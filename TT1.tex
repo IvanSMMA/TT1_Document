@@ -1,0 +1,58 @@
+\documentclass[12pt, letterpaper,openany]{book}
+\usepackage{booktabs}
+% \usepackage{float}  % Para usar el modificador H
+\usepackage{graphicx}         %gráficas eps
+\usepackage{subfigure}        %subfiguras con títulos a) b) ...
+\usepackage[utf8]{inputenc}   %letras acentuadas
+\usepackage[spanish]{babel}   %nombre de capítulos, secciones, 
+\usepackage{amsmath}
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{rotating}
+\usepackage{caption}
+\usepackage{amssymb}
+\usepackage{afterpage}
+\usepackage[spanish]{nomencl}
+\usepackage{textcomp}
+\usepackage{setspace}
+\usepackage{longtable}
+\usepackage{pdfpages}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+\titlespacing*{\section}{1pt}{*1}{*1}
+
+\usepackage{enumitem}  % Para personalizar listas enumeradas
+\usepackage{xcolor}    % Para dar color a los textos
+
+\usepackage[top=3cm,bottom=3cm,left=4cm,right=3cm]{geometry}
+
+\newcommand{\UCactor}{\includegraphics[height=1em]{Images/actor.png}}  % Ícono de usuario
+\newcommand{\UCsystem}{\includegraphics[height=1em]{Images/usecase.png}} % Ícono de sistema
+
+% Title Page
+\title{Tema de tesis}
+\author{Estudiante}
+
+
+\begin{document}
+	%Modificaciones para los nombres de algunos títulos
+	\renewcommand{\listtablename}{{Índice de tablas}}
+	\renewcommand{\tablename}{Tabla}
+%	\renewcommand{\algorithmcfname}{Algoritmo}
+	
+\includepdf[pages={1}]{portada}
+	
+%\maketitle
+\section*{Resumen}
+\section*{Abstract}
+\newpage\null\thispagestyle{empty}\newpage
+
+\addtocontents{toc}{\hfill \textbf{Página} \par}
+\tableofcontents
+
+
+% \let\cleardoublepage\clearpage
+\input{TT1/Capitulo1}
+\input{TT1/Capitulo2}
+\input{TT1/Capitulo3}
+
+\end{document}          
