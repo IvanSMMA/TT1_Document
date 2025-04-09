@@ -10,7 +10,7 @@ Este repositorio contiene el código fuente en LaTeX de nuestro proyecto origina
 
 ## 🚀 Cómo compilar
 
-Puedes compilar este proyecto usando `TT1.tex`. Ejemplo rápido:
+Puedes compilar el proyecto usando `TT1.tex`. Ejemplo rápido:
 
 ```bash
 latexmk -pdf TT1.tex
