@@ -8,6 +8,10 @@
 
 \usepackage{graphicx}
 \usepackage[textwidth=17cm,textheight=20cm]{geometry}
+\usepackage[spanish]{babel}
+\usepackage{datetime}
+\newdateformat{mexdate}{\ordinaldate{\THEDAY}{ de }{\monthname[\THEMONTH]}{ de \THEYEAR}}
+
 
 \begin{document}
 	
@@ -80,7 +84,7 @@
 	
 	\vspace{2cm}
 	
-	{Ciudad de México,}{ }{16 de Mayo de 2025}
+{Ciudad de México,}{ }{\mexdate\today}
 	\end{center}
 	\end{minipage}
 
