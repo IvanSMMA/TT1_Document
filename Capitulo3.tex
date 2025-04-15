@@ -18,25 +18,25 @@
 \end{itemize}
 \subsection{Requerimientos funcionales}
 \begin{itemize}
-    \item \textbf{RN01: Entrada de Texto}  
+    \item \textbf{RF01: Entrada de Texto}  
     La aplicación debe permitir al usuario ingresar texto en español que será traducido a LSM.
     
-    \item \textbf{RN02: Procesamiento de Lenguaje Natural (PLN)}  
+    \item \textbf{RF02: Procesamiento de Lenguaje Natural (PLN)}  
     Implementar un módulo que analice y procese el texto ingresado, identificando frases clave y contextos específicos para su traducción adecuada.
     
-    \item \textbf{RN03: Generación de Avatares 3D}  
+    \item \textbf{RF03: Generación de Avatares 3D}  
     Desarrollar avatares 3D que representen visualmente las señas correspondientes a las frases procesadas. Los avatares deben ser capaces de mostrar expresiones faciales y movimientos corporales que reflejen la gramática y sintaxis de la LSM.
     
-    \item \textbf{RN04: Animaciones y Transiciones}  
+    \item \textbf{RF04: Animaciones y Transiciones}  
     Las animaciones entre señas deben ser fluidas y naturales, utilizando IA para optimizar las transiciones y evitar movimientos bruscos o poco realistas.
     
-    \item \textbf{RN05: Interfaz de Usuario (UI)}  
+    \item \textbf{RF05: Interfaz de Usuario (UI)}  
     Diseñar una interfaz intuitiva y accesible que permita a los usuarios ingresar texto personalizado para su traducción.
     
-    \item \textbf{RN06: Modo de Deletreo}  
+    \item \textbf{RF06: Modo de Deletreo}  
     En caso de que una frase no esté disponible en la base de datos, la aplicación debe ofrecer la opción de deletrear palabra por palabra utilizando el alfabeto dactilológico de la LSM.
     
-    \item \textbf{RN07: Compatibilidad}  
+    \item \textbf{RF07: Compatibilidad}  
     La aplicación debe ser compatible con la última versión de Android, garantizando su funcionamiento en una amplia gama de dispositivos móviles.
 \end{itemize}
 
@@ -106,7 +106,7 @@ El sistema procesa el texto ingresado mediante PLN y lo prepara para su conversi
     \textbf{Precondiciones} & El texto ingresado por el usuario debe estar disponible y correctamente formateado. \\ \hline
     \textbf{Actividad que se va a bitácora} & Registro del texto procesado, las frases clave y el análisis semántico realizado. \\ \hline
     \textbf{Registro que se va a bitácora} & Texto procesado, identificaciones de frases clave, timestamp del análisis. \\ \hline
-    \textbf{Viene de} & El caso de uso "Entrada de texto". \\ \hline
+    \textbf{Viene de} & El caso de uso “Entrada de texto”. \\ \hline
       
     \end{longtable}
 \end{table}
@@ -136,7 +136,7 @@ El sistema genera un avatar 3D que realiza y muestra en pantalla la traducción 
     \textbf{Precondiciones} & El texto debe haber sido procesado y traducido a LSM correctamente. \\ \hline
     \textbf{Actividad que se va a bitácora} & Registro de la generación del avatar y las animaciones realizadas. \\ \hline
     \textbf{Registro que se va a bitácora} & Avatar generado, tipo de señas representadas, timestamp de la generación. \\ \hline
-    \textbf{Viene de} & El caso de uso "Procesamiento de Lenguaje Natural (PLN)". \\ \hline
+    \textbf{Viene de} & El caso de uso “Procesamiento de Lenguaje Natural (PLN)”. \\ \hline
        
     \end{longtable}
 \end{table}
@@ -166,7 +166,7 @@ El sistema detecta una palabra desconocida y activa el modo de deletreo, mostran
     \textbf{Precondiciones} & La palabra no debe estar en la base de datos de LSM. \\ \hline
     \textbf{Actividad que se va a bitácora} & Registro del uso del modo de deletreo por parte del usuario. \\ \hline
     \textbf{Registro que se va a bitácora} & Palabra deletreada, secuencia de letras, timestamp de la actividad. \\ \hline
-    \textbf{Viene de} & El caso de uso "Entrada de texto" o "Procesamiento de Lenguaje Natural (PLN)". \\ \hline
+    \textbf{Viene de} & El caso de uso “Entrada de texto” o “Procesamiento de Lenguaje Natural (PLN)”. \\ \hline
      
     \end{longtable}
 \end{table}
@@ -196,7 +196,7 @@ El sistema usa IA para gestionar animaciones fluidas entre señas en LSM, evitan
     \textbf{Precondiciones} & El avatar 3D debe estar generado y las señas deben estar listas para la animación. \\ \hline
     \textbf{Actividad que se va a bitácora} & Registro de la generación y ejecución de las animaciones y transiciones. \\ \hline
     \textbf{Registro que se va a bitácora} & Transiciones entre señas, optimización de IA, timestamp de la animación. \\ \hline
-    \textbf{Viene de} & El caso de uso "Generación de Avatares 3D". \\ \hline
+    \textbf{Viene de} & El caso de uso “Generación de Avatares 3D”. \\ \hline
       
     \end{longtable}
 \end{table}
@@ -226,7 +226,7 @@ La aplicación es compatible con la última versión de Android y se adapta a di
     \textbf{Precondiciones} & La aplicación debe estar instalada en un dispositivo con la versión compatible de Android. \\ \hline
     \textbf{Actividad que se va a bitácora} & Registro de la versión de Android y la compatibilidad del dispositivo. \\ \hline
     \textbf{Registro que se va a bitácora} & Versión de Android, tipo de dispositivo, timestamp de la verificación de compatibilidad. \\ \hline
-    \textbf{Viene de} & El caso de uso "Inicio de la aplicación" o "Verificación de configuración del dispositivo". \\ \hline
+    \textbf{Viene de} & El caso de uso “Inicio de la aplicación” o “Verificación de configuración del dispositivo”. \\ \hline
        
     \end{longtable}
 \end{table}
