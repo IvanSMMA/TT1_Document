@@ -31,6 +31,15 @@
 \newcommand{\UCactor}{\includegraphics[height=1em]{Images/actor.png}}  % Ícono de usuario
 \newcommand{\UCsystem}{\includegraphics[height=1em]{Images/usecase.png}} % Ícono de sistema
 
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\LT@makecaption}
+  {\hrule}
+  {}
+  {}{}
+\makeatother
+
+
 % Title Page
 \title{Tema de tesis}
 \author{Estudiante}
