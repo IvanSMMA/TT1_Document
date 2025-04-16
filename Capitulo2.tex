@@ -374,29 +374,31 @@ La arquitectura de un sistema de PLN está dividida en cinco niveles:\
 El PLN se apoya de un conjunto de técnicas mediante las cuales se extrae información determinada de un texto. A continuación, se describen algunas de las técnicas más comunes utilizadas:
 
 \begin{enumerate}
-    \item Detección de oraciones. La detección de oraciones es una de las técnicas básicas correspondientes al  nivel de procesamiento sintáctico, que funciona recortando una secuencia de caracteres entre dos signos de puntuación; el signo debe estar acompañado por un espacio en blanco y se excluye el caso de la primer frase, y en posibles ocasiones la última frase.\\
+    \item Detección de oraciones. La detección de oraciones recorta una secuencia de caracteres entre dos signos de puntuación; el signo debe estar acompañado por un espacio en blanco y se excluye el caso de la primer frase, y en posibles ocasiones la última frase. Corresponde el nivel de procesamiento sintáctico dentro de la arquitectura de PLN.\\
     
-La detección de oraciones puede presentar algunas dificultades a la hora de procesar títulos, abreviaturas, o algunos elementos que no siguen algún patrón de texto plano. En el caso de las abreviaturas, se utilizan palabras cargadas en el modelo, empleando un modelo por idioma, ya que el mismo posee los símbolos o abreviaturas necesarias para detectar las sentencias [s46].
+La detección de oraciones puede presentar algunas dificultades a la hora de procesar títulos, abreviaturas, o algunos elementos que no siguen algún patrón de texto plano. En esos casos se emplean bancos de palabras, que incluyen aquellos símbolos o abreviaturas necesarias para detectar las sentencias, y posteriormente son cargadas en el modelo [s46].
 \begin{center}
-    \includegraphics[width=0.8\textwidth]{Images/lib.png}
+    \includegraphics[width=0.8\textwidth]{Images/Cap 2/Deteccion_Oraciones.png}
     \captionof{figure}{Ejemplo de la delimitación de oraciones dentro de un párrafo, obtenido de [s46].}  % Pie de foto manual
 \end{center}
-El ejemplo anterior muestra que el modelo en español determina que “Sr.” es una abreviatura de la palabra “Señor”, y por consiguiente ignora el signo de puntuación como final de la oración.
+El ejemplo anterior muestra que, en el párrafo, el modelo en español determina que “Sr.” es una abreviatura de la palabra “Señor”, y por consiguiente ignora el signo de puntuación como final de la oración.
 
-\item Segmentación por palabras. Después de que se identificaron cada una de las oraciones que componen el texto, se procede a la segmentación por palabras, más conocida como analizador léxico o “Tokenizer”. 
-Esta técnica pertenece al nivel léxico y consiste en la identificación de tokens, que son unidades lingüísticas como palabras, puntuación, números, caracteres alfanuméricos, etc. Para identificar tokens en idiomas modernos, se delimitan espacios en blanco con límites de palabra, entre comillas, paréntesis y puntuación.
-El trato con las abreviaciones es similar a la detección de oraciones, ya que no existen normas universalmente aceptadas para muchas abreviaturas y acrónimos. En el caso del reconocimiento de abreviaturas, se mantiene una lista de palabras recortadas reconocidas [s46].
-\begin{center}
-    \includegraphics[width=0.8\textwidth]{Images/lib2.png}
+\item Segmentación por palabras. Después de que se identifican cada una de las oraciones que componen un texto, se procede a la segmentación por palabras, más conocida como analizador léxico o “Tokenizer”.\\
+
+
+Esta técnica, perteneciente al nivel léxico, consiste en la identificación de tokens, los cuales son unidades lingüísticas como palabras, puntuación, números, caracteres alfanuméricos, etc. Para identificar tokens en idiomas modernos, se delimitan espacios en blanco con límites de palabra, entre comillas, paréntesis y puntuación.\\
+
+El trato con las abreviaciones es similar a la detección de oraciones, ya que se emplea una lista de palabras recortadas reconocidas [s46].\begin{center}
+    \includegraphics[width=0.8\textwidth]{Images/Cap 2/Separacion_Palabras.png}
     \captionof{figure}{ Ejemplo de separación de palabras en un párrafo, obtenido de [s46].}  % Pie de foto manual
 \end{center}
 En el ejemplo anterior, se obtiene la lista de palabras del texto, con la separación por palabras indicada por los espacios en blanco y los signos de puntuación. 
 
-\item Etiquetado gramatical o Part-of-Speech (POS) - tagging. Posterior a la ejecución de las dos técnicas previamente explicadas, se puede realizar el proceso de etiquetado de palabras de acuerdo con el rol que cumplen dentro de una oración. El proceso de Etiquetado gramatical consiste en asignar a cada una de las palabras de un texto su categoría gramatical de acuerdo con la definición de la misma o el contexto en el que aparece, como lo pueden ser los sustantivos, adjetivos, adverbios, etc.
+\item Etiquetado gramatical o Part-of-Speech (POS) - tagging. El proceso de etiquetado gramatical consiste en asignar la categoría gramatical a cada una de las palabras de un texto, de acuerdo con la definición de esta o el contexto en el que aparece, como lo pueden ser los sustantivos, adjetivos, adverbios, etc. \\
 
-Para lograr lo anterior, se necesita establecer las relaciones de una palabra con sus adyacentes dentro de una frase o de un párrafo. Un mismo token puede tener múltiples etiquetas POS, pero solo una es válida dependiendo del contexto.
+Para lograr lo anterior, es primordial establecer las relaciones de una palabra con sus adyacentes dentro de una frase o de un párrafo. Un mismo token puede tener múltiples etiquetas POS, pero solo una es válida dependiendo del contexto.
 \begin{center}
-    \includegraphics[width=0.8\textwidth]{Images/sec.png}
+    \includegraphics[width=0.8\textwidth]{Images/Cap 2/POS-tagging.png}
     \captionof{figure}{POS Tagger, obtenido de [s46].}  % Pie de foto manual
 \end{center}
 \item Segmentación morfológica. Un morfema se define como un fragmento mínimo capaz de expresar el significado de una palabra, es decir, es la unidad significativa más pequeña de un idioma.\\
@@ -432,21 +434,21 @@ La identificación de monemas permite el análisis en profundidad de una palabra
 
 A partir de un listado de palabras Stop words, se detectan dentro del texto para su posible eliminación. En ocasiones, al listado de palabras de uso común se le agrega un conjunto de palabras propias del documento que se analiza, empleando la técnica TF-IDF (Term Frequency - Inverse Document Frequency), que permite determinar qué palabras son importantes para un documento de acuerdo con la frecuencia de aparición dentro de un texto.
 \begin{center}
-    \includegraphics[width=0.8\textwidth]{Images/stop.png}
+    \includegraphics[width=0.8\textwidth]{Images/Cap 2/Deteccion_Stopwords.png}
     \captionof{figure}{ Ejemplo de Detección de Stop words, obtenido de [s34].}  % Pie de foto manual
 \end{center}
 
 \item Reconocimiento de Entidades Nombradas (NER). Busca y clasifica elementos de texto que pertenecen a categorías predefinidas, como lo son nombres de personas, entidades, organizaciones, lugares, expresiones temporales, cantidades, porcentajes. etc.
 Para poder hacer el reconocimiento de las diferentes entidades, se utilizan una serie de aproximaciones, y para poder realizar el análisis es necesario tener una noción del contexto en el cual se encuentra cada una de las entidades para determinar a qué se refieren. Finalmente, dentro de las posibles entidades se realiza una asociación con los conceptos del contexto dentro de una base de datos de conocimiento.
 \begin{center}
-    \includegraphics[width=0.8\textwidth]{Images/truman.png}
+    \includegraphics[width=0.8\textwidth]{Images/Cap 2/NER.png}
     \captionof{figure}{Reconocimiento de Entidades Nombradas, obtenido de [s46]
 }  % Pie de foto manual
 \end{center}
 \item Stemming. Esta técnica busca un concepto de una palabra mediante la eliminación de prefijos y sufijos para obtener la raíz. De esta manera, se reduce la palabra a su mínimo elemento con significado
 
 \begin{center}
-    \includegraphics[width=0.8\textwidth]{Images/catalog.png}
+    \includegraphics[width=0.8\textwidth]{Images/Cap 2/Stemming.png}
     \captionof{figure}{Ejemplo de los términos derivados de la raíz “catalog”, obtenido de [s46].}  % Pie de foto manual
 \end{center}
 No obstante, es importante mencionar que esta técnica no siempre funciona correctamente debido a que hay palabras que poseen raíces compartidas por más de un significado. 
