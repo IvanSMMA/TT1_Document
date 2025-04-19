@@ -93,7 +93,7 @@ La discapacidad auditiva se clasifica en tres tipos según distintos criterios: 
 \end{itemize}
 
 \begin{center}
-    \includegraphics[width=0.8\textwidth]{Images/Cap 2/PartesOido.jpg}
+    \includegraphics[width=0.9\textwidth]{Images/Cap 2/PartesOido.jpg}
     \captionof{figure}{Partes del oído humano, obtenido de [i2].} 
 \end{center}
 
@@ -132,7 +132,7 @@ La presencia de barreras de comunicación generan aislamiento e impiden el desar
 
 Además, la comunidad sorda presenta dificultad para acceder a la información proveniente de la televisión, radio, llamadas telefónicas, megafonías en estaciones de metro y salidas de aeropuertos, etc., debido a que esta es principalmente transmitida hacia la población oyente.\\
 
-\newpage A pesar de que las personas sordas presentan muchas dificultades en su vida diaria, hoy en día disponen de numerosas herramientas de apoyo para impulsar su inclusión en entornos sociales y favorecer su crecimiento personal, como lo son las prótesis auditivas, señales acústicas y su propia Lengua de Señas. En este Trabajo Terminal, únicamente se centrará el estudio en las Lenguas de Señas, concretamente en la Lengua de Señas Mexicana (LSM).\\
+A pesar de que las personas sordas presentan muchas dificultades en su vida diaria, hoy en día disponen de numerosas herramientas de apoyo para impulsar su inclusión en entornos sociales y favorecer su crecimiento personal, como lo son las prótesis auditivas, señales acústicas y su propia Lengua de Señas. En este Trabajo Terminal, únicamente se centrará el estudio en las Lenguas de Señas, concretamente en la Lengua de Señas Mexicana (LSM).\\
 
 \section{Lengua de Señas Mexicana}
 \subsection{Definición de Lengua de Señas}
@@ -149,7 +149,6 @@ Por su parte, el Artículo 20 de dicha ley establece que los medios de comunicac
 
 En México hay entre 87,000 y 100,000 personas hablantes de LSM que la dominan y la emplean como vía de comunicación, siendo incluso una población mucho más grande que algunas comunidades hablantes de lenguas indígenas del país [s27].\\
 
-\newpage
 \subsection{Abecedario de la LSM}
 La siguiente tabla explica detalladamente cómo se conforma cada una de las letras del abecedario de LSM:
 
@@ -346,19 +345,22 @@ El PLN emplea el lenguaje natural para establecer comunicación entre un ser hum
 
 \subsection{Arquitectura de un sistema de PLN}
 
-La arquitectura de un sistema de PLN está dividida en cinco niveles:\
+La arquitectura de un sistema de PLN está dividida en los siguientes niveles [s46]:\
 
 \begin{enumerate}[label=\alph*.]
-    \item \textbf{Nivel Fonológico.} Explica la relación entre las palabras y los sonidos que representan.
+    \item \textbf{Nivel Fonético.} En este nivel se interpretan los sonidos dentro de las palabras.
+    \item \textbf{Nivel Fonémico.} En el nivel fonémico se trabajan con los fonemas, los cuales son unidades teóricas básicas para estudiar el nivel fonológico de la lengua humana, ya que analizan la variación en la pronunciación cuando las palabras están conectadas.
     \item \textbf{Nivel Morfológico.} Indica cómo es que las palabras se construyen a partir de unidades de significado más pequeñas llamadas morfemas.
+    \item \textbf{Nivel Léxico.} El nivel léxico se encarga del significado individual de cada palabra, analizando cada una de las palabras para conocer su significado y función dentro de una oración, dependiendo del contexto en el que se encuentre.
     \item \textbf{Nivel Sintáctico.} Se analiza cómo es que las palabras se unen para formar oraciones, entendiendo la función estructural que cada palabra posee.
     \item \textbf{Nivel Semántico.} Se refiere al significado de las palabras, y cómo los mismos se unen para darle sentido a una oración, considerando también el contexto de la oración.
+    \item \textbf{Nivel de Discurso.} Se encarga de trabajar con unidades de texto grandes, haciendo conexiones entre las oraciones. Se identifica la función que cumple cada oración en el texto, sumando información al significado del texto completo.
     \item \textbf{Nivel Pragmático.} Trata de cómo las oraciones son empleadas en diferentes situaciones y cómo es que el uso afecta el significado de las mismas.
 \end{enumerate}
 
 \begin{center}
-    \includegraphics[width=0.8\textwidth]{Images/diagraanali.png}
-    \captionof{figure}{Arquitectura de un Sistema de Procesamiento de Lenguaje Natural, obtenido de [s43].}  % Pie de foto manual
+    \includegraphics[width=0.8\textwidth]{Images/Cap 2/Niveles_Arquitectura_PLN.png}
+    \captionof{figure}{Niveles de la arquitectura de un Sistema de Procesamiento de Lenguaje Natural, obtenido de [s43].}  % Pie de foto manual
 \end{center}
 
 \textbf{Los pasos que sigue la arquitectura del sistema de PLN es la siguiente [s43]:}
@@ -472,14 +474,13 @@ No obstante, es importante mencionar que esta técnica no siempre funciona corre
 \subsection{Aplicaciones del PLN}
 A continuación, se enlistan las principales aplicaciones del PLN:
 \begin{itemize}
-    \item Recuperación y extracción de información. La recuperación de información (RI), es el proceso de encontrar en un repositorio grande de datos, material (usualmente documentos) de naturaleza no estructurada (usualmente texto) o semiestructurada (páginas Web, por ejemplo), que satisfaga una necesidad de información [s45].
-    \item Por su parte, la extracción de información (EI) consiste en la obtención de las partes de las partes que interesan en el texto para pasarlas a un formato de base de datos [s45].
-    \item Minería de datos. La minería de datos proporciona herramientas poderosas para descubrir patrones ocultos y relaciones en datos estructurados. Este proceso asume que los datos ya se encuentran almacenados en un formato estructurado. La minería de datos usa técnicas y metodologías de reconocimiento de información, extracción de información y corpus procesados con técnicas de lingüística computacional [s45].
-    \item Sistemas de búsqueda de respuestas. Son sistemas diseñados para tomar una pregunta en lenguaje natural y proporcionar una respuesta, para evitar que los usuarios naveguen y lean varias páginas de resultados de búsqueda. Estos sistemas son construidos sobre motores de búsqueda y requieren contenido fuente para descubrir las respuesta; a su vez, deben tener métodos para entender las preguntas del usuario y determinar el tipo de respuesta que debe dar [s45].
-    \item Generación de resúmenes automáticos. La generación de resúmenes consiste en emplear herramientas de PLN, dichos resúmenes pueden ser con enfoque extractivo o abstractivo. Por un lado, los métodos extractivos consisten en tomar una colección de términos, frases o párrafos significativos que definen el significado del texto original para generar un resumen. Por otro lado, los métodos abstractivos dependen de técnicas de parafraseo para producir las síntesis, las técnicas aún están siendo desarrolladas [s45].
-    \item Análisis de sentimientos. El análisis de sentimientos en textos es la identificación y extracción de información subjetiva. Este proceso generalmente involucra el uso de herramientas de PLN y software de análisis de textos para automatizar el proceso. La forma básica de análisis de sentimientos es una clasificación polarizada de sentimientos que puede asignar calificaciones de en un rango de -10 a 10 que se basa en el aprendizaje para evaluar emociones tanto negativas como positivas en corpus etiquetados de entrenamiento [s45].
-    \item Traducción automática. Consiste en tomar el texto escrito en un lenguaje y traducirlo a otro, manteniendo el mismo significado. El proceso de traducción automática sigue tres pasos: en primer lugar, el texto en el lenguaje original se transforma a una representación intermedia, luego se realizan modificaciones a esta representación intermedia basándose en la morfología del lenguaje, y finalmente se transforma al lenguaje destino [s45].
-
+    \item Recuperación y extracción de información. La recuperación de información es el proceso de encontrar datos en un repositorio grande, para satisfacer una necesidad de información [s45].\\ 
+    Por su parte, la extracción de información consiste en la obtención de ciertos elementos dentro de un texto que son de interés, para posteriormente ser pasadas a un formato de base de datos [s45].    
+    \item Minería de datos. La minería de datos permite descubrir patrones ocultos y relaciones en datos estructurados, empleando técnicas de reconocimiento de información, extracción de información y corpus procesados con técnicas de lingüística computacional [s45].
+    \item Sistemas de búsqueda de respuestas. Son sistemas diseñados para interpretar una pregunta en lenguaje natural y proporcionar una respuesta, para evitar que los usuarios naveguen y lean varias páginas de resultados de búsqueda. Estos sistemas son alimentados con contenido fuente para entender las preguntas del usuario y encontrar las respuestas [s45].
+    \item Generación de resúmenes automáticos. La generación de resúmenes consiste en emplear herramientas de PLN, para tomar una colección de términos, frases o párrafos significativos que definen el significado del texto original para generar un resumen. También se pueden emplear técnicas de PLN para parafrasear un texto y producir una síntesis [s45].
+    \item Análisis de sentimientos. El análisis de sentimientos en textos es la identificación y extracción de información subjetiva, empleando herramientas de PLN y software de análisis de textos para automatizar el proceso. El análisis de sentimientos emplea una clasificación polarizada de sentimientos que consiste en un rango de -10 a 10 que se basa en el aprendizaje para evaluar emociones tanto negativas como positivas en corpus etiquetados de entrenamiento [s45].
+    \item Traducción automática. La traducción automática consiste en tomar el texto escrito en un lenguaje y traducirlo a otro, manteniendo el mismo significado. El proceso de traducción automática sigue tres pasos: en primer lugar, el texto en el lenguaje original se transforma a una representación intermedia, luego se realizan modificaciones a esta representación intermedia basándose en la morfología del lenguaje, y finalmente se transforma al lenguaje destino [s45].
 \end{itemize}
 
 \section{MediaPipe}
@@ -517,7 +518,7 @@ El marcador de poses emplea una serie de modelos para predecir los marcadores de
 \end{itemize}
 El modelo de marcador de pose realiza un seguimiento de 33 ubicaciones de puntos de referencia del cuerpo.
 \begin{center}
-    \includegraphics[width=0.8\textwidth]{Images/human.png}
+    \includegraphics[width=0.8\textwidth]{Images/Cap 2/MediaPipe_Pose.png}
     \captionof{figure}{Ubicaciones de puntos de referencia del cuerpo [s51].}  % Pie de foto manual
 \end{center}
 A continuación, se enlistan las partes representadas del cuerpo:
@@ -598,3 +599,5 @@ Las principales características de Android son las siguientes [s81]:
     \item Integración con servicios de Google. Android está integrado con servicios de Google como Gmail, Google Drive, Google Photos, Maps, entre otros.
     \item Compatibilidad con tecnologías emergentes. Android es compatible con tecnologías como la Realidad Virtual (VR), la Realidad Aumentada (AR) y los asistentes virtuales. 
 \end{itemize}
+
+La versión actual del Sistema Operativo Android, al momento, es la versión Android 14, la cual fue anunciada el 04 de Octubre de 2023.
