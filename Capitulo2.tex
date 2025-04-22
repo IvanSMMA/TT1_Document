@@ -324,7 +324,7 @@ La IA puede ser clasificada de varias maneras, ya sea a partir de su grado de ca
 De igual manera, la IA emplea diferentes técnicas, las cuales se enlistan a continuación [s4]:
 
 \begin{itemize}
-    \item Búsqueda de soluciones. Tiene por objetivo encontrar mecanismos de deducción y búsqueda de soluciones para la resolución de problemas cuando no se cuenta con un método directo [s4].\\
+    \item Búsqueda de soluciones. Esta técnica tiene por objetivo encontrar mecanismos de deducción y búsqueda de soluciones para la resolución de problemas cuando no se cuenta con un método directo [s4].\\
 \item Representación del conocimiento. Elaboración de métodos y técnicas eficientes que sean capaces de organizar conocimientos en un sistema, para posteriormente ser usados en la búsqueda de soluciones para diferentes problemáticas [s4].\\
 \item Reconocimiento de patrones. Son técnicas de clasificación para identificar subgrupos midiendo el parecido o similitud entre formas, con el objetivo de obtener conclusiones [s4].\\
 \item Robótica. Esta técnica tiene por objetivo la construcción de robots inteligentes capaces de funcionar con autonomía, que cuenten con la habilidad de realizar procesos mecánicos y manuales con el fin de obtener mayor productividad, suplir mano de obra y proporcionalidad flexibilidad en procesos industriales [s4].\\
@@ -349,9 +349,9 @@ La arquitectura de un sistema de PLN está dividida en los siguientes niveles [s
 
 \begin{enumerate}[label=\alph*.]
     \item \textbf{Nivel Fonético.} En este nivel se interpretan los sonidos dentro de las palabras.
-    \item \textbf{Nivel Fonémico.} En el nivel fonémico se trabajan con los fonemas, los cuales son unidades teóricas básicas para estudiar el nivel fonológico de la lengua humana, ya que analizan la variación en la pronunciación cuando las palabras están conectadas.
-    \item \textbf{Nivel Morfológico.} Indica cómo es que las palabras se construyen a partir de unidades de significado más pequeñas llamadas morfemas.
-    \item \textbf{Nivel Léxico.} El nivel léxico se encarga del significado individual de cada palabra, analizando cada una de las palabras para conocer su significado y función dentro de una oración, dependiendo del contexto en el que se encuentre.
+    \item \textbf{Nivel Fonémico.} En el nivel fonémico se trabajan con los fonemas, los cuales son unidades teóricas básicas para estudiar el nivel fonológico de la lengua humana, ya que analizan la varianza en la pronunciación cuando las palabras están conectadas.
+    \item \textbf{Nivel Morfológico.} Indica cómo es que las palabras se construyen a partir de unidades de significado más pequeñas, llamadas morfemas.
+    \item \textbf{Nivel Léxico.} El nivel léxico se encarga del significado individual de cada palabra, analizando cada una de las palabras para conocer su significado y función dentro de una oración, tomando en cuenta el contexto en el que se encuentre.
     \item \textbf{Nivel Sintáctico.} Se analiza cómo es que las palabras se unen para formar oraciones, entendiendo la función estructural que cada palabra posee.
     \item \textbf{Nivel Semántico.} Se refiere al significado de las palabras, y cómo los mismos se unen para darle sentido a una oración, considerando también el contexto de la oración.
     \item \textbf{Nivel de Discurso.} Se encarga de trabajar con unidades de texto grandes, haciendo conexiones entre las oraciones. Se identifica la función que cumple cada oración en el texto, sumando información al significado del texto completo.
@@ -367,13 +367,13 @@ La arquitectura de un sistema de PLN está dividida en los siguientes niveles [s
 \begin{enumerate}
     \item El usuario le expresa a la computadora lo que desea hacer.\\
     \item La computadora analiza las oraciones que el usuario le proporciona, en el sentido morfológico y sintáctico. En otras palabras, se verifican los componentes léxicos definidos y se verifica si se cumple un orden gramatical entre los elementos identificados.\\
-    \item Posteriormente, se realiza un análisis sintáctico de las oraciones, para saber cuál es el significado de cada oración.\\
+    \item Se realiza un análisis sintáctico de las oraciones, para saber cuál es el significado de cada oración.\\
     \item Después de realizar el paso anterior, se lleva a cabo un análisis pragmático de todas las oraciones juntas. Al final de este paso, la computadora obtiene la expresión final.\\
     \item Una vez obtenida la expresión final, la misma es ejecutada para obtener un resultado que será proporcionado al usuario.
 \end{enumerate}
 
 \subsection{Técnicas de PLN}
-El PLN se apoya de un conjunto de técnicas mediante las cuales se extrae información determinada de un texto. A continuación, se describen algunas de las técnicas más comunes utilizadas:
+El PLN se apoya de un conjunto de técnicas mediante las cuales se extrae información determinada de un texto. A continuación, se describen algunas de las técnicas más comunes utilizadas [s46]:
 
 \begin{enumerate}
     \item Detección de oraciones. La detección de oraciones recorta una secuencia de caracteres entre dos signos de puntuación; el signo debe estar acompañado por un espacio en blanco y se excluye el caso de la primer frase, y en posibles ocasiones la última frase. Corresponde el nivel de procesamiento sintáctico dentro de la arquitectura de PLN.\\
@@ -403,7 +403,9 @@ Para lograr lo anterior, es primordial establecer las relaciones de una palabra 
     \includegraphics[width=0.8\textwidth]{Images/Cap 2/POS-tagging.png}
     \captionof{figure}{POS Tagger, obtenido de [s46].}  % Pie de foto manual
 \end{center}
-\item Segmentación morfológica. Un morfema se define como un fragmento mínimo capaz de expresar el significado de una palabra, es decir, es la unidad significativa más pequeña de un idioma.\\
+\item Segmentación morfológica. En esta etapa, se realiza la identificación de morfemas, que son un fragmento mínimo capaz de expresar el significado de una palabra, es decir, es la unidad significativa más pequeña de un idioma.\\
+
+La identificación de morfemas permite el análisis en profundidad de una palabra en un texto, ya que de esta forma se obtiene información específica como el género, modo, tiempo, etc. y es posible ubicar de manera precisa cada palabra de una oración.\\
 
 Los morfemas se clasifican en 2 categorías. Los morfemas independientes admiten cierta libertad fonológica del lexema: 
 \begin{itemize}
@@ -428,20 +430,18 @@ Por otro lado, los morfemas dependientes van unidos a otra unidad mínima dotada
 \item Persona
 \item Modo y tiempo
     \end{itemize}
-
 \end{enumerate}
-La identificación de monemas permite el análisis en profundidad de una palabra en un texto, ya que de esta forma se obtiene información específica como el género, modo, tiempo, etc. y es posible ubicar de manera precisa cada palabra de una oración.
 
-\item Eliminación de Stop Words. Mediante esta técnica, se excluyen palabras comunes que tienen poco valor para la recuperación de información. La cantidad de ocurrencias de una palabra en un texto determina si es o no una “stop word”, siendo que cuanto más ocurrencias existan menos relevancia tiene en el texto; en su mayoría, los artículos, los pronombres, las preposiciones y las conjunciones. La técnica de eliminación de stop words permite reducir el tamaño de un texto, eliminando aproximadamente el 30\% o 40\% de las palabras, y se seleccionan las palabras claves. \\
+\item Eliminación de Stop Words. Mediante esta técnica, se excluyen palabras comunes que tienen poco valor para la recuperación de información, con el fin de reducir el tamaño de un texto y seleccionar las palabras clave. La cantidad de ocurrencias de una palabra en un texto determina si es o no una “stop word”, siendo que cuanto más ocurrencias existan menos relevancia tiene en el texto; en su mayoría, los artículos, los pronombres, las preposiciones y las conjunciones.\\
 
-A partir de un listado de palabras Stop words, se detectan dentro del texto para su posible eliminación. En ocasiones, al listado de palabras de uso común se le agrega un conjunto de palabras propias del documento que se analiza, empleando la técnica TF-IDF (Term Frequency - Inverse Document Frequency), que permite determinar qué palabras son importantes para un documento de acuerdo con la frecuencia de aparición dentro de un texto.
+A partir de un listado de palabras Stop words, se hace una busqueda de aquellas palabras con mayor ocurrencia dentro de un texto, para su posible eliminación. En ocasiones, al listado de palabras de uso común se le agrega un conjunto de palabras propias del documento que se analiza, empleando la técnica TF-IDF (Term Frequency - Inverse Document Frequency), que permite determinar qué palabras son importantes para un documento de acuerdo con la frecuencia de aparición dentro de un texto.
 \begin{center}
     \includegraphics[width=0.8\textwidth]{Images/Cap 2/Deteccion_Stopwords.png}
     \captionof{figure}{ Ejemplo de Detección de Stop words, obtenido de [s34].}  % Pie de foto manual
 \end{center}
 
-\item Reconocimiento de Entidades Nombradas (NER). Busca y clasifica elementos de texto que pertenecen a categorías predefinidas, como lo son nombres de personas, entidades, organizaciones, lugares, expresiones temporales, cantidades, porcentajes. etc.
-Para poder hacer el reconocimiento de las diferentes entidades, se utilizan una serie de aproximaciones, y para poder realizar el análisis es necesario tener una noción del contexto en el cual se encuentra cada una de las entidades para determinar a qué se refieren. Finalmente, dentro de las posibles entidades se realiza una asociación con los conceptos del contexto dentro de una base de datos de conocimiento.
+\item Reconocimiento de Entidades Nombradas (NER). Se realiza una busqueda y clasificación de elementos de texto que pertenecen a categorías predefinidas, como lo son nombres de personas, nombres de entidades, organizaciones, lugares, expresiones temporales, cantidades, porcentajes. etc.
+Para poder hacer el reconocimiento de las diferentes entidades, se utilizan una serie de aproximaciones, siendo necesario ademas, tener una noción del contexto en el cual se encuentra cada una de las entidades para determinar su significado. Finalmente, dentro de las posibles entidades se realiza una asociación con los conceptos del contexto dentro de una base de datos de conocimiento.
 \begin{center}
     \includegraphics[width=0.8\textwidth]{Images/Cap 2/NER.png}
     \captionof{figure}{Reconocimiento de Entidades Nombradas, obtenido de [s46]
@@ -454,7 +454,7 @@ Para poder hacer el reconocimiento de las diferentes entidades, se utilizan una 
     \captionof{figure}{Ejemplo de los términos derivados de la raíz “catalog”, obtenido de [s46].}  % Pie de foto manual
 \end{center}
 No obstante, es importante mencionar que esta técnica no siempre funciona correctamente debido a que hay palabras que poseen raíces compartidas por más de un significado. 
-\begin{table}[h]
+\begin{table}[H]
     \centering
     \begin{tabular}{|p{4cm}|p{3cm}|p{5cm}|}
         \hline
@@ -482,6 +482,10 @@ A continuación, se enlistan las principales aplicaciones del PLN:
     \item Análisis de sentimientos. El análisis de sentimientos en textos es la identificación y extracción de información subjetiva, empleando herramientas de PLN y software de análisis de textos para automatizar el proceso. El análisis de sentimientos emplea una clasificación polarizada de sentimientos que consiste en un rango de -10 a 10 que se basa en el aprendizaje para evaluar emociones tanto negativas como positivas en corpus etiquetados de entrenamiento [s45].
     \item Traducción automática. La traducción automática consiste en tomar el texto escrito en un lenguaje y traducirlo a otro, manteniendo el mismo significado. El proceso de traducción automática sigue tres pasos: en primer lugar, el texto en el lenguaje original se transforma a una representación intermedia, luego se realizan modificaciones a esta representación intermedia basándose en la morfología del lenguaje, y finalmente se transforma al lenguaje destino [s45].
 \end{itemize}
+
+Este Trabajo Terminal gira en torno a la traducción automática, más en concreto del idioma español a la LSM. En el estado del arte se revisaron trabajos similares que fueron una implementación de la traducción automática, siendo que algunos emplearon modelos de animación 3D.\\
+
+En el siguiente apartado se revisara una de las tecnologías necesarias para la construcción de modelos 3D, como lo es MediaPipe.\\
 
 \section{MediaPipe}
 MediaPipe es un conjunto de herramientas de código abierto para ser empleadas en tareas como el reconocimiento facial, seguimiento de gestos, detección de objetos y el seguimiento del cuerpo humano [s5].
@@ -559,13 +563,15 @@ A continuación, se enlistan las partes representadas del cuerpo:
     \item Right foot index - punta del pie derecho  
 \end{enumerate}
 
+MediaPipe suele ser empleado en conjunto con plataformas y motores gráficos, como pueden ser Blender y Unity, para la creación de modelos 3D. En el siguiente apartado se hará mención de Unity, enfocado principalmente en el desarrollo de modelos 3D.
+
 \section{Modelado de Animaciones 3D}
 El término animación 3D se refiere a la técnica de animación empleada para desplazar modelos tridimensionales generados digitalmente, sirviéndose para ello de un eje de coordenadas cartesiano virtual [s7].\\
 
 La animación 3D ha estado históricamente más orientada a la replicación de la física del mundo real, ya que representa con total libertad la fuerza de gravedad, la inercia o la masa de cuerpos [s7].
 
 \subsection{Unity}
-Unity es una plataforma para el desarrollo de videojuegos y aplicaciones interactivas, que ofrece una amplia variedad de herramientas y recursos para crear experiencias visuales y funcionales [s8]. Es un motor gráfico empleado para desarrollar videojuegos, aplicaciones interactivas en 2D, 2D, realidad aumentada (AR) y realidad virtual (VR), y tiene soporte en varias plataformas como PC, consolas, dispositivos móviles y dispositivos de realidad extendida [s8].\\
+Unity es una plataforma para el desarrollo de videojuegos y aplicaciones interactivas, que ofrece una amplia variedad de herramientas y recursos para crear experiencias visuales y funcionales [s8]. Es un motor gráfico empleado para desarrollar videojuegos, aplicaciones interactivas en 2D, 3D, realidad aumentada (AR) y realidad virtual (VR), y tiene soporte en varias plataformas como PC, consolas, dispositivos móviles y dispositivos de realidad extendida [s8].\\
 
 \begin{center}
     \includegraphics[width=0.6\textwidth]{Images/Cap 2/Unity_Logo.png}
@@ -575,8 +581,6 @@ Unity es una plataforma para el desarrollo de videojuegos y aplicaciones interac
 Unity destaca por su conjunto de características robustas que facilitan el desarrollo de aplicaciones interactivas de alta calidad para la simulación física y el rendering, las cuáles requieren visualización y experiencia de usuario de alta calidad [s8].\\
 
 En la actualidad Unity es empleado en múltiples industrias, además del desarrollo de videojuegos, ya que es popular en sectores como la arquitectura, el diseño automotriz, la medicina y la educación. 
-
-
 
 \section{Sistema Operativo Android}
 Un sistema operativo móvil es un conjunto de programas que habilitan características específicas de un teléfono móvil y brindan servicios a las aplicaciones móviles que se ejecutan en él [s81].\\
