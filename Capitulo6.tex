@@ -1,0 +1,305 @@
+\chapter{Análisis de riesgos}
+\section{Identificación y evaluación de riesgos}
+\subsection{Leyenda de probabilidad y efecto}
+
+\textbf{Probabilidad:}
+\begin{itemize}
+	\item \textbf{Muy alta ($>$75\%):} Altamente probable que ocurra.
+	\item \textbf{Alta (50-75\%):} Probable que ocurra en varias ocasiones durante el proyecto.
+	\item \textbf{Moderada (25-50\%):} Existe una posibilidad razonable de que ocurra.
+	\item \textbf{Baja (10-25\%):} Poco probable que ocurra, pero no imposible.
+\end{itemize}
+
+\textbf{Efecto (Impacto):}
+\begin{itemize}
+	\item \textbf{Catastrófico:} Afecta gravemente el éxito del proyecto, podría impedir la continuidad del mismo.
+	\item \textbf{Serio:} Genera retrasos significativos o pérdida parcial de calidad en el desarrollo o resultados.
+	\item \textbf{Tolerable:} Impacto menor, manejable sin afectar los objetivos generales del proyecto.
+\end{itemize}
+
+% ===== RIESGOS TÉCNICOS =====
+\subsection{Riesgos Técnicos}
+Los riesgos técnicos están relacionados con las limitaciones de la tecnología utilizada, la precisión del modelo de traducción y la adaptación a las particularidades de la Lengua de Señas Mexicana (LSM).
+
+\begin{longtable}{|>{\centering\arraybackslash}p{1cm}|>{\raggedright\arraybackslash}p{8cm}|>{\centering\arraybackslash}p{3cm}|>{\centering\arraybackslash}p{3cm}|}
+	\hline
+	\textbf{ID} & \textbf{Riesgo Específico} & \textbf{Probabilidad} & \textbf{Efecto} \\
+	\hline
+	T1 & Precisión limitada del modelo de traducción de español a LSM. & Alta (50-75\%) & Serio \\
+	\hline
+	T2 & Escasa disponibilidad de datasets de calidad para LSM. & Alta (50-75\%) & Serio \\
+	\hline
+	T3 & Desactualización tecnológica del modelo de IA frente a avances rápidos en el área. & Moderada (25-50\%) & Serio \\
+	\hline
+	T4 & Dificultad para manejar las variaciones regionales y culturales de LSM. & Media (25-50\%) & Catastrófico \\
+	\hline
+	T5 & Problemas de compatibilidad y funcionamiento multiplataforma. & Moderado (25-50\%) & Serio \\
+	\hline
+\end{longtable}
+
+% ===== RIESGOS FINANCIEROS Y COMERCIALES =====
+\subsection{Riesgos Financieros y Comerciales}
+Estos riesgos afectan la viabilidad económica del proyecto y su posible escalamiento hacia una fase comercial.
+
+\begin{longtable}{|>{\centering\arraybackslash}p{1cm}|>{\raggedright\arraybackslash}p{8cm}|>{\centering\arraybackslash}p{3cm}|>{\centering\arraybackslash}p{3cm}|}
+	\hline
+	\textbf{ID} & \textbf{Riesgo Específico} & \textbf{Probabilidad} & \textbf{Efecto} \\
+	\hline
+	F1 & Subestimación de los costos de producción y operación en una fase comercial. & Alta (50-75\%) & Catastrófico \\
+	\hline
+	F2 & Falta de modelos de negocio viables para monetizar la solución. & Moderada (25-50\%) & Serio \\
+	\hline
+	F3 & Dependencia de apoyos gubernamentales o financiamiento social para escalar el proyecto. & Media (25-50\%) & Serio \\
+	\hline
+	F4 & Competencia con otras soluciones similares con mayor madurez o presencia en el mercado. & Media (25-50\%) & Serio \\
+	\hline
+\end{longtable}
+
+% ===== RIESGOS HUMANOS Y DE GESTIÓN =====
+\subsection{Riesgos Humanos y de Gestión}
+Estos riesgos se refieren a la disponibilidad, capacitación y coordinación del equipo, así como a la correcta gestión del proyecto.
+
+\begin{longtable}{|>{\centering\arraybackslash}p{1cm}|>{\raggedright\arraybackslash}p{8cm}|>{\centering\arraybackslash}p{3cm}|>{\centering\arraybackslash}p{3cm}|}
+	\hline
+	\textbf{ID} & \textbf{Riesgo Específico} & \textbf{Probabilidad} & \textbf{Efecto} \\
+	\hline
+	H1 & Falta de experiencia del equipo en procesos de validación lingüística y cultural de LSM. & Alta (50-75\%) & Serio \\
+	\hline
+	H2 & Dependencia de colaboración externa para la validación de señas. & Media (25-50\%) & Serio \\
+	\hline
+	H3 & Desmotivación o alta rotación del equipo técnico. & Moderada (25-50\%) & Serio \\
+	\hline
+	H4 & Falta de claridad o definición adecuada de los requerimientos funcionales. & Alta (50-75\%) & Serio \\
+	\hline
+\end{longtable}
+
+% ===== RIESGOS ÉTICOS Y REGULATORIOS =====
+\subsection{Riesgos Éticos y Regulatorios}
+Riesgos asociados a las normativas, certificaciones y cuestiones éticas, especialmente por el tipo de aplicación y su uso potencial en contextos sensibles.
+
+\begin{longtable}{|>{\centering\arraybackslash}p{1cm}|>{\raggedright\arraybackslash}p{8cm}|>{\centering\arraybackslash}p{3cm}|>{\centering\arraybackslash}p{3cm}|}
+	\hline
+	\textbf{ID} & \textbf{Riesgo Específico} & \textbf{Probabilidad} & \textbf{Efecto} \\
+	\hline
+	E1 & Interpretación incorrecta de mensajes sensibles (contexto médico, legal, etc.). & Baja (10-25\%) & Catastrófico \\
+	\hline
+	E2 & Ausencia de certificaciones o validaciones oficiales del modelo de traducción. & Moderada (25-50\%) & Serio \\
+	\hline
+	E3 & Uso no autorizado de bases de datos o glosarios protegidos. & Baja (10-25\%) & Catastrófico \\
+	\hline
+	E4 & Incumplimiento con normativas de accesibilidad digital o protección de datos. & Moderada (25-50\%) & Catastrófico \\
+	\hline
+\end{longtable}
+
+\section{Planes de prevención y contingencia}
+
+Esta sección describe las acciones preventivas y los planes de contingencia asociados a los riesgos identificados para el proyecto. La información se organiza por categoría de riesgo, facilitando la identificación y trazabilidad de las medidas frente a cada riesgo.
+
+\subsection{Planes de prevención y contingencia para riesgos técnicos}
+
+\begin{longtable}{|>{\centering\arraybackslash}p{0.7cm}|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{5.5cm}|>{\raggedright\arraybackslash}p{5.5cm}|}
+	\hline
+	\textbf{ID} & \textbf{Riesgo Específico} & \textbf{Prevención} & \textbf{Plan de Contingencia} \\
+	\hline
+	T1 & Precisión limitada del modelo de traducción de español a LSM. &
+	\begin{itemize}
+		\item Validar el modelo con expertos en LSM.
+		\item Realizar pruebas piloto con retroalimentación continua.
+		\item Incorporar técnicas de mejora continua en el entrenamiento.
+	\end{itemize} &
+	\begin{itemize}
+		\item Ajustar el modelo mediante reentrenamiento con nuevos datos.
+		\item Aplicar correcciones manuales temporales mientras se mejora la precisión.
+		\item Evaluar modelos alternativos si el desempeño es insatisfactorio.
+	\end{itemize} \\
+	\hline
+	T2 & Escasa disponibilidad de datasets de calidad para LSM. &
+	\begin{itemize}
+		\item Buscar colaboración con instituciones o expertos en LSM.
+		\item Utilizar técnicas de data augmentation para ampliar los datos existentes.
+	\end{itemize} &
+	\begin{itemize}
+		\item Integrar validaciones humanas adicionales para compensar la falta de datos.
+		\item Ajustar el alcance del proyecto si los datos son insuficientes.
+	\end{itemize} \\
+	\hline
+	T3 & Desactualización tecnológica del modelo de IA. &
+	\begin{itemize}
+		\item Mantener vigilancia tecnológica constante.
+		\item Participar en foros y comunidades sobre IA y accesibilidad.
+	\end{itemize} &
+	\begin{itemize}
+		\item Migrar a nuevas versiones o tecnologías según los avances detectados.
+		\item Ajustar la arquitectura para facilitar futuras actualizaciones.
+	\end{itemize} \\
+	\hline
+	T4 & Dificultad para manejar las variaciones regionales y culturales de LSM. &
+	\begin{itemize}
+		\item Incluir especialistas de diferentes regiones para validar las traducciones.
+		\item Diseñar el sistema para permitir configuraciones regionales.
+	\end{itemize} &
+	\begin{itemize}
+		\item Limitar el alcance del prototipo a ciertas regiones mientras se extiende la cobertura.
+		\item Informar claramente las limitaciones del modelo a los usuarios.
+	\end{itemize} \\
+	\hline
+	T5 & Problemas de compatibilidad y funcionamiento multiplataforma. &
+	\begin{itemize}
+		\item Desarrollar bajo estándares multiplataforma.
+		\item Realizar pruebas en distintos dispositivos y navegadores.
+	\end{itemize} &
+	\begin{itemize}
+		\item Aplicar correcciones específicas por plataforma detectada.
+		\item Priorizar las plataformas con mayor demanda de usuarios.
+	\end{itemize} \\
+	\hline
+\end{longtable}
+
+% ========================
+% Puedes continuar con las siguientes subsecciones:
+
+\subsection{Planes de prevención y contingencia para riesgos financieros y comerciales}
+
+\begin{longtable}{|>{\centering\arraybackslash}p{0.7cm}|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{5.5cm}|>{\raggedright\arraybackslash}p{5.5cm}|}
+	\hline
+	\textbf{ID} & \textbf{Riesgo Específico} & \textbf{Prevención} & \textbf{Plan de Contingencia} \\
+	\hline
+	F1 & Subestimación de los costos de producción y operación en una fase comercial. &
+	\begin{itemize}
+		\item Elaborar un análisis financiero detallado con escenarios conservadores.
+		\item Incluir márgenes de contingencia en la planificación de costos.
+	\end{itemize} &
+	\begin{itemize}
+		\item Reevaluar los costos y ajustar el modelo de negocio.
+		\item Buscar financiamiento adicional o ajustar el alcance del proyecto.
+	\end{itemize} \\
+	\hline
+	F2 & Falta de modelos de negocio viables para monetizar la solución. &
+	\begin{itemize}
+		\item Diseñar y evaluar diferentes modelos de negocio desde la fase temprana.
+		\item Consultar expertos en comercialización y accesibilidad.
+	\end{itemize} &
+	\begin{itemize}
+		\item Ajustar la estrategia hacia modelos freemium, licencias o apoyos institucionales.
+		\item Explorar alianzas con organizaciones del sector social o educativo.
+	\end{itemize} \\
+	\hline
+	F3 & Dependencia de apoyos gubernamentales o financiamiento social para escalar el proyecto. &
+	\begin{itemize}
+		\item Diversificar las posibles fuentes de financiamiento (fondos privados, crowdfunding).
+		\item Preparar la documentación requerida para aplicar a diferentes programas.
+	\end{itemize} &
+	\begin{itemize}
+		\item Redimensionar el proyecto a una escala mínima viable si no se obtienen los fondos esperados.
+		\item Buscar inversionistas privados o aliados estratégicos.
+	\end{itemize} \\
+	\hline
+	F4 & Competencia con otras soluciones similares con mayor madurez o presencia en el mercado. &
+	\begin{itemize}
+		\item Realizar un monitoreo constante del mercado y de las soluciones existentes.
+		\item Diferenciar la propuesta de valor en facilidad de uso, precio o calidad.
+	\end{itemize} &
+	\begin{itemize}
+		\item Ajustar el enfoque del producto según las necesidades no cubiertas por la competencia.
+		\item Enfocar el desarrollo en nichos específicos o sectores desatendidos.
+	\end{itemize} \\
+	\hline
+\end{longtable}
+
+
+\subsection{Planes de prevención y contingencia para riesgos humanos y de gestión}
+
+\begin{longtable}{|>{\centering\arraybackslash}p{0.7cm}|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{5.5cm}|>{\raggedright\arraybackslash}p{5.5cm}|}
+	\hline
+	\textbf{ID} & \textbf{Riesgo Específico} & \textbf{Prevención} & \textbf{Plan de Contingencia} \\
+	\hline
+	H1 & Falta de experiencia del equipo en validación lingüística y cultural de LSM. &
+	\begin{itemize}
+		\item Incluir asesoría de expertos en LSM durante el desarrollo.
+		\item Capacitar al equipo en aspectos básicos de la cultura y lengua de señas.
+	\end{itemize} &
+	\begin{itemize}
+		\item Contratar o colaborar con intérpretes certificados para cubrir las áreas necesarias.
+		\item Ajustar las pruebas de validación incorporando especialistas externos.
+	\end{itemize} \\
+	\hline
+	H2 & Dependencia de colaboración externa para la validación de señas. &
+	\begin{itemize}
+		\item Establecer acuerdos formales con colaboradores e intérpretes desde el inicio.
+		\item Definir tiempos y compromisos claros de participación.
+	\end{itemize} &
+	\begin{itemize}
+		\item Buscar reemplazos o alianzas adicionales si algún colaborador no cumple lo acordado.
+		\item Ajustar el cronograma para incluir tiempo adicional si se presentan retrasos.
+	\end{itemize} \\
+	\hline
+	H3 & Desmotivación o alta rotación del equipo técnico. &
+	\begin{itemize}
+		\item Fomentar un ambiente laboral positivo y flexible.
+		\item Ofrecer oportunidades de aprendizaje y desarrollo profesional.
+	\end{itemize} &
+	\begin{itemize}
+		\item Redistribuir funciones y roles de manera temporal.
+		\item Contratar personal de refuerzo o apoyo externo si es necesario.
+	\end{itemize} \\
+	\hline
+	H4 & Falta de claridad o definición adecuada de los requerimientos funcionales. &
+	\begin{itemize}
+		\item Documentar los requisitos de manera detallada y validarlos con los stakeholders.
+		\item Realizar sesiones de revisión y ajuste de requisitos de forma periódica.
+	\end{itemize} &
+	\begin{itemize}
+		\item Detener las tareas críticas hasta tener claridad total sobre los requisitos.
+		\item Reorganizar el backlog y ajustar las prioridades si es necesario.
+	\end{itemize} \\
+	\hline
+\end{longtable}
+
+\subsection{Planes de prevención y contingencia para riesgos éticos y regulatorios}
+
+\begin{longtable}{|>{\centering\arraybackslash}p{0.7cm}|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{5.5cm}|>{\raggedright\arraybackslash}p{5.5cm}|}
+	\hline
+	\textbf{ID} & \textbf{Riesgo Específico} & \textbf{Prevención} & \textbf{Plan de Contingencia} \\
+	\hline
+	E1 & Interpretación incorrecta de mensajes sensibles (contexto médico, legal, etc.). &
+	\begin{itemize}
+		\item Definir claramente los contextos de uso permitidos del sistema.
+		\item Incluir advertencias sobre los límites del modelo en el uso de la aplicación.
+	\end{itemize} &
+	\begin{itemize}
+		\item Limitar temporalmente las funcionalidades en contextos de alto riesgo.
+		\item Incorporar revisiones humanas en casos sensibles o críticos.
+	\end{itemize} \\
+	\hline
+	E2 & Ausencia de certificaciones o validaciones oficiales del modelo de traducción. &
+	\begin{itemize}
+		\item Investigar los procesos de certificación existentes y planear la obtención de las acreditaciones.
+		\item Involucrar expertos en accesibilidad y traducción en el proceso de validación.
+	\end{itemize} &
+	\begin{itemize}
+		\item Buscar asesoría externa para cumplir los requisitos regulatorios si se identifican brechas.
+		\item Ajustar la fase comercial hasta obtener las validaciones requeridas.
+	\end{itemize} \\
+	\hline
+	E3 & Uso no autorizado de bases de datos o glosarios protegidos. &
+	\begin{itemize}
+		\item Verificar licencias de uso de todos los recursos desde la etapa de diseño.
+		\item Priorizar el uso de datos open-source o desarrollados internamente.
+	\end{itemize} &
+	\begin{itemize}
+		\item Sustituir inmediatamente los recursos cuestionados por alternativas con licencias válidas.
+		\item Consultar asesoría legal para resolver posibles conflictos de derechos de autor.
+	\end{itemize} \\
+	\hline
+	E4 & Incumplimiento con normativas de accesibilidad digital o protección de datos. &
+	\begin{itemize}
+		\item Asegurar el cumplimiento de las normas WCAG y las leyes de protección de datos aplicables.
+		\item Consultar especialistas en regulación y accesibilidad.
+	\end{itemize} &
+	\begin{itemize}
+		\item Corregir los puntos de incumplimiento detectados antes del lanzamiento comercial.
+		\item Documentar y comunicar las acciones correctivas a los usuarios y autoridades si es necesario.
+	\end{itemize} \\
+	\hline
+\end{longtable}
+
