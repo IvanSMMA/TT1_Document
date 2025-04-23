@@ -284,6 +284,9 @@ La siguiente tabla explica detalladamente cómo se conforma cada una de las letr
 \end{longtable}
     
 \newpage
+
+\subsection{Grámatica de la Lengua de Señas Mexicana}
+
 \subsection{Dactilogía}
 La dactilología es un sistema de comunicación que transmite información mediante el deletreo manual, y en ocasiones es usado en conjunto con la lengua de señas. Se emplea la mano de diferente manera para pronunciar cada una de las letras [s22].\\
 
@@ -510,8 +513,34 @@ Las principales herramientas que ofrece MediaPipe son:
     \item MediaPipe EfficientDet. Mediante el uso de Redes Neuronales rápidas y eficaces, se puede mejorar la detección y localización de objetos en imágenes [s5]. 
 
 \end{itemize}
+
+\subsection{MediaPipe Hands}
+MediaPipe Hands es una herramienta que permite el seguimiento en tiempo real de manos y dedos mediante el uso de técnicas de Machine Learning (ML), logrando detectar 21 puntos de referencia tridimensionales (3D) a partir de una sola imagen, incluso en dispositivos móviles [s104].\\
+
+\begin{center}
+    \includegraphics[width=0.9\textwidth]{Images/Cap 2/MediaPipe_Hands.png}
+    \captionof{figure}{MediaPipe Hands, obtenido de [s104].}  % Pie de foto manual
+\end{center}
+
+Este sistema funciona mediante un pipeline compuesto por dos modelos que trabajan de manera conjunta [s104]:
+
+\begin{enumerate}
+    \item El modelo de detección de palmas, que analiza la imagen para localizar y delimitar la región donde se encuentra la mano, generando un cuadro delimitador orientado.
+    \item El modelo de estimación de puntos clave, que toma como entrada la región definida por el modelo anterior y predice las coordenadas 3D de 21 puntos clave (nudillos y articulaciones) de la mano.
+\end{enumerate}
+
+\begin{center}
+\includegraphics[width=0.9\textwidth]{Images/Cap 2/MediaPipe_hand_landmarks.png}
+\captionof{figure}{Listado de los 21 puntos clave de la mano que son detectados por el modelo de estimación de puntos clave, obtenido de [s103].}  % Pie de foto manual
+\end{center}
+
+
+Para entrenar el modelo de estimación de puntos clave, se utilizaron aproximadamente 30,000 imágenes reales junto con modelos sintéticos de manos, superpuestos sobre distintos fondos [s103].\\
+
+Debido a que la detección de la palma es más costosa computacionalmente, en flujos de video continuo el sistema optimiza su rendimiento reutilizando la región de la mano previamente detectada por el modelo de estimación de puntos clave. Solo en caso de perder la mano del encuadre o de no poder hacer un seguimiento adecuado, el sistema vuelve a activar el modelo de detección de palmas. Esto permite reducir significativamente las llamadas a este último modelo, mejorando la eficiencia general del sistema [s103].\\
+
 \subsection{MediaPipe Pose}
-Como se comentó en el apartado anterior, MediaPipe Pose permite detectar puntos de referencia de cuerpos humanos en una imagen o vídeo. Se emplea principalmente para identificar ubicaciones claves del cuerpo, analizar la postura y categorizar los movimientos [s51].
+MediaPipe Pose permite detectar puntos de referencia de cuerpos humanos en una imagen o vídeo. Se emplea principalmente para identificar ubicaciones claves del cuerpo, analizar la postura y categorizar los movimientos [s51].
 
 El marcador de poses emplea una serie de modelos para predecir los marcadores de poses [s51]:
 \begin{itemize}
@@ -525,6 +554,7 @@ El modelo de marcador de pose realiza un seguimiento de 33 ubicaciones de puntos
     \includegraphics[width=0.8\textwidth]{Images/Cap 2/MediaPipe_Pose.png}
     \captionof{figure}{Ubicaciones de puntos de referencia del cuerpo [s51].}  % Pie de foto manual
 \end{center}
+
 A continuación, se enlistan las partes representadas del cuerpo:
 
 \begin{enumerate}
