@@ -40,6 +40,64 @@
     La aplicación debe ser compatible con la última versión de Android, garantizando su funcionamiento en una amplia gama de dispositivos móviles.
 \end{itemize}
 
+
+\subsection{Diagrama de actividades}
+\resizebox{0.85\textwidth}{!}{
+\begin{tikzpicture}[node distance=2cm]
+
+    % Nodos
+    \node (start) [startstop] {Inicio};
+    \node (openapp) [process, below of=start] {Usuario abre la app};
+    \node (inputtext) [process, below of=openapp] {Usuario ingresa texto};
+    \node (pressbutton) [process, below of=inputtext] {Usuario presiona traducir};
+    \node (validate) [process, below of=pressbutton] {Validar texto};
+    \node (valid) [decision, below of=validate, yshift=-0.5cm] {¿Texto válido?};
+    
+    \node (showerror) [process, left of=valid, xshift=-5cm] {Mostrar mensaje de error};
+    \node (searchtranslation) [process, right of=valid, xshift=5cm] {Buscar traducción};
+    
+    \node (existstranslation) [decision, below of=searchtranslation, yshift=-2cm] {¿Existe traducción?};
+    
+    \node (fingerspell) [process, left of=existstranslation, xshift=-5cm] {Deletreo dactilológico};
+    \node (assignanimation) [process, right of=existstranslation, xshift=5cm] {Asignar animación LSM};
+    
+    \node (showanimation) [process, below of=existstranslation, yshift=-5cm] {Mostrar animación 3D};
+    \node (end) [startstop, below of=showanimation] {Fin};
+    
+    % Flechas
+    \draw [arrow] (start) -- (openapp);
+    \draw [arrow] (openapp) -- (inputtext);
+    \draw [arrow] (inputtext) -- (pressbutton);
+    \draw [arrow] (pressbutton) -- (validate);
+    \draw [arrow] (validate) -- (valid);
+    
+    \draw [arrow] (valid.west) -- node[above]{No} (showerror.east);
+    \draw [arrow] (valid.east) -- node[above]{Sí} (searchtranslation.west);
+    
+    \draw [arrow] (searchtranslation) -- (existstranslation);
+    
+    \draw [arrow] (existstranslation.west) -- node[above]{No} (fingerspell.east);
+    \draw [arrow] (existstranslation.east) -- node[above]{Sí} (assignanimation.west);
+    
+    \draw [arrow] (fingerspell.south) |- (showanimation.west);
+    \draw [arrow] (assignanimation.south) |- (showanimation.east);
+    
+    \draw [arrow] (showanimation) -- (end);
+    
+    \end{tikzpicture}
+}
+
+\subsection{Diagrama de clases}
+\begin{center}
+    \includegraphics[width=0.6\textwidth]{Images/Cap 3/clases.png}
+    \captionof{figure}{Diagrama de clases del sistema.} 
+\end{center}
+
+\subsection{Diagrama de secuencia}
+\begin{center}
+    \includegraphics[width=0.6\textwidth]{Images/Cap 3/secuencia.png}
+    \captionof{figure}{Diagrama de secuencia del sistema.}
+\end{center}
 \subsection{Requerimientos no funcionales}
 \begin{itemize}
     \item \textbf{RnF01: Rendimiento}  
