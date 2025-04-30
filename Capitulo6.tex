@@ -1,4 +1,10 @@
 \chapter{Análisis de riesgos}
+Durante el desarrollo de proyectos tecnológicos, como es el caso del presente trabajo, es fundamental anticipar posibles riesgos que pudieran comprometer la calidad, los tiempos de entrega o el cumplimiento de los objetivos planteados. 
+
+Este capítulo tiene como propósito identificar, clasificar y evaluar los riesgos potenciales que podrían afectar el desarrollo del prototipo. También, se incluye un plan de contingencia ay prevención, con lo que se busca establecer estrategias de mitigación y control que permitan reducir su efecto negativo en el proyecto. \\
+
+La información presentada a continuación se organiza conforme a una escala de probabilidad e impacto, cuyo propósito es facilitar la priorización de riesgos y tomar decisiones informadas respecto a su tratamiento. \\
+
 \section{Identificación y evaluación de riesgos}
 \subsection{Leyenda de probabilidad y efecto}
 
@@ -18,12 +24,12 @@
 \end{itemize}
 
 % ===== RIESGOS TÉCNICOS =====
-\subsection{Riesgos Técnicos}
+\subsection{Riesgos técnicos}
 Los riesgos técnicos están relacionados con las limitaciones de la tecnología utilizada, la precisión del modelo de traducción y la adaptación a las particularidades de la Lengua de Señas Mexicana (LSM).
 
 \begin{longtable}{|>{\centering\arraybackslash}p{1cm}|>{\raggedright\arraybackslash}p{8cm}|>{\centering\arraybackslash}p{3cm}|>{\centering\arraybackslash}p{3cm}|}
 	\hline
-	\textbf{ID} & \textbf{Riesgo Específico} & \textbf{Probabilidad} & \textbf{Efecto} \\
+	\textbf{ID} & \textbf{Riesgo específico} & \textbf{Probabilidad} & \textbf{Efecto} \\
 	\hline
 	T1 & Precisión limitada del modelo de traducción de español a LSM. & Alta (50-75\%) & Serio \\
 	\hline
@@ -38,12 +44,12 @@ Los riesgos técnicos están relacionados con las limitaciones de la tecnología
 \end{longtable}
 
 % ===== RIESGOS FINANCIEROS Y COMERCIALES =====
-\subsection{Riesgos Financieros y Comerciales}
+\subsection{Riesgos financieros y comerciales}
 Estos riesgos afectan la viabilidad económica del proyecto y su posible escalamiento hacia una fase comercial.
 
 \begin{longtable}{|>{\centering\arraybackslash}p{1cm}|>{\raggedright\arraybackslash}p{8cm}|>{\centering\arraybackslash}p{3cm}|>{\centering\arraybackslash}p{3cm}|}
 	\hline
-	\textbf{ID} & \textbf{Riesgo Específico} & \textbf{Probabilidad} & \textbf{Efecto} \\
+	\textbf{ID} & \textbf{Riesgo específico} & \textbf{Probabilidad} & \textbf{Efecto} \\
 	\hline
 	F1 & Subestimación de los costos de producción y operación en una fase comercial. & Alta (50-75\%) & Catastrófico \\
 	\hline
@@ -56,12 +62,12 @@ Estos riesgos afectan la viabilidad económica del proyecto y su posible escalam
 \end{longtable}
 
 % ===== RIESGOS HUMANOS Y DE GESTIÓN =====
-\subsection{Riesgos Humanos y de Gestión}
+\subsection{Riesgos humanos y de gestión}
 Estos riesgos se refieren a la disponibilidad, capacitación y coordinación del equipo, así como a la correcta gestión del proyecto.
 
 \begin{longtable}{|>{\centering\arraybackslash}p{1cm}|>{\raggedright\arraybackslash}p{8cm}|>{\centering\arraybackslash}p{3cm}|>{\centering\arraybackslash}p{3cm}|}
 	\hline
-	\textbf{ID} & \textbf{Riesgo Específico} & \textbf{Probabilidad} & \textbf{Efecto} \\
+	\textbf{ID} & \textbf{Riesgo específico} & \textbf{Probabilidad} & \textbf{Efecto} \\
 	\hline
 	H1 & Falta de experiencia del equipo en procesos de validación lingüística y cultural de LSM. & Alta (50-75\%) & Serio \\
 	\hline
@@ -74,12 +80,12 @@ Estos riesgos se refieren a la disponibilidad, capacitación y coordinación del
 \end{longtable}
 
 % ===== RIESGOS ÉTICOS Y REGULATORIOS =====
-\subsection{Riesgos Éticos y Regulatorios}
+\subsection{Riesgos éticos y regulatorios}
 Riesgos asociados a las normativas, certificaciones y cuestiones éticas, especialmente por el tipo de aplicación y su uso potencial en contextos sensibles.
 
 \begin{longtable}{|>{\centering\arraybackslash}p{1cm}|>{\raggedright\arraybackslash}p{8cm}|>{\centering\arraybackslash}p{3cm}|>{\centering\arraybackslash}p{3cm}|}
 	\hline
-	\textbf{ID} & \textbf{Riesgo Específico} & \textbf{Probabilidad} & \textbf{Efecto} \\
+	\textbf{ID} & \textbf{Riesgo específico} & \textbf{Probabilidad} & \textbf{Efecto} \\
 	\hline
 	E1 & Interpretación incorrecta de mensajes sensibles (contexto médico, legal, etc.). & Baja (10-25\%) & Catastrófico \\
 	\hline
@@ -91,6 +97,8 @@ Riesgos asociados a las normativas, certificaciones y cuestiones éticas, especi
 	\hline
 \end{longtable}
 
+\newpage
+
 \section{Planes de prevención y contingencia}
 
 Esta sección describe las acciones preventivas y los planes de contingencia asociados a los riesgos identificados para el proyecto. La información se organiza por categoría de riesgo, facilitando la identificación y trazabilidad de las medidas frente a cada riesgo.
@@ -99,7 +107,7 @@ Esta sección describe las acciones preventivas y los planes de contingencia aso
 
 \begin{longtable}{|>{\centering\arraybackslash}p{0.7cm}|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{5.5cm}|>{\raggedright\arraybackslash}p{5.5cm}|}
 	\hline
-	\textbf{ID} & \textbf{Riesgo Específico} & \textbf{Prevención} & \textbf{Plan de Contingencia} \\
+	\textbf{ID} & \textbf{Riesgo específico} & \textbf{Prevención} & \textbf{Plan de contingencia} \\
 	\hline
 	T1 & Precisión limitada del modelo de traducción de español a LSM. &
 	\begin{itemize}
@@ -135,8 +143,7 @@ Esta sección describe las acciones preventivas y los planes de contingencia aso
 	\hline
 	T4 & Dificultad para manejar las variaciones regionales y culturales de LSM. &
 	\begin{itemize}
-		\item Incluir especialistas de diferentes regiones para validar las traducciones.
-		\item Diseñar el sistema para permitir configuraciones regionales.
+		\item Buscar especialistas del área para el uso de región específica.
 	\end{itemize} &
 	\begin{itemize}
 		\item Limitar el alcance del prototipo a ciertas regiones mientras se extiende la cobertura.
@@ -155,6 +162,7 @@ Esta sección describe las acciones preventivas y los planes de contingencia aso
 	\hline
 \end{longtable}
 
+\newpage
 % ========================
 % Puedes continuar con las siguientes subsecciones:
 
@@ -162,7 +170,7 @@ Esta sección describe las acciones preventivas y los planes de contingencia aso
 
 \begin{longtable}{|>{\centering\arraybackslash}p{0.7cm}|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{5.5cm}|>{\raggedright\arraybackslash}p{5.5cm}|}
 	\hline
-	\textbf{ID} & \textbf{Riesgo Específico} & \textbf{Prevención} & \textbf{Plan de Contingencia} \\
+	\textbf{ID} & \textbf{Riesgo específico} & \textbf{Prevención} & \textbf{Plan de contingencia} \\
 	\hline
 	F1 & Subestimación de los costos de producción y operación en una fase comercial. &
 	\begin{itemize}
@@ -206,12 +214,13 @@ Esta sección describe las acciones preventivas y los planes de contingencia aso
 	\hline
 \end{longtable}
 
+\newpage
 
 \subsection{Planes de prevención y contingencia para riesgos humanos y de gestión}
 
 \begin{longtable}{|>{\centering\arraybackslash}p{0.7cm}|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{5.5cm}|>{\raggedright\arraybackslash}p{5.5cm}|}
 	\hline
-	\textbf{ID} & \textbf{Riesgo Específico} & \textbf{Prevención} & \textbf{Plan de Contingencia} \\
+	\textbf{ID} & \textbf{Riesgo específico} & \textbf{Prevención} & \textbf{Plan de contingencia} \\
 	\hline
 	H1 & Falta de experiencia del equipo en validación lingüística y cultural de LSM. &
 	\begin{itemize}
@@ -259,7 +268,7 @@ Esta sección describe las acciones preventivas y los planes de contingencia aso
 
 \begin{longtable}{|>{\centering\arraybackslash}p{0.7cm}|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{5.5cm}|>{\raggedright\arraybackslash}p{5.5cm}|}
 	\hline
-	\textbf{ID} & \textbf{Riesgo Específico} & \textbf{Prevención} & \textbf{Plan de Contingencia} \\
+	\textbf{ID} & \textbf{Riesgo específico} & \textbf{Prevención} & \textbf{Plan de contingencia} \\
 	\hline
 	E1 & Interpretación incorrecta de mensajes sensibles (contexto médico, legal, etc.). &
 	\begin{itemize}
@@ -281,7 +290,7 @@ Esta sección describe las acciones preventivas y los planes de contingencia aso
 		\item Ajustar la fase comercial hasta obtener las validaciones requeridas.
 	\end{itemize} \\
 	\hline
-	E3 & Uso no autorizado de bases de datos o glosarios protegidos. &
+	E3 & Uso no autorizado de conjunto de datos o glosarios protegidos. &
 	\begin{itemize}
 		\item Verificar licencias de uso de todos los recursos desde la etapa de diseño.
 		\item Priorizar el uso de datos open-source o desarrollados internamente.
@@ -293,7 +302,7 @@ Esta sección describe las acciones preventivas y los planes de contingencia aso
 	\hline
 	E4 & Incumplimiento con normativas de accesibilidad digital o protección de datos. &
 	\begin{itemize}
-		\item Asegurar el cumplimiento de las normas WCAG y las leyes de protección de datos aplicables.
+		\item Asegurar el cumplimiento de la norma ISO 9241-210:2019 y Heurísticas de Jakob Nielsen.
 		\item Consultar especialistas en regulación y accesibilidad.
 	\end{itemize} &
 	\begin{itemize}
