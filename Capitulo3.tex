@@ -19,10 +19,10 @@
 \subsection{Requerimientos funcionales}
 \begin{itemize}
     \item \textbf{RF01: Entrada de Texto}  
-    La aplicación debe permitir al usuario ingresar texto en español que será traducido a LSM.
+    La aplicación debe permitir al usuario ingresar y editar texto en español que será traducido a LSM.
     
     \item \textbf{RF02: Procesamiento de Lenguaje Natural (PLN)}  
-    Implementar un módulo que analice y procese el texto ingresado, identificando frases clave y contextos específicos para su traducción adecuada.
+    Implementar un módulo que valide, analice y procese el texto ingresado, identificando frases clave y contextos específicos para su traducción adecuada.
     
     \item \textbf{RF03: Generación de Avatares 3D}  
     Desarrollar avatares 3D que representen visualmente las señas correspondientes a las frases procesadas. Los avatares deben ser capaces de mostrar expresiones faciales y movimientos corporales que reflejen la gramática y sintaxis de la LSM.
@@ -34,7 +34,7 @@
     Diseñar una interfaz intuitiva y accesible que permita a los usuarios ingresar texto personalizado para su traducción.
     
     \item \textbf{RF06: Modo de Deletreo}  
-    En caso de que una frase no esté disponible en la base de datos, la aplicación debe ofrecer la opción de deletrear palabra por palabra utilizando el alfabeto dactilológico de la LSM.
+    El sistema debe intentar asignarle una traducción a la frase ingresada. En caso de que a una frase no se le pueda asignar una traducción, la aplicación debe ofrecer la opción de deletrear palabra por palabra utilizando el alfabeto dactilológico de la LSM.
     
     \item \textbf{RF07: Compatibilidad}  
     La aplicación debe ser compatible con la última versión de Android, garantizando su funcionamiento en una amplia gama de dispositivos móviles.
@@ -85,7 +85,6 @@ El usuario ingresa texto en español en la aplicación, que luego es procesado y
 \textbf{Precondiciones} & El sistema está abierto y funcionando correctamente. El usuario debe estar en la pantalla principal. \\ \hline
 \textbf{Actividad que se va a bitácora} & Registro del texto ingresado por el usuario y la fecha y hora de la traducción solicitada. \\ \hline
 \textbf{Registro que se va a bitácora} & Texto ingresado, usuario que lo ingresó, IP del dispositivo, timestamp de la acción. \\ \hline
-\textbf{Viene de} &  \\ \hline
 \end{tabularx}
 
     
@@ -108,139 +107,139 @@ El usuario ingresa texto en español en la aplicación, que luego es procesado y
 
 \textit{--- Fin del caso de uso.}
 
-\subsubsection{Caso de uso 02: Procesamiento de Lenguaje Natural (PLN)}
-\subsubsection{Resumen}
-El sistema procesa el texto ingresado mediante PLN y lo prepara para su conversión a señas en LSM.
-\subsubsection{Descripción}
-\noindent
-\begin{tabularx}{\textwidth}{|l|X|}
-\hline
-\textbf{Atributos} & Tipo de texto procesado, análisis semántico y sintáctico. \\ \hline
-\textbf{Actores} & Sistema (encargado del procesamiento del texto). \\ \hline
-\textbf{Precondiciones} & El texto ingresado por el usuario debe estar disponible y correctamente formateado. \\ \hline
-\textbf{Actividad que se va a bitácora} & Registro del texto procesado, las frases clave y el análisis semántico realizado. \\ \hline
-\textbf{Registro que se va a bitácora} & Texto procesado, identificaciones de frases clave, timestamp del análisis. \\ \hline
-\textbf{Viene de} & El caso de uso “Entrada de texto”. \\ \hline
-\end{tabularx}
+% \subsubsection{Caso de uso 02: Procesamiento de Lenguaje Natural (PLN)}
+% \subsubsection{Resumen}
+% El sistema procesa el texto ingresado mediante PLN y lo prepara para su conversión a señas en LSM.
+% \subsubsection{Descripción}
+% \noindent
+% \begin{tabularx}{\textwidth}{|l|X|}
+% \hline
+% \textbf{Atributos} & Tipo de texto procesado, análisis semántico y sintáctico. \\ \hline
+% \textbf{Actores} & Sistema (encargado del procesamiento del texto). \\ \hline
+% \textbf{Precondiciones} & El texto ingresado por el usuario debe estar disponible y correctamente formateado. \\ \hline
+% \textbf{Actividad que se va a bitácora} & Registro del texto procesado, las frases clave y el análisis semántico realizado. \\ \hline
+% \textbf{Registro que se va a bitácora} & Texto procesado, identificaciones de frases clave, timestamp del análisis. \\ \hline
+% \textbf{Viene de} & El caso de uso “Entrada de texto”. \\ \hline
+% \end{tabularx}
     
-\subsubsection{Trayectoria principal}
-\begin{enumerate}[label=\textbf{\arabic*}, leftmargin=1.5cm]
-    \item \UCsystem \ El sistema recibe el texto ingresado por el usuario.
+% \subsubsection{Trayectoria principal}
+% \begin{enumerate}[label=\textbf{\arabic*}, leftmargin=1.5cm]
+%     \item \UCsystem \ El sistema recibe el texto ingresado por el usuario.
     
-    \item \UCsystem \ El sistema analiza el texto utilizando el módulo de procesamiento de lenguaje natural, identificando frases clave y contexto semántico para una traducción adecuada.
+%     \item \UCsystem \ El sistema analiza el texto utilizando el módulo de procesamiento de lenguaje natural, identificando frases clave y contexto semántico para una traducción adecuada.
     
-    \item \UCsystem \ El sistema prepara el texto procesado para la generación de las señas en LSM.
+%     \item \UCsystem \ El sistema prepara el texto procesado para la generación de las señas en LSM.
 
-\end{enumerate}
+% \end{enumerate}
 
-\textit{--- Fin del caso de uso.}
+% \textit{--- Fin del caso de uso.}
 
-\subsubsection{Caso de uso 03: Generación de Avatares 3D}
-\subsubsection{Resumen}
-El sistema genera un avatar 3D que realiza y muestra en pantalla la traducción en señas LSM, incluyendo expresiones faciales y movimientos corporales.
-\subsubsection{Descripción}
-\noindent
-\begin{tabularx}{\textwidth}{|l|X|}
-\hline
-\textbf{Atributos} & Avatar 3D, animación de señas, expresiones faciales y movimientos corporales. \\ \hline
-\textbf{Actores} & Sistema (generador del avatar 3D), Usuario (quien visualiza el avatar). \\ \hline
-\textbf{Precondiciones} & El texto debe haber sido procesado y traducido a LSM correctamente. \\ \hline
-\textbf{Actividad que se va a bitácora} & Registro de la generación del avatar y las animaciones realizadas. \\ \hline
-\textbf{Registro que se va a bitácora} & Avatar generado, tipo de señas representadas, timestamp de la generación. \\ \hline
-\textbf{Viene de} & El caso de uso “Procesamiento de Lenguaje Natural (PLN)”. \\ \hline
-\end{tabularx}
+% \subsubsection{Caso de uso 03: Generación de Avatares 3D}
+% \subsubsection{Resumen}
+% El sistema genera un avatar 3D que realiza y muestra en pantalla la traducción en señas LSM, incluyendo expresiones faciales y movimientos corporales.
+% \subsubsection{Descripción}
+% \noindent
+% \begin{tabularx}{\textwidth}{|l|X|}
+% \hline
+% \textbf{Atributos} & Avatar 3D, animación de señas, expresiones faciales y movimientos corporales. \\ \hline
+% \textbf{Actores} & Sistema (generador del avatar 3D), Usuario (quien visualiza el avatar). \\ \hline
+% \textbf{Precondiciones} & El texto debe haber sido procesado y traducido a LSM correctamente. \\ \hline
+% \textbf{Actividad que se va a bitácora} & Registro de la generación del avatar y las animaciones realizadas. \\ \hline
+% \textbf{Registro que se va a bitácora} & Avatar generado, tipo de señas representadas, timestamp de la generación. \\ \hline
+% \textbf{Viene de} & El caso de uso “Procesamiento de Lenguaje Natural (PLN)”. \\ \hline
+% \end{tabularx}
 
-\subsubsection{Trayectoria principal}
-\begin{enumerate}[label=\textbf{\arabic*}, leftmargin=1.5cm]
-    \item \UCsystem \ El sistema genera un avatar 3D correspondiente a la traducción de la frase en LSM.
+% \subsubsection{Trayectoria principal}
+% \begin{enumerate}[label=\textbf{\arabic*}, leftmargin=1.5cm]
+%     \item \UCsystem \ El sistema genera un avatar 3D correspondiente a la traducción de la frase en LSM.
     
-    \item \UCsystem \ El avatar 3D realiza las señas correspondientes, incluyendo expresiones faciales y movimientos corporales.
+%     \item \UCsystem \ El avatar 3D realiza las señas correspondientes, incluyendo expresiones faciales y movimientos corporales.
 
-    \item \UCsystem \ El avatar 3D se presenta en la pantalla al usuario, mostrando la traducción de la frase en LSM.
+%     \item \UCsystem \ El avatar 3D se presenta en la pantalla al usuario, mostrando la traducción de la frase en LSM.
 
-\end{enumerate}
+% \end{enumerate}
 
-\textit{--- Fin del caso de uso.}
+% \textit{--- Fin del caso de uso.}
 
-\subsubsection{Caso de uso 04: Modo de Deletreo}
-\subsubsection{Resumen}
-El sistema detecta una palabra desconocida y activa el modo de deletreo, mostrando cada letra con gestos del alfabeto dactilológico de LSM.
-\subsubsection{Descripción}
-\noindent
-\begin{tabularx}{\textwidth}{|l|X|}
-\hline
-\textbf{Atributos} & Alfabeto dactilológico, letras individualmente representadas en LSM. \\ \hline
-\textbf{Actores} & Usuario (quien observa el deletreo), Sistema (que activa el modo de deletreo). \\ \hline
-\textbf{Precondiciones} & La palabra no debe estar en la base de datos de LSM. \\ \hline
-\textbf{Actividad que se va a bitácora} & Registro del uso del modo de deletreo por parte del usuario. \\ \hline
-\textbf{Registro que se va a bitácora} & Palabra deletreada, secuencia de letras, timestamp de la actividad. \\ \hline
-\textbf{Viene de} & El caso de uso “Entrada de texto” o “Procesamiento de Lenguaje Natural (PLN)”. \\ \hline
-\end{tabularx}
+% \subsubsection{Caso de uso 04: Modo de Deletreo}
+% \subsubsection{Resumen}
+% El sistema detecta una palabra desconocida y activa el modo de deletreo, mostrando cada letra con gestos del alfabeto dactilológico de LSM.
+% \subsubsection{Descripción}
+% \noindent
+% \begin{tabularx}{\textwidth}{|l|X|}
+% \hline
+% \textbf{Atributos} & Alfabeto dactilológico, letras individualmente representadas en LSM. \\ \hline
+% \textbf{Actores} & Usuario (quien observa el deletreo), Sistema (que activa el modo de deletreo). \\ \hline
+% \textbf{Precondiciones} & La palabra no debe estar en la base de datos de LSM. \\ \hline
+% \textbf{Actividad que se va a bitácora} & Registro del uso del modo de deletreo por parte del usuario. \\ \hline
+% \textbf{Registro que se va a bitácora} & Palabra deletreada, secuencia de letras, timestamp de la actividad. \\ \hline
+% \textbf{Viene de} & El caso de uso “Entrada de texto” o “Procesamiento de Lenguaje Natural (PLN)”. \\ \hline
+% \end{tabularx}
 
   
-\subsubsection{Trayectoria principal}
-\begin{enumerate}[label=\textbf{\arabic*}, leftmargin=1.5cm]
-    \item \UCsystem \ El sistema detecta que la palabra ingresada no está en la base de datos de LSM.
+% \subsubsection{Trayectoria principal}
+% \begin{enumerate}[label=\textbf{\arabic*}, leftmargin=1.5cm]
+%     \item \UCsystem \ El sistema detecta que la palabra ingresada no está en la base de datos de LSM.
     
-    \item \UCsystem \ El sistema activa el modo de deletreo, permitiendo al usuario ver la palabra deletreada utilizando el alfabeto dactilológico de LSM.
+%     \item \UCsystem \ El sistema activa el modo de deletreo, permitiendo al usuario ver la palabra deletreada utilizando el alfabeto dactilológico de LSM.
     
-    \item \UCactor \ El usuario observa las letras del deletreo en la pantalla, cada una representada por un gesto del alfabeto dactilológico de LSM.
+%     \item \UCactor \ El usuario observa las letras del deletreo en la pantalla, cada una representada por un gesto del alfabeto dactilológico de LSM.
 
-\end{enumerate}
+% \end{enumerate}
 
-\textit{--- Fin del caso de uso.}
+% \textit{--- Fin del caso de uso.}
 
-\subsubsection{Caso de uso 05: Animaciones y Transiciones}
-\subsubsection{Resumen}
-El sistema usa IA para gestionar animaciones fluidas entre señas en LSM, evitando movimientos bruscos y mejorando la experiencia visual.
-\subsubsection{Descripción}
-\noindent
-\begin{tabularx}{\textwidth}{|l|X|}
-\hline
-\textbf{Atributos} & Animación fluida, transiciones entre señas optimizadas, uso de IA. \\ \hline
-\textbf{Actores} & Sistema (que gestiona las animaciones y transiciones). \\ \hline
-\textbf{Precondiciones} & El avatar 3D debe estar generado y las señas deben estar listas para la animación. \\ \hline
-\textbf{Actividad que se va a bitácora} & Registro de la generación y ejecución de las animaciones y transiciones. \\ \hline
-\textbf{Registro que se va a bitácora} & Transiciones entre señas, optimización de IA, timestamp de la animación. \\ \hline
-\textbf{Viene de} & El caso de uso “Generación de Avatares 3D”. \\ \hline
-\end{tabularx}
+% \subsubsection{Caso de uso 05: Animaciones y Transiciones}
+% \subsubsection{Resumen}
+% El sistema usa IA para gestionar animaciones fluidas entre señas en LSM, evitando movimientos bruscos y mejorando la experiencia visual.
+% \subsubsection{Descripción}
+% \noindent
+% \begin{tabularx}{\textwidth}{|l|X|}
+% \hline
+% \textbf{Atributos} & Animación fluida, transiciones entre señas optimizadas, uso de IA. \\ \hline
+% \textbf{Actores} & Sistema (que gestiona las animaciones y transiciones). \\ \hline
+% \textbf{Precondiciones} & El avatar 3D debe estar generado y las señas deben estar listas para la animación. \\ \hline
+% \textbf{Actividad que se va a bitácora} & Registro de la generación y ejecución de las animaciones y transiciones. \\ \hline
+% \textbf{Registro que se va a bitácora} & Transiciones entre señas, optimización de IA, timestamp de la animación. \\ \hline
+% \textbf{Viene de} & El caso de uso “Generación de Avatares 3D”. \\ \hline
+% \end{tabularx}
     
-\subsubsection{Trayectoria principal}
-\begin{enumerate}[label=\textbf{\arabic*}, leftmargin=1.5cm]
-    \item \UCsystem \ El sistema gestiona las animaciones entre las señas de LSM, asegurando que sean fluidas y naturales.
+% \subsubsection{Trayectoria principal}
+% \begin{enumerate}[label=\textbf{\arabic*}, leftmargin=1.5cm]
+%     \item \UCsystem \ El sistema gestiona las animaciones entre las señas de LSM, asegurando que sean fluidas y naturales.
     
-    \item \UCsystem \ Utiliza inteligencia artificial (IA) para optimizar las transiciones entre las señas, evitando movimientos bruscos o poco realistas.
+%     \item \UCsystem \ Utiliza inteligencia artificial (IA) para optimizar las transiciones entre las señas, evitando movimientos bruscos o poco realistas.
     
-    \item \UCsystem \ El sistema presenta las animaciones de las señas con transiciones suaves, brindando una experiencia visual coherente.
+%     \item \UCsystem \ El sistema presenta las animaciones de las señas con transiciones suaves, brindando una experiencia visual coherente.
 
-\end{enumerate}
+% \end{enumerate}
 
-\textit{--- Fin del caso de uso.}
-\newpage
-\subsubsection{Caso de uso 06: Compatibilidad}
-\subsubsection{Resumen}
-La aplicación es compatible con la última versión de Android y se adapta a diversos dispositivos y tamaños de pantalla.
-\subsubsection{Descripción}
-\noindent
-\begin{tabularx}{\textwidth}{|l|X|}
-\hline
-\textbf{Atributos} & Compatibilidad con versiones de Android, ajustes automáticos según dispositivos. \\ \hline
-\textbf{Actores} & Sistema (que garantiza la compatibilidad), Usuario (que utiliza la aplicación). \\ \hline
-\textbf{Precondiciones} & La aplicación debe estar instalada en un dispositivo con la versión compatible de Android. \\ \hline
-\textbf{Actividad que se va a bitácora} & Registro de la versión de Android y la compatibilidad del dispositivo. \\ \hline
-\textbf{Registro que se va a bitácora} & Versión de Android, tipo de dispositivo, timestamp de la verificación de compatibilidad. \\ \hline
-\textbf{Viene de} & El caso de uso “Inicio de la aplicación” o “Verificación de configuración del dispositivo”. \\ \hline
-\end{tabularx}
+% \textit{--- Fin del caso de uso.}
+% \newpage
+% \subsubsection{Caso de uso 06: Compatibilidad}
+% \subsubsection{Resumen}
+% La aplicación es compatible con la última versión de Android y se adapta a diversos dispositivos y tamaños de pantalla.
+% \subsubsection{Descripción}
+% \noindent
+% \begin{tabularx}{\textwidth}{|l|X|}
+% \hline
+% \textbf{Atributos} & Compatibilidad con versiones de Android, ajustes automáticos según dispositivos. \\ \hline
+% \textbf{Actores} & Sistema (que garantiza la compatibilidad), Usuario (que utiliza la aplicación). \\ \hline
+% \textbf{Precondiciones} & La aplicación debe estar instalada en un dispositivo con la versión compatible de Android. \\ \hline
+% \textbf{Actividad que se va a bitácora} & Registro de la versión de Android y la compatibilidad del dispositivo. \\ \hline
+% \textbf{Registro que se va a bitácora} & Versión de Android, tipo de dispositivo, timestamp de la verificación de compatibilidad. \\ \hline
+% \textbf{Viene de} & El caso de uso “Inicio de la aplicación” o “Verificación de configuración del dispositivo”. \\ \hline
+% \end{tabularx}
     
-\subsubsection{Trayectoria principal}
-\begin{enumerate}[label=\textbf{\arabic*}, leftmargin=1.5cm]
-    \item \UCsystem \ La aplicación debe ser compatible con la última versión de Android.
+% \subsubsection{Trayectoria principal}
+% \begin{enumerate}[label=\textbf{\arabic*}, leftmargin=1.5cm]
+%     \item \UCsystem \ La aplicación debe ser compatible con la última versión de Android.
     
-    \item \UCsystem \ El sistema garantiza su funcionamiento en una amplia gama de dispositivos móviles, ajustándose a diferentes tamaños de pantalla y capacidades del dispositivo.
+%     \item \UCsystem \ El sistema garantiza su funcionamiento en una amplia gama de dispositivos móviles, ajustándose a diferentes tamaños de pantalla y capacidades del dispositivo.
 
-\end{enumerate}
+% \end{enumerate}
 
-\textit{--- Fin del caso de uso.}
+% \textit{--- Fin del caso de uso.}
 
 \noindent
 \begin{tabularx}{\textwidth}{|X|X|X|}
@@ -260,6 +259,10 @@ Necesito asistencia urgente. & ¿Cómo te llamas? & No hay problema. \\ \hline
 
 
 \subsection{Diagrama de casos de uso}
+\begin{center}
+    \includegraphics[width=0.6\textwidth]{Images/Cap 3/casodeuso1.png}
+    \captionof{figure}{Diagrama de caso de uso 1}
+\end{center}
 \subsection{Mockups del sistema}
 \begin{center}
     \includegraphics[width=0.6\textwidth]{Images/Cap 3/Pantalla1.png}
