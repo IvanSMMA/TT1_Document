@@ -1,4 +1,4 @@
-\documentclass[12pt, letterpaper,openany]{book}
+\documentclass[12pt, letterpaper,oneside]{book}
 \usepackage{booktabs}
 % \usepackage{float}  % Para usar el modificador H
 \usepackage{graphicx}         %gráficas eps
@@ -32,6 +32,14 @@
 \tikzstyle{decision} = [diamond, minimum width=3.5cm, minimum height=1cm, text centered, draw=black, fill=yellow!30]
 \tikzstyle{arrow} = [thick,->,>=stealth]
 
+\titleformat{\section}
+  {\normalfont\Large\bfseries}{\thesection}{1em}{}
+
+\titleformat{\subsection}
+  {\normalfont\large\bfseries}{\thesubsection}{1em}{}
+
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries\itshape}{\thesubsubsection}{1em}{}
 
 
 \titlespacing*{\section}{1pt}{*1}{*1}
