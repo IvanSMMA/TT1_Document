@@ -547,13 +547,8 @@ El análisis realizado en esta sección, permite concluir que el proyecto es tan
 
 \subsubsection{Diagrama de clases}
 \begin{center}
-<<<<<<< HEAD
     \includegraphics[width=1\textwidth]{Images/Cap 3/clases.jpeg }
     \captionof{figure}{Diagrama de clases del sistema} 
-=======
-    \includegraphics[width=0.6\textwidth]{Images/Cap 3/clasesJV.png}
-    \captionof{figure}{Diagrama de clases del sistema.} 
->>>>>>> 5830684019f442ce920a9de8efa33fa7a0cd2f84
 \end{center}
 
 \subsubsection{Diagrama de secuencia}
@@ -565,7 +560,7 @@ El análisis realizado en esta sección, permite concluir que el proyecto es tan
 \subsubsection{Casos de uso}
 \subsubsection{Caso de uso 01: Traducir texto}
 \subsubsection{Resumen}
-El usuario ingresa texto en español en la aplicación, que luego es procesado y traducido a LSM.
+El usuario ingresa texto en español en la aplicación, que luego es procesado y traducido a LSM para visualizar una animación correspondiente a la traducción.
 \subsubsection{Descripción}
 
 \noindent
@@ -594,8 +589,22 @@ El usuario ingresa texto en español en la aplicación, que luego es procesado y
    
     \item \UCsystem \ El sistema procesa el texto ingresado y lo traduce a LSM, mostrando el resultado en formato animado o en video.
 
-    \item \UCactor \ Puede modificar el texto y volver a ejecutar la traducción si es necesario.
+    \item \UCactor \ Puede ingresar texto nuevo y volver a interar la traducción.
 
+\end{enumerate}
+
+\subsubsection{Trayectoria alternativa A}
+\begin{enumerate}[label=\textbf{\arabic*}, leftmargin=1.5cm]
+    \item \UCactor \ Ingresa el texto con caracteres no permitidos o excede el límite de caracteres.
+	\item \UCsystem \ El sistema muestra un mensaje de error indicando que el texto no es válido con base en la RN05.  
+	\item \UCactor \ El usuario corrige el texto y vuelve a intentar la traducción.
+\end{enumerate}
+
+\subsubsection{Trayectoria alternativa B}
+\begin{enumerate}[label=\textbf{\arabic*}, leftmargin=1.5cm]
+    \item \UCactor \ Intenta traducir el texto sin haberlo ingresado.
+	\item \UCsystem \ El sistema muestra un mensaje de error indicando que el campo de texto está vacío con base en la RN04.
+	\item \UCactor \ El usuario ingresa el texto y vuelve a intentar la traducción.
 \end{enumerate}
 
 \textit{--- Fin del caso de uso.}
