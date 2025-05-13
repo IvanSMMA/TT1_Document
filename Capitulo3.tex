@@ -474,6 +474,7 @@ El análisis realizado en esta sección, permite concluir que el proyecto es tan
 \section{Análisis y diseño de sistemas}
 \subsection{Descripción del alcance}
 \subsection{Entregables}
+\subsubsection{Diagrama de arquitectura}
 \subsubsection{Reglas de negocio}
 \begin{itemize}[leftmargin=1.5cm]
     \item \textbf{RN01:} El sistema debe permitir al usuario ingresar texto de forma manual o pegarlo desde otra aplicación.
@@ -528,7 +529,14 @@ El análisis realizado en esta sección, permite concluir que el proyecto es tan
     La aplicación debe ser compatible con la última versión de Android, garantizando su funcionamiento en una amplia gama de dispositivos móviles.
 \end{itemize}
 
-\subsubsection{Diagrama de actividades}
+\subsubsection{Diagrama de procesos}
+\begin{center}
+    \includegraphics[width=1\textwidth]{Images/Cap 3/Procesos.jpeg}
+    \captionof{figure}{Diagrama de procesos del sistema}
+\end{center}
+
+
+\subsubsection{Diagrama de actividades} 
 \begin{center}
     \includegraphics[width=0.6\textwidth]{Images/Cap 3/actividades.png}
     \captionof{figure}{Diagrama de actividades del sistema}
@@ -585,6 +593,13 @@ El usuario ingresa texto en español en la aplicación, que luego es procesado y
 \textit{--- Fin del caso de uso.}
 
 
+\subsubsection{Diagrama de casos de uso}
+\begin{center}
+    \includegraphics[width=0.6\textwidth]{Images/Cap 3/casodeuso.png}
+    \captionof{figure}{Diagrama de caso de uso 1}
+\end{center}
+
+\subsubsection{Identificación de frases}
 \noindent
 \begin{tabularx}{\textwidth}{|X|X|X|}
 \hline
@@ -601,12 +616,6 @@ Necesito asistencia urgente. & ¿Cómo te llamas? & No hay problema. \\ \hline
 ¡Fuego! ¡Fuego! & Hasta luego. & Es un placer. \\ \hline
 \end{tabularx}
 
-
-\subsubsection{Diagrama de casos de uso}
-\begin{center}
-    \includegraphics[width=0.6\textwidth]{Images/Cap 3/casodeuso1.png}
-    \captionof{figure}{Diagrama de caso de uso 1}
-\end{center}
 
 \subsection{Mockups del sistema}
 \begin{center}
@@ -630,7 +639,7 @@ Se debe ingresar texto en español dentro del cuadtro de entrada de texto, para 
     \captionof{figure}{Mockup de la pantalla la animación}
 \end{center}
 
-La tercera pantalla de la aplicación es la pantalla en donde se muestra la animación 3D de la traducción, para que el usuario sepa en que momento inicia la traducción se le mostrará un mensaje con la palabra "Vamos". Además se le indica la frase ingresada del usuario y la traducción asignada. Debajo del avatar 3D, se vuelve a mostrar el cuadro de entrada de texto para ingresar un nuevo mensaje.
+La tercera pantalla de la aplicación es la pantalla en donde se muestra la animación 3D de la traducción, para que el usuario sepa en que momento inicia la traducción se le mostrará un mensaje con la palabra "Vamos" . Además se le indica la frase ingresada del usuario y la traducción asignada. Debajo del avatar 3D, se vuelve a mostrar el cuadro de entrada de texto para ingresar un nuevo mensaje.
 
 \begin{center}
     \includegraphics[width=0.5\textwidth]{Images/Cap 3/Pantalla4.png}
@@ -638,6 +647,9 @@ La tercera pantalla de la aplicación es la pantalla en donde se muestra la anim
 \end{center}
 
 En caso de que no se le pueda asignar una traducción a la frase ingresada, se mostrará la pantalla de deletreo dactilológico. En esta pantalla se muestra el avatar 3D realizando el deletreo de la frase ingresada por el usuario. Al igual que en la pantalla anterior, se vuelve a mostrar el cuadro de entrada de texto para ingresar un nuevo mensaje.
+
+
+
 
 \subsection{Identificación y evaluación de riesgos}
 \subsubsection{Leyenda de probabilidad y efecto}
@@ -985,10 +997,6 @@ Esta sección describe las acciones preventivas y los planes de contingencia aso
 \end{longtable}
 
 
-\section{Selección de los datos}
-\subsection{Recolección de datos}
-
-\section{Preparación de los datos}
 
 \chapter{Conclusiones}
 En la primera etapa desarrollada del Trabajo Terminal, se establecen las bases teóricas y técnicas necesarias para el desarrollo de una solución tecnológica inclusiva orientada a mejorar la comunicación entre personas oyentes y personas con discapacidad auditiva. A partir del análisis de la motivación, la problemática y los objetivos del proyecto, se delimita un enfoque centrado en la accesibilidad lingüística a través de la Lengua de Señas Mexicana (LSM).\\
@@ -999,16 +1007,16 @@ La revisión del estado del arte y la construcción del marco teórico permiten 
 \chapter{Referencias}
 
 
-\chapter{Trabajo relacionado}
+% \chapter{Trabajo relacionado}
 
-\chapter{Desarrollo}
+% \chapter{Desarrollo}
 
-\chapter{Experimentos}
+% \chapter{Experimentos}
 
-\chapter{Conclusiones y trabajo futuro}
+% \chapter{Conclusiones y trabajo futuro}
 
-\appendix
-\chapter*{Anexos}
-\addcontentsline{toc}{chapter}{Anexos}
+% \appendix
+% \chapter*{Anexos}
+% \addcontentsline{toc}{chapter}{Anexos}
 
-\chapter{Cuestionario aplicado}
+% \chapter{Cuestionario aplicado}
