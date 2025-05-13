@@ -485,18 +485,13 @@ El análisis realizado en esta sección, permite concluir que el proyecto es tan
 
 \subsubsection{Reglas de negocio}
 \begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{RN01:} El sistema debe permitir al usuario ingresar texto de forma manual o pegarlo desde otra aplicación.
-    \item \textbf{RN02:} El sistema debe permitir solo la entrada de texto en español.
-    \item \textbf{RN03:} El campo de entrada debe tener un límite de caracteres (por ejemplo, 30 caracteres).
-    \item \textbf{RN04:} El sistema debe validar el texto ingresado para evitar caracteres no permitidos.
-    \item \textbf{RN05:} El botón de traducción debe estar habilitado solo cuando el campo de texto no esté vacío.
-    \item \textbf{RN06:} El sistema debe mostrar un mensaje de error si el texto ingresado no es válido.
-    \item \textbf{RN07:} El sistema debe permitir al usuario editar el texto antes de enviarlo a traducción.
-    \item \textbf{RN08:} El sistema no debe permitir enviar texto vacío a la traducción.
-	\item \textbf{RN09:} El sistema debe traducir el texto ingresado a LSM.
-    \item \textbf{RN010:} El sistema debe asignarle una única traducción y animación a cada texto validado.
-    \item \textbf{RN11:} El sistema deberá deletrear el texto ingresado utilizando el alfabeto dactilológico de LSM si no se le pudo asignar una traducción a LSM.
-    \item \textbf{RN12:} El sistema debe mostrar el resultado de la traducción en formato animado.
+    \item \textbf{RN01:} El sistema debe permitir al usuario solo ingresar texto de forma manual o pegarlo desde otra aplicación.
+    \item \textbf{RN02:} El campo de entrada debe tener un límite de caracteres (por ejemplo, 30 caracteres).
+    \item \textbf{RN03:} El sistema debe validar el texto ingresado para evitar caracteres no permitidos.
+    \item \textbf{RN04:} El botón de traducción debe estar habilitado solo cuando el campo de texto no esté vacío.
+    \item \textbf{RN05:} El sistema debe mostrar un mensaje de error si el texto ingresado no es válido.
+    \item \textbf{RN06:} El sistema debe permitir al usuario editar el texto antes de enviarlo a traducción.
+	\item \textbf{RN07:} El sistema siempre debe mostrar alguna animación, ya sea la correspondiente a la traducción o el deletreo.
 \end{itemize}
 \subsubsection{Requerimientos funcionales}
 \begin{itemize}
@@ -552,7 +547,7 @@ El análisis realizado en esta sección, permite concluir que el proyecto es tan
 
 \subsubsection{Diagrama de clases}
 \begin{center}
-    \includegraphics[width=0.6\textwidth]{Images/Cap 3/Clases.png}
+    \includegraphics[width=1\textwidth]{Images/Cap 3/clases.jpeg }
     \captionof{figure}{Diagrama de clases del sistema} 
 \end{center}
 
