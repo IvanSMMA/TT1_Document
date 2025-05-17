@@ -53,7 +53,7 @@ Ambas perspectivas se estructuran mediante dos métodos complementarios de anál
 Esta estructura metodológica permite identificar con precisión los recursos involucrados, calcular el presupuesto total estimado y analizar la factibilidad financiera del proyecto, tanto en su ejecución académica como en un escenario de comercialización futuro.
 
 \paragraph{\textbf{Informe de costos de creación del prototipo.}} 
-Este informe presenta el análisis financiero asociado al desarrollo y creación del prototipo de la aplicación móvil de apoyo para la traducción de frases del español a la Lengua de Señas Mexicana (LSM) mediante Procesamiento de Lenguaje Natural (PLN) y modelado 3D. El objetivo es identificar y estructurar los costos necesarios para garantizar la factibilidad del proyecto en su etapa de creación.
+Este informe presenta el análisis financiero asociado a la creación del prototipo en cuestión. El objetivo es identificar y estructurar los costos necesarios para garantizar la factibilidad del proyecto en su etapa de creación.
 
 \paragraph{\textbf{Presupuesto mediante recursos.}} 
 Dentro del análisis basado en recursos, el proceso de desarrollo se ha estructurado en tres etapas principales, cada una integrada por actividades específicas que permiten avanzar de manera ordenada, asegurando la calidad y funcionalidad del prototipo final. Las etapas contempladas son:
@@ -87,10 +87,11 @@ A continuación, se detallan los costos asociados a los servicios necesarios par
 
 \begin{table}[H]
 	\centering
-	\renewcommand{\arraystretch}{1.5}
+	\renewcommand{\arraystretch}{1.6}
 	\setlength{\tabcolsep}{12pt}
-	\resizebox{\textwidth}{!}{%
-		\begin{tabular}{|l|r|r|r|}
+	\Huge % tamaño de fuente más grande posible
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{tabular}{|p{7cm}|r|r|r|}
 			\hline
 			\textbf{Recurso} & \textbf{Costo mensual (MXN \$)} & \textbf{Costo a 4 meses (MXN \$)} & \textbf{Costo a 1 año (MXN \$)} \\ \hline
 			Electricidad e Internet (compartido entre integrantes) & \$500.00 & \$2,000.00 & \$6,000.00 \\ \hline
@@ -98,22 +99,25 @@ A continuación, se detallan los costos asociados a los servicios necesarios par
 			Pruebas en dispositivos Android (emulador físico o virtual) & \$500.00 & \$2,000.00 & \$6,000.00 \\ \hline
 			Reserva para servicios externos o pruebas adicionales & \$1,000.00 & \$4,000.00 & \$12,000.00 \\ \hline
 			\textbf{Total estimado de servicios} & \textbf{\$2,300.00} & \textbf{\$9,200.00} & \textbf{\$27,600.00} \\ \hline
-		\end{tabular}%
-	}
+		\end{tabular}
+	\end{adjustbox}
 	\caption{Costos estimados de servicios en el escenario académico durante la creación del prototipo.}
 	\label{tab:costos_servicios}
 \end{table}
 
+
+
 \begin{table}[H]
 	\centering
-	\renewcommand{\arraystretch}{1.5}
-	\setlength{\tabcolsep}{10pt}
-	\resizebox{\textwidth}{!}{%
-		\begin{tabular}{|l|r|r|r|}
+	\renewcommand{\arraystretch}{1.6}
+	\setlength{\tabcolsep}{12pt}
+	\Huge % Tamaño de fuente más grande disponible en LaTeX estándar
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{tabular}{|p{7cm}|r|r|r|}
 			\hline
 			\textbf{Recurso o servicio} & \textbf{Costo mensual (MXN \$)} & \textbf{Costo a 4 meses (MXN \$)} & \textbf{Costo a 1 año (MXN \$)} \\ \hline
 			Electricidad e internet (oficina dedicada) & \$2,500.00 & \$10,000.00 & \$30,000.00 \\ \hline
-			Renta de espacio de coworking (para 3 personas) & \$9,000.00 & \$36,000.00 & \$108,000.00 \\ \hline
+			Renta de espacio de coworking (para 4 personas) & \$9,000.00 & \$36,000.00 & \$108,000.00 \\ \hline
 			Suscripción a plataformas de desarrollo (GitHub Copilot, Blender Studio, etc.) & \$800.00 & \$3,200.00 & \$9,600.00 \\ \hline
 			API de lenguaje natural (OpenAI GPT, DialogFlow) & \$1,000.00 & \$4,000.00 & \$12,000.00 \\ \hline
 			Servicios de almacenamiento en la nube (Google Cloud, Firebase, etc.) & \$750.00 & \$3,000.00 & \$9,000.00 \\ \hline
@@ -124,21 +128,23 @@ A continuación, se detallan los costos asociados a los servicios necesarios par
 			Marketing digital (redes sociales, web, SEO) & \$2,000.00 & \$8,000.00 & \$24,000.00 \\ \hline
 			Traducción y adaptación de contenido LSM (consultoría externa) & \$4,000.00 & \$16,000.00 & \$48,000.00 \\ \hline
 			\textbf{TOTAL ESTIMADO} & \textbf{\$30,750.00} & \textbf{\$123,000.00} & \textbf{\$369,000.00} \\ \hline
-		\end{tabular}%
-	}
+		\end{tabular}
+	\end{adjustbox}
 	\caption{Costos estimados de servicios en un escenario comercial para la creación del prototipo.}
 	\label{tab:costos_comercial}
 \end{table}
+
 
 \paragraph{\textbf{Compras no recurrentes.}} 
 En esta sección se presentan los costos estimados de artículos y adquisiciones necesarias para la creación del prototipo, clasificadas como compras no recurrentes. Estas compras representan inversiones únicas que no implican costos periódicos, pero que son fundamentales para el correcto desarrollo y prueba de la aplicación.
 
 \begin{table}[H]
 	\centering
-	\renewcommand{\arraystretch}{1.5}
-	\setlength{\tabcolsep}{8pt}
-	\resizebox{\textwidth}{!}{%
-		\begin{tabular}{|l|c|r|r|}
+	\renewcommand{\arraystretch}{1.6}
+	\setlength{\tabcolsep}{10pt}
+	\Huge
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{tabular}{|p{7cm}|c|r|r|}
 			\hline
 			\textbf{Recurso} & \textbf{Unidades} & \textbf{Costo unitario (MXN \$)} & \textbf{Costo total (MXN \$)} \\ \hline
 			Equipo de cómputo personal (propio de los integrantes) & 3 & -- & -- \\ \hline
@@ -146,68 +152,73 @@ En esta sección se presentan los costos estimados de artículos y adquisiciones
 			Capacitación online (cursos: Blender, MediaPipe, PLN) & 3 cursos & \$800.00 & \$2,400.00 \\ \hline
 			Compra de modelos 3D o recursos gráficos (opcional) & 1 paquete & \$2,500.00 & \$2,500.00 \\ \hline
 			\textbf{Total compras no recurrentes} & & & \textbf{\$4,900.00} \\ \hline
-		\end{tabular}%
-	}
+		\end{tabular}
+	\end{adjustbox}
 	\caption{Costos estimados de artículos y compras no recurrentes en el escenario académico.}
 	\label{tab:compras_no_recurrentes}
 \end{table}
+
 
 \noindent \textbf{Nota aclaratoria:}  
 El equipo de cómputo utilizado corresponde a dispositivos personales de los integrantes del proyecto, por lo cual no se ha considerado un costo adicional en esta categoría. La compra de modelos 3D o recursos gráficos es considerada opcional y dependerá de la necesidad de complementar el material gráfico disponible de manera gratuita o de libre acceso.
 
 \begin{table}[H]
 	\centering
-	\renewcommand{\arraystretch}{1.5}
-	\setlength{\tabcolsep}{8pt}
-	\resizebox{\textwidth}{!}{%
-		\begin{tabular}{|l|c|r|r|}
+	\renewcommand{\arraystretch}{1.6}
+	\setlength{\tabcolsep}{10pt}
+	\Huge
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{tabular}{|p{7cm}|c|r|r|}
 			\hline
 			\textbf{Recurso} & \textbf{Unidades} & \textbf{Costo unitario (MXN \$)} & \textbf{Costo total (MXN \$)} \\ \hline
-			Equipo de cómputo profesional (para desarrollo y edición 3D) & 3 & \$25,000.00 & \$75,000.00 \\ \hline
-			Dispositivos móviles de prueba (Android gama media/alta) & 2 & \$7,000.00 & \$14,000.00 \\ \hline
+			Equipo de cómputo profesional (para desarrollo y edición 3D) & 4 & \$25,000.00 & \$100,000.00 \\ \hline
+			Dispositivos móviles de prueba (Android gama media) & 2 & \$12,000.00 & \$24,000.00 \\ \hline
 			Cámara y sensor de movimiento (para captura LSM y pruebas) & 1 & \$12,000.00 & \$12,000.00 \\ \hline
 			Paquete profesional de modelos 3D con licencia comercial & 1 & \$10,000.00 & \$10,000.00 \\ \hline
-			Tablet para testing y revisión de interfaz (Android 14) & 1 & \$6,000.00 & \$6,000.00 \\ \hline
 			Cursos y certificaciones profesionales (PLN, UX, IA, Unity) & 4 & \$3,000.00 & \$12,000.00 \\ \hline
 			Equipo de audio y grabación (para interfaz voz/signos) & 1 & \$4,500.00 & \$4,500.00 \\ \hline
-			\textbf{Total compras no recurrentes} & & & \textbf{\$133,500.00} \\ \hline
-		\end{tabular}%
-	}
+			\textbf{Total compras no recurrentes} & & & \textbf{\$162,500.00} \\ \hline
+		\end{tabular}
+	\end{adjustbox}
 	\caption{Costos estimados de compras no recurrentes en un escenario de comercialización}
 	\label{tab:compras_no_recurrentes_comercial}
 \end{table}
+
 
 \paragraph{\textbf{Sueldos y asesorías.}} 
 El presente apartado presenta el costo estimado de los sueldos y asesorías considerados para la creación del prototipo en cuestión. Se adopta un enfoque dual que contempla tanto el escenario académico de ejecución como una proyección orientada a una futura etapa de comercialización del producto.
 
 \begin{table}[H]
 	\centering
-	\renewcommand{\arraystretch}{1.5}
+	\renewcommand{\arraystretch}{1.6}
 	\setlength{\tabcolsep}{10pt}
-	\resizebox{\textwidth}{!}{%
-		\begin{tabular}{|l|c|r|r|r|r|}
+	\Huge
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{tabular}{|p{5.5cm}|c|r|r|r|r|}
 			\hline
 			\textbf{Equipo} & \textbf{Cantidad} & \multicolumn{2}{c|}{\textbf{Desarrollo}} & \multicolumn{2}{c|}{\textbf{Mantenimiento / Ajustes}} \\ \hline
-			\textbf{Tipo} & & \textbf{Mensual (MXN \$)} & \textbf{4 meses (MXN \$)} & \textbf{Mensual (MXN \$)} & \textbf{A un año (MXN)} \\ \hline
-			Desarrollador Full Stack Junior (estudiante) & 3 & \$72,000.00 (\$24,000.00 c/u) & \$288,000.00& -- & -- \\ \hline
-			Asesoría en animación 3D (freelance) & 1 parcial & \$300.00 (por sesión)& \$1,200.00 (cuatro sesiones) & -- & -- \\ \hline
-			Asesoría en LSM (validación de señas) & 1 parcial & \$200.00 (por sesión)& \$800.00 (cuatro sesiones) & -- & -- \\ \hline
-			\textbf{Total} & \textbf{5} & \textbf{\$72,500.00} & \textbf{\$290,000.00} & -- & --\\ \hline
-		\end{tabular}%
-	}
-	\caption{Costos estimados en el escenario académico de sueldos y asesorías durante el creación del prototipo.}
+			\textbf{Tipo} & & \textbf{Mensual (MXN \$)} & \textbf{4 meses (MXN \$)} & \textbf{Mensual (MXN \$)} & \textbf{A un año (MXN \$)} \\ \hline
+			Desarrollador Full Stack Junior (estudiante) & 3 & \$72,000.00 (\$24,000.00 c/u) & \$288,000.00 & -- & -- \\ \hline
+			Asesoría en animación 3D (freelance) & 1 parcial & \$300.00 (por sesión) & \$1,200.00 (cuatro sesiones) & -- & -- \\ \hline
+			Asesoría en LSM (validación de señas) & 1 parcial & \$200.00 (por sesión) & \$800.00 (cuatro sesiones) & -- & -- \\ \hline
+			\textbf{Total} & \textbf{5} & \textbf{\$72,500.00} & \textbf{\$290,000.00} & -- & -- \\ \hline
+		\end{tabular}
+	\end{adjustbox}
+	\caption{Costos estimados en el escenario académico de sueldos y asesorías durante la creación del prototipo.}
 	\label{tab:sueldos_asesorias}
 \end{table}
+
 
 \noindent \textbf{Nota aclaratoria:}  
 El sueldo en este caso, se considera un pago simbólico, sin embargo, el sueldo mensual se consideró como un aproximado para un Desarrollador Full Stack Junior en México con fecha de mayo de 2025 [CITA IEE].  
 
 \begin{table}[H]
 	\centering
-	\renewcommand{\arraystretch}{1.5}
+	\renewcommand{\arraystretch}{1.6}
 	\setlength{\tabcolsep}{10pt}
-	\resizebox{\textwidth}{!}{%
-		\begin{tabular}{|l|c|r|r|r|r|}
+	\Huge
+	\begin{adjustbox}{max width=\textwidth}
+		\begin{tabular}{|p{5.8cm}|c|r|r|r|r|}
 			\hline
 			\textbf{Rol / Servicio} & \textbf{Cantidad} & \multicolumn{2}{c|}{\textbf{Desarrollo}} & \multicolumn{2}{c|}{\textbf{Mantenimiento / Ajustes}} \\ \hline
 			\textbf{Tipo} & & \textbf{Mensual (MXN \$)} & \textbf{4 meses (MXN \$)} & \textbf{Mensual (MXN \$)} & \textbf{A un año (MXN \$)} \\ \hline
@@ -217,11 +228,12 @@ El sueldo en este caso, se considera un pago simbólico, sin embargo, el sueldo 
 			Asesoría profesional en LSM & 1 parcial & \$10,000.00 & \$40,000.00 & \$5,000.00 & \$60,000.00 \\ \hline
 			Soporte técnico / DevOps & 1 & \$15,000.00 & \$60,000.00 & \$10,000.00 & \$120,000.00 \\ \hline
 			\textbf{Total estimado} & \textbf{6} & \textbf{\$108,000.00} & \textbf{\$544,000.00} & \textbf{\$58,000.00} & \textbf{\$696,000.00} \\ \hline
-		\end{tabular}%
-	}
-	\caption{Costos estimados de sueldos y asesorías en un entorno comercial durante el creación del prototipo.}
+		\end{tabular}
+	\end{adjustbox}
+	\caption{Costos estimados de sueldos y asesorías en un entorno comercial durante la creación del prototipo.}
 	\label{tab:sueldos_comercial}
 \end{table}
+
 
 
 \noindent \textbf{Nota aclaratoria:}  
@@ -247,14 +259,14 @@ El presente apartado presenta el resumen de los costos que incluye ambos escenar
 		\begin{tabular}{|l|r|}
 			\hline
 			\textbf{Concepto} & \textbf{Monto estimado (MXN \$)} \\ \hline
-			Presupuesto total de actividades & \$72,900.00 \\ \hline
+			Presupuesto total de actividades & \$71,100.00 \\ \hline
 			Presupuesto total de recursos (desarrollo) & \$9,200.00 \\ \hline
 			Presupuesto total de recursos (despliegue) & \$27,600.00 \\ \hline
 			Compras no recurrentes & \$4,900.00 \\ \hline
 			Sueldo del equipo (desarrollo) & \$290,000.00 \\ \hline
 			Sueldo del equipo (mantenimiento) & -- \\ \hline
-			Reserva para riesgos e imprevistos (15\%) & \$10,935.00 \\ \hline
-			\textbf{Presupuesto total estimado del proyecto} & \textbf{\$416,021.00} \\ \hline
+			Reserva para riesgos e imprevistos (15\%) & \$10,665.00 \\ \hline
+			\textbf{Presupuesto total estimado del proyecto} & \textbf{\$413,939.00} \\ \hline
 		\end{tabular}%
 	}
 	\caption{Resumen de costos estimados para el desarrollo y despliegue en el escenario académico.}
@@ -272,11 +284,11 @@ El presente apartado presenta el resumen de los costos que incluye ambos escenar
 			Presupuesto total de actividades & \$179,280.00 \\ \hline
 			Presupuesto total de recursos (desarrollo) & \$123,000.00 \\ \hline
 			Presupuesto total de recursos (despliegue) & \$369,000.00 \\ \hline
-			Compras no recurrentes & \$133,500.00 \\ \hline
+			Compras no recurrentes & \$162,500.00 \\ \hline
 			Sueldo del equipo (desarrollo) & \$544,000.00 \\ \hline
 			Sueldo del equipo (mantenimiento) & \$696,000.00 \\ \hline
 			Reserva para riesgos e imprevistos (15\%) & \$26,892.00 \\ \hline
-			\textbf{Presupuesto total estimado del proyecto} & \textbf{\$2,072,346.00} \\ \hline
+			\textbf{Presupuesto total estimado del proyecto} & \textbf{\$2,101,346.00} \\ \hline
 		\end{tabular}%
 	}
 	\caption{Resumen de costos estimados para el desarrollo y despliegue en un entorno comercial del prototipo.}
@@ -318,12 +330,12 @@ Para ofrecer una visión integral, esta sección presenta dos enfoques diferenci
 \vspace{1em}
 \noindent\textbf{Resumen de costos (despliegue) – Enfoque académico:}
 \begin{itemize}
-	\item \textbf{Gestión de calidad y pruebas internas:} \$2,400.00 MXN (simbólico).
-	\item \textbf{Validación con usuarios (pruebas piloto y retroalimentación):} \$5,000.00 MXN (simbólico).
-	\item \textbf{Documentación y ajustes finales del prototipo:} \$5,000.00 MXN (simbólico).
+	\item \textbf{Gestión de calidad y pruebas internas:} \$3,600.00 MXN (simbólico).
+	\item \textbf{Validación con usuarios (pruebas piloto y retroalimentación):} \$7,500.00 MXN (simbólico).
+	\item \textbf{Documentación y ajustes finales del prototipo:} \$1,500.00 MXN (simbólico).
 \end{itemize}
 
-\noindent\textbf{Costo total estimado (académico):} \textbf{\$12,400.00 MXN}
+\noindent\textbf{Costo total estimado (académico):} \textbf{\$12,600.00 MXN}
 
 \vspace{1em}
 \noindent\textbf{Resumen de costos (despliegue) – Enfoque comercial:} (según tarifas profesionales conservadoras)
@@ -367,11 +379,11 @@ A continuación, se presenta el desglose de costos estimados para una fase inici
 			Presupuesto total de actividades & \$179,280.00 \\ \hline
 			Presupuesto total de recursos (desarrollo) & \$123,000.00 \\ \hline
 			Presupuesto total de recursos (despliegue) & \$369,000.00 \\ \hline
-			Compras no recurrentes & \$133,500.00 \\ \hline
+			Compras no recurrentes & \$162,500.00 \\ \hline
 			Sueldo del equipo (desarrollo) & \$544,000.00 \\ \hline
 			Sueldo del equipo (mantenimiento) & \$696,000.00 \\ \hline
 			Reserva para riesgos e imprevistos (15\%) & \$26,892.00 \\ \hline
-			\textbf{Presupuesto total estimado del proyecto} & \textbf{\$2,072,346.00} \\ \hline
+			\textbf{Presupuesto total estimado del proyecto} & \textbf{\$2,101,346.00} \\ \hline
 		\end{tabular}%
 	}
 	\caption{Proyección de costos para una posible fase comercial}
@@ -393,29 +405,28 @@ Para calcular un precio base de suscripción mensual, se considera el siguiente 
 \paragraph{\textbf{Cálculo del precio base mensual.}}
 
 \[
-\text{Costo mensual del proyecto} = \frac{\$2,072,346.00}{24} = \$86,347.75
+\text{Costo mensual del proyecto} = \frac{\num{2101346.00}}{24} = \num{87556.08}
 \]
 
 \[
-\text{Costo mensual por usuario} = \frac{\$86,347.75}{200} = \$431.74
+\text{Costo mensual por usuario} = \frac{\num{87556.08}}{200} = \num{437.78}
 \]
 
 \[
-\text{Costo por hora de uso} = \frac{\$431.74}{40} = \$10.79
+\text{Costo por hora de uso} = \frac{\num{437.78}}{40} = \num{10.94}
 \]
-
 
 \paragraph{\textbf{Propuesta de precio final.}}
 Considerando un margen de ganancia del \textbf{20\%}, el precio sugerido de suscripción mensual sería:
 
 \[
-\text{Precio base mensual} = \$431.74 \times 1.20 = \$518.09
+\text{Precio base mensual} = \num{437.78} \times 1.20 = \num{525.34}
 \]
 
 Redondeando al entero más cercano:
 
 \[
-\text{Precio base mensual redondeado} = \$518.00
+\text{Precio base mensual redondeado} = \num{525.00}
 \]
 
 \begin{flushleft}
@@ -442,9 +453,9 @@ Donde:
 \begin{itemize}
 	\item \textbf{PM} = Persona-meses estimados de esfuerzo.
 	\item \textbf{A} = Constante base del modelo. Se usa el valor estándar de $A = 2.94$.
-	\item \textbf{Tamaño} = Tamaño estimado del software en miles de líneas de código (KLOC). Se considera un tamaño de $2$ KLOC. ()2,000 líneas de código).
+	\item \textbf{Tamaño} = Tamaño estimado del software en miles de líneas de código (KLOC). Se considera un tamaño de $2$ KLOC (2,000 líneas de código).
 	\item \textbf{E} = Exponente de escala. Para este proyecto se asume $E = 1.05$, valor apropiado para proyectos con requisitos moderadamente definidos.
-	\item $\prod EM_i$ = Producto de los multiplicadores de esfuerzo. Se asume un valor neutral de $1.0$ al tratarse de un entorno académico con condiciones estándar.
+	\item $\prod EM_i$ = Producto de los multiplicadores de esfuerzo. Se asume un valor neutral de $1.0$, al tratarse de un entorno académico con condiciones estándar.
 \end{itemize}
 
 Sustituyendo los valores en la fórmula:
@@ -453,20 +464,27 @@ Sustituyendo los valores en la fórmula:
 \text{PM} = 2.94 \cdot (2)^{1.05} \cdot 1.0 \approx 2.94 \cdot 2.07 = \textbf{6.09 persona-meses.}
 \]
 
-Considerando un periodo de desarrollo de aproximadamente cuatro meses, el esfuerzo mensual requerido se calcula como:
+Considerando un periodo de desarrollo de aproximadamente ocho meses, el esfuerzo mensual requerido se calcula como:
 
 \[
-\frac{6.09 \text{ persona-meses}}{4 \text{ meses}} \approx 1.52 \text{ personas por mes.}
+\frac{6.09 \text{ persona-meses}}{8 \text{ meses}} = \num{0.76125} \approx \num{0.76} \text{ personas por mes.}
 \]
 
-Esta estimación respalda la necesidad de contar con al menos tres integrantes, ya que permite distribuir responsabilidades entre los distintos módulos del sistema (procesamiento de lenguaje natural, generación de animaciones y desarrollo móvil), realizar tareas en paralelo, reducir riesgos operativos y garantizar la calidad del prototipo final.
+Aunque el esfuerzo promedio mensual es inferior a una persona de tiempo completo, se justifica la participación de al menos tres integrantes en el proyecto, debido a las siguientes razones:
+
+\begin{itemize}
+	\item Permite distribuir responsabilidades de forma especializada entre los tres módulos principales del sistema: procesamiento de lenguaje natural, generación de animaciones 3D y desarrollo móvil.
+	\item Favorece el trabajo en paralelo, lo que reduce los tiempos de espera entre etapas y facilita el cumplimiento de plazos intermedios.
+	\item Mejora la calidad del prototipo al facilitar revisiones cruzadas, pruebas continuas y retroalimentación iterativa.
+	\item Minimiza el riesgo operativo frente a posibles contingencias como cargas académicas variables, imprevistos personales o rotación parcial del equipo.
+\end{itemize}
 
 
 \subsubsection{Recursos tecnológicos}
 El equipo de trabajo dispone del equipo de cómputo necesario para el desarrollo, prueba y validación de la aplicación móvil. Además, se cuenta con acceso a las plataformas de desarrollo y a las herramientas de software requeridas, tales como ambientes de programación, motores de animación 3D y bibliotecas especializadas de procesamiento de lenguaje natural (PLN). Esta disponibilidad de recursos tecnológicos garantiza las condiciones adecuadas para la implementación efectiva del prototipo.
 
 \subsubsection{Plazo}
-El tiempo estimado para el desarrollo del prototipo es de aproximadamente cuatro meses, considerando las fases de análisis, diseño, desarrollo, pruebas y presentación final. Dado que el alcance del proyecto se limita a la traducción de un conjunto predefinido de frases específicas, se considera que el plazo establecido es adecuado para cumplir con los objetivos planteados y la solución propuesta. \\
+El tiempo estimado para el desarrollo del prototipo es de aproximadamente ocho meses, considerando las fases de análisis, diseño, desarrollo, pruebas y presentación final. Dado que el alcance del proyecto se limita a la traducción de un conjunto predefinido de frases específicas, se considera que el plazo establecido es adecuado para cumplir con los objetivos planteados y la solución propuesta. \\
 
 
 El análisis realizado en esta sección, permite concluir que el proyecto es tanto viable como factible dentro del contexto académico en el cual se desarrolla. El equipo de trabajo cuenta con los conocimientos fundamentales, el acceso a las tecnologías requeridas y los recursos necesarios para la construcción de un prototipo funcional. Aunque se han identificado áreas que demandarán un proceso de capacitación complementaria, estas no representan un obstáculo significativo para el éxito del proyecto, siempre que se mantenga una adecuada gestión de tiempos y actividades conforme a los alcances establecidos. De este modo, se fortalecen las condiciones para lograr un desarrollo efectivo que cumpla con los objetivos planteados y a futuro siente las bases para una posible expansión comercial.
