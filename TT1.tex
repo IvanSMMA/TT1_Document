@@ -19,6 +19,7 @@
 \usepackage{setspace}
 \usepackage{float}
 \usepackage{longtable}
+\captionsetup[longtable]{position=bottom}
 \usepackage{pdfpages}
 \usepackage[hidelinks]{hyperref}
 \usepackage{titlesec}
@@ -26,6 +27,10 @@
 \usepackage{tabularx}
 \usepackage{adjustbox}
 \usepackage{siunitx}
+\usepackage{indentfirst}
+\usepackage{url}        % permite cortar URLs
+         % para ajustar entorno thebibliography
+
 
 \usetikzlibrary{shapes.geometric, arrows}
 
@@ -95,7 +100,7 @@ This project addresses the limitations of current technologies for translating M
 \input{Capitulo1}
 \input{Capitulo2}
 \input{Capitulo3}
-%\input{Capitulo4}
+\input{Referencias}
 %\input{Capitulo5}
 %\input{Capitulo6}
 \end{document}          
