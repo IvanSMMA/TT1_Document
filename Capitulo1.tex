@@ -6,9 +6,9 @@ En México la comunicación es un derecho fundamental para todas las personas, y
 
 Si bien la Lengua de Señas Mexicana (LSM) es el principal medio de comunicación para las personas con discapacidad auditiva en México, ya sea en interacciones cotidianas o en situaciones de emergencia, las personas dependen de soluciones tecnológicas para poder comunicarse. \\
 
-Existen herramientas digitales (ver \autoref{sec:edoArte}) que permiten la traducción de español a Lenguas de Señas, pero en su mayoría son interpretes de lenguas de señas de otros países (como el de España, Brasil, Estados Unidos), los cuales en algunos casos presentan imprecisiones o incompatibilidad debido a las versiones de los sistemas operativos empleados. En el caso de las herramientas que emplean animaciones 3D, las mismas se muestran fragmentadas, causando que se dificulte la comprensión de los mensajes.\\
+Existen herramientas digitales (ver \autoref{sec:edoArte}) que permiten la traducción de español a Lenguas de Señas, pero en su mayoría son interpretes de Lenguas de Señas de otros países (como el de España, Brasil y Estados Unidos), los cuales en algunos casos presentan imprecisiones o incompatibilidad debido a las versiones de los sistemas operativos empleados. En el caso de las herramientas que emplean animaciones 3D, las mismas se muestran fragmentadas, causando que se dificulte la comprensión de los mensajes.\\
 
-La motivación de este Trabajo Terminal es mejorar la accesibilidad de las personas sordas, a la par que se fomenta la inclusión social y tecnológica para esta comunidad, empleando técnicas de Inteligencia Artificial, Procesamiento de Lenguaje Natural y Modelado 3D para obtener una traducción más fluida y natural, basándose en las Heurísticas de Usabilidad de Nielsen y la norma ISO 9241-210.\\
+La motivación de este Trabajo Terminal es ayudar a mejorar la accesibilidad de las personas sordas, a la par que se fomenta la inclusión social y tecnológica para esta comunidad, empleando técnicas de Inteligencia Artificial, Procesamiento de Lenguaje Natural y Modelado 3D para obtener una traducción más fluida y natural, basándose en las Heurísticas de Usabilidad de Nielsen y la norma ISO 9241-210.\\
 
 
 \newpage
@@ -19,30 +19,29 @@ A pesar de las barreras, las personas sordas han desarrollado su propio medio de
 
 La Ley General para la Inclusión de las Personas con Discapacidad establece que los medios de comunicación deben implementar tecnologías o intérpretes de Lengua de Señas Mexicana para facilitar el acceso a contenido para la comunidad sorda \cite{ref4}. En este contexto, las ciencias de la computación enfrentan un reto importante en cuanto a la creación de recursos digitales que respondan a estas necesidades específicas de accesibilidad e inclusión, concretamente en tareas de procesamiento de lenguaje y traducción automática.\\
 
-Actualmente existen diversos proyectos relacionados con la traducción de Lengua de Señas, sin embargo, la mayoría presentan limitaciones significativas. Una de las principales dificultades es la falta de fluidez en las animaciones de la traducción del español a LSM, ya que los traductores actuales no logran representar el lenguaje de señas de manera continua. Como resultado, las animaciones suelen presentar cortes entre palabras o frases, lo que resulta en una traducción fragmentada y poco natural.\\
+Actualmente existen diversos proyectos relacionados con la traducción de Lengua de Señas, sin embargo, la mayoría presentan limitaciones significativas. Una de las principales dificultades es la falta de fluidez en las animaciones de la traducción del español a Lengua de Señas, ya que los traductores actuales no logran representar el lenguaje de señas de manera continua. Como resultado, las animaciones suelen presentar cortes entre palabras o frases, lo que resulta en una traducción fragmentada y poco natural.\\
 
-Estas deficiencias afectan la comprensión de los mensajes por parte de los usuarios, ya que la secuencia de señas no fluye con la rapidez y precisión necesarias para facilitar una comunicación efectiva. Además, algunos de estos proyectos están diseñados para versiones anteriores de Android y no funcionan en las versiones más recientes del sistema operativo (ver \autoref{sec:edoArte}).\\
-
+Estas deficiencias dificultan la comprensión de los mensajes por parte de los usuarios, ya que la secuencia de señas no se presenta con la fluidez y precisión necesarias para lograr una comunicación efectiva. Además, algunos de estos proyectos están orientados a Lenguas de Señas de otros países y fueron desarrollados para versiones antiguas de Android, por lo que no son compatibles con las versiones más recientes del sistema operativo (ver \autoref{sec:edoArte}).
 
 \section{Objetivos}
 \subsection{Objetivo General}
-Desarrollar un prototipo de aplicación móvil en Android que, utilizando técnicas de Procesamiento de Lenguaje Natural y Modelado 3D, traduzca oraciones específicas empleadas en situaciones de emergencia, así como expresiones cotidianas como saludos y agradecimientos, del español a la Lengua de Señas Mexicana (LSM).
+Desarrollar un prototipo de aplicación móvil en Android que, utilizando técnicas de Procesamiento de Lenguaje Natural (PLN) y Modelado 3D, traduzca oraciones específicas empleadas en situaciones de emergencia, así como expresiones cotidianas como saludos y agradecimientos, del español a la Lengua de Señas Mexicana (LSM).
 
 \subsection{Objetivo Especifícos}
 \begin{itemize}
-    \item Desarrollar el módulo de procesamiento de texto mediante técnicas de procesamiento de lenguaje natural, para interpretar oraciones específicas en español y transformarlas en sentencias manipulables para la traducción a la Lengua de Señas Mexicana (LSM).
-    \item Construir un módulo de animación 3D que represente visualmente las señas en Lenguaje de Señas Mexicana (LSM), a partir de las oraciones procesadas.
-    \item Implementar el módulo de animación 3D utilizando Inteligencia Artificial, buscando obtener una representación fluida del lenguaje de señas en los avatares.
-    \item Crear una aplicación móvil en Android, versión 14, que integre los módulos de procesamiento de lenguaje natural, módulo de generación de animaciones 3D y transiciones fluidas entre los componentes del prototipo.
+    \item Desarrollar el módulo de procesamiento de texto mediante técnicas de PLN, para interpretar oraciones específicas en español y transformarlas en sentencias manipulables para la traducción a la Lengua de Señas Mexicana (LSM).
+    \item Construir un módulo de animación 3D que represente visualmente las señas en LSM, a partir de las oraciones procesadas.
+    \item Implementar el módulo de animación 3D utilizando Inteligencia Artificial (IA), buscando obtener una representación fluida de la Lengua de Señas en los avatares.
+    \item Crear una aplicación móvil en Android, versión 14, que integre los módulos de PLN, módulo de generación de animaciones 3D y transiciones fluidas entre los componentes del prototipo.
     \item Validar la funcionalidad y usabilidad de la aplicación móvil mediante pruebas con personas con discapacidad auditiva y personas oyentes, en escenarios simulados de emergencia.
 \end{itemize}
 
 \section{Alcance}
 \subsection{Alcance General}
-El Trabajo Terminal consiste en el desarrollo de un prototipo de aplicación móvil que traduzca frases de español a LSM mediante animaciones 3D. La aplicación tendrá un conjunto predefinido de frases comunes para saludos y situaciones de emergencia, y en caso de no contar con una frase específica, se empleará la dactilología (representación de las letras de una palabra empleando las manos) para poder garantizar la comunicación.
+El Trabajo Terminal consiste en el desarrollo de un prototipo de aplicación móvil que traduzca frases de español a LSM mediante animaciones 3D. La aplicación tendrá un conjunto predefinido de frases comunes para saludos, agradecimientos y situaciones de emergencia. En caso de no contar con una frase específica, se empleará la dactilología (representación de las letras de una palabra empleando las manos) para poder garantizar la comunicación.
 
 \subsection{Alcance Especifíco}
-Se hará uso de una interfaz de usuario simple e intuitiva basándose en las Heurísticas de Usabilidad de Nielsen y la norma ISO 9241-210, que sea de utilidad para la población objetivo. Mediante técnicas de Procesamiento de Lenguaje Natural (PLN) se pretende hacer un procesamiento del dataset que contiene las frases en español, para posteriormente realizar el modelado de las animaciones 3D empleando Mediapipe; dichas animaciones serán fluidas para mostrar una comunicación natural y fácil de entender.
+Se hará uso de una interfaz de usuario simple e intuitiva, basándose en las Heurísticas de Usabilidad de Nielsen y la norma ISO 9241-210, que sea de utilidad para la población objetivo. Mediante técnicas de Procesamiento de Lenguaje Natural (PLN) se pretende hacer un procesamiento del dataset que contiene las frases en español, para posteriormente realizar el modelado de las animaciones 3D empleando Mediapipe; dichas animaciones serán fluidas para mostrar una comunicación natural y fácil de entender.
 
 \subsection{Delimitación}
 Es importante aclarar que la traducción será únicamente de un canal de comunicación: de español a LSM. Lo anterior por la razón de que la traducción de LSM a español es más compleja por las diferencias estructurales y gramaticales entre ambos lenguajes.\\
@@ -81,13 +80,13 @@ Finalmente, se busca crear representaciones visuales en 3D para poder facilitar 
 
 \begin{center}
     \includegraphics[width=0.8\textwidth]{Images/Cap 1/diacajanegra.png}
-    \captionof{figure}[Diagrama de contexto de la App]{Diagrama del funcionamiento de la App, elaboración propia.}
+    \captionof{figure}[Diagrama de contexto de la App]{Diagrama de contexto de la App, elaboración propia.}
 \end{center}
 
 \newpage
 \section{Estado del arte}
 \label{sec:edoArte}
-Se han realizado diversas investigaciones referentes a la problemática de la comunicación entre personas oyentes y personas con discapacidad auditiva. En algunos trabajos, se han desarrollado sistemas de software que emplean diferentes tecnologías y herramientas, destacando principalmente las técnicas de Procesamiento de Lenguaje Natural (PLN), Visión Artificial, Modelado 3D y técnicas de Inteligencia Artificial. A continuación, se describen los trabajos relacionados: \begin{itemize}
+Se han realizado diversas investigaciones referentes a la problemática de la comunicación entre personas oyentes y personas con discapacidad auditiva. En algunos trabajos, se han desarrollado sistemas de software que emplean diferentes tecnologías y herramientas, destacando principalmente las técnicas de Procesamiento de Lenguaje Natural (PLN), \textit{Computer Vision}, Modelado 3D y técnicas de Inteligencia Artificial. A continuación, se describen los trabajos relacionados: \begin{itemize}
     \item \textbf{\textit{Translation of Spanish Text to Mexican Sign Language Glossed Text Using Rules and Deep Learning}}: en este trabajo se presenta una arquitectura para traducir de español a Lengua de Señas Mexicana (LSM), cuyos resultados fueron evaluados con las métricas BLEU y WER. En este artículo se encontró que la traducción con técnicas tradicionales tiene un mejor desempeño que el aprendizaje profundo \cite{ref8}.
     \item \textbf{\textit{Resource Creation for Automatic Translation System from Texts in Spanish into Mexican Sign Language}}: este artículo presenta la creación de recursos lingüísticos para la traducción automática del español escrito a LSM, así como el sistema que la implementa. En colaboración con la Casa de la Cultura de los Sordos (CDMX), se tradujeron 150 oraciones pertenecientes a 13 estructuras gramaticales reconocidas por el sistema, identificando 100 signos que pueden representar una oración completa. Se observó que, ante la falta de un signo específico, las personas sordas tienden a deletrear la palabra. El sistema traduce de forma literal al buscar y reproducir palabras en su base de datos, además de contar con signos que representan expresiones completas \cite{ref9}.
     \item \textbf{Aplicación “Voz y Señas”}: esta aplicación, desarrollada para el Sistema Operativo Android 7.0 por el Instituto de Pedagogia en conjunto con TecnoPrótesis y Bienestar Incluyente A.C., permite traducir la LSM por medio del habla o escribiendo texto. Sus objetivos son favorecer la comunicación entre una persona sorda y una persona oyente, y ser una herramienta auxiliar en los procesos de alfabetización, redacción de textos y comprensión lectora \cite{ref10}. 
@@ -98,7 +97,7 @@ Se han realizado diversas investigaciones referentes a la problemática de la co
     \item \textbf{Sistema traductor de la Lengua de Señas Mexicana mediante dactilología y de español a español signado}: sistema de Inteligencia Artificial capaz de ayudar a entablar un diálogo entre una persona sorda y otra oyente, mediante la traducción de las señas de dactilología a texto plano en español y de forma análoga, la traducción del texto plano a español a español signado \cite{ref15}.
 \end{itemize}
 
-Los estudios analizados anteriormente indican que ya habido trabajos que han intentado auxiliar el proceso de comunicación entre una persona oyente y una persona sorda, aunque en su mayorían han sido a lenguas de señas de otros países como lo son la Lengua de Señas Colombiana (LSC), la Lengua de Señas Española (LSE), la Lengua de Señas Americana (ASL) y la Lengua de Señas Brasileña (LIBRAS). El enfoque del prototipo propuesto en el presente Trabajo Terminal es en la Lengua de Señas Mexicana (LSM), empleando técnicas de IA, PLN y Modelado 3D para crear animaciones optimizadas que permitan establecer comunicación entre personas oyentes y personas con discapacidad auditiva. \\
+Los estudios analizados anteriormente indican que ya habido trabajos que han intentado auxiliar el proceso de comunicación entre una persona oyente y una persona sorda, aunque en su mayorían han sido a lenguas de señas de otros países como lo son la Lengua de Señas Colombiana (LSC), la Lengua de Señas Española (LSE), la Lengua de Señas Americana (ASL) y la Lengua de Señas Brasileña (LIBRAS). El enfoque del prototipo propuesto en el presente Trabajo Terminal es la Lengua de Señas Mexicana (LSM), empleando técnicas de IA, PLN y Modelado 3D para crear animaciones optimizadas que permitan establecer comunicación entre personas oyentes y personas con discapacidad auditiva. \\
 
 \newpage
 La siguiente tabla muestra una comparación detallada entre los proyectos descritos anteriormente y el proyecto propuesto, tomando en cuenta los siguientes parámetros: \textbf{A)} Análisis textual PLN, \textbf{B)} \textit{Computer Vision}, \textbf{C)} Sistema Experto, \textbf{D)} IA Generativa, \textbf{E)} \textit{Deep Learning}, \textbf{F)} Respuesta Gráfica (P. ej. Avatar), \textbf{G)} Animación Fluida (sin cortes), \textbf{H)} Uso de Hardware, \textbf{I)} Audio (\textit{IN/OUT}).
@@ -144,8 +143,9 @@ En este proyecto, el equipo se encargará tanto del desarrollo técnico como de 
 
 Esta distribución permitirá aplicar Scrum de manera eficiente, asegurando un desarrollo iterativo y coordinado, en el que cada integrante contribuirá activamente al avance del proyecto mediante la integración de sus respectivas áreas.
 
-
 \begin{center}
-    \includegraphics[width=0.8\textwidth]{Images/Cap 1/metoscrum.jpg}
+	\makebox[\textwidth]{%
+		\includegraphics[width=1\textwidth]{Images/Cap 1/metoscrum.jpg}
+	}
     \captionof{figure}[Metodología Scrum]{Metodología Scrum, obtenido de \cite{ref19}.}  % Pie de foto manual
 \end{center}
