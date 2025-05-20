@@ -3,9 +3,7 @@
 La comunicación es un proceso dinámico, en el que participa una fuente o emisor que envía un mensaje a través de un canal o medio a un potencial receptor que, a su vez, puede convertirse también en emisor \cite{ref20}. Cuando se transmite el mensaje de una forma clara y efectiva para el receptor sin generar dudas ni confusiones, se logra un comunicación efectiva \cite{ref21}.\\
 
 Comunicar es el acto que permite establecer relaciones efectivas, compartir experiencias, experimentar emociones y sentimientos, así como hacer que los demás lo experimenten \cite{ref22}. A continuación, se describen los tipos de comunicación que existen.
-En este proyecto, el equipo se encargará tanto del desarrollo técnico como de la gestión ágil del producto, transformando los requerimientos en incrementos funcionales. La estructura del equipo se distribuye en tres áreas especializadas: Juan Martín Juárez Solano, quien funge como desarrollador de Procesamiento de Lenguaje Natural (PLN) y Product Owner, será responsable de implementar el procesamiento del lenguaje, adaptar las frases al contexto de la Lengua de Señas Mexicana (LSM) y optimizar la comunicación con los módulos de animación. Iván Emiliano Sánchez Mancilla, desarrollador de Android y Scrum Master, estará a cargo de estructurar la aplicación, desarrollar interfaces y conectar los distintos módulos. Sergio Ulises Rojas Alarcon, por su parte, será el responsable del desarrollo de animaciones 3D con MediaPipe, diseñando avatares e implementando los gestos. Los directores del Trabajo Terminal asumen el rol de clientes, proporcionando requerimientos y validando los entregables del equipo.
 
-\newpage
 \subsection{Tipos de Comunicación}
 Uno de los tipos de comunicación está basado en si se usan palabras o no, es decir, comunicación verbal o no verbal \cite{ref23}:
 
@@ -97,6 +95,8 @@ Un oyente se define como aquella persona con la capacidad de escuchar sonidos qu
 \subsection{Personas con discapacidad auditiva (sordas)}
 Por otro lado, una persona que padece de discapacidad auditiva es aquella que ha sufrido la pérdida de la función del sistema auditivo, teniendo como consecuencia una discapacidad para poder oír, lo que dificulta el acceso al lenguaje oral \cite{ref27}.\\ 
 
+Los términos adecuados para referirse a las personas que padecen de esta condición son personas sordas, personas con discapacidad auditiva o personas de la comunidad sorda \cite{refsordos}. \\
+
 De acuerdo con la Federación Mundial de Sordos, existen aproximadamente 70 millones de personas sordas en todo el mundo, las cuales emplean más de 300 diferentes lenguas de señas \cite{ref28}. Las lenguas de señas varían entre países, presentando cambios principalmente en la estructura gramatical, sintaxis, vocabulario, signos, alfabeto y expresiones corporales \cite{ref26}.\\
 
 Por otro lado, la Secretaría de Salud menciona que en México hay aproximadamente 2.3 millones de personas con discapacidad auditiva, de las cuales más del 50\% son mayores de 60 años, 34\% tienen entre 30 y 59 años, y el 2\% son niñas y niños \cite{ref3}.\\
@@ -170,7 +170,7 @@ En el mundo existen cerca de 300 lenguas de señas distintas, siendo así que ca
 Por su parte, la Lengua de Señas Mexicana (LSM) es la lengua de señas que se emplea en México, que cuenta con su propio vocabulario y gramática. A la LSM se le considera como una lengua, debido a que es completamente capaz de expresar una amplia gama de pensamientos y emociones como cualquier otra lengua \cite{ref33}.
 
 \subsection{Lengua de Señas Mexicana (LSM)}
-La Ley General para la Inclusión de las Personas con Discapacidad [s26] define a la LSM, en el Artículo 2, como la lengua de una comunidad de sordos que consiste en una serie de signos gestuales articulados con las manos y acompañados de expresiones faciales, mirada intencional y movimiento corporal, dotados de función lingüística, que forma parte del patrimonio lingüistico de dicha comunidad y es tan rica y compleja en gramática y vocabulario como cualquier lengua oral \cite{ref34}.\\
+La Ley General para la Inclusión de las Personas con Discapacidad \cite{ref34} define a la LSM, en el Artículo 2, como la lengua de una comunidad de sordos que consiste en una serie de signos gestuales articulados con las manos y acompañados de expresiones faciales, mirada intencional y movimiento corporal, dotados de función lingüística, que forma parte del patrimonio lingüistico de dicha comunidad y es tan rica y compleja en gramática y vocabulario como cualquier lengua oral \cite{ref34}.\\
 
 Por su parte, el Artículo 20 de dicha ley establece que los medios de comunicación deben implementar la tecnología, más concretamente, de intérpretes de LSM que permitan a la comunidad de sordos las facilidades de comunicación \cite{ref34}.\\
 
@@ -353,9 +353,10 @@ En las lenguas de señas, los fonemas, las unidades mínimas con significado, pu
 \end{enumerate}
 
 \textbf{La Configuración Manual (CM) en la LSM}\\
-En las lenguas de señas, las manos son las principales herramientas para comunicar, aunque no son las únicas. Además de considerar la dirección del movimiento y el lugar en el espacio donde se hace una seña, también es esencial observar la forma que toman las manos, conocida como configuración manual (CM). Esta configuración puede variar tanto en la mano dominante como en la no dominante.\\
+\label{sec:config_manual}
+En las lenguas de señas, las manos son las principales herramientas para comunicar, aunque no son las únicas. Además de considerar la dirección del movimiento y el lugar en el espacio donde se hace una seña, también es esencial observar la forma que toman las manos, conocida como configuración manual (CM). Esta configuración puede variar tanto en la mano dominante como en la no dominante \cite{ref37}.\\
 
-La configuración manual, entonces, representa la forma específica que adoptan las manos al momento de hacer una seña. Esto incluye aspectos como:
+La configuración manual, entonces, representa la forma específica que adoptan las manos al momento de hacer una seña. Esto incluye aspectos como \cite{ref37}:
 
 \begin{itemize}
     \item \textbf{La posición de los dedos}: si están juntos o separados, doblados o rectos.
@@ -363,7 +364,7 @@ La configuración manual, entonces, representa la forma específica que adoptan 
     \item \textbf{La ubicación del pulgar y del índice}: suelen tener movimientos propios.
 \end{itemize}
 
-Desde un punto de vista técnico, la configuración manual forma parte de lo que se llama la matriz articulatoria. Dentro de ella, se distinguen dos grupos importantes:
+Desde un punto de vista técnico, la configuración manual forma parte de lo que se llama la matriz articulatoria. Dentro de ella, se distinguen dos grupos importantes \cite{ref37}:
 
 \begin{itemize}
     \item Los dedos (índice, medio, anular y meñique), que suelen moverse como bloque.
@@ -375,9 +376,9 @@ Debido a todas las combinaciones posibles entre estos elementos, las configuraci
 \newpage
 
 \textbf{Orientación de la Palma de la Mano}\\
-La orientación de la palma se refiere a la dirección en la que se encuentra la palma de la mano en relación con el cuerpo de la persona que está haciendo la seña, justo en el momento en que adopta la configuración manual.\\
+Se refiere a la dirección en la que se encuentra la palma de la mano en relación con el cuerpo de la persona que está haciendo la seña, justo en el momento en que adopta la configuración manual \cite{ref37}.\\
 
-En la Lengua de Señas Mexicana (LSM), se han identificado nueve posibles formas de orientar la palma durante la articulación de una seña. Estas son:
+En la Lengua de Señas Mexicana (LSM), se han identificado nueve posibles formas de orientar la palma durante la articulación de una seña \cite{ref37}. Estas son:
 
 \begin{enumerate}
     \item Palma hacia arriba, con los dedos apuntando a la izquierda.
@@ -399,9 +400,9 @@ En la Lengua de Señas Mexicana (LSM), se han identificado nueve posibles formas
 Cada una de estas orientaciones forma parte de la estructura visual y espacial de una seña, y su correcta ejecución es clave para transmitir el significado deseado.\\
 
 \textbf{Ubicación en la Lengua de Señas Mexicana (LSM)}\\
-La ubicación se refiere al lugar específico en el espacio donde se realiza una seña. Este espacio, conocido como espacio señante, puede estar frente al cuerpo o sobre él y es clave para transmitir el significado correcto.\\
+Hace referencia al lugar específico en el espacio donde se realiza una seña. Este espacio, conocido como espacio señante, puede estar frente al cuerpo o sobre él y es clave para transmitir el significado correcto \cite{ref37}.\\
 
-Para describir las señas en este diccionario, se dividió el espacio señante principalmente en niveles de altura y direcciones laterales. En algunos casos, también se toma en cuenta una tercera dimensión, que implica mayor cercanía o profundidad.\\
+Para describir las señas en este diccionario, se dividió el espacio señante principalmente en niveles de altura y direcciones laterales. En algunos casos, también se toma en cuenta una tercera dimensión, que implica mayor cercanía o profundidad \cite{ref37}.\\
 
 Cuando las señas se hacen sobre el cuerpo, se habla de “alturas” específicas, como por ejemplo:
 \begin{itemize}
@@ -439,10 +440,10 @@ Finalmente, si la seña se hace sobre el tronco del cuerpo, se especifica si es:
     \item Al centro.
 \end{itemize}
 
-Aunque algunas ubicaciones pueden detallarse aún más, se busca usar una descripción unificada para facilitar la comprensión.\\
+Aunque algunas ubicaciones pueden detallarse aún más, se busca usar una descripción unificada para facilitar la comprensión \cite{ref37}.\\
 
 \textbf{Dirección del Movimiento de la mano en la LSM}\\
-La dirección se refiere a la trayectoria que la mano sigue al realizar una seña. En la \autoref{direcciones_Mano} se muestran las nueve direcciones que las configuraciones manuales pueden seguir durante la articulación de las señas respecto al cuerpo.
+Es la trayectoria que la mano sigue al realizar una seña \cite{ref37}. En la \autoref{direcciones_Mano} se muestran las nueve direcciones que las configuraciones manuales pueden seguir durante la articulación de las señas respecto al cuerpo.
 
 \begin{center}
     \includegraphics[width=0.8\textwidth]{Images/Cap 2/Direccion_Manos_LSM.png}
@@ -450,8 +451,9 @@ La dirección se refiere a la trayectoria que la mano sigue al realizar una señ
     \label{direcciones_Mano}
 \end{center}
 
+\newpage
 \textbf{Explicación de los movimientos y sus símbolos}\\
-Una vez especificadas las posibles direcciones de las configuraciones manuales, se presenta a continuación una tabla con todos los movimientos que las manos pueden realizar en la LSM. En la primera columna se menciona el nombre del movimiento; en la segunda, la descripción del mismo y en la tercera aparecen flechas o imágenes de la mano para indicar la dirección o la manera en que las configuraciones manuales se mueven.\\
+La \autoref{tabla:Movimiento_LSM} muestra todos los movimientos que las manos pueden realizar en la LSM. En la primera columna se menciona el nombre del movimiento; en la segunda, la descripción del mismo y en la tercera aparecen flechas o imágenes de la mano para indicar la dirección o la manera en que las configuraciones manuales se mueven.\\
 
 \begin{longtable}{|m{5cm}|m{5cm}|m{5cm}|}
     \hline
@@ -569,12 +571,12 @@ Una vez especificadas las posibles direcciones de las configuraciones manuales, 
 \end{longtable}
 
 \textbf{Rasgos no manuales: expresión facial y gestos}\\
-Los rasgos no manuales (RNM) en la Lengua de Señas Mexicana incluyen la expresión facial, los gestos y los movimientos del cuerpo. Estos elementos se realizan al mismo tiempo que las señas y tienen una función gramatical clave, ya que aportan significado al mensaje, similar a cómo el tono de voz o la velocidad lo hacen en el español hablado.\\
+Los rasgos no manuales (RNM) en la Lengua de Señas Mexicana incluyen la expresión facial, los gestos y los movimientos del cuerpo \cite{ref37}. Estos elementos se realizan al mismo tiempo que las señas y tienen una función gramatical clave, ya que aportan significado al mensaje, similar a cómo el tono de voz o la velocidad lo hacen en el español hablado \cite{ref37}.\\
 
-También existen gestos universales que no dependen del idioma o la cultura, como los que expresan felicidad, tristeza, dolor o alegría y que se entienden en cualquier parte del mundo.\\
+También existen gestos universales que no dependen del idioma o la cultura, como los que expresan felicidad, tristeza, dolor o alegría y que se entienden en cualquier parte del mundo \cite{ref37}.\\
 
 \textbf{Tipos de Señas en la LSM}\\
-En la Lengua de Señas Mexicana (LSM), las señas se pueden clasificar de diferentes maneras, principalmente según cuántas manos se usan y cómo se mueven.
+En la Lengua de Señas Mexicana (LSM), las señas se pueden clasificar de diferentes maneras, principalmente según cuántas manos se usan y cómo se mueven \cite{ref37}:
 
 \begin{itemize}
     \item \textbf{Seña manual (SM)}: se realiza con una sola mano.
@@ -584,7 +586,7 @@ En la Lengua de Señas Mexicana (LSM), las señas se pueden clasificar de difere
 \end{itemize}
 
 \newpage
-Además, según la relación entre la seña y su significado, también se pueden clasificar así:
+Además, según la relación entre la seña y su significado, también se pueden clasificar así \cite{ref37}:
 \begin{itemize}
     \item Icónicas: Estas señas imitan la forma o alguna característica del objeto al que se refieren. Por ejemplo, la seña de “árbol” muestra cómo es un árbol.
     \item Referenciales en el cuerpo: Algunas señas se hacen en partes del cuerpo relacionadas con el objeto, como la seña de “manzana”, que se realiza en la mejilla.
@@ -595,18 +597,18 @@ Además, según la relación entre la seña y su significado, también se pueden
 \end{itemize}
 
 \textbf{Clasificadores en la LSM}\\
-En la LSM, los clasificadores son señas especiales que permiten describir mejor las características de un objeto. Estas señas combinan dos elementos: uno que indica a qué tipo de objeto se hace referencia (como persona, animal, cosa) y otro que muestra sus propiedades, como forma, tamaño o cómo se mueve.\\
+En la LSM, los clasificadores son señas especiales que permiten describir mejor las características de un objeto, las cuales combinan dos elementos: uno que indica a qué tipo de objeto se hace referencia (como persona, animal, cosa) y otro que muestra sus propiedades, como forma, tamaño o cómo se mueve \cite{ref37}. Son muy útiles cuando no existe una seña exacta para algo y ayudan a transmitir el mensaje de manera visual y clara\\
 
-Los clasificadores se basan en la configuración manual (CM), es decir, en la forma en la que se colocan y usan las manos. A través de estas configuraciones, se puede representar si un objeto es redondo, plano, grande, pequeño, blando, rígido, entre otros rasgos. También se pueden indicar su ubicación, cantidad u orden. Son muy útiles cuando no existe una seña exacta para algo y ayudan a transmitir el mensaje de manera visual y clara.\\
+Están basados en la configuración manual (CM), es decir, en la forma en la que se colocan y usan las manos. A través de estas configuraciones, se puede representar si un objeto es redondo, plano, grande, pequeño, blando, rígido, entre otros rasgos y, de igual manera, pueden indicar su ubicación, cantidad u orden \cite{ref37}.\\
 
-Además, existen clasificadores de predicado, que no solo describen el objeto, sino que también aportan información sobre su movimiento, posición o estado. Estos se combinan con “raíces de movimiento” para señalar si algo se mueve, está quieto o entra en contacto con algo. Las raíces de movimiento pueden ser:
+Además, existen clasificadores de predicado, que no solo describen el objeto, sino que también aportan información sobre su movimiento, posición o estado. Estos se combinan con “raíces de movimiento” para señalar si algo se mueve, está quieto o entra en contacto con algo \cite{ref37}. Las raíces de movimiento pueden ser:
 \begin{itemize}
     \item Movimiento o proceso.
     \item Descripción estática.
     \item Contacto con otro objeto.
 \end{itemize}
 
-Los clasificadores también se organizan en diferentes tipos, dependiendo de lo que representan:
+Los clasificadores también se organizan en diferentes tipos, dependiendo de lo que representan \cite{ref37}:
 \begin{itemize}
     \item Clasificadores de entidad (personas, animales, cosas).
     \item De superficie (planos, mesas, pisos).
@@ -617,18 +619,18 @@ Los clasificadores también se organizan en diferentes tipos, dependiendo de lo 
 \end{itemize}
 
 \textbf{Afijos}\\
-Un afijo es una pequeña unidad con significado que se añade a una palabra para cambiar su sentido o su función gramatical. De acuerdo con la definición de la Real Academia Española \cite{refrae}, los afijos son morfemas que se agregan a la raíz de una palabra para alterar su significado o categoría. Sin embargo, en la Lengua de Señas, el uso de afijos no es común como lo es en las lenguas orales.\\
+De acuerdo con la definición de la Real Academia Española \cite{refrae}, los afijos son morfemas que se agregan a la raíz de una palabra para alterar su sentido o función gramatical. No obstante, en la Lengua de Señas, el uso de afijos no es común como lo es en las lenguas orales \cite{ref37}.\\
 
-En las lenguas habladas, los afijos como prefijos y sufijos son parte esencial de la estructura de muchas palabras. En cambio, en la Lengua de Señas, su presencia es limitada y aparece sobre todo en situaciones en las que interviene el español escrito. Generalmente, son personas oyentes que conocen la LSM quienes tienden a emplear estos elementos con mayor frecuencia, adaptando la estructura del español al sistema visual y gestual de la lengua de señas.\\
+En las lenguas habladas, los afijos como prefijos y sufijos son parte esencial de la estructura de muchas palabras. En cambio, en la Lengua de Señas, su presencia es limitada y aparece sobre todo en situaciones en las que interviene el español escrito \cite{ref37}. Generalmente, son personas oyentes que conocen la LSM quienes tienden a emplear estos elementos con mayor frecuencia, adaptando la estructura del español al sistema visual y gestual de la lengua de señas.\\
 
 \textbf{Prefijos}\\
-En la Lengua de Señas Mexicana (LSM), los prefijos son elementos que se colocan al inicio de una seña para agregar información como el tiempo, el género o el número. Aunque en las lenguas orales los prefijos son comunes, en LSM su uso es más limitado y, en muchos casos, surge por influencia del español. Actualmente, se conservan pocos prefijos, como por ejemplo “in-” o “im-”, que se representan con una “I” hecha por la mano dominante al tocar la mano base.\\
+En la Lengua de Señas Mexicana (LSM), los prefijos son elementos que se colocan al inicio de una seña para agregar información como el tiempo, el género o el número \cite{ref37}. Aunque en las lenguas orales son comunes, en LSM su uso es más limitado y, en muchos casos, surge por influencia del español. Actualmente, se conservan pocos prefijos, como por ejemplo “in-” o “im-”, que se representan con una “I” hecha por la mano dominante al tocar la mano base \cite{ref37}.\\
 
-Para expresar el género femenino, se utiliza una seña específica que aparece después de indicar el masculino. El número (singular o plural) suele marcarse antes del sustantivo, y si se quiere enfatizar, puede colocarse también después.\\
+Para expresar el género femenino, se utiliza una seña específica que aparece después de indicar el masculino. El número (singular o plural) suele marcarse antes del sustantivo, y si se quiere enfatizar, puede colocarse también después \cite{ref37}.\\
 
-El tiempo del mensaje se indica al inicio, ya sea mediante una seña específica o con movimientos del cuerpo: inclinarse hacia adelante para el futuro, o hacia atrás para el pasado.\\
+El tiempo del mensaje se indica al inicio, ya sea mediante una seña específica o con movimientos del cuerpo: inclinarse hacia adelante para el futuro, o hacia atrás para el pasado \cite{ref37}.\\
 
-En cuanto a la negación, existen señas conocidas como dobletes, que tienen una forma afirmativa y otra negativa completamente distinta, sin necesidad de añadir gestos como mover la cabeza. Algunos ejemplos son:
+En cuanto a la negación, existen señas conocidas como dobletes, que tienen una forma afirmativa y otra negativa completamente distinta, sin necesidad de añadir gestos como mover la cabeza \cite{ref37}. Algunos ejemplos son:
 \begin{itemize}
     \item Gustar / No gustar.
     \item Poder / No poder.
@@ -640,9 +642,9 @@ En cuanto a la negación, existen señas conocidas como dobletes, que tienen una
 \end{itemize}
 
 \textbf{Sufijos}\\
-Los sufijos son pequeñas unidades de significado que se colocan después de una seña para dar más precisión o detalle al mensaje. Su uso en la Lengua de Señas Mexicana (LSM) se ha dado principalmente por la influencia del idioma español, ya que en las lenguas orales es común agregar estas terminaciones a las palabras.\\
+Son pequeñas unidades de significado que se colocan después de una seña para dar más precisión o detalle al mensaje. Su uso en la Lengua de Señas Mexicana (LSM) se ha visto influenciado principalmente por el idioma español, ya que en las lenguas orales es común agregar estas terminaciones a las palabras \cite{ref37}.\\
 
-En el pasado, los sufijos más frecuentes en LSM eran “-ción” y “-mente”, ya que ayudan a formar sustantivos abstractos o adverbios. Sin embargo, con el tiempo han dejado de usarse tanto y actualmente los sufijos que se siguen utilizando con mayor frecuencia son:
+En el pasado, los sufijos más frecuentes en LSM eran “-ción” y “-mente”, ya que ayudan a formar sustantivos abstractos o adverbios \cite{ref37}. Sin embargo, con el tiempo han dejado de usarse tanto y actualmente los sufijos que se siguen utilizando con mayor frecuencia son:
 
 \begin{itemize}
     \item -ito / -ita, que indican diminutivo o cercanía con afecto.
@@ -655,7 +657,7 @@ En el pasado, los sufijos más frecuentes en LSM eran “-ción” y “-mente�
 \subsection{Dactilología}
 La dactilología es un sistema de comunicación que transmite información mediante el deletreo manual, y en ocasiones es usado en conjunto con la lengua de señas. Se emplea la mano de diferente manera para pronunciar cada una de las letras \cite{ref30}.\\
 
-Otra definición de la dactilología es que es la representación manual de cada una de las letras que componen el alfabeto, para poder transmitir a las personas sordas cualquier palabra que se desee comunicar. Todas las lenguas de señas poseen mecanismos internos que les permiten generar mensajes \cite{ref40}.\\
+Otra definición de la dactilología es que es la representación manual de cada una de las letras que componen el alfabeto para poder transmitir a las personas sordas cualquier palabra que se desee comunicar. Todas las lenguas de señas poseen mecanismos internos que les permiten generar mensajes \cite{ref40}.\\
 
 Para comunicarse por medio de dactilología se emplea la mano dominante a la altura de la barbilla, en conjunto con la articulación oral, siendo necesario que la cara y la boca sean visibles \cite{ref40}. Principalmente se usa para sustantivos, nombres propios, direcciones y palabras para los cuales no existe un signo creado.\\
 
