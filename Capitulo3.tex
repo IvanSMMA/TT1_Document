@@ -495,52 +495,113 @@ El análisis realizado en esta sección, permite concluir que el proyecto es tan
  \begin{flushleft} \href{https://miro.com/app/board/uXjVI24dV0c=/?share_link_id=690276332577}{\textbf{Ver el diagrama de arquitetcura con detalle}} \end{flushleft}
 
 \subsubsection{Reglas de negocio}
-\begin{itemize}[leftmargin=1.5cm]
-    \item \textbf{RN01:} El sistema debe permitir al usuario solo ingresar texto de forma manual o pegarlo desde otra aplicación.
-    \item \textbf{RN02:} El campo de entrada debe tener un límite de caracteres (por ejemplo, 30 caracteres).
-    \item \textbf{RN03:} El sistema debe validar el texto ingresado para evitar caracteres no permitidos.
-    \item \textbf{RN04:} El botón de traducción debe estar habilitado solo cuando el campo de texto no esté vacío.
-    \item \textbf{RN05:} El sistema debe mostrar un mensaje de error si el texto ingresado no es válido.
-    \item \textbf{RN06:} El sistema debe permitir al usuario editar el texto antes de enviarlo a traducción.
-	\item \textbf{RN07:} El sistema siempre debe mostrar alguna animación, ya sea la correspondiente a la traducción o el deletreo.
-\end{itemize}
-\subsubsection{Requerimientos funcionales}
-\begin{itemize}
-    \item \textbf{RF01: Entrada de Texto}  
-    La aplicación debe permitir al usuario ingresar y editar texto que será traducido a LSM.
-    
-    \item \textbf{RF02: Procesamiento de Lenguaje Natural (PLN)}  
-    Implementar un módulo que valide, analice y procese el texto ingresado, identificando frases clave y contextos específicos para su traducción.
-    
-    \item \textbf{RF03: Generación de Avatares 3D}  
-    Desarrollar avatares 3D que representen visualmente las señas correspondientes a las frases procesadas. Los avatares deben ser capaces de mostrar expresiones faciales y movimientos corporales que reflejen la gramática y sintaxis de la LSM. 
-    
-    \item \textbf{RF04: Modo de Deletreo}  
-    El sistema debe intentar asignarle una traducción a la frase ingresada. En caso de que a una frase no se le pueda asignar una traducción, la aplicación debe deletrear palabra por palabra utilizando el alfabeto dactilológico de la LSM.
-    
-    
-\end{itemize}
 
+\begin{table}[H]
+	\centering
+	\renewcommand{\arraystretch}{1.5}
+	\setlength{\tabcolsep}{5pt}
+	\begin{adjustbox}{max width=\linewidth}
+		\normalsize
+		\begin{tabular}{|c|p{4.5cm}|p{9cm}|}
+			\hline
+			\textbf{Núm.} & \textbf{Nombre} & \textbf{Descripción} \\ \hline
+			
+			RN01 & Entrada de texto manual & El sistema debe permitir al usuario solo ingresar texto de forma manual o pegarlo desde otra aplicación. \\ \hline
+			
+			RN02 & Límite de caracteres & El campo de entrada debe tener un límite de caracteres (por ejemplo, 30 caracteres). \\ \hline
+			
+			RN03 & Validación de caracteres & El sistema debe validar el texto ingresado para evitar caracteres no permitidos. \\ \hline
+			
+			RN04 & Activación del botón & El botón de traducción debe estar habilitado solo cuando el campo de texto no esté vacío. \\ \hline
+			
+			RN05 & Error por texto inválido & El sistema debe mostrar un mensaje de error si el texto ingresado no es válido. \\ \hline
+			
+			RN06 & Edición antes de traducir & El sistema debe permitir al usuario editar el texto antes de enviarlo a traducción. \\ \hline
+			
+			RN07 & Siempre mostrar animación & El sistema siempre debe mostrar alguna animación, ya sea la correspondiente a la traducción o el deletreo. \\ \hline
+			
+		\end{tabular}
+	\end{adjustbox}
+	\caption[Reglas de negocio del prototipo]{Reglas de negocio definidas para el prototipo, elaboración propia.}
+	\label{tab:reglas_negocio}
+\end{table}
+
+\subsubsection{Requerimientos funcionales}
+
+\begin{table}[H]
+	\centering
+	\renewcommand{\arraystretch}{1.6}
+	\setlength{\tabcolsep}{5pt}
+	\begin{adjustbox}{max width=\linewidth}
+		\normalsize
+		\begin{tabular}{|c|p{13.5cm}|}
+			\hline
+			\textbf{Núm.} & \textbf{Descripción} \\ \hline
+			
+			RF01 & La aplicación debe permitir al usuario ingresar y editar texto que será traducido a LSM. \\ \hline
+			
+			RF02 & Implementar un módulo que valide, analice y procese el texto ingresado, identificando frases clave y contextos específicos para su traducción adecuada. \\ \hline
+			
+			RF03 & Desarrollar avatares 3D que representen visualmente las señas correspondientes a las frases procesadas. Los avatares deben ser capaces de mostrar expresiones faciales y movimientos corporales que reflejen la gramática y sintaxis de la LSM. \\ \hline
+			
+			RF04 & El sistema debe intentar asignarle una traducción a la frase ingresada. En caso de que a una frase no se le pueda asignar una traducción, la aplicación debe ofrecer la opción de deletrear palabra por palabra utilizando el alfabeto dactilológico de la LSM. \\ \hline
+			
+		\end{tabular}
+	\end{adjustbox}
+	\caption[Requerimientos funcionales del prototipo]{Requerimientos funcionales del prototipo, elaboración propia.}
+	\label{tab:requerimientos_funcionales}
+\end{table}
 
 \subsubsection{Requerimientos no funcionales}
-\begin{itemize}
-    \item \textbf{RnF01: Rendimiento}  
-    La aplicación debe cargar y procesar las traducciones en menos de 2 segundos, garantizando una experiencia de usuario rápida y eficiente.
-    
-    \item \textbf{RnF02: Usabilidad}  
-    La interfaz debe ser fácil de navegar, con instrucciones claras y botones de acción bien definidos, siguiendo las heurísticas de usabilidad de Nielsen.
+En este caso, los requerimientos no funcionales se basaron en los especificados por Ian Sommerville [CITAAAA 1].
 
-	 \item \textbf{RnF03: Animaciones y Transiciones}  
-    Las animaciones entre señas deben ser fluidas y naturales, utilizando IA para optimizar las transiciones y evitar movimientos bruscos o poco realistas.
-    
-    \item \textbf{RnF04: Interfaz de Usuario (UI)}  
-    Diseñar una interfaz intuitiva y accesible que permita a los usuarios ingresar texto personalizado para su traducción.
-
-    \item \textbf{RnF05: Actualización del contenido lingüístico}
-	El sistema debe permitir la incorporación y actualización de nuevas versiones del LSM, incluyendo modificaciones en señas existentes, adición de nuevas señas o adaptaciones conforme evolucionen los estándares lingüísticos oficiales.
-	\item \textbf{RnF06: Compatibilidad}  
-    La aplicación debe ser compatible con la última versión de Android, garantizando su funcionamiento en una amplia gama de dispositivos móviles.
-\end{itemize}
+\begin{table}[H]
+	\centering
+	\renewcommand{\arraystretch}{1.6}
+	\setlength{\tabcolsep}{5pt}
+	\begin{adjustbox}{max width=\linewidth}
+		\normalsize
+		\begin{tabular}{|c|p{8.1cm}|p{4.6cm}|}
+			\hline
+			\textbf{Núm.} & \textbf{Descripción} & \textbf{Métricas} \\ \hline
+			
+			RNF01 & La aplicación debe cargar y procesar las traducciones en menos de 2 segundos, garantizando una experiencia de usuario rápida y eficiente. & 
+			\begin{tabular}[t]{@{}p{4.6cm}@{}}
+				\raggedright \textbf{Métrica 1:} tiempo de respuesta promedio de 2 segundos por petición. \\
+			\end{tabular} \\ \hline
+			
+			RNF02 & La interfaz debe ser fácil de navegar, con instrucciones claras y botones de acción bien definidos, siguiendo las heurísticas de usabilidad de Nielsen. & 
+			\begin{tabular}[t]{@{}p{4.6cm}@{}}
+				\raggedright \textbf{Métrica 1:} 80\,\% de usuarios completan tareas básicas sin ayuda. \\
+				\textbf{Métrica 2:} tiempo promedio de 1 minuto para tareas básicas.
+			\end{tabular} \\ \hline
+			
+			RNF03 & Las animaciones entre señas deben ser fluidas y naturales, utilizando IA para optimizar las transiciones y evitar movimientos bruscos o poco realistas. & 
+			\begin{tabular}[t]{@{}p{4.6cm}@{}}
+				\raggedright \textbf{Métrica 1:} 80\,\% de textos producen animaciones sin movimientos bruscos ni interrupciones entre señas.
+				
+			\end{tabular} \\ \hline
+			
+			RNF04 & Diseñar una interfaz intuitiva y accesible, siguiendo las heurísticas de usabilidad de Nielsen, que permita a los usuarios ingresar texto personalizado para su traducción. & 
+			\begin{tabular}[t]{@{}p{4.6cm}@{}}
+				\raggedright \textbf{Métrica 1:} máximo de 5 clics para completar una tarea básica.
+			\end{tabular} \\ \hline
+			
+			RNF05 & El sistema debe ser capaz de adaptarse a futuras expansiones, como la inclusión de más frases, soporte para otros dialectos de señas o integración con otras plataformas. & 
+			\begin{tabular}[t]{@{}p{4.6cm}@{}}
+				\raggedright \textbf{Métrica 1:} nuevas funciones deben agregarse como módulos independientes, sin modificar más del 5\% del código existente. 
+			\end{tabular} \\ \hline
+			
+			RNF06 & La aplicación debe ser compatible con la última versión de Android (versión 14), garantizando su funcionamiento en una amplia gama de dispositivos móviles. & 
+			\begin{tabular}[t]{@{}p{4.6cm}@{}}
+				\raggedright \textbf{Métrica 1:} validación funcional en al menos 3 dispositivos con Android (versión 14).
+			\end{tabular} \\ \hline
+			
+		\end{tabular}
+	\end{adjustbox}
+	\caption[Requerimientos no funcionales del prototipo]{Requerimientos no funcionales del prototipo, elaboración propia.}
+	\label{tab:requerimientos_no_funcionales}
+\end{table}
 
 \subsubsection{Diagrama de procesos}
 \begin{center}
@@ -562,7 +623,7 @@ El análisis realizado en esta sección, permite concluir que el proyecto es tan
 \subsubsection{Diagrama de clases}
 \begin{center}
 	\makebox[\textwidth]{%
-		\includegraphics[width=1\textwidth]{Images/Cap 3/tapecito.png}
+		\includegraphics[width=1\textwidth]{Images/Cap 3/clasesFinal.png}
 	}
 	\captionof{figure}{Diagrama de clases del sistema}
 \end{center}
@@ -743,7 +804,7 @@ Los riesgos técnicos están relacionados con las limitaciones de la tecnología
 	\hline
 	T3 & Desactualización tecnológica del modelo de IA frente a avances rápidos en el área. & Moderada (25-50\%) & Serio \\
 	\hline
-	T4 & Dificultad para manejar las variaciones regionales y culturales de LSM. & Media (25-50\%) & Catastrófico \\
+	T4 & Dificultad para manejar las variaciones regionales y culturales de LSM. & Media (25-50\%) & Tolerable \\
 	\hline
 	T5 & Problemas de compatibilidad y funcionamiento multiplataforma. & Moderado (25-50\%) & Serio \\
 	\hline
@@ -811,7 +872,7 @@ Riesgos asociados a las normativas, certificaciones y cuestiones éticas, especi
 	\hline
 	E2 & Ausencia de certificaciones o validaciones oficiales del modelo de traducción. & Moderada (25-50\%) & Serio \\
 	\hline
-	E3 & Uso no autorizado de bases de datos o glosarios protegidos. & Baja (10-25\%) & Catastrófico \\
+	E3 & Uso no autorizado de conjuntos de datos o glosarios protegidos. & Baja (10-25\%) & Catastrófico \\
 	\hline
 	E4 & Incumplimiento con normativas de accesibilidad digital o protección de datos. & Moderada (25-50\%) & Catastrófico \\
 	\hline
