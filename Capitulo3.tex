@@ -24,11 +24,6 @@ Las tecnologías consideradas para el presente proyecto incluyen:
 \subsubsection{Condiciones para la ejecución}
 El proyecto se desarrolla en el marco de un trabajo terminal académico, lo que garantiza el acceso a recursos institucionales, asesoría especializada y bibliografía técnica actualizada. De igual manera, el creciente interés social y académico por fomentar la inclusión de la comunidad sorda en México genera un entorno favorable para la implementación de este tipo de iniciativas, fortaleciendo así las condiciones de ejecución del prototipo.
 
-Además de considerar las condiciones actuales para la ejecución del proyecto, se ha previsto su potencial de crecimiento a futuro, como se expone a continuación.
-
-\subsubsection{Escalabilidad}
-Aunque el proyecto está concebido inicialmente como un prototipo académico, su arquitectura modular permitirá una potencial expansión hacia una versión comercial en etapas futuras. Esta expansión contemplaría la incorporación de un mayor número de frases, la optimización de los motores de animación y la adaptación a múltiples dispositivos o plataformas. No obstante, se reconoce que dicho crecimiento requerirá una inversión adicional en recursos financieros y humanos, factores que deberán evaluarse conforme avance el desarrollo del proyecto.
-
 \subsection{Factibilidad}
 La factibilidad del proyecto se analiza considerando los recursos financieros, humanos y tecnológicos disponibles, así como el tiempo estimado para su desarrollo y finalización.
 
@@ -489,7 +484,6 @@ El tiempo estimado para el desarrollo del prototipo es de aproximadamente ocho m
 El análisis realizado en esta sección, permite concluir que el proyecto es tanto viable como factible dentro del contexto académico en el cual se desarrolla. El equipo de trabajo cuenta con los conocimientos fundamentales, el acceso a las tecnologías requeridas y los recursos necesarios para la construcción de un prototipo funcional. Aunque se han identificado áreas que demandarán un proceso de capacitación complementaria, estas no representan un obstáculo significativo para el éxito del proyecto, siempre que se mantenga una adecuada gestión de tiempos y actividades conforme a los alcances establecidos. De este modo, se fortalecen las condiciones para lograr un desarrollo efectivo que cumpla con los objetivos planteados y a futuro siente las bases para una posible expansión comercial.
 
 \section{Análisis y diseño de sistemas}
-\subsection{Descripción del alcance}
 \subsection{Entregables}
 
 \subsubsection{Diagrama de arquitectura}
@@ -533,6 +527,7 @@ El análisis realizado en esta sección, permite concluir que el proyecto es tan
 \end{table}
 
 \subsubsection{Requerimientos funcionales}
+<<<<<<< HEAD
 \begin{table}[H]
 	\centering
 	\renewcommand{\arraystretch}{1.6}
@@ -556,6 +551,23 @@ El análisis realizado en esta sección, permite concluir que el proyecto es tan
 	\caption[Requerimientos funcionales del prototipo]{Requerimientos funcionales del prototipo, elaboración propia.}
 	\label{tab:requerimientos_funcionales}
 \end{table}
+=======
+\begin{itemize}
+    \item \textbf{RF01: Entrada de Texto}  
+    La aplicación debe permitir al usuario ingresar y editar texto que será traducido a LSM.
+    
+    \item \textbf{RF02: Procesamiento de Lenguaje Natural (PLN)}  
+    Implementar un módulo que valide, analice y procese el texto ingresado, identificando frases clave y contextos específicos para su traducción.
+    
+    \item \textbf{RF03: Generación de Avatares 3D}  
+    Desarrollar avatares 3D que representen visualmente las señas correspondientes a las frases procesadas. Los avatares deben ser capaces de mostrar expresiones faciales y movimientos corporales que reflejen la gramática y sintaxis de la LSM. 
+    
+    \item \textbf{RF04: Modo de Deletreo}  
+    El sistema debe intentar asignarle una traducción a la frase ingresada. En caso de que a una frase no se le pueda asignar una traducción, la aplicación debe deletrear palabra por palabra utilizando el alfabeto dactilológico de la LSM.
+    
+    
+\end{itemize}
+>>>>>>> c3b3ba7c54096a59b15cf4c85ce0355824d7a067
 
 
 \subsubsection{Requerimientos no funcionales}
@@ -610,7 +622,15 @@ En este caso, los requerimientos no funcionales se basaron en los especificados 
 \end{table}
 
 
+<<<<<<< HEAD
 
+=======
+    \item \textbf{RnF05: Actualización del contenido lingüístico}
+	El sistema debe permitir la incorporación y actualización de nuevas versiones del LSM, incluyendo modificaciones en señas existentes, adición de nuevas señas o adaptaciones conforme evolucionen los estándares lingüísticos oficiales.
+	\item \textbf{RnF06: Compatibilidad}  
+    La aplicación debe ser compatible con la última versión de Android, garantizando su funcionamiento en una amplia gama de dispositivos móviles.
+\end{itemize}
+>>>>>>> c3b3ba7c54096a59b15cf4c85ce0355824d7a067
 
 \subsubsection{Diagrama de procesos}
 \begin{center}
@@ -648,26 +668,40 @@ En este caso, los requerimientos no funcionales se basaron en los especificados 
 \subsubsection{Casos de uso}
 \subsubsection{Caso de uso 01: Traducir texto}
 \subsubsection{Resumen}
-El usuario ingresa texto en español en la aplicación, que luego es procesado y traducido a LSM para visualizar una animación correspondiente a la traducción.
+El usuario ingresa texto en la aplicación, que luego es procesado y traducido a LSM para visualizar una animación correspondiente a la traducción.
 \subsubsection{Descripción}
 
 \noindent
 \begin{tabularx}{\textwidth}{|l|X|}
 \hline
-\textbf{Atributos} & Tipo de texto: Español, límite de 500 caracteres, validación de caracteres permitidos. \\ \hline
-\textbf{Actores} & Usuario (quien ingresa el texto). \\ \hline
-\textbf{Proposito} & Generar una traducción apartir del texo ingresado en Español a LSM. \\ \hline
-\textbf{Entrada} & Texto. \\ \hline
-\textbf{Salida} & Se mostrará la animación asignada al texto o en el deletreo dactilológico en su defecto. \\ \hline
-\textbf{Precondiciones} & El sistema está abierto y funcionando correctamente. El usuario debe estar en la pantalla principal. \\ \hline
-\textbf{Postcondición} & El usuario podrá visualizar la animación \\ \hline
+\textbf{Caso de uso} & Traducir texto \\ \hline
+
+\textbf{Actor principal} & Usuario (persona que ingresa el texto a traducir). \\ \hline
+
+\textbf{Descripción} & El usuario ingresa texto en el campo indicado de la aplicación. El sistema procesa la frase y determina si existe una traducción directa en LSM. En caso afirmativo, se reproduce la animación correspondiente con un avatar 3D. Si no se encuentra una coincidencia, el sistema recurre al deletreo dactilológico para representar el texto ingresado. \\ \hline
+
+\textbf{Atributos del texto} & Máximo 50 caracteres. Validación para evitar caracteres especiales o símbolos no admitidos. \\ \hline
+
+\textbf{Entrada} & Texto proporcionado por el usuario. \\ \hline
+
+\textbf{Procesamiento} & El módulo de procesamiento de lenguaje natural (PLN) analiza el texto y busca coincidencias en el conjunto de datos. Si no hay coincidencia, se segmenta y transforma en deletreo letra por letra. \\ \hline
+
+\textbf{Salida} & Se muestra la animación en 3D de la traducción en LSM o, en su defecto, del deletreo dactilológico correspondiente. Se incluye un mensaje visual de inicio con la palabra "Vamos". \\ \hline
+
+\textbf{Precondiciones} & El sistema debe estar encendido, funcional y el usuario debe encontrarse en la pantalla principal con acceso al campo de texto. \\ \hline
+
+\textbf{Postcondiciones} & El usuario visualiza la animación correspondiente y tiene la opción de ingresar una nueva frase para traducir. \\ \hline
+
+\textbf{Excepciones} & Si el texto excede el límite o contiene caracteres no válidos, el sistema mostrará un mensaje de error con base en la RN05 e invitará a corregir la entrada. \\ \hline
 \end{tabularx}
+\captionof{table}[Caso de uso 1]{Caso de uso 1, elaboración propia.}
+
 
     
 
 \subsubsection{Trayectoria principal}
 \begin{enumerate}[label=\textbf{\arabic*}, leftmargin=1.5cm]
-    \item \UCsystem \ El sistema muestra un campo de entrada de texto en la pantalla principal de la aplicación, permitiendo al usuario ingresar texto en español.  
+    \item \UCsystem \ El sistema muestra un campo de entrada de texto en la pantalla principal de la aplicación, permitiendo al usuario ingresar texto.  
     Además, la interfaz incluye:  
     \begin{itemize}
         \item Botón para iniciar la traducción.
@@ -675,7 +709,7 @@ El usuario ingresa texto en español en la aplicación, que luego es procesado y
 
     \item \UCactor \ Ingresa el texto en el campo de entrada.  
    
-    \item \UCsystem \ El sistema procesa el texto ingresado y lo traduce a LSM, mostrando el resultado en formato animado o en video.
+    \item \UCsystem \ El sistema procesa el texto ingresado y le asigna una traducción a LSM, mostrandole la animación asignada si la hubo o el deletreo dactilológico si no se le pudo asignar una.
 
     \item \UCactor \ Puede ingresar texto nuevo y volver a interar la traducción.
 
@@ -704,8 +738,11 @@ El usuario ingresa texto en español en la aplicación, que luego es procesado y
     \captionof{figure}{Diagrama de caso de uso 1}
 \end{center}
 
+
 \subsubsection{Identificación de frases}
-\noindent
+
+\begin{table}[H]
+\centering
 \begin{tabularx}{\textwidth}{|X|X|X|}
 \hline
 \textbf{Emergencia (3 a 5 palabras)} & \textbf{Saludo (2 a 4 palabras)} & \textbf{Agradecimiento/ Respuestas (2 a 4 palabras)} \\ \hline
@@ -720,6 +757,9 @@ Necesito asistencia urgente. & ¿Cómo te llamas? & No hay problema. \\ \hline
 ¿Dónde está la salida? & Me llamo [nombre]. & No pasa nada. \\ \hline
 ¡Fuego! ¡Fuego! & Hasta luego. & Es un placer. \\ \hline
 \end{tabularx}
+\caption[Identificación de frases]{Identificación de frases, elaboración propia.}
+\end{table}
+Las frases seleccionadas son ejemplos representativos de situaciones cotidianas y de emergencia. Se busca que el usuario pueda comunicarse de manera efectiva en contextos importantes, facilitando la comprensión y la interacción con personas que utilizan la Lengua de Señas Mexicana (LSM).
 
 \subsection{Mockups del sistema}
 \begin{center}
@@ -734,16 +774,16 @@ La primera pantalla que se muestra es la pantalla de carga de la aplicación, la
     \captionof{figure}{Mockup de la pantalla de ingreso de texto}
 \end{center}
  
-La seguda pantalla de la aplicación, la pantalla principal, es la pantalla para ingresar el texto. Se muestra el nombre de la app, un mensaje de bienvenida al usuario, un cuadro para ingresar el texto y un botón para acceder a la traducción.\\
+La seguda pantalla de la aplicación, la pantalla principal, es la pantalla para ingresar el texto. Se muestra el nombre de la app y  un cuadro para ingresar el texto y un botón para acceder a la traducción.\\
 
-Se debe ingresar texto en español dentro del cuadtro de entrada de texto, para que se realice todo el Procesamiento de Lenguaje Natural y mostrar la animación.
+Se debe ingresar texto dentro del cuadro de entrada de texto, para que se realice todo el Procesamiento de Lenguaje Natural y mostrar la animación.
 
 \begin{center}
     \includegraphics[width=0.5\textwidth]{Images/Cap 3/Pantalla3.png}
     \captionof{figure}{Mockup de la pantalla la animación}
 \end{center}
 
-La tercera pantalla de la aplicación es la pantalla en donde se muestra la animación 3D de la traducción, para que el usuario sepa en que momento inicia la traducción se le mostrará un mensaje con la palabra "Vamos" . Además se le indica la frase ingresada del usuario y la traducción asignada. Debajo del avatar 3D, se vuelve a mostrar el cuadro de entrada de texto para ingresar un nuevo mensaje.
+La tercera pantalla de la aplicación es la pantalla en donde se muestra la animación 3D asignada a la traducción, para que el usuario sepa en que momento inicia la traducción se le mostrará un mensaje con la palabra "Vamos" . Además se le indica la frase ingresada del usuario y la traducción asignada. Debajo del avatar 3D, se vuelve a mostrar el cuadro de entrada de texto para ingresar un nuevo mensaje.
 
 \begin{center}
     \includegraphics[width=0.5\textwidth]{Images/Cap 3/Pantalla4.png}
@@ -752,8 +792,11 @@ La tercera pantalla de la aplicación es la pantalla en donde se muestra la anim
 
 En caso de que no se le pueda asignar una traducción a la frase ingresada, se mostrará la pantalla de deletreo dactilológico, al igual que la Pantalla anterior para que el usuario sepa en que momento inicia la traducción se le mostrará un mensaje con la palabra "Vamos". En esta pantalla se muestra el avatar 3D realizando el deletreo de la frase ingresada por el usuario. Al igual que en la pantalla anterior, se vuelve a mostrar el cuadro de entrada de texto para ingresar un nuevo mensaje.
 
-
-
+\begin{center}
+	\includegraphics[width=0.5\textwidth]{Images/Cap 3/Paleta.png}
+	\captionof{figure}{Paleta de colores de la aplicación}
+\end{center}
+Se selccionó la siguiente paleta de colores para la aplicación, ya que usa colores representativos de la bandera de LSM, además de que los colores son agradables a la vista y no generan cansancio visual.
 
 \subsection{Identificación y evaluación de riesgos}
 \subsubsection{Leyenda de probabilidad y efecto}
@@ -1128,6 +1171,34 @@ La revisión del estado del arte y la construcción del marco teórico permiten 
 % \appendix
 \chapter*{Anexos}
 \addcontentsline{toc}{chapter}{Anexos}
+
+\chapter{Ley General para la Inclusión de las Personas con Discapacidad}
+\label{anexo:ley_inclusion_disc}
+\section{Encabezado de la Ley General para la Inclusión de las Personas con Discapacidad}
+
+\begin{center}
+	\makebox[\textwidth]{%
+		\includegraphics[width=1\textwidth]{Images/Anexos/Encabezado_Ley.png}
+	}
+    \captionof{figure}[Encabezado de la Ley General para la Inclusión de las Personas con Discapacidad]{Encabezado de la Ley General para la Inclusión de las Personas con Discapacidad, obtenido de \cite{ref34}}
+\end{center}
+
+\section{Artículo 2, Fracción XXII}
+\begin{center}
+	\makebox[\textwidth]{%
+		\includegraphics[width=1\textwidth]{Images/Anexos/Art2_FraccXXII.png}
+	}
+    \captionof{figure}[Artículo 2, Fracción XXII, de la Ley General para la Inclusión de las Personas con Discapacidad]{Artículo 2, Fracción XXII, de la Ley General para la Inclusión de las Personas con Discapacidad, obtenido de \cite{ref34}}
+\end{center}
+
+\section{Artículo 20}
+\begin{center}
+	\makebox[\textwidth]{%
+		\includegraphics[width=1\textwidth]{Images/Anexos/Art20.png}
+	}
+    \captionof{figure}[Artículo 20]{Artículo 20 de la Ley General para la Inclusión de las Personas con Discapacidad, obtenido de \cite{ref34}}
+\end{center}
+
 \chapter{Enfoque por actividades (académico)}
 \label{anexo:actividades_academicas}  % Etiqueta para hacer referencia
 \section{Etapa: creación del prototipo}
