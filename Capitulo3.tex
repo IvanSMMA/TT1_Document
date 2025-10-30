@@ -6,18 +6,16 @@ En esta sección, se presenta el análisis de viabilidad y factibilidad del prot
 El análisis de viabilidad considera los conocimientos técnicos del equipo, la madurez de las tecnologías disponibles y las condiciones actuales para el desarrollo. Este análisis permite evaluar si el proyecto puede llevarse a cabo de manera exitosa bajo las condiciones planteadas.
 
 \subsubsection{Conocimientos y experiencia}
-El equipo de desarrollo posee conocimientos en Procesamiento de Lenguaje Natural (PLN), así como habilidades básicas en animaciones y recursos visuales. Aunque la experiencia en animación 3D orientada a señas, en programación de aplicaciones móviles y en el manejo de la Lengua de Señas Mexicana (LSM) es limitada, se considera factible adquirir y aplicar los conocimientos necesarios mediante el uso de recursos de investigación, bibliotecas especializadas y la colaboración con expertos en LSM, tomando en cuenta la versión correspondiente al uso y documentación del año 2024. Esta disposición de aprendizaje y fortalecimiento de competencias respalda la viabilidad técnica del proyecto en función de las capacidades del equipo.
-
+El equipo de desarrollo posee conocimientos en herramientas de IA como el Procesamiento de Lenguaje Natural (PLN), así como habilidades básicas en animaciones y recursos visuales. Aunque la experiencia en programación de aplicaciones móviles y en el manejo de la Lengua de Señas Mexicana (LSM) es limitada, se considera factible adquirir y aplicar los conocimientos necesarios mediante el uso de recursos de investigación, bibliotecas especializadas y la colaboración con expertos en LSM, tomando en cuenta la versión correspondiente al uso y documentación del año 2024. Esta disposición de aprendizaje y fortalecimiento de competencias respalda la viabilidad técnica del proyecto en función de las capacidades del equipo.
 De manera complementaria, se cuenta con diversas tecnologías que facilitarán la implementación del prototipo, tal como se describe a continuación.
 
 \subsubsection{Tecnologías disponibles}
-Actualmente, existen diversas tecnologías y herramientas que facilitan la creación de sistemas de traducción de texto a señas, tales como conjunto de datos de señas en video, motores de animación 3D y frameworks para el desarrollo de aplicaciones móviles. Asimismo, se dispone de plataformas de código abierto que permiten representar señas mediante modelos animados o videos precargados, optimizando así los recursos disponibles para el desarrollo de prototipos.
+Actualmente, existen diversas tecnologías y herramientas que facilitan la creación de sistemas de traducción de texto a señas, tales como conjunto de datos de señas en video, frameworks para el desarrollo de aplicaciones móviles y herramientas para creación de animaciones. Asimismo, se dispone de plataformas de código abierto que permiten representar señas mediante modelos animados o videos precargados, optimizando así los recursos disponibles para el desarrollo de prototipos.
 
 Las tecnologías consideradas para el presente proyecto incluyen:
 \begin{itemize} 
 	\item Librerías y conjunto de datos de señas mexicanas (videos de señas). 
-	\item Herramientas de animación 3D como Blender (versión 4.4.3) o Unity (versión 6.1), así como motores ligeros compatibles con aplicaciones móviles. 
-	\item Frameworks de desarrollo móvil como Flutter (versión 3.29.3) y React Native (versión 0.79). 
+	\item Frameworks de desarrollo móvil como React (19.0.0) y Expo SDK (54.0.0). 
 	\item Herramientas de Procesamiento de Lenguaje Natural (PLN) para el análisis y segmentación de frases en español. 
 \end{itemize}
 
@@ -62,7 +60,7 @@ Dentro del análisis basado en recursos, el proceso de desarrollo se ha estructu
 Cada una de estas etapas será detallada en los apartados siguientes.
 
 \paragraph{\textbf{Creación del prototipo.}} 
-Esta primera etapa abarca todas las actividades necesarias para el desarrollo inicial del prototipo: definición de objetivos, especificaciones técnicas, requisitos, diseño de animaciones, etc. Aquí se implementan técnicas de PLN para la segmentación de frases y modelado/animación 3D para representar las señas en LSM.
+Esta primera etapa abarca todas las actividades necesarias para el desarrollo inicial del prototipo: definición de objetivos, especificaciones técnicas, requisitos, diseño de animaciones, etc. Aquí se implementan técnicas de PLN para la segmentación de frases y de animaciones para representar las señas en LSM.
 
 \paragraph{\textbf{Despliegue del prototipo.}} 
 Incluye acciones para poner en funcionamiento la app en Android (versión 14), publicación, configuración técnica, documentación técnica y pruebas piloto con usuarios. Esta retroalimentación permitirá ajustar y mejorar la experiencia de uso.
@@ -155,7 +153,7 @@ En esta sección se presentan los costos estimados de artículos y adquisiciones
 
 
 \noindent \textbf{Nota aclaratoria:}  
-el equipo de cómputo utilizado corresponde a dispositivos personales de los integrantes del proyecto, por lo cual no se ha considerado un costo adicional en esta categoría. La compra de modelos 3D o recursos gráficos es considerada opcional y dependerá de la necesidad de complementar el material gráfico disponible de manera gratuita o de libre acceso.
+el equipo de cómputo utilizado corresponde a dispositivos personales de los integrantes del proyecto, por lo cual no se ha considerado un costo adicional en esta categoría. La compra de herramientas para modelado 3D o recursos gráficos es considerada opcional y dependerá de la necesidad de complementar el material gráfico disponible de manera gratuita o de libre acceso.
 
 \begin{table}[H]
 	\centering
@@ -430,11 +428,11 @@ Redondeando al entero más cercano:
 
 
 \subsubsection{Recursos humanos}
-El equipo de desarrollo está conformado por tres estudiantes de la carrera de Ingeniería en Inteligencia Artificial, con experiencia académica en proyectos de Ingeniería de software. Esta preparación garantiza que el equipo cuenta con las competencias necesarias para realizar el análisis, diseño, implementación, prueba y validación del prototipo propuesto.
+El equipo de desarrollo está conformado por tres estudiantes de la carrera de Ingeniería en Inteligencia Artificial, con experiencia académica en proyectos de Ingeniería de software. Esta preparación garantiza que el equipo cuenta con las competencias necesarias para realizar el análisis, diseño, implementación, prueba y validación del prototipo propuesto.\\
 
-Adicionalmente, se contempla la posibilidad de realizar capacitaciones específicas en el manejo de conjuntos de datos de señas y técnicas de animación 3D, con el objetivo de reforzar el conocimiento técnico necesario para los módulos especializados del sistema.
+Adicionalmente, se contempla la posibilidad de realizar capacitaciones específicas sobre LSM, manejo de conjuntos de datos de señas y herramientas de animación, con el objetivo de reforzar el conocimiento técnico necesario para los módulos especializados del sistema.\\
 
-La asignación de tres integrantes al proyecto se fundamenta mediante una estimación del esfuerzo utilizando el modelo \textbf{COCOMO II (Constructive Cost Model II)}, específicamente en su modalidad \textit{Early Design Model}, apropiada para proyectos en etapas iniciales [CITA IEEE].
+La asignación de tres integrantes al proyecto se fundamenta mediante una estimación del esfuerzo utilizando el modelo \textbf{COCOMO II (Constructive Cost Model II)}, específicamente en su modalidad \textit{Early Design Model}, apropiada para proyectos en etapas iniciales [CITA IEEE].\\
 
 La fórmula del modelo es la siguiente:
 
@@ -467,7 +465,7 @@ Considerando un periodo de desarrollo de aproximadamente ocho meses, el esfuerzo
 Aunque el esfuerzo promedio mensual es inferior a una persona de tiempo completo, se justifica la participación de al menos tres integrantes en el proyecto, debido a las siguientes razones:
 
 \begin{itemize}
-	\item Permite distribuir responsabilidades de forma especializada entre los tres módulos principales del sistema: procesamiento de lenguaje natural, generación de animaciones 3D y desarrollo móvil.
+	\item Permite distribuir responsabilidades de forma especializada entre los tres módulos principales del sistema: procesamiento de lenguaje natural, desarrollo móvil y animaciones.
 	\item Favorece el trabajo en paralelo, lo que reduce los tiempos de espera entre etapas y facilita el cumplimiento de plazos intermedios.
 	\item Mejora la calidad del prototipo al facilitar revisiones cruzadas, pruebas continuas y retroalimentación iterativa.
 	\item Minimiza el riesgo operativo frente a posibles contingencias como cargas académicas variables, imprevistos personales o rotación parcial del equipo.
@@ -475,13 +473,13 @@ Aunque el esfuerzo promedio mensual es inferior a una persona de tiempo completo
 
 
 \subsubsection{Recursos tecnológicos}
-El equipo de trabajo dispone del equipo de cómputo necesario para el desarrollo, prueba y validación de la aplicación móvil. Además, se cuenta con acceso a las plataformas de desarrollo y a las herramientas de software requeridas, tales como ambientes de programación, motores de animación 3D y bibliotecas especializadas de procesamiento de lenguaje natural (PLN). Esta disponibilidad de recursos tecnológicos garantiza las condiciones adecuadas para la implementación efectiva del prototipo.
+El equipo de trabajo dispone del equipo de cómputo necesario para el desarrollo, prueba y validación de la aplicación móvil. Además, se cuenta con acceso a las plataformas de desarrollo y a las herramientas de software requeridas, tales como ambientes de programación, herramientas para creación de animaciones y bibliotecas especializadas de procesamiento de lenguaje natural (PLN). Esta disponibilidad de recursos tecnológicos garantiza las condiciones adecuadas para la implementación efectiva del prototipo.
 
 \subsubsection{Plazo}
 El tiempo estimado para el desarrollo del prototipo es de aproximadamente ocho meses, considerando las fases de análisis, diseño, desarrollo, pruebas y presentación final. Dado que el alcance del proyecto se limita a la traducción de un conjunto predefinido de frases específicas, se considera que el plazo establecido es adecuado para cumplir con los objetivos planteados y la solución propuesta. \\
 
 
-El análisis realizado en esta sección, permite concluir que el proyecto es tanto viable como factible dentro del contexto académico en el cual se desarrolla. El equipo de trabajo cuenta con los conocimientos fundamentales, el acceso a las tecnologías requeridas y los recursos necesarios para la construcción de un prototipo funcional. Aunque se han identificado áreas que demandarán un proceso de capacitación complementaria, estas no representan un obstáculo significativo para el éxito del proyecto, siempre que se mantenga una adecuada gestión de tiempos y actividades conforme a los alcances establecidos. De este modo, se fortalecen las condiciones para lograr un desarrollo efectivo que cumpla con los objetivos planteados y a futuro siente las bases para una posible expansión comercial.
+El análisis realizado en esta sección, permite concluir que el proyecto es tanto viable como factible dentro del contexto académico en el cual se desarrolla. El equipo de trabajo cuenta con los conocimientos fundamentales, el acceso a las tecnologías requeridas y los recursos necesarios para la construcción de un prototipo funcional. Aunque se han identificado áreas que demandarán un proceso de capacitación complementaria como el aprendizaje de LSM y el entendimiento de las herramientas de animación, estas no representan un obstáculo significativo para el éxito del proyecto, siempre que se mantenga una adecuada gestión de tiempos y actividades conforme a los alcances establecidos. De este modo, se fortalecen las condiciones para lograr un desarrollo efectivo que cumpla con los objetivos planteados y a futuro siente las bases para una posible expansión comercial.\\
 
 \section{Análisis y diseño de sistemas}
 \subsection{Entregables}
@@ -540,7 +538,7 @@ El análisis realizado en esta sección, permite concluir que el proyecto es tan
 			
 			RF02 & Implementar un módulo que valide, analice y procese el texto ingresado, identificando frases clave y contextos específicos para su traducción adecuada. \\ \hline
 			
-			RF03 & Desarrollar avatares 3D que representen visualmente las señas correspondientes a las frases procesadas. Los avatares deben ser capaces de mostrar expresiones faciales y movimientos corporales que reflejen la gramática y sintaxis de la LSM. \\ \hline
+			RF03 & Desarrollar animaciones que representen visualmente las señas correspondientes a las frases procesadas. Las animaciones deben ser capaces de mostrar expresiones corporales que reflejen la gramática y sintaxis de la LSM. \\ \hline
 			
 			RF04 & El sistema debe intentar asignarle una traducción a la frase ingresada. En caso de que a una frase no se le pueda asignar una traducción, la aplicación debe ofrecer la opción de deletrear palabra por palabra utilizando el alfabeto dactilológico de la LSM. \\ \hline
 			
@@ -575,7 +573,7 @@ En este caso, los requerimientos no funcionales se basaron en los especificados 
 				\textbf{Métrica 2:} tiempo promedio de 1 minuto para tareas básicas.
 			\end{tabular} \\ \hline
 			
-			RNF03 & Las animaciones entre señas deben ser fluidas y naturales, utilizando IA para optimizar las transiciones y evitar movimientos bruscos o poco realistas. & 
+			RNF03 & Las animaciones entre señas deben ser fluidas y naturales, evitando movimientos bruscos o poco realistas. & 
 			\begin{tabular}[t]{@{}p{4.6cm}@{}}
 				\raggedright \textbf{Métrica 1:} 80\,\% de textos producen animaciones sin movimientos bruscos ni interrupciones entre señas.
 				
@@ -648,7 +646,7 @@ El usuario ingresa texto en la aplicación, que luego es procesado y traducido a
 
 \textbf{Actor principal} & Usuario (persona que ingresa el texto a traducir). \\ \hline
 
-\textbf{Descripción} & El usuario ingresa texto en el campo indicado de la aplicación. El sistema procesa la frase y determina si existe una traducción directa en LSM. En caso afirmativo, se reproduce la animación correspondiente con un avatar 3D. Si no se encuentra una coincidencia, el sistema recurre al deletreo dactilológico para representar el texto ingresado. \\ \hline
+\textbf{Descripción} & El usuario ingresa texto en el campo indicado de la aplicación. El sistema procesa la frase y determina si existe una traducción directa en LSM. En caso afirmativo, se reproduce la animación correspondiente. Si no se encuentra una coincidencia, el sistema recurre al deletreo dactilológico para representar el texto ingresado. \\ \hline
 
 \textbf{Atributos del texto} & Máximo 50 caracteres. Validación para evitar caracteres especiales o símbolos no admitidos. \\ \hline
 
@@ -656,7 +654,7 @@ El usuario ingresa texto en la aplicación, que luego es procesado y traducido a
 
 \textbf{Procesamiento} & El módulo de procesamiento de lenguaje natural (PLN) analiza el texto y busca coincidencias en el conjunto de datos. Si no hay coincidencia, se segmenta y transforma en deletreo letra por letra. \\ \hline
 
-\textbf{Salida} & Se muestra la animación en 3D de la traducción en LSM o, en su defecto, del deletreo dactilológico correspondiente. Se incluye un mensaje visual de inicio con la palabra "Vamos". \\ \hline
+\textbf{Salida} & Se muestra la animación de la traducción en LSM o, en su defecto, del deletreo dactilológico correspondiente. Se incluye un mensaje visual de inicio con la palabra “Vamos”. \\ \hline
 
 \textbf{Precondiciones} & El sistema debe estar encendido, funcional y el usuario debe encontrarse en la pantalla principal con acceso al campo de texto. \\ \hline
 
@@ -737,7 +735,7 @@ Las frases seleccionadas son ejemplos representativos de situaciones cotidianas 
     \captionof{figure}[Mockup de la pantalla de carga de la aplicación]{Mockup de la pantalla de carga de la aplicación, elaboración propia.}
 \end{center}
 
-La primera pantalla que se muestra es la pantalla de carga de la aplicación, la cual muestra el mensaje " Espere por favor", junto con el ícono de un reloj para indicar que la app está cargando.
+La primera pantalla que se muestra es la pantalla de carga de la aplicación, la cual muestra el mensaje “Espere por favor”, junto con el ícono de un reloj para indicar que la app está cargando.
 
 \begin{center}
     \includegraphics[width=0.5\textwidth]{Images/Cap 3/Pantalla2.png}
@@ -753,14 +751,14 @@ Se debe ingresar texto dentro del cuadro de entrada de texto, para que se realic
     \captionof{figure}[Mockup de la pantalla la animación]{Mockup de la pantalla la animación, elaboración propia.}
 \end{center}
 
-La tercera pantalla de la aplicación es la pantalla en donde se muestra la animación 3D asignada a la traducción, para que el usuario sepa en que momento inicia la traducción se le mostrará un mensaje con la palabra "Vamos" . Además se le indica la frase ingresada del usuario y la traducción asignada. Debajo del avatar 3D, se vuelve a mostrar el cuadro de entrada de texto para ingresar un nuevo mensaje.
+La tercera pantalla de la aplicación es la pantalla en donde se muestra la animación 3D asignada a la traducción, para que el usuario sepa en que momento inicia la traducción se le mostrará un mensaje con la palabra “Vamos”. Además se le indica la frase ingresada del usuario y la traducción asignada. Debajo de la animación, se vuelve a mostrar el cuadro de entrada de texto para ingresar un nuevo mensaje.
 
 \begin{center}
     \includegraphics[width=0.5\textwidth]{Images/Cap 3/Pantalla4.png}
     \captionof{figure}[Mockup de la pantalla la animación]{Mockup de la pantalla la animación, elaboración propia.}
 \end{center}
 
-En caso de que no se le pueda asignar una traducción a la frase ingresada, se mostrará la pantalla de deletreo dactilológico, al igual que la Pantalla anterior para que el usuario sepa en que momento inicia la traducción se le mostrará un mensaje con la palabra "Vamos". En esta pantalla se muestra el avatar 3D realizando el deletreo de la frase ingresada por el usuario. Al igual que en la pantalla anterior, se vuelve a mostrar el cuadro de entrada de texto para ingresar un nuevo mensaje.
+En caso de que no se le pueda asignar una traducción a la frase ingresada, se mostrará la pantalla de deletreo dactilológico, al igual que la Pantalla anterior para que el usuario sepa en que momento inicia la traducción se le mostrará un mensaje con la palabra “Vamos”. En esta pantalla se muestra la animación realizando el deletreo de la frase ingresada por el usuario. Al igual que en la pantalla anterior, se vuelve a mostrar el cuadro de entrada de texto para ingresar un nuevo mensaje.
 
 \begin{center}
 	\includegraphics[width=0.5\textwidth]{Images/Cap 3/Paleta.png}
