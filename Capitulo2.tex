@@ -1020,7 +1020,7 @@ Las principales características de Android son las siguientes \cite{ref57}:
     \item \textbf{Compatibilidad con tecnologías emergentes}: es compatible con tecnologías como la Realidad Virtual (VR), la Realidad Aumentada (AR) y los asistentes virtuales. 
 \end{itemize}
 
-La versión actual del Sistema Operativo Android, al momento, es la versión Android 14, la cual fue anunciada el 04 de Octubre de 2023.
+La versión actual del Sistema Operativo Android, al momento, es la versión Android 14, la cual fue anunciada el 04 de Octubre de 2023.\\
 
 \section{React Native}
 React Native es un framework de aplicaciones móviles desarrollado por Meta (Facebook) que permite crear aplicaciones para iOS y Android empleando JavaScript y React \cite{ref59}.\\
@@ -1045,6 +1045,11 @@ La última versión de React Native, al momento de la elaboración de este proye
 \subsection{Expo}
 Expo es un framework diseñado para facilitar el desarrollo de aplicaciones en React, el cual integra un conjunto de herramientas y servicios que funcionan sobre React Native y las principales plataformas móviles. Su propósito es simplificar las tareas de creación, compilación y despliegue de aplicaciones en iOS, Android e incluso en la Web, utilizando siempre una misma base de código escrita en JavaScript o TypeScript con React [p1].\\
 
+\begin{center}
+    \includegraphics[width=0.8\textwidth]{Images/Cap 2/expo.jpg}
+    \captionof{figure}[Logo Expo]{React Expo, obtenido de [p5].} 
+\end{center}
+
 Además, Expo ofrece acceso a una gran variedad de funciones nativas desde JavaScript, permitiendo trabajar con elementos como la cámara, notificaciones, síntesis de voz, sensores del dispositivo, detección facial y manejo de video, entre otros [p1].\\
 
 Las características principales de Expo son las siguientes [p2]:
@@ -1055,8 +1060,7 @@ Las características principales de Expo son las siguientes [p2]:
     \item \textbf{Bibliotecas integradas}: incluye múltiples API preconstruidas que permiten acceder fácilmente a funcionalidades nativas del dispositivo.
 \end{itemize}
 
-\newpage
-Las herramientas destacadas del Ecosistema Expo incluyen [p3]:
+Las herramientas destacadas del ecosistema de Expo incluyen [p3]:
 \begin{itemize}
     \item \textbf{Expo Go App}: aplicación móvil que permite visualizar y probar el proyecto en tiempo real, sin necesidad de compilarlo por completo.
     \item \textbf{Expo SDK}: conjunto de API listas para usar, que proporcionan acceso rápido a servicios como la cámara, notificaciones push o geolocalización.
@@ -1070,14 +1074,186 @@ A continuación, se enlistan las ventajas de utilizar Expo para el desarrollo de
     \item \textbf{Actualizaciones rápidas}: gracias a EAS Update, los cambios o parches pueden implementarse de manera inmediata, garantizando un rendimiento estable y eficiente en todas las plataformas.
 \end{itemize}
 
-Expo para React Native constituye una solución potente y optimizada para acelerar el desarrollo de aplicaciones móviles sin perder flexibilidad. Ya sea para la creación de prototipos o proyectos multiplataforma, Expo proporciona un ecosistema integral de herramientas y servicios que simplifican el flujo de trabajo y mejoran la eficiencia en todo el proceso [p3].
+Expo para React Native constituye una solución potente y optimizada para acelerar el desarrollo de aplicaciones móviles sin perder flexibilidad. Ya sea para la creación de prototipos o proyectos multiplataforma, Expo proporciona un ecosistema integral de herramientas y servicios que simplifican el flujo de trabajo y mejoran la eficiencia en todo el proceso [p3].\\
 
-% \section{API}
+\section{API}
+Las API (del inglés Application Programming Interfaces) son mecanismos que permiten la comunicación entre dos componentes de software mediante definiciones, protocolos y reglas de intercambio. Actúan como un contrato de servicio que especifica cómo deben comunicarse las aplicaciones a través de solicitudes y respuestas estructuradas [a1]. En este modelo, el cliente envía la solicitud y el servidor la procesa y devuelve una respuesta, permitiendo la integración entre distintos sistemas [a1].\\
+\newline \textbf{Tipos de API según su funcionamiento}
 
-% \section{Servicios en la Nube}
-% \subsection{AWS}
+\begin{center}
+    \includegraphics[width=0.8\textwidth]{Images/Cap 2/API.png}
+    \captionof{figure}[APIS]{Funcionamiento de las API, obtenido de [a4].} 
+\end{center}
 
-\section{Microservicios}
+Las API pueden operar de distintas formas [a1]:
+\begin{itemize}
+    \item \textbf{SOAP}: usa XML para intercambiar información entre cliente y servidor; actualmente se considera menos flexible.
+    \item \textbf{RPC}: permite ejecutar funciones remotas en el servidor y recibir los resultados.
+    \item \textbf{WebSocket}: admite comunicación bidireccional en tiempo real mediante objetos JSON.
+    \item \textbf{REST}: es el tipo más utilizado, basado en HTTP y en el intercambio de datos entre cliente y servidor.
+\end{itemize}
+
+\noindent\textbf{Clasificación por ámbito y uso}
+
+Según su alcance y aplicación, las API se agrupan en [a1][a4]:
+\begin{itemize}
+    \item \textbf{Privadas o internas}: se usan dentro de una empresa para conectar sistemas propios.
+    \item \textbf{Públicas o abiertas}: accesibles a cualquier usuario o desarrollador.
+    \item \textbf{De socios o aliados}: restringidas a colaboradores autorizados.
+    \item \textbf{Compuestas}: combinan varias API para atender procesos más complejos.
+\end{itemize}
+
+\vspace{1em} % ← agrega espacio aquí
+
+También pueden clasificarse por su propósito [a4]:
+\begin{itemize}
+    \item \textbf{De datos}: gestionan operaciones CRUD sobre bases de datos.
+    \item \textbf{De sistemas operativos}: permiten a las aplicaciones interactuar con los recursos del sistema.
+    \item \textbf{Remotas}: conectan sistemas distribuidos a través de una red.
+    \item \textbf{Web}: posibilitan la comunicación entre servicios en la web.
+\end{itemize}
+
+Las API exponen un conjunto limitado de acciones y puntos de acceso (endpoints) para que otros sistemas interactúen con ellas. Las solicitudes especifican la acción y los datos requeridos, y las respuestas devuelven la información procesada [a2]. También pueden activarse por eventos de negocio, como pagos, registros o actualizaciones de inventario, facilitando procesos automatizados entre múltiples sistemas [a2].\\
+
+Entre las principales ventajas de las API destacan [a3]:
+\begin{itemize}
+    \item \textbf{Ahorro de tiempo y costos}: simplifican el desarrollo al reutilizar funcionalidades existentes.
+    \item \textbf{Colaboración e integración}: permiten ampliar arquitecturas con nuevos servicios.
+    \item \textbf{Seguridad y control}: limitan el acceso mediante pasarelas y autenticación.
+    \item \textbf{Innovación}: fomentan la creación de nuevas aplicaciones y oportunidades de negocio.
+\end{itemize}
+
+\section{Servicios en la Nube}
+Los servicios en la nube son soluciones tecnológicas que permiten a usuarios y organizaciones acceder bajo demanda a recursos informáticos, aplicaciones y datos a través de internet, sin necesidad de poseer infraestructura o hardware especializado. Estos servicios son administrados por un proveedor de nube, lo que permite a los usuarios obtener acceso flexible y económico a las herramientas que necesitan, sin asumir los costos ni la complejidad de su gestión [n1].\\
+
+El funcionamiento de la nube se basa en la virtualización de recursos que residen en servidores físicos ubicados en centros de datos gestionados por los proveedores. Los usuarios acceden a estos recursos mediante una conexión a internet, almacenando y procesando la información en servidores remotos en lugar de en equipos locales. Generalmente, el uso de la nube se cobra por suscripción o consumo, lo que representa una alternativa más económica frente al mantenimiento de infraestructura propia [n1].\\
+
+\begin{center}
+    \includegraphics[width=0.8\textwidth]{Images/Cap 2/Nube.png}
+    \captionof{figure}[Nube]{Funcionamiento de los Servicios en la Nube, obtenido de [n5].} 
+\end{center}
+
+Entre las principales ventajas de los servicios en la nube se destacan [n1]:
+\begin{itemize}
+    \item Reducción de hardware físico y costos operativos.
+    \item Flexibilidad de pago según el consumo real.
+    \item Menor carga del área de TI, ya que el mantenimiento recae en el proveedor.
+    \item Acceso remoto desde cualquier dispositivo y ubicación.
+    \item Colaboración en tiempo real entre equipos mediante plataformas compartidas.
+\end{itemize}
+
+\noindent \textbf{Modelos de servicios en la nube}
+
+Los servicios de nube se clasifican comúnmente en tres modelos principales, con una categoría adicional emergente [n1]:
+\begin{itemize}
+    \item \textbf{Infraestructura como servicio (IaaS)}: ofrece recursos virtualizados como servidores, almacenamiento y redes. Ejemplos: Amazon Web Services (AWS) y Microsoft Azure.
+    \item \textbf{Plataforma como servicio (PaaS)}: proporciona entornos completos para el desarrollo, prueba y despliegue de aplicaciones, sin gestionar la infraestructura subyacente.
+    \item \textbf{Software como servicio (SaaS)}: ofrece aplicaciones completas alojadas en la nube, accesibles desde internet, como Google Workspace o Microsoft 365.
+    \item \textbf{Todo como servicio (XaaS)}: extiende el modelo a cualquier recurso tecnológico disponible como servicio bajo demanda.
+\end{itemize}
+
+\vspace{1em} % ← agrega espacio aquí
+
+Contar con un proveedor especializado en la nube aporta beneficios adicionales [n2], como lo son:
+\begin{itemize}
+    \item Agilidad empresarial y mantenimiento simplificado.
+    \item Costos reducidos mediante esquemas de pago por uso.
+    \item Escalabilidad inmediata según la demanda.  
+    \item Alta fiabilidad e infraestructura redundante.  
+    \item Acceso centralizado y movilidad global.
+    \item Recuperación ante fallos gracias a planes de continuidad del negocio.  
+    \item Componentes de la infraestructura de nube  
+\end{itemize}
+
+\vspace{1em} % ← agrega espacio aquí
+
+La infraestructura de nube se compone de varios elementos esenciales [n3]:
+\begin{itemize}
+    \item \textbf{Servidores}: equipos de alto rendimiento ubicados en centros de datos distribuidos.
+    \item \textbf{Redes}: conectividad entre aplicaciones, servicios y datos mediante equipos de conmutación y balanceadores de carga.
+    \item \textbf{Almacenamiento}: espacios escalables para guardar datos de manera segura y accesible.
+    \item \textbf{Software}: herramientas de administración, máquinas virtuales y entornos de análisis que facilitan el uso de los recursos virtualizados.
+\end{itemize}
+
+Los servicios en la nube ofrecen una amplia gama de beneficios, que van desde bajos costos iniciales hasta una mayor libertad de acceso al software. Su naturaleza adaptable y escalable permite que se ajusten a diferentes proyectos y empresas de cualquier tamaño o sector. La diversidad de opciones disponibles brinda la posibilidad de seleccionar el tipo de servicio que mejor se alinee con las necesidades de cada proyecto, lo que convierte a la nube en una solución versátil y aplicable en prácticamente cualquier entorno [n4].
+
+\subsection{AWS}
+Amazon Web Services (AWS) es uno de los principales proveedores de servicios en la nube a nivel mundial. Ofrece una amplia gama de soluciones tecnológicas que incluyen almacenamiento, recursos de computación, bases de datos, desarrollo de aplicaciones móviles, inteligencia artificial y herramientas empresariales, todo bajo el modelo de cloud computing [aws1].\\
+
+AWS tiene presencia en más de 190 países y cuenta con una extensa red de centros de datos distribuidos en América, Europa, Asia y Oceanía. Su infraestructura global garantiza alta disponibilidad, seguridad y escalabilidad. Entre sus ventajas más destacadas se encuentran [aws1]:
+\begin{itemize}
+    \item \textbf{Seguridad}: cuenta con certificaciones internacionales como PCI DSS, ISO 27001, HIPAA y auditorías SOC 1 y SOC 2.
+    \item \textbf{Amplia oferta de bases de datos}: soporta sistemas como MySQL, Oracle, PostgreSQL, SQL Server, MongoDB y Amazon Aurora.
+    \item \textbf{Bajo costo}: elimina la necesidad de inversión en infraestructura local mediante un modelo de pago por uso.
+    \item \textbf{Accesibilidad y flexibilidad}: los servicios pueden adaptarse rápidamente a las necesidades del mercado, con incorporación constante de nuevas herramientas.
+    \item \textbf{Gobernanza y visibilidad}: permite auditar y controlar los datos a pesar de que la infraestructura sea administrada por AWS.
+    \item \textbf{Resiliencia}: sus centros de datos están diseñados para operar incluso en situaciones críticas o de contingencia.
+\end{itemize}
+
+Las herramientas y servicios de AWS abarcan múltiples áreas de la computación en la nube [aws2]:
+\begin{itemize}
+    \item \textbf{Cloud computing}: incluye modelos de servicio como IaaS, PaaS y SaaS, permitiendo escalar aplicaciones según la demanda.
+    \item \textbf{Redes privadas virtuales}: con Amazon VPC es posible crear entornos seguros y personalizados dentro de la nube.
+    \item \textbf{Gestión de bases de datos}: Amazon RDS facilita la creación y administración de bases de datos accesibles desde cualquier dispositivo o ubicación.
+    \item \textbf{Aplicaciones empresariales y móviles}: AWS ofrece herramientas para el desarrollo de apps, respaldo de datos (backup), recuperación ante desastres (disaster recovery), autenticación doble, IoT e inteligencia de negocios.
+\end{itemize}
+
+Entre los servicios más utilizados y representativos de la plataforma se encuentran [aws3]:
+\begin{itemize}
+    \item \textbf{Servicios informáticos}: Amazon EC2 (Elastic Compute Cloud) proporciona potencia de cómputo escalable, y AWS Lambda permite ejecutar código sin necesidad de administrar servidores.
+    \item \textbf{Almacenamiento}: Amazon S3 ofrece almacenamiento de objetos escalable, Amazon Glacier permite archivado de bajo costo, y Amazon EBS proporciona almacenamiento en bloques de alto rendimiento.
+    \item \textbf{Bases de datos}: Amazon RDS gestiona bases relacionales, mientras que DynamoDB ofrece bases NoSQL rápidas y flexibles.
+    \item \textbf{Red y distribución de contenido}: AWS Direct Connect ofrece conexiones dedicadas y Amazon CloudFront acelera la entrega global de contenido mediante una red CDN.
+    \item \textbf{Seguridad y cumplimiento}: AWS IAM gestiona el acceso a los recursos y AWS Shield protege contra ataques DDoS.
+    \item \textbf{Servicios avanzados}: la plataforma incluye soluciones para aprendizaje automático, análisis de datos, IoT y herramientas de desarrollo, facilitando la integración de funciones inteligentes y automatización.
+\end{itemize}
+
+AWS constituye una plataforma integral y versátil que ha transformado la forma en que las organizaciones gestionan sus operaciones digitales. Sus ventajas en seguridad, rendimiento y escalabilidad la convierten en una de las opciones más sólidas del mercado, y su amplia oferta de servicios, alcance global y constante innovación la posicionan como un referente líder en computación en la nube [aws3].\\
+
+\begin{center}
+    \includegraphics[width=0.7\textwidth]{Images/Cap 2/aws.png}
+    \captionof{figure}[Logo AWS]{Amazon Web Services (AWS), obtenido de [aws4].} 
+\end{center}
+
+
+\section{Arquitectura de Microservicios}
+La arquitectura de microservicios, abreviada comúnmente como microservicios, es un estilo de diseño de software orientado al desarrollo de aplicaciones como un conjunto de servicios pequeños, independientes y desplegables de forma separada. Cada microservicio posee un dominio de responsabilidad propio y puede implementarse utilizando distintos lenguajes o tecnologías, siempre que mantenga una comunicación coherente mediante contratos de API bien definidos [m1][m2][m3].\\
+
+A diferencia de las arquitecturas monolíticas, en las que todos los componentes de una aplicación se integran en un único bloque de código, los microservicios promueven un enfoque distribuido y débilmente acoplado, lo que implica que un fallo en un componente no afecta el funcionamiento del resto del sistema [m2][m3]. Esta independencia facilita el mantenimiento, la escalabilidad y la actualización continua sin interrumpir el servicio general [m3][m4].\\
+
+Gracias a su flexibilidad, la arquitectura de microservicios permite desarrollar e implementar funcionalidades individuales de manera autónoma, lo que acelera el ciclo de desarrollo y mejora la capacidad de respuesta ante las necesidades del usuario o del negocio [m3][m4]. Además, los equipos de desarrollo pueden trabajar de forma paralela en distintos servicios, reduciendo el tiempo de entrega de nuevas características y evitando dependencias entre módulos [m2][m4].\\
+
+Entre los ejemplos más comunes del uso de microservicios se encuentran [m1]:
+\begin{itemize}
+    \item \textbf{Migración de sitios web}: permite dividir una plataforma monolítica en varios microservicios desplegados en la nube, favoreciendo la escalabilidad y el mantenimiento.
+    \item \textbf{Gestión de contenido multimedia}: posibilita el almacenamiento y distribución de videos o imágenes mediante sistemas de almacenamiento de objetos escalables.
+    \item \textbf{Procesamiento de transacciones y facturación}: separa los módulos de pago y facturación, garantizando que el sistema continúe funcionando incluso si un servicio falla.
+    \item \textbf{Procesamiento de datos}: amplía la compatibilidad con la nube de los servicios de análisis y gestión de datos.
+\end{itemize}
+
+Las aplicaciones basadas en microservicios presentan varios atributos distintivos [m2][m3], como lo son:
+\begin{itemize}
+    \item \textbf{Independencia de desarrollo y despliegue}: cada servicio puede diseñarse, probarse y desplegarse sin afectar a los demás.
+    \item \textbf{Comunicación basada en API}: los microservicios se comunican entre sí mediante interfaces estandarizadas, lo que permite la integración sin modificar los datos de origen.
+    \item \textbf{Escalabilidad selectiva}: los servicios pueden ampliarse individualmente según la demanda, optimizando los recursos y reduciendo costos.
+    \item \textbf{Diversidad tecnológica}: cada servicio puede desarrollarse con el lenguaje o framework más adecuado a su función.
+\end{itemize}
+
+La adopción de microservicios ofrece múltiples beneficios frente a las arquitecturas tradicionales [m3][m4]. A continuación se enlistan algunos:
+\begin{itemize}
+    \item \textbf{Resiliencia y tolerancia a fallos}: al ser componentes independientes, los errores en un servicio no afectan al resto de la aplicación.
+    \item \textbf{Agilidad y velocidad de desarrollo}: la división en módulos pequeños acelera la creación, prueba e implementación del software.
+    \item \textbf{Escalabilidad y mantenimiento mejorado}: los equipos pueden escalar servicios específicos y depurar errores sin interrumpir toda la aplicación.
+    \item \textbf{Eficiencia operativa}: algunos equipos pueden gestionar sus propios microservicios, reduciendo la necesidad de departamentos de operaciones separados.
+    \item \textbf{Dinamismo tecnológico}: se facilita la adopción de nuevas herramientas o tecnologías sin reescribir toda la aplicación.
+\end{itemize}
+
+Los microservicios representan un modelo arquitectónico moderno y modular, ideal para entornos nativos de la nube y para organizaciones que buscan agilidad, escalabilidad y resiliencia en sus aplicaciones [m1][m2][m3][m4].\\
+
+\begin{center}
+    \includegraphics[width=0.95\textwidth]{Images/Cap 2/microservicios.png}
+    \captionof{figure}[Microservicios]{Arquitectura de Microservicios, obtenido de [m5].} 
+\end{center}
 
 \section{Las 10 Reglas Heurísticas de Usabilidad de Nielsen}
 En 1994, Jakob Nielsen estableció un conjunto de reglas que todos los sistemas deben cumplir, para la detección de fallos sin realizar pruebas de usuario. Dichas reglas son útiles para realizar una evaluación de usabilidad de un sitio web, aplicación o producto digital \cite{ref61}.\\
