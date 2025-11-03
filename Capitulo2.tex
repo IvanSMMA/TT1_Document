@@ -663,25 +663,30 @@ Para comunicarse por medio de dactilología se emplea la mano dominante a la alt
 
 Si bien la discapacidad auditiva representa una barrera de la comunicación, las personas sordas en los últimos años han buscado superar esa barrera con ayuda de dispositivos tecnológicos que puedan fungir como intérpretes. El desarrollo de la Inteligencia Artificial (IA), más concretamente las técnicas de Procesamiento de Lenguaje Natural (PLN), han ayudado a crear nuevos sistemas que faciliten la interacción entre personas oyentes y personas de la comunidad sorda, derribando las barreras de la comunicación.\\
 
-En los siguientes apartados se analizarán un par de herramientas que serán necesarias para el desarrollo del prototipo planteado en el capítulo 1 (ver \autoref{sec:Intro}), como lo es la Inteligencia Artificial (IA) y el Procesamiento de Lenguaje Natural (PLN).\\
-
 \subsection{Diferencia entre Traducción e Interpretación}
 La traducción es el proceso de convertir textos escritos de un idioma a otro, conservando el sentido, la intención y el tono del mensaje original. La misma se realiza sobre materiales tangibles: documentos, contratos, libros, artículos, guiones, entre otros. El objetivo es transcribir por escrito un mensaje de una lengua origen a una lengua meta, conservando su significado, estilo y contexto \cite{reftradint}. \\
 
+La traducción implica un proceso cognitivo complejo que requiere no sólo la sustitución lingüística, sino también la comprensión del contexto cultural y semántico en el que se enmarca el mensaje original. En el ámbito computacional, este proceso es llevado a cabo por sistemas de traducción automática que analizan la estructura lingüística, la semántica y las relaciones gramaticales del texto fuente, empleando modelos estadísticos o de aprendizaje profundo para generar un texto equivalente en el idioma destino [t1].\\
+
 Por otro lado, la interpretación es la conversión del mensaje oral de un orador de una lengua hablada a otra, la cual trabaja con el discurso oral, y el proceso se realiza en tiempo real. Por lo tanto, el intérprete debe reaccionar rápidamente, sin margen de corrección ni consulta \cite{reftradint}.\\
 
-En el caso de la Lengua de Señas Mexicana (LSM), los intérpretes desempeñan un papel fundamental al facilitar la comunicación en espacios presenciales (como instituciones educativas, hospitales o conferencias), mientras que un sistema automatizado como el propuesto en este trabajo realiza un proceso de traducción escrita a representación visual animada.\\
+La interpretación requiere habilidades cognitivas diferentes a las de la traducción, ya que el intérprete debe procesar simultáneamente la comprensión y la reformulación del mensaje, implicando una alta capacidad de concentración y dominio de ambas lenguas en contextos culturales diversos. A diferencia de la traducción donde existe la posibilidad de revisar el resultado en materiales de consulta, la interpretación se caracteriza por su inmediatez y espontaneidad, lo que la hace esencial en entornos como conferencias, juicios o emergencias médicas [t1].\\ 
 
-Es por esa razón que este prototipo no pretende reemplazar el trabajo de los intérpretes humanos, sino complementar sus funciones mediante herramientas digitales que permiten traducir texto escrito en español a representaciones visuales animadas en LSM, especialmente en situaciones donde no hay intérpretes disponibles.\\
+En el caso de la Lengua de Señas Mexicana (LSM), los intérpretes desempeñan un papel fundamental al facilitar la comunicación en espacios presenciales, mientras que un sistema automatizado como el propuesto en este trabajo realiza un proceso de traducción escrita a representación visual animada.\\
 
-Esta distinción es importante para comprender el alcance del proyecto, que se centra en la traducción automatizada, y no en la interpretación en tiempo real mediante medios humanos.\\
+La LSM, al ser una lengua visogestual, no puede traducirse de manera literal palabra por palabra, sino que requiere un proceso de adaptación sintáctica y semántica. Por ello, los sistemas automáticos deben incorporar etapas de análisis lingüístico y modelado computacional que permitan representar la estructura y el contexto de la oración en español dentro del marco gramatical propio de la LSM.\\
+
+El desarrollo de este tipo de sistemas contribuye al campo de la accesibilidad tecnológica al proporcionar alternativas comunicativas que promueven la inclusión social. El uso de técnicas de Procesamiento de Lenguaje Natural (PLN) y animaciones permite automatizar la traducción escrita a visual, garantizando resultados comprensibles y gramaticalmente coherentes con las reglas lingüísticas de la LSM. Esta distinción resulta fundamental para entender el alcance del proyecto, centrado en la traducción automatizada y no en la interpretación en tiempo real mediante medios humanos.\\
+
+Este prototipo no pretende reemplazar el trabajo de los intérpretes humanos, sino complementar sus funciones mediante herramientas digitales que permitan traducir texto escrito en español a representaciones visuales animadas en LSM. El proyecto se enmarca dentro del campo de la traducción asistida por computadora, en la cual el procesamiento previo del texto constituye una fase esencial para transformar el lenguaje natural en representaciones visuales comprensibles. Además, si en el futuro el sistema logra procesar voz o señas en tiempo real, podría evolucionar hacia un sistema de interpretación automática, ampliando su alcance y abriendo una nueva línea de investigación en accesibilidad e inteligencia artificial aplicada a las lenguas de señas.\\
+
+En los siguientes apartados se analizarán un par de herramientas que serán necesarias para el desarrollo del prototipo planteado en el capítulo 1 (ver \autoref{sec:Intro}), como lo es la Inteligencia Artificial (IA) y el Procesamiento de Lenguaje Natural (PLN).\\
 
 \section{Inteligencia Artificial}
 La Inteligencia Artificial (IA) es la capacidad que poseen las máquinas para usar algoritmos y aprender de los datos para tomar decisiones tal como lo haría un ser humano \cite{ref41}. A diferencia del ser humano, la IA no necesita descansar y es capaz de analizar grandes cantidades de información, reduciendo el margen de error.\\
 
 La IA se basa en el uso de algoritmos y tecnologías de aprendizaje automático para dar a las máquinas la capacidad de aplicar ciertas habilidades cognitivas y realizar tareas por sí mismas de manera autónoma o semiautónoma. A medida que la IA mejora, muchos procesos son más eficientes y algunas tareas que parecían complicadas se realizan con mayor rapidez y precisión \cite{ref42}.\\
 
-\newpage
 \subsection{Clasificación de la Inteligencia Artificial}
 La IA puede ser clasificada de varias maneras, ya sea a partir de su grado de capacidad cognitiva o a partir de su grado de autonomía \cite{ref42}.\\
 
@@ -1039,7 +1044,7 @@ La última versión de React Native, al momento de la elaboración de este proye
 
 \begin{center}
     \includegraphics[width=0.6\textwidth]{Images/Cap 2/ReactNative-Logo.png}
-    \captionof{figure}[Logo de Android]{Logo de React Native, obtenido de \cite{ref60}.} 
+    \captionof{figure}[Logo de React Native]{Logo de React Native, obtenido de \cite{ref60}.} 
 \end{center}
 
 \subsection{Expo}
@@ -1047,7 +1052,7 @@ Expo es un framework diseñado para facilitar el desarrollo de aplicaciones en R
 
 \begin{center}
     \includegraphics[width=0.8\textwidth]{Images/Cap 2/expo.jpg}
-    \captionof{figure}[Logo Expo]{React Expo, obtenido de [p5].} 
+    \captionof{figure}[Logo de Expo]{React Expo, obtenido de [p5].} 
 \end{center}
 
 Además, Expo ofrece acceso a una gran variedad de funciones nativas desde JavaScript, permitiendo trabajar con elementos como la cámara, notificaciones, síntesis de voz, sensores del dispositivo, detección facial y manejo de video, entre otros [p1].\\
@@ -1123,6 +1128,46 @@ Entre las principales ventajas de las API destacan [a3]:
     \item \textbf{Innovación}: fomentan la creación de nuevas aplicaciones y oportunidades de negocio.
 \end{itemize}
 
+\section{Arquitectura de Microservicios}
+La arquitectura de microservicios, abreviada comúnmente como microservicios, es un estilo de diseño de software orientado al desarrollo de aplicaciones como un conjunto de servicios pequeños, independientes y desplegables de forma separada. Cada microservicio posee un dominio de responsabilidad propio y puede implementarse utilizando distintos lenguajes o tecnologías, siempre que mantenga una comunicación coherente mediante contratos de API bien definidos [m1][m2][m3].\\
+
+A diferencia de las arquitecturas monolíticas, en las que todos los componentes de una aplicación se integran en un único bloque de código, los microservicios promueven un enfoque distribuido y débilmente acoplado, lo que implica que un fallo en un componente no afecta el funcionamiento del resto del sistema [m2][m3]. Esta independencia facilita el mantenimiento, la escalabilidad y la actualización continua sin interrumpir el servicio general [m3][m4].\\
+
+Gracias a su flexibilidad, la arquitectura de microservicios permite desarrollar e implementar funcionalidades individuales de manera autónoma, lo que acelera el ciclo de desarrollo y mejora la capacidad de respuesta ante las necesidades del usuario o del negocio [m3][m4]. Además, los equipos de desarrollo pueden trabajar de forma paralela en distintos servicios, reduciendo el tiempo de entrega de nuevas características y evitando dependencias entre módulos [m2][m4].\\
+
+Entre los ejemplos más comunes del uso de microservicios se encuentran [m1]:
+\begin{itemize}
+    \item \textbf{Migración de sitios web}: permite dividir una plataforma monolítica en varios microservicios desplegados en la nube, favoreciendo la escalabilidad y el mantenimiento.
+    \item \textbf{Gestión de contenido multimedia}: posibilita el almacenamiento y distribución de videos o imágenes mediante sistemas de almacenamiento de objetos escalables.
+    \item \textbf{Procesamiento de transacciones y facturación}: separa los módulos de pago y facturación, garantizando que el sistema continúe funcionando incluso si un servicio falla.
+    \item \textbf{Procesamiento de datos}: amplía la compatibilidad con la nube de los servicios de análisis y gestión de datos.
+\end{itemize}
+
+Las aplicaciones basadas en microservicios presentan varios atributos distintivos [m2][m3], como lo son:
+\begin{itemize}
+    \item \textbf{Independencia de desarrollo y despliegue}: cada servicio puede diseñarse, probarse y desplegarse sin afectar a los demás.
+    \item \textbf{Comunicación basada en API}: los microservicios se comunican entre sí mediante interfaces estandarizadas, lo que permite la integración sin modificar los datos de origen.
+    \item \textbf{Escalabilidad selectiva}: los servicios pueden ampliarse individualmente según la demanda, optimizando los recursos y reduciendo costos.
+    \item \textbf{Diversidad tecnológica}: cada servicio puede desarrollarse con el lenguaje o framework más adecuado a su función.
+\end{itemize}
+
+La adopción de microservicios ofrece múltiples beneficios frente a las arquitecturas tradicionales [m3][m4]. A continuación se enlistan algunos:
+\begin{itemize}
+    \item \textbf{Resiliencia y tolerancia a fallos}: al ser componentes independientes, los errores en un servicio no afectan al resto de la aplicación.
+    \item \textbf{Agilidad y velocidad de desarrollo}: la división en módulos pequeños acelera la creación, prueba e implementación del software.
+    \item \textbf{Escalabilidad y mantenimiento mejorado}: los equipos pueden escalar servicios específicos y depurar errores sin interrumpir toda la aplicación.
+    \item \textbf{Eficiencia operativa}: algunos equipos pueden gestionar sus propios microservicios, reduciendo la necesidad de departamentos de operaciones separados.
+    \item \textbf{Dinamismo tecnológico}: se facilita la adopción de nuevas herramientas o tecnologías sin reescribir toda la aplicación.
+\end{itemize}
+
+Los microservicios representan un modelo arquitectónico moderno y modular, ideal para entornos nativos de la nube y para organizaciones que buscan agilidad, escalabilidad y resiliencia en sus aplicaciones [m1][m2][m3][m4].\\
+
+\begin{center}
+    \includegraphics[width=0.95\textwidth]{Images/Cap 2/microservicios.png}
+    \captionof{figure}[Arquitectura de Microservicios]{Arquitectura de Microservicios, obtenido de [m5].} 
+\end{center}
+
+
 \section{Servicios en la Nube}
 Los servicios en la nube son soluciones tecnológicas que permiten a usuarios y organizaciones acceder bajo demanda a recursos informáticos, aplicaciones y datos a través de internet, sin necesidad de poseer infraestructura o hardware especializado. Estos servicios son administrados por un proveedor de nube, lo que permite a los usuarios obtener acceso flexible y económico a las herramientas que necesitan, sin asumir los costos ni la complejidad de su gestión [n1].\\
 
@@ -1130,7 +1175,7 @@ El funcionamiento de la nube se basa en la virtualización de recursos que resid
 
 \begin{center}
     \includegraphics[width=0.8\textwidth]{Images/Cap 2/Nube.png}
-    \captionof{figure}[Nube]{Funcionamiento de los Servicios en la Nube, obtenido de [n5].} 
+    \captionof{figure}[Servicios en la Nube]{Funcionamiento de los Servicios en la Nube, obtenido de [n5].} 
 \end{center}
 
 Entre las principales ventajas de los servicios en la nube se destacan [n1]:
@@ -1212,47 +1257,7 @@ AWS constituye una plataforma integral y versátil que ha transformado la forma 
 
 \begin{center}
     \includegraphics[width=0.7\textwidth]{Images/Cap 2/aws.png}
-    \captionof{figure}[Logo AWS]{Amazon Web Services (AWS), obtenido de [aws4].} 
-\end{center}
-
-
-\section{Arquitectura de Microservicios}
-La arquitectura de microservicios, abreviada comúnmente como microservicios, es un estilo de diseño de software orientado al desarrollo de aplicaciones como un conjunto de servicios pequeños, independientes y desplegables de forma separada. Cada microservicio posee un dominio de responsabilidad propio y puede implementarse utilizando distintos lenguajes o tecnologías, siempre que mantenga una comunicación coherente mediante contratos de API bien definidos [m1][m2][m3].\\
-
-A diferencia de las arquitecturas monolíticas, en las que todos los componentes de una aplicación se integran en un único bloque de código, los microservicios promueven un enfoque distribuido y débilmente acoplado, lo que implica que un fallo en un componente no afecta el funcionamiento del resto del sistema [m2][m3]. Esta independencia facilita el mantenimiento, la escalabilidad y la actualización continua sin interrumpir el servicio general [m3][m4].\\
-
-Gracias a su flexibilidad, la arquitectura de microservicios permite desarrollar e implementar funcionalidades individuales de manera autónoma, lo que acelera el ciclo de desarrollo y mejora la capacidad de respuesta ante las necesidades del usuario o del negocio [m3][m4]. Además, los equipos de desarrollo pueden trabajar de forma paralela en distintos servicios, reduciendo el tiempo de entrega de nuevas características y evitando dependencias entre módulos [m2][m4].\\
-
-Entre los ejemplos más comunes del uso de microservicios se encuentran [m1]:
-\begin{itemize}
-    \item \textbf{Migración de sitios web}: permite dividir una plataforma monolítica en varios microservicios desplegados en la nube, favoreciendo la escalabilidad y el mantenimiento.
-    \item \textbf{Gestión de contenido multimedia}: posibilita el almacenamiento y distribución de videos o imágenes mediante sistemas de almacenamiento de objetos escalables.
-    \item \textbf{Procesamiento de transacciones y facturación}: separa los módulos de pago y facturación, garantizando que el sistema continúe funcionando incluso si un servicio falla.
-    \item \textbf{Procesamiento de datos}: amplía la compatibilidad con la nube de los servicios de análisis y gestión de datos.
-\end{itemize}
-
-Las aplicaciones basadas en microservicios presentan varios atributos distintivos [m2][m3], como lo son:
-\begin{itemize}
-    \item \textbf{Independencia de desarrollo y despliegue}: cada servicio puede diseñarse, probarse y desplegarse sin afectar a los demás.
-    \item \textbf{Comunicación basada en API}: los microservicios se comunican entre sí mediante interfaces estandarizadas, lo que permite la integración sin modificar los datos de origen.
-    \item \textbf{Escalabilidad selectiva}: los servicios pueden ampliarse individualmente según la demanda, optimizando los recursos y reduciendo costos.
-    \item \textbf{Diversidad tecnológica}: cada servicio puede desarrollarse con el lenguaje o framework más adecuado a su función.
-\end{itemize}
-
-La adopción de microservicios ofrece múltiples beneficios frente a las arquitecturas tradicionales [m3][m4]. A continuación se enlistan algunos:
-\begin{itemize}
-    \item \textbf{Resiliencia y tolerancia a fallos}: al ser componentes independientes, los errores en un servicio no afectan al resto de la aplicación.
-    \item \textbf{Agilidad y velocidad de desarrollo}: la división en módulos pequeños acelera la creación, prueba e implementación del software.
-    \item \textbf{Escalabilidad y mantenimiento mejorado}: los equipos pueden escalar servicios específicos y depurar errores sin interrumpir toda la aplicación.
-    \item \textbf{Eficiencia operativa}: algunos equipos pueden gestionar sus propios microservicios, reduciendo la necesidad de departamentos de operaciones separados.
-    \item \textbf{Dinamismo tecnológico}: se facilita la adopción de nuevas herramientas o tecnologías sin reescribir toda la aplicación.
-\end{itemize}
-
-Los microservicios representan un modelo arquitectónico moderno y modular, ideal para entornos nativos de la nube y para organizaciones que buscan agilidad, escalabilidad y resiliencia en sus aplicaciones [m1][m2][m3][m4].\\
-
-\begin{center}
-    \includegraphics[width=0.95\textwidth]{Images/Cap 2/microservicios.png}
-    \captionof{figure}[Microservicios]{Arquitectura de Microservicios, obtenido de [m5].} 
+    \captionof{figure}[Logo de AWS]{Amazon Web Services (AWS), obtenido de [aws4].} 
 \end{center}
 
 \section{Las 10 Reglas Heurísticas de Usabilidad de Nielsen}
