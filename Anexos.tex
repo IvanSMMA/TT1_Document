@@ -1,6 +1,136 @@
 \appendix
 
-\chapter[Anexo A. Ley General para la Inclusión de las Personas con Discapacidad]{Ley General para la Inclusión de las Personas con Discapacidad}
+\chapter[Anexo A. MediaPipe, Blender y Unity]{MediaPipe, Blender y Unity}
+\label{anexo:blender_unity}
+
+Las herramientas y tecnologías descritas en este anexo formaron parte del enfoque inicial propuesto para el desarrollo del prototipo. Sin embargo, durante el desarrollo del proyecto se identificaron diversas limitaciones técnicas, de tiempo y de recursos que impidieron su implementación, tales como la necesidad de un equipo especializado en animación, disponibilidad de hardware para captura de movimiento y la alta complejidad del modelado 3D para representar señas detalladas de la Lengua de Señas Mexicana (LSM). Se realizaron algunas modificaciones a la propuesta original con el fin de cubrir la mayor parte de los objetivos, enfocándose principalmente en la fluidez y comunicación del español a LSM, y se optó por reubicar estos elementos a los anexos, manteniéndolos como referencia conceptual del planteamiento original y como base para futuros trabajos que deseen retomar esta línea de desarrollo.\\
+
+\section{MediaPipe}
+MediaPipe es un conjunto de herramientas de código abierto para ser empleadas en tareas como el reconocimiento facial, seguimiento de gestos, detección de objetos y el seguimiento del cuerpo humano \cite{ref49}.
+
+\begin{center}
+    \includegraphics[width=0.6\textwidth]{Images/Cap 2/MediaPipeLogo.jpeg}
+    \captionof{figure}[Logo de Mediapipe]{Logo de Mediapipe, obtenido de \cite{ref50}.} 
+\end{center}
+
+\subsection{Herramientas de MediaPipe}
+Las principales herramientas que ofrece MediaPipe son:
+\begin{itemize}
+    \item \textbf{MediaPipe Detección de caras}: permite detectar y seguir rostros de una imagen o vídeos en tiempo real, empleando técnicas de \textit{machine learning} para mejorar la precisión \cite{ref49}.
+    \item \textbf{Malla facial MediaPipe}: proporciona una malla 3D del rostro, para proporcionar información precisa sobre los rasgos faciales, lo cuál es útil en aplicaciones de animación y modelado 3D \cite{ref49}.
+    \item \textbf{MediaPipe Hands}: con esta herramienta se puede detectar y seguir los movimientos de la mano en tiempo real, con alta precisión \cite{ref49}.
+    \item \textbf{MediaPipe Holistic}: combina la detección facial, el seguimiento de manos y el seguimiento corporal en una sola herramienta integrada, lo que es útil para aplicaciones de realidad aumentada y juegos \cite{ref49}.
+    \item \textbf{MediaPipe Objectron}: es una herramienta para detectar y seguir objetos 3D en el espacio, siendo útil para comprender e interactuar con objetos reales en un entorno virtual \cite{ref49}.
+    \item \textbf{Segmentación MediaPipe Selfie}: permite segmentar a las personas en el fondo de una imagen o vídeo \cite{ref49}.
+    \item \textbf{MediaPipe Pose}: detecta las posturas del cuerpo humano, proporcionando información sobre las posiciones de las articulaciones y las extremidades \cite{ref49}.
+    \item \textbf{Reconocimiento de gestos MediaPipe}: herramienta empleada en el reconocimiento de gestos de la mano para interacciones intuitivas y control de gestos \cite{ref49}.
+    \item \textbf{MediaPipe EfficientDet}: mediante el uso de Redes Neuronales rápidas y eficaces, se puede mejorar la detección y localización de objetos en imágenes \cite{ref49}. 
+
+\end{itemize}
+
+\newpage
+\subsection{MediaPipe Hands}
+MediaPipe Hands es una herramienta que permite el seguimiento en tiempo real de manos y dedos mediante el uso de técnicas de \textit{Machine Learning} (ML), logrando detectar 21 puntos de referencia tridimensionales (3D) a partir de una sola imagen, incluso en dispositivos móviles \cite{ref51}.\\
+
+\begin{center}
+    \includegraphics[width=0.9\textwidth]{Images/Cap 2/MediaPipe_Hands.png}
+    \captionof{figure}[MediaPipe Hands]{MediaPipe Hands, obtenido de \cite{ref51}.}  % Pie de foto manual
+\end{center}
+
+Este sistema funciona mediante un \textit{pipeline} compuesto por dos modelos que trabajan de manera conjunta \cite{ref51}:
+
+\begin{enumerate}
+    \item \textbf{El modelo de detección de palmas}: analiza la imagen para localizar y delimitar la región donde se encuentra la mano, generando un cuadro delimitador orientado.
+    \item \textbf{El modelo de estimación de puntos clave}: toma como entrada la región definida por el modelo anterior y predice las coordenadas 3D de 21 puntos clave (nudillos y articulaciones) de la mano.
+\end{enumerate}
+
+\begin{center}
+\includegraphics[width=0.9\textwidth]{Images/Cap 2/MediaPipe_hand_landmarks.png}
+\captionof{figure}[Listado de los 21 puntos clave de la mano que son detectados por el modelo de estimación de puntos clave]{Listado de los 21 puntos clave de la mano que son detectados por el modelo de estimación de puntos clave, obtenido de \cite{ref52}.}  % Pie de foto manual
+\end{center}
+
+
+Para entrenar el modelo de estimación de puntos clave, se utilizaron aproximadamente 30,000 imágenes reales junto con modelos sintéticos de manos, superpuestos sobre distintos fondos \cite{ref52}.\\
+
+Debido a que la detección de la palma es más costosa computacionalmente, en flujos de video continuo el sistema optimiza su rendimiento reutilizando la región de la mano previamente detectada por el modelo de estimación de puntos clave. Solo en caso de perder la mano del encuadre o de no poder hacer un seguimiento adecuado, el sistema vuelve a activar el modelo de detección de palmas. Esto permite reducir significativamente las llamadas a este último modelo, mejorando la eficiencia general del sistema \cite{ref52}.\\
+
+\subsection{MediaPipe Pose}
+Por su parte, MediaPipe Pose permite detectar puntos de referencia de cuerpos humanos en una imagen o vídeo. Se emplea principalmente para identificar ubicaciones claves del cuerpo, analizar la postura y categorizar los movimientos \cite{ref53}.\\
+
+El marcador de poses emplea una serie de modelos para predecir los marcadores de poses \cite{ref53}:
+\begin{itemize}
+
+    \item \textbf{Modelo de detección de poses}: detectar la presencia de cuerpos con algunos puntos de referencia de poses clave.
+    \item \textbf{Modelo de marcador de pose}: agregar una asignación completa de una pose, en la que se generan 33 puntos de referencia de la pose 3D.
+
+\end{itemize}
+El modelo de marcador de pose realiza un seguimiento de 33 ubicaciones de puntos de referencia del cuerpo.
+\begin{center}
+    \includegraphics[width=0.8\textwidth]{Images/Cap 2/MediaPipe_Pose.png}
+    \captionof{figure}[Ubicaciones de puntos de referencia del cuerpo]{Ubicaciones de puntos de referencia del cuerpo, obtenido de \cite{ref53}.}  % Pie de foto manual
+\end{center}
+
+A continuación, se enlistan las partes representadas del cuerpo:
+
+\begin{enumerate}
+    \item Nose - nariz.  
+    \item Left eye (inner) - ojo izquierdo (interior).  
+    \item Left eye - ojo izquierdo.  
+    \item Left eye (outer) - ojo izquierdo (exterior).  
+    \item Right eye (inner) - ojo derecho (interior).  
+    \item Right eye - ojo derecho.  
+    \item Right eye (outer) - ojo derecho (exterior).  
+    \item Left ear - oreja izquierda.  
+    \item Right ear - oreja derecha.  
+    \item Mouth (left) - boca (izquierda).  
+    \item Mouth (right) - boca (derecha).  
+    \item Left shoulder - hombro izquierdo.  
+    \item Right shoulder - hombro derecho.  
+    \item Left elbow - codo izquierdo.  
+    \item Right elbow - codo derecho.  
+    \item Left wrist - muñeca izquierda.  
+    \item Right wrist - muñeca derecha.  
+    \item Left pinky - meñique izquierdo.  
+    \item Right pinky - meñique derecho.  
+    \item Left index - índice izquierdo.  
+    \item Right index - índice derecho.  
+    \item Left thumb - pulgar izquierdo.  
+    \item Right thumb - pulgar derecho.  
+    \item Left hip - cadera izquierda.  
+    \item Right hip - cadera derecha.  
+    \item Left knee - rodilla izquierda.  
+    \item Right knee - rodilla derecha.  
+    \item Left ankle - tobillo izquierdo.  
+    \item Right ankle - tobillo derecho.  
+    \item Left heel - talón izquierdo.  
+    \item Right heel - talón derecho.  
+    \item Left foot index - punta del pie izquierdo.  
+    \item Right foot index - punta del pie derecho.  
+\end{enumerate}
+
+MediaPipe suele ser empleado en conjunto con plataformas y motores gráficos, como pueden ser Blender y Unity, para la creación de modelos 3D. En el siguiente apartado se revisará al motor gráfico Unity, enfocado principalmente en el desarrollo de modelos 3D.\\
+
+\section{Modelado de Animaciones 3D}
+El término animación 3D se refiere a la técnica de animación empleada para desplazar modelos tridimensionales generados digitalmente, sirviéndose para ello de un eje de coordenadas cartesiano virtual \cite{ref54}.\\
+
+La animación 3D ha estado históricamente más orientada a la replicación de la física del mundo real, ya que representa con total libertad la fuerza de gravedad, la inercia o la masa de cuerpos \cite{ref54}.
+
+\subsection{Unity}
+Unity es una plataforma para el desarrollo de videojuegos y aplicaciones interactivas, que ofrece una amplia variedad de herramientas y recursos para crear experiencias visuales y funcionales \cite{ref55}. Es un motor gráfico empleado para desarrollar videojuegos, aplicaciones interactivas en 2D, 3D, realidad aumentada (AR) y realidad virtual (VR).\\
+
+\begin{center}
+    \includegraphics[width=0.6\textwidth]{Images/Cap 2/Unity_Logo.png}
+    \captionof{figure}[Logo de Unity]{Logo de Unity, obtenido de \cite{ref56}.} 
+\end{center}
+
+Unity destaca por su conjunto de características robustas que facilitan el desarrollo de aplicaciones interactivas de alta calidad para la simulación física y el rendering, las cuáles requieren visualización y experiencia de usuario de alta calidad \cite{ref55}.\\
+
+En la actualidad Unity es empleado en múltiples industrias, además del desarrollo de videojuegos, ya que es popular en sectores como la arquitectura, el diseño automotriz, la medicina y la educación. Además, tiene soporte en varias plataformas como computadoras (PC), consolas, dispositivos móviles y dispositivos de realidad aumentada \cite{ref55}. La última versión que se ha lanzado de Unity, al momento de la realización de este trabajo, es la 6.1.\\
+
+Considerando que Unity tiene compatibilidad con dispositivos móviles, en el siguiente apartado se hará un breve análisis de Android, un sistema operativo móvil que es ampliamente utilizado en smartphones.\\
+
+
+\chapter[Anexo B. Ley General para la Inclusión de las Personas con Discapacidad]{Ley General para la Inclusión de las Personas con Discapacidad}
 \label{anexo:ley_inclusion_disc}
 \section{Encabezado de la Ley General para la Inclusión de las Personas con Discapacidad}
 
@@ -27,7 +157,7 @@
     \captionof{figure}[Artículo 20]{Artículo 20 de la Ley General para la Inclusión de las Personas con Discapacidad, obtenido de \cite{ref34}}
 \end{center}
 
-\chapter[Anexo B. Enfoque por actividades (académico)]{Enfoque por actividades (académico)}
+\chapter[Anexo C. Enfoque por actividades (académico)]{Enfoque por actividades (académico)}
 \label{anexo:actividades_academicas}  % Etiqueta para hacer referencia
 \section{Etapa: creación del prototipo}
 
@@ -350,7 +480,7 @@
 	\label{tab:costos_estados_financieros}
 \end{table}
 
-\chapter[Anexo C. Enfoque por actividades (comercial)]{Enfoque por actividades (comercial)}
+\chapter[Anexo D. Enfoque por actividades (comercial)]{Enfoque por actividades (comercial)}
 \label{anexo:actividades_comercial}  % Etiqueta para hacer referencia
 \section{Etapa: creación del prototipo}
 \begin{table}[H]

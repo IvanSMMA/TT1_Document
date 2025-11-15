@@ -8,8 +8,9 @@ Si bien la Lengua de Señas Mexicana (LSM) es el principal medio de comunicació
 
 Existen herramientas digitales (ver \autoref{sec:edoArte}) que permiten la traducción de español a Lenguas de Señas, pero en su mayoría son interpretes de Lenguas de Señas de otros países (como los de España, Brasil y Estados Unidos), los cuales en algunos casos presentan imprecisiones o incompatibilidad debido a las versiones de los sistemas operativos empleados. En el caso de las herramientas que emplean animaciones, las mismas se muestran fragmentadas, causando que se dificulte la comprensión de los mensajes.\\
 
-La motivación de este Trabajo Terminal es ayudar a mejorar la accesibilidad de las personas sordas, a la par que se fomenta la inclusión social y tecnológica para esta comunidad, empleando técnicas de Inteligencia Artificial, Procesamiento de Lenguaje Natural y Modelado 3D para obtener una traducción más fluida y natural, basándose en las Heurísticas de Usabilidad de Nielsen y la norma ISO 9241-210.\\
+La motivación de este Trabajo Terminal es ayudar a mejorar la accesibilidad de las personas sordas, a la par que se fomenta la inclusión social y tecnológica para esta comunidad, empleando técnicas de Inteligencia Artificial, Procesamiento de Lenguaje Natural y Modelado 3D (ver \textbf{\nameref{anexo:blender_unity}}) para obtener una traducción más fluida y natural, basándose en las Heurísticas de Usabilidad de Nielsen y la norma ISO 9241-210.\\
 
+\textbf{Nota aclaratoria}: Inicialmente se había planteado realizar el proyecto empleando modelado 3D con herramientas como MediaPipe, Unity y Blender. Sin embargo, debido a ciertas limitaciones de tiempo y recursos, se optó por emplear otro tipo de tecnologías y herramientas para el desarrollo de este Trabajo Terminal con el fin de centrarse en el desarrollo del modulo de Procesamiento de Lenguaje Natural (PLN) y la fluidez de las señas. A pesar de los cambios realizados, toda la teoría relacionada al modulo de animaciones 3D, MediaPipe, Unity y Blender se mantendrá en el \textbf{\nameref{anexo:blender_unity}}.
 
 \newpage
 \section{Problemática}
@@ -25,14 +26,14 @@ Estas deficiencias dificultan la comprensión de los mensajes por parte de los u
 
 \section{Objetivos}
 \subsection{Objetivo General}
-Desarrollar un prototipo de aplicación móvil en Android que, utilizando técnicas de Procesamiento de Lenguaje Natural (PLN) y Modelado 3D, traduzca oraciones específicas empleadas en situaciones de emergencia, así como expresiones cotidianas como saludos y agradecimientos, del español a la Lengua de Señas Mexicana (LSM).
+Desarrollar un prototipo de aplicación móvil en Android que, utilizando técnicas de Procesamiento de Lenguaje Natural (PLN) y Modelado 3D (ver \textbf{\nameref{anexo:blender_unity}}), traduzca oraciones específicas empleadas en situaciones de emergencia, así como expresiones cotidianas como saludos y agradecimientos, del español a la Lengua de Señas Mexicana (LSM).
 
 \subsection{Objetivo Especifícos}
 \begin{itemize}
     \item Desarrollar el módulo de procesamiento de texto mediante técnicas de PLN, para interpretar oraciones específicas en español y transformarlas en sentencias manipulables para la traducción a la Lengua de Señas Mexicana (LSM).
-    \item Construir un módulo de animación 3D que represente visualmente las señas en LSM, a partir de las oraciones procesadas.
-    \item Implementar el módulo de animación 3D utilizando Inteligencia Artificial (IA), buscando obtener una representación fluida de la Lengua de Señas en los avatares.
-    \item Crear una aplicación móvil en Android, versión 14, que integre los módulos de PLN, módulo de generación de animaciones 3D y transiciones fluidas entre los componentes del prototipo.
+    \item Construir un módulo de animación 3D que represente visualmente las señas en LSM, a partir de las oraciones procesadas (ver \textbf{\nameref{anexo:blender_unity}}).
+    \item Implementar el módulo de animación 3D utilizando Inteligencia Artificial (IA), buscando obtener una representación fluida de la Lengua de Señas en los avatares (ver \textbf{\nameref{anexo:blender_unity}}).
+    \item Crear una aplicación móvil en Android, versión 14, que integre los módulos de PLN, módulo de generación de animaciones 3D (ver \textbf{\nameref{anexo:blender_unity}}) y transiciones fluidas entre los componentes del prototipo.
     \item Validar la funcionalidad y usabilidad de la aplicación móvil mediante pruebas con personas con discapacidad auditiva y personas oyentes, en escenarios simulados de emergencia.
 \end{itemize}
 
@@ -41,7 +42,7 @@ Desarrollar un prototipo de aplicación móvil en Android que, utilizando técni
 El Trabajo Terminal consiste en el desarrollo de un prototipo de aplicación móvil que traduzca frases de español a LSM mediante animaciones. La aplicación tendrá un conjunto predefinido de frases comunes para saludos, emergencias y expresiones de mínima comunicación. En caso de no contar con una frase específica, se empleará la dactilología (representación de las letras de una palabra empleando las manos) para poder garantizar la comunicación.
 
 \subsection{Alcance Especifíco}
-Se hará uso de una interfaz de usuario simple e intuitiva, basándose en las Heurísticas de Usabilidad de Nielsen y la norma ISO 9241-210, que sea de utilidad para la población objetivo. Mediante técnicas de Procesamiento de Lenguaje Natural (PLN) se pretende hacer un procesamiento del dataset que contiene las frases en español, para posteriormente realizar el modelado de las animaciones 3D empleando MediaPipe; dichas animaciones serán fluidas para mostrar una comunicación natural y fácil de entender.
+Se hará uso de una interfaz de usuario simple e intuitiva, basándose en las Heurísticas de Usabilidad de Nielsen y la norma ISO 9241-210, que sea de utilidad para la población objetivo. Mediante técnicas de Procesamiento de Lenguaje Natural (PLN) se pretende hacer un procesamiento del dataset que contiene las frases en español, para posteriormente realizar el modelado de las animaciones 3D empleando MediaPipe (ver \textbf{\nameref{anexo:blender_unity}}); dichas animaciones serán fluidas para mostrar una comunicación natural y fácil de entender.
 
 \subsection{Delimitación}
 Es importante aclarar que la traducción será únicamente de un canal de comunicación: de español a LSM. Lo anterior por la razón de que la traducción de LSM a español es más compleja por las diferencias estructurales y gramaticales entre ambos lenguajes.\\
