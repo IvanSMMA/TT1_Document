@@ -108,7 +108,34 @@ A continuación, se enlistan las partes representadas del cuerpo:
     \item Right foot index - punta del pie derecho.  
 \end{enumerate}
 
-MediaPipe suele ser empleado en conjunto con plataformas y motores gráficos, como pueden ser Blender y Unity, para la creación de modelos 3D. En el siguiente apartado se revisará al motor gráfico Unity, enfocado principalmente en el desarrollo de modelos 3D.\\
+\subsection{MediaPipe Holistic}
+MediaPipe Holistic es un sistema que combina los modelos de pose, rostro y manos para realizar un análisis completo del cuerpo humano en tiempo real. Este enfoque holístico permite detectar un total de 543 puntos clave: 33 de pose, 468 del rostro y 21 por mano, procesando continuamente secuencias de imágenes para identificar gestos, posturas y movimientos corporales [hol1].\\
+
+\begin{center}
+    \includegraphics[width=0.8\textwidth]{Images/Anexos/MediaPipe_Holistic.png}
+    \captionof{figure}[MediaPipe Holistic]{MediaPipe Holistic, obtenido de [hol2].}  % Pie de foto manual
+\end{center}
+
+El Modelo Holistic está diseñado para capturar simultáneamente expresiones faciales, gestos manuales y postura corporal, lo que lo convierte en una herramienta útil para aplicaciones de realidad aumentada, seguimiento de actividad física, interacción basada en gestos y otros entornos donde se requiere comprender el movimiento humano de manera integral [hol2].\\
+
+Los principales componentes del modelo MediaPipe Holistic son los siguientes [hol2]:
+\begin{itemize}
+	\item \textbf{Pose Sub-model}: estima 33 puntos clave del esqueleto humano, cubriendo articulaciones como hombros, codos, muñecas, cadera, rodillas y tobillos. Permite reconstruir poses corporales en tiempo real, útil para análisis de movimiento, deporte, danza y experiencias interactivas.
+	\item \textbf{Face Sub-model}: detecta 468 puntos del rostro, incluyendo ojos, boca, nariz y contornos faciales. Su nivel de detalle permite reconocer expresiones, emociones y habilitar experiencias de realidad aumentada como filtros o maquillaje digital.
+	\item \textbf{Hands Sub-model}: identifica 21 puntos por mano, capturando la forma y movimiento de los dedos. Esto permite aplicaciones como reconocimiento de lengua de señas, manipulación virtual o interfaces gestuales.
+\end{itemize}
+
+Entre las aplicaciones del modelo destacan principalmente las siguientes [hol2]:
+\begin{itemize}
+	\item \textbf{Realidad Aumentada (AR)}: integración de objetos virtuales que reaccionan al movimiento corporal del usuario.
+	\item \textbf{Fitness y salud}: seguimiento de posturas y movimientos para ofrecer retroalimentación en tiempo real.
+	\item \textbf{Interacción humano-computadora}: control de interfaces sin contacto, ideal para dispositivos inteligentes o entornos públicos.
+	\item \textbf{Accesibilidad}: interpretación de lengua de señas y soporte para personas con movilidad reducida mediante controles gestuales.
+\end{itemize}
+
+MediaPipe Holistic funciona como una canalización optimizada que integra los módulos de rostro, manos y pose para realizar seguimiento simultáneo. Su uso más común es detectar estas partes del cuerpo y extraer puntos clave para modelos de visión por computadora [hol3].\\
+
+En general, MediaPipe suele ser empleado en conjunto con plataformas y motores gráficos, como pueden ser Blender y Unity, para la creación de modelos 3D. En el siguiente apartado se revisará al motor gráfico Unity, enfocado principalmente en el desarrollo de modelos 3D.\\
 
 \section{Modelado de Animaciones 3D}
 El término animación 3D se refiere a la técnica de animación empleada para desplazar modelos tridimensionales generados digitalmente, sirviéndose para ello de un eje de coordenadas cartesiano virtual \cite{ref54}.\\
