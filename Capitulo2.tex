@@ -864,6 +864,263 @@ No obstante, es importante mencionar que esta técnica no siempre funciona corre
 
 \end{enumerate}
 
+\subsection{Embeddings Semánticos}
+Los embeddings semánticos constituyen una forma de representar palabras, frases o incluso documentos mediante valores numéricos. En esencia, consisten en transformar el lenguaje natural, difícil de procesar directamente por una computadora, en vectores matemáticos que sí pueden ser manipulados mediante operaciones algebraicas. Esto permite que los sistemas automáticos capten relaciones de significado más allá de la simple coincidencia de palabras, logrando una comprensión más profunda del contenido lingüístico \cite{refebd1}.\\
+
+Para obtener estas representaciones, se emplean algoritmos de aprendizaje automático entrenados con grandes volúmenes de texto, como libros, artículos científicos o recopilaciones masivas de contenido web. Durante el entrenamiento, el modelo identifica patrones, asociaciones y regularidades en el uso del lenguaje. De esta manera, aprende a ubicar cada palabra dentro de un espacio vectorial de muchas dimensiones, donde la proximidad entre vectores refleja su similitud semántica. Así, términos relacionados aparecen cercanos entre sí, mientras que aquellos con significados distintos se separan en el espacio \cite{refebd1}.\\
+
+\noindent \textbf{Vectores semánticos o representaciones vectoriales}
+
+Los vectores semánticos, también denominados representaciones vectoriales o simplemente embeddings, son la base del procesamiento moderno del significado en modelos computacionales. Un vector puede entenderse como una secuencia ordenada de números que define un punto dentro de un espacio con múltiples dimensiones; cada una de estas dimensiones expresa alguna característica aprendida por el modelo durante su entrenamiento \cite{refebd1}.\\
+
+Una forma de visualizar este concepto es compararlo con un mapa geográfico. En un mapa tradicional, la posición de un punto se determina mediante dos coordenadas, como latitud y longitud. De manera análoga, en un espacio semántico cada palabra se asocia a un vector que indica su ubicación dentro de cientos o miles de dimensiones. Cuando dos vectores se encuentran cercanos, significa que sus palabras representan ideas o significados similares; si están lejanos, la relación semántica entre ellas es escasa o inexistente \cite{refebd1}.\\
+
+En la práctica, los embeddings suelen ser representaciones densas de alta dimensionalidad, generalmente entre 128 y 1024 dimensiones, lo que permite capturar matices complejos del significado lingüístico con un grado notable de precisión \cite{refebd2}.\\
+
+\begin{center}
+    \includegraphics[width=0.8\textwidth]{Images/Cap 2/Embeddings/1_RepresentaciónVectorial.png}
+    \captionof{figure}[Representación Vectorial]{Representación vectorial, obtenido de \cite{refebd1}.}  % Pie de foto manual
+\end{center}
+
+\noindent \textbf{Dimensiones de un embedding como una analogía con mapas}
+
+Las dimensiones de un vector semántico pueden entenderse del mismo modo que las coordenadas que ubican un punto en un mapa. Sin embargo, en lugar de señalar una posición geográfica, cada dimensión sitúa una palabra o frase dentro de un espacio semántico abstracto. Cada una de estas dimensiones refleja alguna característica latente del significado, como matices emocionales, atributos gramaticales o cualquier otro rasgo aprendido por el modelo durante el entrenamiento \cite{refebd2}.\\
+
+Cuando todas las dimensiones se combinan, forman una especie de “mapa conceptual” en el que las palabras se distribuyen según sus semejanzas. Por esta razón, dos términos con significados próximos aparecerán cercanos en este espacio, mientras que aquellos que no comparten relación se encontrarán a mayor distancia \cite{refebd2}.\\
+
+Por ejemplo, si una de las dimensiones capturara aspectos relacionados con la polaridad emocional, podría esperarse que palabras como “feliz” o “alegre” obtuvieran valores similares, mientras que palabras como “triste” o “deprimido” se localizarían en posiciones opuestas dentro de esa misma dimensión.\\
+
+\noindent \textbf{Cómo los vectores representan el significado en los textos}
+
+Los embeddings permiten que un sistema automático comprenda el significado de un texto al reflejar patrones de uso y coocurrencia entre las palabras. Aquellos términos que suelen aparecer en contextos similares tienden a adquirir vectores parecidos. De esta manera, palabras como rey y reina se ubicarán cerca entre sí porque suelen relacionarse con conceptos comunes, como la monarquía o el poder \cite{refebd3}.\\
+
+Además, al tratarse de valores numéricos, estos vectores pueden ser manipulados matemáticamente \cite{refebd3}. Por ejemplo, si un modelo ha aprendido atributos vinculados al género gramatical, podría aproximarse la relación:
+
+\begin{center}
+    \includegraphics[width=0.9\textwidth]{Images/Cap 2/Embeddings/2_RelacionesSemánticas.png}
+    \captionof{figure}[Relaciones Semánticas]{Relaciones semánticas entre palabras, obtenido de \cite{refebd1}.}  % Pie de foto manual
+\end{center}
+
+Si bien los modelos reales manejan estructuras mucho más complejas, este tipo de ejemplos ilustra cómo los embeddings capturan no solo definiciones individuales, sino también las relaciones semánticas que existen entre los conceptos.\\
+
+\noindent \textbf{Embeddings: representaciones de alta dimensionalidad}
+
+Los embeddings actuales, como los generados por modelos avanzados de Google, OpenAI y otros sistemas basados en redes neuronales, suelen tener cientos o miles de dimensiones. Estas dimensiones no están definidas manualmente; surgen de manera automática durante el entrenamiento y cada una representa un aspecto abstracto del significado aprendido por el modelo \cite{refebd1}.\\
+
+El uso de una gran cantidad de dimensiones permite representar los textos con un nivel de detalle muy elevado, similar a disponer de un mapa extremadamente preciso con numerosas coordenadas. Gracias a esta alta dimensionalidad, los modelos pueden capturar relaciones semánticas complejas, matices contextuales, analogías y diferentes sentidos de una misma palabra \cite{refebd1}.\\
+
+Por ejemplo, el siguiente vector podría representar el embedding de la frase “La materia no se crea ni se destruye, solo se transforma”:\\
+
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{Images/Cap 2/Embeddings/3_RepresentaciónEmbedding.png}
+    \captionof{figure}[Representación Vectorial de un embedding]{Representación vectorial de un embedding, obtenido de \cite{refebd1}.}  % Pie de foto manual
+\end{center}
+
+En dicho vector, cada componente corresponde a una dimensión del espacio semántico. La combinación de todos estos valores numéricos produce una representación única del significado global de la frase. Aunque estos números no son interpretables por una persona en términos directos, sí permiten que un sistema automático manipule esa representación de forma matemática \cite{refebd1}.\\
+
+De este modo, cuando se genera el embedding de otra frase con un significado parecido. Por ejemplo: “La energía no desaparece, únicamente cambia de forma”, ambos vectores tienden a aparecer muy próximos dentro del espacio semántico, ya que comparten patrones conceptuales y contextuales. Esta cercanía numérica refleja la similitud entre las ideas expresadas en ambas oraciones.\\
+
+\noindent \textbf{Entrenamiento de los modelos de embedding (usualmente con 768 dimensiones)}
+
+Los modelos encargados de producir embeddings se entrenan utilizando cantidades masivas de texto, que pueden incluir libros, artículos científicos, publicaciones web, código y diversos tipos de documentos. En los últimos años, este proceso ha escalado de forma significativa, con modelos que se entrenan sobre volúmenes de datos cada vez mayores \cite{refebd4}.\\
+
+Durante este entrenamiento, el sistema aprende a identificar relaciones entre palabras y a predecir el contexto en el que podrían aparecer. Este aprendizaje es lo que permite que, posteriormente, pueda transformar cualquier frase en un vector numérico dentro del espacio semántico.\\
+
+\begin{center}
+    \includegraphics[width=0.9\textwidth]{Images/Cap 2/Embeddings/4_DimensionesEmbedding.png}
+    \captionof{figure}[Dimensiones de un embedding]{Dimensiones de un embedding, obtenido de \cite{refebd1}.}  % Pie de foto manual
+\end{center}
+
+El número de dimensiones que tendrá cada embedding se establece como un parámetro del modelo. Un valor muy común en modelos modernos es 768 dimensiones, aunque pueden existir variantes con más o menos dimensiones según los objetivos del sistema y la arquitectura utilizada. Este proceso de entrenamiento exige una enorme capacidad computacional y puede requerir varios días o incluso semanas para completarse, especialmente cuando se trabaja con grandes volúmenes de datos o modelos de última generación \cite{refebd4}.\\
+
+Además de comprender el concepto general de los embeddings, es importante reconocer que existen diversas técnicas para generarlos. Estas técnicas han evolucionado con el tiempo y pueden clasificarse en dos grandes categorías: los métodos clásicos, que producen representaciones estáticas, y los métodos modernos, que generan representaciones contextuales capaces de capturar matices más complejos del lenguaje. A continuación, se describen brevemente los modelos más representativos de cada categoría.\\
+
+\noindent \textbf{Técnicas clásicas de generación de embeddings}
+
+Los métodos clásicos fueron pioneros en la representación vectorial del lenguaje y permitieron reemplazar las palabras por vectores que conservaban relaciones semánticas básicas. Entre los modelos más influyentes se encuentran:
+
+\begin{itemize}
+    \item \textbf{Word2Vec}, introducido por Mikolov y colaboradores \cite{refebd5}.
+    \item \textbf{GloVe}, basado en la factorización de matrices de co-ocurrencias de palabras \cite{refebd6}.
+    \item \textbf{FastText}, que mejora los modelos anteriores al incorporar información de subpalabras y prefijos, permitiendo representar adecuadamente palabras nuevas o poco frecuentes \cite{refebd7}.
+\end{itemize}
+
+Estos modelos producen embeddings estáticos: cada palabra posee un único vector sin importar el contexto en el que aparece.\\
+
+\noindent \textbf{Técnicas modernas (embeddings contextuales)}
+
+Con el desarrollo de arquitecturas más avanzadas, como redes bidireccionales y modelos transformers, surgieron métodos capaces de generar embeddings que dependen del contexto de cada oración. Esto permite capturar significados más finos y relaciones más complejas entre las palabras. Entre los modelos destacados se encuentran:
+
+\begin{itemize}
+    \item \textbf{ELMo}, basado en redes LSTM bidireccionales que generan representaciones sensibles al contexto \cite{refebd8}.
+    \item \textbf{BERT}, modelo basado en transformers y entrenado mediante Masked Language Modeling, que produce representaciones contextuales profundas \cite{refebd9}.
+    \item \textbf{Sentence-BERT}, una adaptación de BERT diseñada específicamente para generar embeddings de oraciones altamente útiles en tareas de similitud semántica \cite{refebd10}.
+\end{itemize}
+
+Sentence-BERT será el modelo utilizado en este Trabajo Terminal debido a su capacidad para producir representaciones compactas y comparables de oraciones completas.\\
+
+\noindent \textbf{Ventajas de Sentence-BERT}
+
+Este modelo presenta características que lo convierten en una opción especialmente adecuada para aplicaciones que requieren medir similitud semántica entre textos \cite{refebd10}:
+
+\begin{itemize}
+    \item Captura el significado global de oraciones completas, no solo de palabras individuales.
+    \item Ha sido preentrenado utilizando millones de pares de frases comparadas semánticamente.
+    \item Está optimizado para tareas de similitud, búsqueda semántica y recuperación de información.
+    \item Permite inferencia rápida sin necesidad de entrenamiento adicional (\textit{fine-tuning}) en la mayoría de los casos.
+\end{itemize}
+
+\subsection{Similitud coseno}
+La similitud del coseno es una medida ampliamente utilizada para evaluar el grado de semejanza entre dos vectores dentro de un espacio multidimensional. A diferencia de otras métricas basadas en distancia, este método no considera la magnitud de los vectores, sino la dirección hacia la cual apuntan. Esta característica la vuelve especialmente útil en espacios de alta dimensionalidad, donde las distancias euclidiana o Manhattan pueden volverse menos representativas.\\
+
+El cálculo consiste en obtener el coseno del ángulo formado por dos vectores distintos de cero. El resultado es un valor numérico comprendido entre –1 y 1, donde:
+\begin{itemize}
+    \item \textbf{1} indica que ambos vectores apuntan exactamente en la misma dirección, es decir, tienen una similitud completa.
+    \item \textbf{0} señala que los vectores son ortogonales, lo que implica que no existe relación direccional entre ellos.
+    \item \textbf{-1} representa direcciones totalmente opuestas, lo cual se interpreta como máxima disimilitud.
+\end{itemize}
+
+Esta medida puede visualizarse como la comparación entre dos flechas: si ambas apuntan hacia el mismo lugar, la similitud es alta; si forman un ángulo recto, no guardan relación; y si se orientan en direcciones contrarias, son totalmente diferentes.\\
+
+En el ámbito del Machine Learning, Procesamiento de Lenguaje Natural (PLN) e Inteligencia Artificial, la similitud del coseno resulta fundamental debido a que estos sistemas operan con datos representados como vectores (por ejemplo, embeddings de texto). Al convertir palabras, frases o documentos en vectores numéricos, se pueden comparar semánticamente mediante esta métrica.\\
+
+Por ejemplo, un chatbot puede transformar una consulta en un embedding, compararlo con los vectores almacenados en una base de datos y emplear la similitud del coseno para identificar cuál respuesta es la más cercana en significado. Este proceso permite medir cuánta relación existe entre dos representaciones vectoriales y seleccionar la opción más adecuada.\\
+
+En resumen, la similitud del coseno es la métrica estándar para comparar embeddings, ya que ofrece una forma robusta de evaluar el parecido semántico entre textos mediante la orientación de sus vectores en el espacio.\\
+
+\noindent \textbf{Definición matemática:}
+
+La similitud del coseno se define a partir de la relación angular entre dos vectores. Matemáticamente, se expresa como:
+
+\[
+\text{cosine\_similarity}(A, B)
+= \frac{A \cdot B}{\|A\| \, \|B\|}
+\]
+
+donde:
+\begin{itemize}
+    \item $A \cdot B$ = producto punto (suma de productos elemento a elemento).
+    \item $\|A\|$ = norma euclidiana del vector $A$.
+    \item Rango: $[-1, 1]$, típicamente $[0, 1]$ cuando se usan embeddings normalizados.
+\end{itemize}
+
+Esta formulación permite medir qué tan alineados están dos vectores dentro de un espacio multidimensional, lo cual es fundamental para comparar representaciones semánticas en tareas de PLN.\\
+
+\noindent Propiedades:
+
+La similitud coseno presenta características que la hacen especialmente útil en modelos basados en embeddings:
+
+\begin{itemize}
+    \item Invariante a la magnitud de los vectores
+    \item Cómputo eficiente: $O(d)$ donde $d$ es la dimensionalidad
+    \item Interpretabilidad: 1.0 = idéntico, 0.0 = ortogonal
+\end{itemize}
+
+En el proceso de selección de una métrica adecuada para comparar embeddings, se evaluaron diversas alternativas empleadas comúnmente en tareas de análisis vectorial. Sin embargo, varias de ellas presentan limitaciones importantes cuando se trabajan datos de alta dimensionalidad o representaciones semánticas continuas, razón por la cual fueron descartadas:
+
+\noindent \textbf{Alternativas consideradas y rechazadas:}
+\begin{itemize}
+    \item \textbf{Distancia Euclidiana}: Su desempeño se ve afectado por la magnitud de los vectores, lo que genera resultados inconsistentes cuando los embeddings tienen distintas escalas o longitudes.
+    \item \textbf{Distancia de Manhattan}: Aunque útil en ciertos contextos, no captura la direccionalidad entre los vectores, un aspecto clave para evaluar similitud semántica.
+    \item \textbf{Índice de Jaccard}: Diseñado para conjuntos discretos; no es adecuado para vectores densos y continuos, como los generados por modelos modernos de PLN.
+\end{itemize}
+
+La similitud del coseno se seleccionó como la métrica óptima debido a sus propiedades, que la han consolidado como un estándar en sistemas basados en embeddings. Entre sus principales ventajas destacan:
+\begin{itemize}
+    \item \textbf{Robustez en espacios de alta dimensionalidad}: A diferencia de las distancias tradicionales, la similitud coseno mantiene un comportamiento estable incluso cuando los vectores poseen cientos o miles de dimensiones.
+    \item \textbf{Independencia de la magnitud}: Al centrarse únicamente en el ángulo entre vectores, evita que diferencias en longitud distorsionen la percepción de similitud.
+    \item \textbf{Eficiencia computacional}: Su cálculo es ligero y puede implementarse con gran rapidez utilizando herramientas ampliamente adoptadas como NumPy o SciPy.
+    \item \textbf{Versatilidad en múltiples dominios}: Es aplicable en tareas como minería de textos, recuperación de información, sistemas de recomendación y búsquedas semánticas en tiempo real, lo que la convierte en una métrica generalista y ampliamente probada.
+\end{itemize}
+
+En conjunto, estas características la hacen especialmente adecuada para comparar representaciones vectoriales en el contexto del Procesamiento de Lenguaje Natural empleado en este proyecto.
+
+\subsection{Transformers y Modelos Pre-Entrenados}
+Desde su presentación en 2017, la arquitectura Transformer supuso un cambio definitivo en el desarrollo de modelos de aprendizaje profundo, especialmente en el ámbito del Procesamiento de Lenguaje Natural (PLN). Antes de su aparición, el PLN dependía en gran medida de arquitecturas secuenciales como las redes neuronales recurrentes (RNN) y sus variantes (LSTM y GRU). Aunque efectivas para ciertas tareas, estas redes tenían dificultades para capturar dependencias de largo alcance y requerían procesar la información paso a paso, lo que limitaba su escalabilidad.\\
+
+El trabajo \textit{“Attention Is All You Need”} introducido por Vaswani et al. en 2017 [e6] propuso un enfoque completamente distinto: eliminar la recurrencia y reemplazarla por un mecanismo de atención capaz de modelar relaciones globales entre tokens en una sola operación. Esta innovación permitió acelerar drásticamente el entrenamiento y mejorar la calidad contextual de los modelos, convirtiéndose en la base de sistemas modernos como BERT, GPT, T5 y otras variantes avanzadas.\\
+
+A continuación, se describen los elementos esenciales que conforman la arquitectura Transformer, los cuales permiten comprender por qué se ha convertido en el estándar en modelos de PLN:
+\begin{enumerate}
+    \item \textbf{Embeddings}. Cada token del texto se representa como un vector denso de alta dimensionalidad. Esto permite trabajar con significado numérico en lugar de cadenas de texto.
+    \item \textbf{Codificación posicional}: Como el modelo no es secuencial, se introduce información sobre el orden de los tokens usando vectores posicionales, normalmente basados en funciones senoidales.
+    \item \textbf{Mecanismo de atención (Self-Attention)}: Este mecanismo permite que cada token “preste atención” a otros tokens de la secuencia para capturar relaciones contextuales. Se utilizan tres vectores: query, key y value.
+    \item \textbf{Multi-Head Attention}: Permite al modelo enfocarse en diferentes partes del texto desde distintas perspectivas. Cada “cabeza” aprende un aspecto contextual distinto.
+    \item \textbf{Capas Feed-Forward}: Redes neuronales tradicionales que procesan los datos post-atención token por token.
+    \item \textbf{Normalización y conexiones residuales}: Estas técnicas estabilizan el entrenamiento y ayudan a preservar el flujo de información.
+\end{enumerate}
+
+\noindent \textbf{Arquitectura general: encoder y decoder}
+
+El Transformer original está compuesto por dos bloques principales:
+\begin{itemize}
+    \item \textbf{Encoder}: procesa la entrada analizando relaciones entre los tokens.
+    \item \textbf{Decoder}: genera la salida, utilizando atención tanto a la entrada codificada como al contexto generado anteriormente.
+\end{itemize}
+
+Dependiendo del tipo de modelo, puede utilizarse solo una de estas partes:
+\begin{itemize}
+    \item \textbf{Modelos encoder-only}: Por ejemplo, BERT, empleados para clasificación, extracción de características o embeddings.
+    \item \textbf{Modelos decoder-only}: Como GPT, orientados a generación de texto.
+    \item \textbf{Modelos encoder–decoder}: Como T5, útiles para tareas de traducción o reformulación.
+\end{itemize}
+
+\noindent \textbf{Procesamiento general de un Transformer}
+\begin{enumerate}
+    \item Tokenización del texto de entrada.
+    \item Conversión de tokens a embeddings.
+    \item Suma de las codificaciones posicionales.
+    \item Procesamiento mediante múltiples capas de self-attention y feed-forward.
+    \item (En modelos de generación) aplicación de atención enmascarada para controlar el orden autoregresivo.
+    \item Obtención del siguiente token mediante una capa final softmax.
+\end{enumerate}
+
+En términos generales, la arquitectura Transformer integra los componentes que se describen a continuación:
+\begin{itemize}
+    \item \textbf{Encoder}: procesa y contextualiza el texto de entrada.
+    \item \textbf{Decoder}: produce la salida token por token (no presente en BERT).
+    \item \textbf{Self-Attention}: cada palabra puede relacionarse con todas las demás en la secuencia.
+    \item \textbf{Multi-Head Attention}: permite analizar el texto desde diversas perspectivas simultáneamente.
+    \item \textbf{Feed-Forward Networks}: capas densas que refinan la representación.
+    \item \textbf{Positional Encoding}: incorpora información relativa al orden.
+\end{itemize}
+
+A continuación, se enlistan algunos modelos pre-entrenados basados en Transformers.\\
+
+\noindent \textbf{BERT (Bidirectional Encoder Representations from Transformers)}
+
+\begin{itemize}
+    \item Entrenado con grandes corpus como Wikipedia y BookCorpus (aprox. 3.3B palabras).
+    \item Utiliza dos tareas principales durante el pre-entrenamiento:
+    \begin{itemize}
+        \item \textbf{Masked Language Model}: predecir palabras ocultas dentro de una oración.
+        \item \textbf{Next Sentence Prediction}: aprender relaciones entre oraciones consecutivas.
+    \end{itemize}
+    \item Su naturaleza bidireccional lo hace ideal para tareas de comprensión del lenguaje.
+\end{itemize}
+
+\noindent \textbf{SENTENCE-TRANSFORMERS (BERT)}
+
+Extensión de BERT adaptada para generar embeddings semánticos de oraciones con alta calidad. Se caracteriza por:
+\begin{itemize}
+    \item Uso de redes siamesas o triplet loss para aprender similitud textual.
+    \item Optimización específica para tareas de búsqueda semántica, clustering y clasificación basada en similitud.
+    \item Disponibilidad de modelos especializados para distintos idiomas y aplicaciones.
+\end{itemize}
+
+El modelo utilizado en este Trabajo Terminal es paraphrase-multilingual-MiniLM-L12-v2. Sus características principales son:
+\begin{itemize}
+    \item \textbf{Familia}: MiniLM (una variante compacta y eficiente de BERT).
+    \item \textbf{Número de capas}: 12 (menor profundidad que BERT-large).
+    \item \textbf{Dimensionalidad de los embeddings}: 384.
+    \item \textbf{Compatibilidad multilingüe}: soporta más de 50 idiomas, incluido el español.
+    \item \textbf{Optimización}: especializado en detección de paráfrasis y similitud semántica.
+    \item \textbf{Tamaño reducido (aprox. 120 MB)}: facilita su uso en proyectos con recursos limitados.
+    \item \textbf{Velocidad}: capaz de procesar consultas en aproximadamente 40 ms sobre CPU.
+\end{itemize}
+
+Este modelo fue elegido debido a su equilibrio entre rendimiento, precisión semántica y eficiencia computacional, lo que lo hace adecuado para el sistema de reconocimiento y correspondencia lingüística requerido en el proyecto.
+
 \subsection{Aplicaciones del PLN}
 A continuación, se enlistan las principales aplicaciones del PLN:
 \begin{itemize}
@@ -1000,14 +1257,85 @@ Entre las principales ventajas de las API destacan \cite{refapi4}:
     \item \textbf{Innovación}: fomentan la creación de nuevas aplicaciones y oportunidades de negocio.
 \end{itemize}
 
+\subsection{API REST}
+La Transferencia de Estado Representacional (REST, por sus siglas en inglés) constituye un estilo arquitectónico que define un conjunto de principios para el diseño de interfaces entre sistemas. Su propósito es establecer reglas que permitan crear APIs capaces de comunicarse de forma eficiente, escalable y fiable, incluso en entornos distribuidos como Internet. Una arquitectura basada en REST se caracteriza por ser flexible, fácil de mantener y por ofrecer portabilidad entre distintas plataformas, lo que la vuelve una opción común para el desarrollo de servicios web modernos.\\
+
+Cuando una API se implementa siguiendo estos principios, se le denomina API REST o API RESTful. Del mismo modo, los servicios web construidos bajo esta arquitectura reciben el nombre de servicios web RESTful. En la práctica, los términos REST API y RESTful API suelen emplearse como equivalentes.\\
+
+A continuación, se describen los principales lineamientos que definen el estilo REST:
+\begin{enumerate}
+    \item \textbf{Interfaz Uniforme}: La uniformidad de la interfaz es el eje central de REST, ya que garantiza que la comunicación entre cliente y servidor siga un formato consistente. Los datos que se transmiten se denominan representaciones y pueden diferir de la forma en la que el servidor almacena internamente sus recursos. Por ejemplo, la información podría gestionarse como texto plano y enviarse al cliente en formato JSON, XML o HTML.\\
+    
+    Este principio incluye cuatro restricciones importantes:
+
+    \begin{itemize}
+        \item Cada solicitud debe identificar el recurso al que desea acceder, normalmente mediante una URL.
+        \item La representación enviada por el servidor proporciona suficiente información para que el cliente pueda modificar o eliminar el recurso si es necesario.
+        \item Los mensajes deben ser autodescriptivos, es decir, contener los metadatos necesarios para que el cliente sepa cómo procesarlos.
+        \item Las representaciones deben incluir enlaces a otros recursos relevantes, de modo que el cliente pueda descubrirlos sin requerir conocimiento previo del sistema.
+    \end{itemize}
+
+    \item \textbf{Tecnología sin estado}: REST establece que cada solicitud enviada al servidor debe contener toda la información necesaria para ser atendida, sin depender de solicitudes anteriores. Esto implica que el servidor no mantiene sesiones ni estados entre interacciones. Gracias a esta independencia, el sistema se vuelve más escalable y sencillo de distribuir, ya que cualquier servidor puede atender cualquier petición sin requerir contexto adicional.
+    \item \textbf{Sistema por capas}: En REST, la comunicación entre cliente y servidor puede pasar por uno o más intermediarios, como balanceadores de carga, servidores de seguridad o cachés, sin que el cliente sea consciente de ello. Las capas pueden encargarse de tareas como autenticación, lógica de negocio o almacenamiento, y funcionan de manera transparente para quien consume la API. Esta estructura permite mejorar la organización del sistema y distribuir responsabilidades sin afectar la interacción con el cliente.
+    \item \textbf{Almacenamiento en caché}: Los servicios RESTful permiten aprovechar mecanismos de almacenamiento en caché para mejorar el rendimiento. Si ciertos datos no cambian con frecuencia, pueden ser guardados temporalmente por el cliente o por intermediarios para evitar solicitudes repetitivas al servidor. La API debe indicar, mediante cabeceras específicas, si una respuesta puede almacenarse y por cuánto tiempo, permitiendo así reducir la carga del servidor y disminuir los tiempos de respuesta.
+    \item \textbf{Código bajo demanda}: Opcionalmente, REST permite que el servidor envíe código ejecutable al cliente para ampliar sus capacidades de forma temporal. Un ejemplo habitual ocurre en páginas web que envían fragmentos de JavaScript al navegador para validar formularios o añadir interactividad. Aunque no es obligatorio, este principio proporciona flexibilidad adicional al aumentar las funciones disponibles del lado del cliente sin requerir instalaciones externas.
+\end{enumerate}
+
+\subsection{API RESTful}
+Una API RESTful es una interfaz que permite que dos sistemas informáticos intercambien información de forma segura a través de Internet. En entornos empresariales, es habitual que diferentes aplicaciones, internas o de terceros, necesiten comunicarse entre sí para completar diversas tareas. Por ejemplo, un sistema de nóminas puede requerir información de un servicio bancario externo para gestionar pagos, o datos de una aplicación interna para validar horas trabajadas.\\
+
+Las API diseñadas bajo el estilo REST facilitan este tipo de integración, ya que emplean estándares abiertos y bien definidos que permiten una comunicación eficiente, confiable y sencilla de mantener.\\
+
+\noindent \textbf{Principios fundamentales de REST}
+
+Los servicios RESTful se basan en una serie de principios arquitectónicos que garantizan interoperabilidad, escalabilidad y simplicidad:
+
+\begin{enumerate}
+    \item \textbf{Cliente–Servidor}: Se mantiene una separación clara entre el cliente (quien consume la información) y el servidor (quien la provee), lo que facilita el mantenimiento y la evolución independiente de cada parte.
+    \item \textbf{Sin estado (Stateless)}: Cada petición enviada al servidor debe contener toda la información necesaria para procesarla. El servidor no almacena el estado de las interacciones previas, lo que mejora la escalabilidad.
+    \item \textbf{Cacheable}: Las respuestas pueden indicar si es posible almacenarlas en caché, reduciendo la carga sobre el servidor y acelerando la comunicación.
+    \item \textbf{Interfaz uniforme}: Todos los recursos deben identificarse mediante URIs y utilizar representaciones estandarizadas, proporcionando una interacción consistente entre cliente y servidor.
+    \item \textbf{Sistema en capas}: La arquitectura puede incluir múltiples capas como seguridad, balanceo de carga o intermediarios sin que el cliente necesite conocer su existencia.
+\end{enumerate}
+
+\noindent \textbf{Métodos HTTP utilizados en REST}
+
+Los servicios RESTful emplean los métodos del protocolo HTTP para definir la operación que se desea realizar sobre un recurso:
+
+\begin{itemize}
+    \item \textbf{GET}: Recupera un recurso o una colección de recursos. Es un método seguro e idempotente.
+    \item \textbf{POST}: Crea un nuevo recurso o ejecuta una acción específica en el servidor.
+    \item \textbf{PUT}: Reemplaza por completo un recurso existente con una nueva representación.
+    \item \textbf{PATCH}: Realiza una actualización parcial del recurso.
+    \item \textbf{DELETE}: Elimina el recurso identificado por la URI.
+\end{itemize}
+
+\noindent \textbf{Códigos de estado HTTP}
+
+Las respuestas de una API RESTful utilizan códigos de estado estándar para indicar el resultado de la operación:
+
+\begin{itemize}
+    \item \textbf{2xx – Éxito}: Ejemplos comunes incluyen 200 OK para peticiones correctas y 201 Created para la creación de un nuevo recurso.
+    \item \textbf{4xx – Errores del cliente}: Incluyen situaciones como 400 Bad Request cuando la petición está mal formada o 404 Not Found si el recurso solicitado no existe.
+    \item \textbf{5xx – Errores del servidor}: Indican fallos internos, como 500 Internal Server Error.
+\end{itemize}
+
+El estilo REST ofrece múltiples beneficios que explican su amplia adopción en la industria del software:
+\begin{itemize}
+    \item \textbf{Alta escalabilidad}: La ausencia de estado facilita el uso de balanceadores de carga y distribuciones horizontales.
+    \item \textbf{Desacoplamiento}: Cliente y servidor pueden evolucionar de manera independiente, siempre que mantengan los contratos de la API.
+    \item \textbf{Amplio soporte y estandarización}: REST es uno de los enfoques más utilizados, por lo que existe abundante documentación, librerías y compatibilidad multiplataforma.
+    \item \textbf{Herramientas maduras}: Ecosistemas como Postman, Swagger/OpenAPI, entre otros, permiten documentar, probar y mantener APIs de manera eficiente.
+\end{itemize}
+
 \section{Arquitectura de Microservicios}
-La arquitectura de microservicios, abreviada comúnmente como microservicios, es un estilo de diseño de software orientado al desarrollo de aplicaciones como un conjunto de servicios pequeños, independientes y desplegables de forma separada. Cada microservicio posee un dominio de responsabilidad propio y puede implementarse utilizando distintos lenguajes o tecnologías, siempre que mantenga una comunicación coherente mediante contratos de API bien definidos [m1][m2][m3].\\
+La arquitectura de microservicios, abreviada comúnmente como microservicios, es un estilo de diseño de software orientado al desarrollo de aplicaciones como un conjunto de servicios pequeños, independientes y desplegables de forma separada. Cada microservicio posee un dominio de responsabilidad propio y puede implementarse utilizando distintos lenguajes o tecnologías, siempre que mantenga una comunicación coherente mediante contratos de API bien definidos \cite{refmic1,refmic2,refmic3}.\\
 
-A diferencia de las arquitecturas monolíticas, en las que todos los componentes de una aplicación se integran en un único bloque de código, los microservicios promueven un enfoque distribuido y débilmente acoplado, lo que implica que un fallo en un componente no afecta el funcionamiento del resto del sistema [m2][m3]. Esta independencia facilita el mantenimiento, la escalabilidad y la actualización continua sin interrumpir el servicio general [m3][m4].\\
+A diferencia de las arquitecturas monolíticas, en las que todos los componentes de una aplicación se integran en un único bloque de código, los microservicios promueven un enfoque distribuido y débilmente acoplado, lo que implica que un fallo en un componente no afecta el funcionamiento del resto del sistema \cite{refmic2}\cite{refmic3}. Esta independencia facilita el mantenimiento, la escalabilidad y la actualización continua sin interrumpir el servicio general \cite{refmic3}\cite{refmic4}.\\
 
-Gracias a su flexibilidad, la arquitectura de microservicios permite desarrollar e implementar funcionalidades individuales de manera autónoma, lo que acelera el ciclo de desarrollo y mejora la capacidad de respuesta ante las necesidades del usuario o del negocio [m3][m4]. Además, los equipos de desarrollo pueden trabajar de forma paralela en distintos servicios, reduciendo el tiempo de entrega de nuevas características y evitando dependencias entre módulos [m2][m4].\\
+Gracias a su flexibilidad, la arquitectura de microservicios permite desarrollar e implementar funcionalidades individuales de manera autónoma, lo que acelera el ciclo de desarrollo y mejora la capacidad de respuesta ante las necesidades del usuario o del negocio \cite{refmic3}\cite{refmic4}. Además, los equipos de desarrollo pueden trabajar de forma paralela en distintos servicios, reduciendo el tiempo de entrega de nuevas características y evitando dependencias entre módulos \cite{refmic2}\cite{refmic4}.\\
 
-Entre los ejemplos más comunes del uso de microservicios se encuentran [m1]:
+Entre los ejemplos más comunes del uso de microservicios se encuentran \cite{refmic1}:
 \begin{itemize}
     \item \textbf{Migración de sitios web}: permite dividir una plataforma monolítica en varios microservicios desplegados en la nube, favoreciendo la escalabilidad y el mantenimiento.
     \item \textbf{Gestión de contenido multimedia}: posibilita el almacenamiento y distribución de videos o imágenes mediante sistemas de almacenamiento de objetos escalables.
@@ -1015,7 +1343,7 @@ Entre los ejemplos más comunes del uso de microservicios se encuentran [m1]:
     \item \textbf{Procesamiento de datos}: amplía la compatibilidad con la nube de los servicios de análisis y gestión de datos.
 \end{itemize}
 
-Las aplicaciones basadas en microservicios presentan varios atributos distintivos [m2][m3], como lo son:
+Las aplicaciones basadas en microservicios presentan varios atributos distintivos \cite{refmic2}\cite{refmic3}, como lo son:
 \begin{itemize}
     \item \textbf{Independencia de desarrollo y despliegue}: cada servicio puede diseñarse, probarse y desplegarse sin afectar a los demás.
     \item \textbf{Comunicación basada en API}: los microservicios se comunican entre sí mediante interfaces estandarizadas, lo que permite la integración sin modificar los datos de origen.
@@ -1023,7 +1351,7 @@ Las aplicaciones basadas en microservicios presentan varios atributos distintivo
     \item \textbf{Diversidad tecnológica}: cada servicio puede desarrollarse con el lenguaje o framework más adecuado a su función.
 \end{itemize}
 
-La adopción de microservicios ofrece múltiples beneficios frente a las arquitecturas tradicionales [m3][m4]. A continuación se enlistan algunos:
+La adopción de microservicios ofrece múltiples beneficios frente a las arquitecturas tradicionales \cite{refmic3}\cite{refmic4}. A continuación se enlistan algunos:
 \begin{itemize}
     \item \textbf{Resiliencia y tolerancia a fallos}: al ser componentes independientes, los errores en un servicio no afectan al resto de la aplicación.
     \item \textbf{Agilidad y velocidad de desarrollo}: la división en módulos pequeños acelera la creación, prueba e implementación del software.
@@ -1032,25 +1360,25 @@ La adopción de microservicios ofrece múltiples beneficios frente a las arquite
     \item \textbf{Dinamismo tecnológico}: se facilita la adopción de nuevas herramientas o tecnologías sin reescribir toda la aplicación.
 \end{itemize}
 
-Los microservicios representan un modelo arquitectónico moderno y modular, ideal para entornos nativos de la nube y para organizaciones que buscan agilidad, escalabilidad y resiliencia en sus aplicaciones [m1][m2][m3][m4].\\
+Los microservicios representan un modelo arquitectónico moderno y modular, ideal para entornos nativos de la nube y para organizaciones que buscan agilidad, escalabilidad y resiliencia en sus aplicaciones \cite{refmic1,refmic2,refmic3,refmic4}.\\
 
 \begin{center}
     \includegraphics[width=0.95\textwidth]{Images/Cap 2/microservicios.png}
-    \captionof{figure}[Arquitectura de Microservicios]{Arquitectura de Microservicios, obtenido de [m5].} 
+    \captionof{figure}[Arquitectura de Microservicios]{Arquitectura de Microservicios, obtenido de \cite{refmic5}.} 
 \end{center}
 
 
 \section{Servicios en la Nube}
-Los servicios en la nube son soluciones tecnológicas que permiten a usuarios y organizaciones acceder bajo demanda a recursos informáticos, aplicaciones y datos a través de internet, sin necesidad de poseer infraestructura o hardware especializado. Estos servicios son administrados por un proveedor de nube, lo que permite a los usuarios obtener acceso flexible y económico a las herramientas que necesitan, sin asumir los costos ni la complejidad de su gestión [n1].\\
+Los servicios en la nube son soluciones tecnológicas que permiten a usuarios y organizaciones acceder bajo demanda a recursos informáticos, aplicaciones y datos a través de internet, sin necesidad de poseer infraestructura o hardware especializado. Estos servicios son administrados por un proveedor de nube, lo que permite a los usuarios obtener acceso flexible y económico a las herramientas que necesitan, sin asumir los costos ni la complejidad de su gestión \cite{refnub1}.\\
 
-El funcionamiento de la nube se basa en la virtualización de recursos que residen en servidores físicos ubicados en centros de datos gestionados por los proveedores. Los usuarios acceden a estos recursos mediante una conexión a internet, almacenando y procesando la información en servidores remotos en lugar de en equipos locales. Generalmente, el uso de la nube se cobra por suscripción o consumo, lo que representa una alternativa más económica frente al mantenimiento de infraestructura propia [n1].\\
+El funcionamiento de la nube se basa en la virtualización de recursos que residen en servidores físicos ubicados en centros de datos gestionados por los proveedores. Los usuarios acceden a estos recursos mediante una conexión a internet, almacenando y procesando la información en servidores remotos en lugar de en equipos locales. Generalmente, el uso de la nube se cobra por suscripción o consumo, lo que representa una alternativa más económica frente al mantenimiento de infraestructura propia \cite{refnub1}.\\
 
 \begin{center}
     \includegraphics[width=0.8\textwidth]{Images/Cap 2/Nube.png}
-    \captionof{figure}[Servicios en la Nube]{Funcionamiento de los Servicios en la Nube, obtenido de [n5].} 
+    \captionof{figure}[Servicios en la Nube]{Funcionamiento de los Servicios en la Nube, obtenido de \cite{refnub2}.} 
 \end{center}
 
-Entre las principales ventajas de los servicios en la nube se destacan [n1]:
+Entre las principales ventajas de los servicios en la nube se destacan \cite{refnub1}:
 \begin{itemize}
     \item Reducción de hardware físico y costos operativos.
     \item Flexibilidad de pago según el consumo real.
@@ -1061,7 +1389,7 @@ Entre las principales ventajas de los servicios en la nube se destacan [n1]:
 
 \noindent \textbf{Modelos de servicios en la nube}
 
-Los servicios de nube se clasifican comúnmente en tres modelos principales, con una categoría adicional emergente [n1]:
+Los servicios de nube se clasifican comúnmente en tres modelos principales, con una categoría adicional emergente \cite{refnub1}:
 \begin{itemize}
     \item \textbf{Infraestructura como servicio (IaaS)}: ofrece recursos virtualizados como servidores, almacenamiento y redes. Ejemplos: Amazon Web Services (AWS) y Microsoft Azure.
     \item \textbf{Plataforma como servicio (PaaS)}: proporciona entornos completos para el desarrollo, prueba y despliegue de aplicaciones, sin gestionar la infraestructura subyacente.
@@ -1071,7 +1399,7 @@ Los servicios de nube se clasifican comúnmente en tres modelos principales, con
 
 \vspace{1em} % ← agrega espacio aquí
 
-Contar con un proveedor especializado en la nube aporta beneficios adicionales [n2], como lo son:
+Contar con un proveedor especializado en la nube aporta beneficios adicionales \cite{refnub3}, como lo son:
 \begin{itemize}
     \item Agilidad empresarial y mantenimiento simplificado.
     \item Costos reducidos mediante esquemas de pago por uso.
@@ -1084,7 +1412,7 @@ Contar con un proveedor especializado en la nube aporta beneficios adicionales [
 
 \vspace{1em} % ← agrega espacio aquí
 
-La infraestructura de nube se compone de varios elementos esenciales [n3]:
+La infraestructura de nube se compone de varios elementos esenciales \cite{refnub4}:
 \begin{itemize}
     \item \textbf{Servidores}: equipos de alto rendimiento ubicados en centros de datos distribuidos.
     \item \textbf{Redes}: conectividad entre aplicaciones, servicios y datos mediante equipos de conmutación y balanceadores de carga.
@@ -1092,12 +1420,12 @@ La infraestructura de nube se compone de varios elementos esenciales [n3]:
     \item \textbf{Software}: herramientas de administración, máquinas virtuales y entornos de análisis que facilitan el uso de los recursos virtualizados.
 \end{itemize}
 
-Los servicios en la nube ofrecen una amplia gama de beneficios, que van desde bajos costos iniciales hasta una mayor libertad de acceso al software. Su naturaleza adaptable y escalable permite que se ajusten a diferentes proyectos y empresas de cualquier tamaño o sector. La diversidad de opciones disponibles brinda la posibilidad de seleccionar el tipo de servicio que mejor se alinee con las necesidades de cada proyecto, lo que convierte a la nube en una solución versátil y aplicable en prácticamente cualquier entorno [n4].
+Los servicios en la nube ofrecen una amplia gama de beneficios, que van desde bajos costos iniciales hasta una mayor libertad de acceso al software. Su naturaleza adaptable y escalable permite que se ajusten a diferentes proyectos y empresas de cualquier tamaño o sector. La diversidad de opciones disponibles brinda la posibilidad de seleccionar el tipo de servicio que mejor se alinee con las necesidades de cada proyecto, lo que convierte a la nube en una solución versátil y aplicable en prácticamente cualquier entorno \cite{refnub5}.
 
 \subsection{AWS}
-Amazon Web Services (AWS) es uno de los principales proveedores de servicios en la nube a nivel mundial. Ofrece una amplia gama de soluciones tecnológicas que incluyen almacenamiento, recursos de computación, bases de datos, desarrollo de aplicaciones móviles, inteligencia artificial y herramientas empresariales, todo bajo el modelo de cloud computing [aws1].\\
+Amazon Web Services (AWS) es uno de los principales proveedores de servicios en la nube a nivel mundial. Ofrece una amplia gama de soluciones tecnológicas que incluyen almacenamiento, recursos de computación, bases de datos, desarrollo de aplicaciones móviles, inteligencia artificial y herramientas empresariales, todo bajo el modelo de cloud computing \cite{refaws1}.\\
 
-AWS tiene presencia en más de 190 países y cuenta con una extensa red de centros de datos distribuidos en América, Europa, Asia y Oceanía. Su infraestructura global garantiza alta disponibilidad, seguridad y escalabilidad. Entre sus ventajas más destacadas se encuentran [aws1]:
+AWS tiene presencia en más de 190 países y cuenta con una extensa red de centros de datos distribuidos en América, Europa, Asia y Oceanía. Su infraestructura global garantiza alta disponibilidad, seguridad y escalabilidad. Entre sus ventajas más destacadas se encuentran \cite{refaws1}:
 \begin{itemize}
     \item \textbf{Seguridad}: cuenta con certificaciones internacionales como PCI DSS, ISO 27001, HIPAA y auditorías SOC 1 y SOC 2.
     \item \textbf{Amplia oferta de bases de datos}: soporta sistemas como MySQL, Oracle, PostgreSQL, SQL Server, MongoDB y Amazon Aurora.
@@ -1107,7 +1435,7 @@ AWS tiene presencia en más de 190 países y cuenta con una extensa red de centr
     \item \textbf{Resiliencia}: sus centros de datos están diseñados para operar incluso en situaciones críticas o de contingencia.
 \end{itemize}
 
-Las herramientas y servicios de AWS abarcan múltiples áreas de la computación en la nube [aws2]:
+Las herramientas y servicios de AWS abarcan múltiples áreas de la computación en la nube \cite{refaws2}:
 \begin{itemize}
     \item \textbf{Cloud computing}: incluye modelos de servicio como IaaS, PaaS y SaaS, permitiendo escalar aplicaciones según la demanda.
     \item \textbf{Redes privadas virtuales}: con Amazon VPC es posible crear entornos seguros y personalizados dentro de la nube.
@@ -1115,7 +1443,7 @@ Las herramientas y servicios de AWS abarcan múltiples áreas de la computación
     \item \textbf{Aplicaciones empresariales y móviles}: AWS ofrece herramientas para el desarrollo de apps, respaldo de datos (backup), recuperación ante desastres (disaster recovery), autenticación doble, IoT e inteligencia de negocios.
 \end{itemize}
 
-Entre los servicios más utilizados y representativos de la plataforma se encuentran [aws3]:
+Entre los servicios más utilizados y representativos de la plataforma se encuentran \cite{refaws3}:
 \begin{itemize}
     \item \textbf{Servicios informáticos}: Amazon EC2 (Elastic Compute Cloud) proporciona potencia de cómputo escalable, y AWS Lambda permite ejecutar código sin necesidad de administrar servidores.
     \item \textbf{Almacenamiento}: Amazon S3 ofrece almacenamiento de objetos escalable, Amazon Glacier permite archivado de bajo costo, y Amazon EBS proporciona almacenamiento en bloques de alto rendimiento.
@@ -1125,11 +1453,11 @@ Entre los servicios más utilizados y representativos de la plataforma se encuen
     \item \textbf{Servicios avanzados}: la plataforma incluye soluciones para aprendizaje automático, análisis de datos, IoT y herramientas de desarrollo, facilitando la integración de funciones inteligentes y automatización.
 \end{itemize}
 
-AWS constituye una plataforma integral y versátil que ha transformado la forma en que las organizaciones gestionan sus operaciones digitales. Sus ventajas en seguridad, rendimiento y escalabilidad la convierten en una de las opciones más sólidas del mercado, y su amplia oferta de servicios, alcance global y constante innovación la posicionan como un referente líder en computación en la nube [aws3].\\
+AWS constituye una plataforma integral y versátil que ha transformado la forma en que las organizaciones gestionan sus operaciones digitales. Sus ventajas en seguridad, rendimiento y escalabilidad la convierten en una de las opciones más sólidas del mercado, y su amplia oferta de servicios, alcance global y constante innovación la posicionan como un referente líder en computación en la nube \cite{refaws3}.\\
 
 \begin{center}
     \includegraphics[width=0.7\textwidth]{Images/Cap 2/aws.png}
-    \captionof{figure}[Logo de AWS]{Amazon Web Services (AWS), obtenido de [aws4].} 
+    \captionof{figure}[Logo de AWS]{Amazon Web Services (AWS), obtenido de \cite{refaws4}.} 
 \end{center}
 
 \section{Las 10 Reglas Heurísticas de Usabilidad de Nielsen}
