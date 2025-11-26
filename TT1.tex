@@ -34,6 +34,45 @@
          % para ajustar entorno thebibliography
 \usepackage{hyperref}
 \usepackage{nameref}
+\usepackage{pifont}
+\usepackage{inconsolata} % o cualquier fuente monoespaciada
+
+
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    commentstyle=\color{gray},
+    showstringspaces=false,
+    breaklines=true,
+    breakatwhitespace=true,
+    frame=single,
+    inputencoding=utf8,
+    extendedchars=true,
+    literate=%
+      {á}{{\'a}}1
+      {é}{{\'e}}1
+      {í}{{\'i}}1
+      {ó}{{\'o}}1
+      {ú}{{\'u}}1
+      {Á}{{\'A}}1
+      {É}{{\'E}}1
+      {Í}{{\'I}}1
+      {Ó}{{\'O}}1
+      {Ú}{{\'U}}1
+      {ñ}{{\~n}}1
+      {Ñ}{{\~N}}1
+      {¿}{{\textquestiondown}}1
+      {¡}{{\textexclamdown}}1
+      {→}{{$\rightarrow$}}1,
+}
+
+
 
 % Redefinir la palabra "Apéndice" por "Anexo"
 \addto\captionsspanish{%

@@ -970,10 +970,10 @@ Este modelo presenta características que lo convierten en una opción especialm
     \item Permite inferencia rápida sin necesidad de entrenamiento adicional (\textit{fine-tuning}) en la mayoría de los casos.
 \end{itemize}
 
-\subsection{Similitud coseno}
-La similitud del coseno es una medida ampliamente utilizada para evaluar el grado de semejanza entre dos vectores dentro de un espacio multidimensional. A diferencia de otras métricas basadas en distancia, este método no considera la magnitud de los vectores, sino la dirección hacia la cual apuntan. Esta característica la vuelve especialmente útil en espacios de alta dimensionalidad, donde las distancias euclidiana o Manhattan pueden volverse menos representativas.\\
+\subsection{Similitud Coseno}
+La similitud coseno es una medida ampliamente utilizada para evaluar el grado de semejanza entre dos vectores dentro de un espacio multidimensional. A diferencia de otras métricas basadas en distancia, este método no considera la magnitud de los vectores, sino la dirección hacia la cual apuntan. Esta característica la vuelve especialmente útil en espacios de alta dimensionalidad, donde las distancias euclidiana o Manhattan pueden volverse menos representativas \cite{refcos1}.\\
 
-El cálculo consiste en obtener el coseno del ángulo formado por dos vectores distintos de cero. El resultado es un valor numérico comprendido entre –1 y 1, donde:
+El cálculo consiste en obtener el coseno del ángulo formado por dos vectores distintos de cero \cite{refcos1}. El resultado es un valor numérico comprendido entre –1 y 1, donde:
 \begin{itemize}
     \item \textbf{1} indica que ambos vectores apuntan exactamente en la misma dirección, es decir, tienen una similitud completa.
     \item \textbf{0} señala que los vectores son ortogonales, lo que implica que no existe relación direccional entre ellos.
@@ -982,15 +982,15 @@ El cálculo consiste en obtener el coseno del ángulo formado por dos vectores d
 
 Esta medida puede visualizarse como la comparación entre dos flechas: si ambas apuntan hacia el mismo lugar, la similitud es alta; si forman un ángulo recto, no guardan relación; y si se orientan en direcciones contrarias, son totalmente diferentes.\\
 
-En el ámbito del Machine Learning, Procesamiento de Lenguaje Natural (PLN) e Inteligencia Artificial, la similitud del coseno resulta fundamental debido a que estos sistemas operan con datos representados como vectores (por ejemplo, embeddings de texto). Al convertir palabras, frases o documentos en vectores numéricos, se pueden comparar semánticamente mediante esta métrica.\\
+En el ámbito del Machine Learning, Procesamiento de Lenguaje Natural (PLN) e Inteligencia Artificial, la similitud del coseno resulta fundamental debido a que estos sistemas operan con datos representados como vectores (por ejemplo, embeddings de texto). Al convertir palabras, frases o documentos en vectores numéricos, se pueden comparar semánticamente mediante esta métrica \cite{refcos2}.\\
 
-Por ejemplo, un chatbot puede transformar una consulta en un embedding, compararlo con los vectores almacenados en una base de datos y emplear la similitud del coseno para identificar cuál respuesta es la más cercana en significado. Este proceso permite medir cuánta relación existe entre dos representaciones vectoriales y seleccionar la opción más adecuada.\\
+Por ejemplo, un chatbot puede transformar una consulta en un embedding, compararlo con los vectores almacenados en una base de datos y emplear la similitud del coseno para identificar cuál respuesta es la más cercana en significado. Este proceso permite medir cuánta relación existe entre dos representaciones vectoriales y seleccionar la opción más adecuada \cite{refcos2}\cite{refcos3}.\\
 
-En resumen, la similitud del coseno es la métrica estándar para comparar embeddings, ya que ofrece una forma robusta de evaluar el parecido semántico entre textos mediante la orientación de sus vectores en el espacio.\\
+En resumen, la similitud del coseno es la métrica estándar para comparar embeddings, ya que ofrece una forma robusta de evaluar el parecido semántico entre textos mediante la orientación de sus vectores en el espacio \cite{refcos3}.\\
 
 \noindent \textbf{Definición matemática:}
 
-La similitud del coseno se define a partir de la relación angular entre dos vectores. Matemáticamente, se expresa como:
+La similitud del coseno se define a partir de la relación angular entre dos vectores. Matemáticamente, se expresa como \cite{refcos1}\cite{refcos2}:
 
 \[
 \text{cosine\_similarity}(A, B)
@@ -1006,7 +1006,7 @@ donde:
 
 Esta formulación permite medir qué tan alineados están dos vectores dentro de un espacio multidimensional, lo cual es fundamental para comparar representaciones semánticas en tareas de PLN.\\
 
-\noindent Propiedades:
+\noindent \textbf{Propiedades}:
 
 La similitud coseno presenta características que la hacen especialmente útil en modelos basados en embeddings:
 
@@ -1017,15 +1017,13 @@ La similitud coseno presenta características que la hacen especialmente útil e
 \end{itemize}
 
 En el proceso de selección de una métrica adecuada para comparar embeddings, se evaluaron diversas alternativas empleadas comúnmente en tareas de análisis vectorial. Sin embargo, varias de ellas presentan limitaciones importantes cuando se trabajan datos de alta dimensionalidad o representaciones semánticas continuas, razón por la cual fueron descartadas:
-
-\noindent \textbf{Alternativas consideradas y rechazadas:}
 \begin{itemize}
     \item \textbf{Distancia Euclidiana}: Su desempeño se ve afectado por la magnitud de los vectores, lo que genera resultados inconsistentes cuando los embeddings tienen distintas escalas o longitudes.
     \item \textbf{Distancia de Manhattan}: Aunque útil en ciertos contextos, no captura la direccionalidad entre los vectores, un aspecto clave para evaluar similitud semántica.
     \item \textbf{Índice de Jaccard}: Diseñado para conjuntos discretos; no es adecuado para vectores densos y continuos, como los generados por modelos modernos de PLN.
 \end{itemize}
 
-La similitud del coseno se seleccionó como la métrica óptima debido a sus propiedades, que la han consolidado como un estándar en sistemas basados en embeddings. Entre sus principales ventajas destacan:
+La similitud del coseno se seleccionó como la métrica óptima debido a sus propiedades, que la han consolidado como un estándar en sistemas basados en embeddings. Entre sus principales ventajas destacan \cite{refcos1, refcos2, refcos3}:
 \begin{itemize}
     \item \textbf{Robustez en espacios de alta dimensionalidad}: A diferencia de las distancias tradicionales, la similitud coseno mantiene un comportamiento estable incluso cuando los vectores poseen cientos o miles de dimensiones.
     \item \textbf{Independencia de la magnitud}: Al centrarse únicamente en el ángulo entre vectores, evita que diferencias en longitud distorsionen la percepción de similitud.
@@ -1036,14 +1034,18 @@ La similitud del coseno se seleccionó como la métrica óptima debido a sus pro
 En conjunto, estas características la hacen especialmente adecuada para comparar representaciones vectoriales en el contexto del Procesamiento de Lenguaje Natural empleado en este proyecto.
 
 \subsection{Transformers y Modelos Pre-Entrenados}
-Desde su presentación en 2017, la arquitectura Transformer supuso un cambio definitivo en el desarrollo de modelos de aprendizaje profundo, especialmente en el ámbito del Procesamiento de Lenguaje Natural (PLN). Antes de su aparición, el PLN dependía en gran medida de arquitecturas secuenciales como las redes neuronales recurrentes (RNN) y sus variantes (LSTM y GRU). Aunque efectivas para ciertas tareas, estas redes tenían dificultades para capturar dependencias de largo alcance y requerían procesar la información paso a paso, lo que limitaba su escalabilidad.\\
+Desde su presentación en 2017, la arquitectura Transformer supuso un cambio definitivo en el desarrollo de modelos de aprendizaje profundo, especialmente en el ámbito del Procesamiento de Lenguaje Natural (PLN). Antes de su aparición, el PLN dependía en gran medida de arquitecturas secuenciales como las redes neuronales recurrentes (RNN) y sus variantes (LSTM y GRU). Aunque efectivas para ciertas tareas, estas redes tenían dificultades para capturar dependencias de largo alcance y requerían procesar la información paso a paso, lo que limitaba su escalabilidad \cite{reftrans1}\cite{reftrans2}.\\
 
-El trabajo \textit{“Attention Is All You Need”} introducido por Vaswani et al. en 2017 [e6] propuso un enfoque completamente distinto: eliminar la recurrencia y reemplazarla por un mecanismo de atención capaz de modelar relaciones globales entre tokens en una sola operación. Esta innovación permitió acelerar drásticamente el entrenamiento y mejorar la calidad contextual de los modelos, convirtiéndose en la base de sistemas modernos como BERT, GPT, T5 y otras variantes avanzadas.\\
+El trabajo \textit{“Attention Is All You Need”} propuso un enfoque completamente distinto: eliminar la recurrencia y reemplazarla por un mecanismo de atención capaz de modelar relaciones globales entre tokens en una sola operación. Esta innovación permitió acelerar drásticamente el entrenamiento y mejorar la calidad contextual de los modelos, convirtiéndose en la base de sistemas modernos como BERT, GPT, T5 y otras variantes avanzadas \cite{reftrans2}.\\
 
-A continuación, se describen los elementos esenciales que conforman la arquitectura Transformer, los cuales permiten comprender por qué se ha convertido en el estándar en modelos de PLN:
+A continuación, se describen los elementos esenciales que conforman la arquitectura Transformer, los cuales permiten comprender por qué se ha convertido en el estándar en modelos de PLN \cite{reftrans1}:
 \begin{enumerate}
     \item \textbf{Embeddings}. Cada token del texto se representa como un vector denso de alta dimensionalidad. Esto permite trabajar con significado numérico en lugar de cadenas de texto.
     \item \textbf{Codificación posicional}: Como el modelo no es secuencial, se introduce información sobre el orden de los tokens usando vectores posicionales, normalmente basados en funciones senoidales.
+    \begin{center}
+        \includegraphics[width=0.95\textwidth]{Images/Cap 2/Transformers/Transformers1.jpg}
+        \captionof{figure}[Vectores Posicionales]{Vectores Posicionales, obtenido de \cite{reftrans1}.}  % Pie de foto manual
+    \end{center}
     \item \textbf{Mecanismo de atención (Self-Attention)}: Este mecanismo permite que cada token “preste atención” a otros tokens de la secuencia para capturar relaciones contextuales. Se utilizan tres vectores: query, key y value.
     \item \textbf{Multi-Head Attention}: Permite al modelo enfocarse en diferentes partes del texto desde distintas perspectivas. Cada “cabeza” aprende un aspecto contextual distinto.
     \item \textbf{Capas Feed-Forward}: Redes neuronales tradicionales que procesan los datos post-atención token por token.
@@ -1052,13 +1054,18 @@ A continuación, se describen los elementos esenciales que conforman la arquitec
 
 \noindent \textbf{Arquitectura general: encoder y decoder}
 
-El Transformer original está compuesto por dos bloques principales:
+El Transformer original está compuesto por dos bloques principales \cite{reftrans1}:
 \begin{itemize}
     \item \textbf{Encoder}: procesa la entrada analizando relaciones entre los tokens.
     \item \textbf{Decoder}: genera la salida, utilizando atención tanto a la entrada codificada como al contexto generado anteriormente.
 \end{itemize}
 
-Dependiendo del tipo de modelo, puede utilizarse solo una de estas partes:
+\begin{center}
+    \includegraphics[width=0.95\textwidth]{Images/Cap 2/Transformers/Transformers2.jpg}
+    \captionof{figure}[Arquitectura General Transformer]{Arquitectura General de un Transformer, obtenido de \cite{reftrans1}.}  % Pie de foto manual
+\end{center}
+
+Dependiendo del tipo de modelo, puede utilizarse solo una de estas partes \cite{reftrans1}:
 \begin{itemize}
     \item \textbf{Modelos encoder-only}: Por ejemplo, BERT, empleados para clasificación, extracción de características o embeddings.
     \item \textbf{Modelos decoder-only}: Como GPT, orientados a generación de texto.
@@ -1075,7 +1082,7 @@ Dependiendo del tipo de modelo, puede utilizarse solo una de estas partes:
     \item Obtención del siguiente token mediante una capa final softmax.
 \end{enumerate}
 
-En términos generales, la arquitectura Transformer integra los componentes que se describen a continuación:
+En términos generales, la arquitectura Transformer integra los componentes que se describen a continuación \cite{reftrans1}:
 \begin{itemize}
     \item \textbf{Encoder}: procesa y contextualiza el texto de entrada.
     \item \textbf{Decoder}: produce la salida token por token (no presente en BERT).
@@ -1090,7 +1097,7 @@ A continuación, se enlistan algunos modelos pre-entrenados basados en Transform
 \noindent \textbf{BERT (Bidirectional Encoder Representations from Transformers)}
 
 \begin{itemize}
-    \item Entrenado con grandes corpus como Wikipedia y BookCorpus (aprox. 3.3B palabras).
+    \item Entrenado con grandes corpus como Wikipedia y BookCorpus (aprox. 3.3B palabras) \cite{refebd9}.
     \item Utiliza dos tareas principales durante el pre-entrenamiento:
     \begin{itemize}
         \item \textbf{Masked Language Model}: predecir palabras ocultas dentro de una oración.
@@ -1101,7 +1108,7 @@ A continuación, se enlistan algunos modelos pre-entrenados basados en Transform
 
 \noindent \textbf{SENTENCE-TRANSFORMERS (BERT)}
 
-Extensión de BERT adaptada para generar embeddings semánticos de oraciones con alta calidad. Se caracteriza por:
+Extensión de BERT adaptada para generar embeddings semánticos de oraciones con alta calidad \cite{refebd10}. Se caracteriza por:
 \begin{itemize}
     \item Uso de redes siamesas o triplet loss para aprender similitud textual.
     \item Optimización específica para tareas de búsqueda semántica, clustering y clasificación basada en similitud.
@@ -1258,11 +1265,11 @@ Entre las principales ventajas de las API destacan \cite{refapi4}:
 \end{itemize}
 
 \subsection{API REST}
-La Transferencia de Estado Representacional (REST, por sus siglas en inglés) constituye un estilo arquitectónico que define un conjunto de principios para el diseño de interfaces entre sistemas. Su propósito es establecer reglas que permitan crear APIs capaces de comunicarse de forma eficiente, escalable y fiable, incluso en entornos distribuidos como Internet. Una arquitectura basada en REST se caracteriza por ser flexible, fácil de mantener y por ofrecer portabilidad entre distintas plataformas, lo que la vuelve una opción común para el desarrollo de servicios web modernos.\\
+La Transferencia de Estado Representacional (REST, por sus siglas en inglés) constituye un estilo arquitectónico que define un conjunto de principios para el diseño de interfaces entre sistemas. Su propósito es establecer reglas que permitan crear APIs capaces de comunicarse de forma eficiente, escalable y fiable, incluso en entornos distribuidos como Internet. Una arquitectura basada en REST se caracteriza por ser flexible, fácil de mantener y por ofrecer portabilidad entre distintas plataformas, lo que la vuelve una opción común para el desarrollo de servicios web modernos \cite{refapi5}.\\
 
-Cuando una API se implementa siguiendo estos principios, se le denomina API REST o API RESTful. Del mismo modo, los servicios web construidos bajo esta arquitectura reciben el nombre de servicios web RESTful. En la práctica, los términos REST API y RESTful API suelen emplearse como equivalentes.\\
+Cuando una API se implementa siguiendo estos principios, se le denomina API REST o API RESTful. Del mismo modo, los servicios web construidos bajo esta arquitectura reciben el nombre de servicios web RESTful. En la práctica, los términos REST API y RESTful API suelen emplearse como equivalentes \cite{refapi5}.\\
 
-A continuación, se describen los principales lineamientos que definen el estilo REST:
+A continuación, se describen los principales lineamientos que definen el estilo REST \cite{refapi5}:
 \begin{enumerate}
     \item \textbf{Interfaz Uniforme}: La uniformidad de la interfaz es el eje central de REST, ya que garantiza que la comunicación entre cliente y servidor siga un formato consistente. Los datos que se transmiten se denominan representaciones y pueden diferir de la forma en la que el servidor almacena internamente sus recursos. Por ejemplo, la información podría gestionarse como texto plano y enviarse al cliente en formato JSON, XML o HTML.\\
     
@@ -1282,13 +1289,13 @@ A continuación, se describen los principales lineamientos que definen el estilo
 \end{enumerate}
 
 \subsection{API RESTful}
-Una API RESTful es una interfaz que permite que dos sistemas informáticos intercambien información de forma segura a través de Internet. En entornos empresariales, es habitual que diferentes aplicaciones, internas o de terceros, necesiten comunicarse entre sí para completar diversas tareas. Por ejemplo, un sistema de nóminas puede requerir información de un servicio bancario externo para gestionar pagos, o datos de una aplicación interna para validar horas trabajadas.\\
+Una API RESTful es una interfaz que permite que dos sistemas informáticos intercambien información de forma segura a través de Internet. En entornos empresariales, es habitual que diferentes aplicaciones, internas o de terceros, necesiten comunicarse entre sí para completar diversas tareas. Por ejemplo, un sistema de nóminas puede requerir información de un servicio bancario externo para gestionar pagos, o datos de una aplicación interna para validar horas trabajadas \cite{refapi6}.\\
 
-Las API diseñadas bajo el estilo REST facilitan este tipo de integración, ya que emplean estándares abiertos y bien definidos que permiten una comunicación eficiente, confiable y sencilla de mantener.\\
+Las API diseñadas bajo el estilo REST facilitan este tipo de integración, ya que emplean estándares abiertos y bien definidos que permiten una comunicación eficiente, confiable y sencilla de mantener \cite{refapi6}.\\
 
 \noindent \textbf{Principios fundamentales de REST}
 
-Los servicios RESTful se basan en una serie de principios arquitectónicos que garantizan interoperabilidad, escalabilidad y simplicidad:
+Los servicios RESTful se basan en una serie de principios arquitectónicos que garantizan interoperabilidad, escalabilidad y simplicidad \cite{refapi6}:
 
 \begin{enumerate}
     \item \textbf{Cliente–Servidor}: Se mantiene una separación clara entre el cliente (quien consume la información) y el servidor (quien la provee), lo que facilita el mantenimiento y la evolución independiente de cada parte.
@@ -1300,7 +1307,7 @@ Los servicios RESTful se basan en una serie de principios arquitectónicos que g
 
 \noindent \textbf{Métodos HTTP utilizados en REST}
 
-Los servicios RESTful emplean los métodos del protocolo HTTP para definir la operación que se desea realizar sobre un recurso:
+Los servicios RESTful emplean los métodos del protocolo HTTP para definir la operación que se desea realizar sobre un recurso \cite{refapi6}:
 
 \begin{itemize}
     \item \textbf{GET}: Recupera un recurso o una colección de recursos. Es un método seguro e idempotente.
@@ -1312,7 +1319,7 @@ Los servicios RESTful emplean los métodos del protocolo HTTP para definir la op
 
 \noindent \textbf{Códigos de estado HTTP}
 
-Las respuestas de una API RESTful utilizan códigos de estado estándar para indicar el resultado de la operación:
+Las respuestas de una API RESTful utilizan códigos de estado estándar para indicar el resultado de la operación \cite{refapi6}:
 
 \begin{itemize}
     \item \textbf{2xx – Éxito}: Ejemplos comunes incluyen 200 OK para peticiones correctas y 201 Created para la creación de un nuevo recurso.
@@ -1320,7 +1327,7 @@ Las respuestas de una API RESTful utilizan códigos de estado estándar para ind
     \item \textbf{5xx – Errores del servidor}: Indican fallos internos, como 500 Internal Server Error.
 \end{itemize}
 
-El estilo REST ofrece múltiples beneficios que explican su amplia adopción en la industria del software:
+El estilo REST ofrece múltiples beneficios que explican su amplia adopción en la industria del software \cite{refapi6}:
 \begin{itemize}
     \item \textbf{Alta escalabilidad}: La ausencia de estado facilita el uso de balanceadores de carga y distribuciones horizontales.
     \item \textbf{Desacoplamiento}: Cliente y servidor pueden evolucionar de manera independiente, siempre que mantengan los contratos de la API.
