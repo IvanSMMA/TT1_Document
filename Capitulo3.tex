@@ -638,33 +638,49 @@ En este caso, los requerimientos no funcionales se basaron en los especificados 
 El usuario ingresa texto en la aplicación, que luego es procesado y traducido a LSM para visualizar una animación correspondiente a la traducción.
 \subsubsection{Descripción}
 
-\noindent
-\begin{tabularx}{\textwidth}{|l|X|}
-\hline
-\textbf{Caso de uso} & Traducir texto \\ \hline
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.6}
+    \setlength{\tabcolsep}{5pt}
+    \begin{adjustbox}{max width=\linewidth}
+        \normalsize
+        \begin{tabular}{|c|p{12cm}|}
+            \hline
+            \textbf{Elemento} & \textbf{Descripción} \\ \hline
 
-\textbf{Actor principal} & Usuario (persona que ingresa el texto a traducir). \\ \hline
+            \textbf{Caso de uso} & Traducir texto. \\ \hline
 
-\textbf{Descripción} & El usuario ingresa texto en el campo indicado de la aplicación. El sistema procesa la frase y determina si existe una traducción directa en LSM. En caso afirmativo, se reproduce la animación correspondiente con un avatar 3D. Si no se encuentra una coincidencia, el sistema recurre al deletreo dactilológico para representar el texto ingresado. \\ \hline
+            \textbf{Actor principal} & Usuario (persona que ingresa el texto a traducir). \\ \hline
 
-\textbf{Atributos del texto} & Máximo 50 caracteres. Validación para evitar caracteres especiales o símbolos no admitidos. \\ \hline
+            \textbf{Descripción} & 
+            El usuario ingresa texto en el campo indicado de la aplicación. El sistema procesa la frase y determina si existe una traducción directa en LSM. Si la hay, se reproduce la animación correspondiente con un avatar 3D. En caso contrario, el sistema recurre al deletreo dactilológico. \\ \hline
 
-\textbf{Entrada} & Texto proporcionado por el usuario. \\ \hline
+            \textbf{Atributos del texto} & 
+            Máximo 50 caracteres. Validación para evitar caracteres especiales o símbolos no admitidos. \\ \hline
 
-\textbf{Procesamiento} & El módulo de procesamiento de lenguaje natural (PLN) analiza el texto y busca coincidencias en el conjunto de datos. Si no hay coincidencia, se segmenta y transforma en deletreo letra por letra. \\ \hline
+            \textbf{Entrada} & 
+            Texto proporcionado por el usuario. \\ \hline
 
-\textbf{Salida} & Se muestra la animación en 3D de la traducción en LSM o, en su defecto, del deletreo dactilológico correspondiente. Se incluye un mensaje visual de inicio con la palabra “Vamos”. \\ \hline
+            \textbf{Procesamiento} & 
+            El módulo de procesamiento de lenguaje natural (PLN) analiza el texto y busca coincidencias en el conjunto de datos. Si no hay coincidencia, se segmenta y transforma en deletreo letra por letra. \\ \hline
 
-\textbf{Precondiciones} & El sistema debe estar encendido, funcional y el usuario debe encontrarse en la pantalla principal con acceso al campo de texto. \\ \hline
+            \textbf{Salida} & 
+            Se muestra la animación en 3D de la traducción en LSM o, en su defecto, del deletreo dactilológico correspondiente. Incluye un mensaje visual de inicio: “Vamos”. \\ \hline
 
-\textbf{Postcondiciones} & El usuario visualiza la animación correspondiente y tiene la opción de ingresar una nueva frase para traducir. \\ \hline
+            \textbf{Precondiciones} & 
+            El sistema debe estar encendido, funcional y el usuario debe encontrarse en la pantalla principal con acceso al campo de texto. \\ \hline
 
-\textbf{Excepciones} & Si el texto excede el límite o contiene caracteres no válidos, el sistema mostrará un mensaje de error con base en la RN05 e invitará a corregir la entrada. \\ \hline
-\end{tabularx}
-\captionof{table}[Caso de uso 1]{Caso de uso 1, elaboración propia.}
+            \textbf{Postcondiciones} & 
+            El usuario visualiza la animación correspondiente y puede ingresar una nueva frase para traducir. \\ \hline
 
-
-    
+            \textbf{Excepciones} & 
+            Si el texto excede el límite o contiene caracteres no válidos, el sistema mostrará un mensaje de error basado en RN05 e invitará a corregir la entrada. \\ \hline
+        \end{tabular}
+    \end{adjustbox}
+    \caption[Caso de uso 1]{Caso de uso 1, elaboración propia.}
+    \label{tab:caso_uso_1}
+\end{table}
+   
 
 \subsubsection{Trayectoria principal}
 \begin{enumerate}[label=\textbf{\arabic*}, leftmargin=1.5cm]
@@ -705,7 +721,6 @@ El usuario ingresa texto en la aplicación, que luego es procesado y traducido a
     \captionof{figure}[Diagrama de caso de uso 1]{Diagrama de caso de uso 1, elaboración propia.}
 \end{center}
 
-
 \subsubsection{Identificación de frases}
 
 \begin{table}[H]
@@ -726,6 +741,7 @@ Estoy sangrando. & Nos vemos. & No lo sé. \\ \hline
 \end{tabularx}
 \caption[Identificación de frases]{Identificación de frases, elaboración propia.}
 \end{table}
+
 Las frases seleccionadas son ejemplos representativos de situaciones cotidianas y de emergencia. Se busca que el usuario pueda comunicarse de manera efectiva en contextos importantes, facilitando la comprensión y la interacción con personas que utilizan la Lengua de Señas Mexicana (LSM).
 
 \subsection{Mockups del sistema}
@@ -763,7 +779,8 @@ En caso de que no se le pueda asignar una traducción a la frase ingresada, se m
 	\includegraphics[width=0.5\textwidth]{Images/Cap 3/Paleta.png}
 	\captionof{figure}{Paleta de colores de la aplicación, elaboración propia.}
 \end{center}
-Se selccionó la siguiente paleta de colores para la aplicación, ya que usa colores representativos de la bandera de LSM, además de que los colores son agradables a la vista y no generan cansancio visual.
+
+Se seleccionó la siguiente paleta de colores para la aplicación, ya que usa colores representativos de la bandera de LSM, además de que los colores son agradables a la vista y no generan cansancio visual.
 
 \subsection{Identificación y evaluación de riesgos}
 \subsubsection{Leyenda de probabilidad y efecto}

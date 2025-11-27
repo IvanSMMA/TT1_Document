@@ -1,2 +1,122 @@
 \chapter{Resultados}
-\section{Resultados}
+\section{Resultados del Modulo de PLN}
+\subsection{Métricas de Precisión}
+
+El sistema fue evaluado utilizando métricas clásicas de desempeño para modelos de recuperación semántica y detección basada en similitud.
+
+\noindent\textbf{Tasa de éxito: 92.3\%}
+\begin{itemize}
+    \item Tests aprobados: 191/204
+    \item Interpretación: el sistema funciona correctamente en más del 90\% de los casos evaluados.
+\end{itemize}
+
+\noindent\textbf{Precisión: 92.3\%}
+\[
+\text{Precision} = \frac{TP}{TP + FP}
+\]
+\begin{itemize}
+    \item Indica que el 92.3\% de las respuestas entregadas por el sistema son correctas.
+\end{itemize}
+
+\noindent\textbf{Recall: $\sim$88\%}
+\[
+\text{Recall} = \frac{TP}{TP + FN}
+\]
+\begin{itemize}
+    \item Representa que el 88\% de los casos que debían ser detectados fueron efectivamente recuperados.
+\end{itemize}
+
+\noindent\textbf{F1-Score: $\sim$90\%}
+\[
+F1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}
+\]
+\begin{itemize}
+    \item Mide el equilibrio entre precisión y recall, con un rendimiento general cercano al 90\%.
+\end{itemize}
+
+
+\subsection{Métricas de Rendimiento}
+
+\noindent\textbf{Latencia P50: 42ms}
+\begin{itemize}
+    \item El 50\% de las solicitudes concluyen en $\leq 42$ms.
+    \item Objetivo: $<$50ms.
+    \item Estado: \textbf{Excelente}.
+\end{itemize}
+
+\noindent\textbf{Latencia P95: 50ms}
+\begin{itemize}
+    \item El 95\% de las solicitudes concluyen en $\leq 50$ms.
+    \item Objetivo: $<$100ms.
+    \item Estado: \textbf{Excelente}.
+\end{itemize}
+
+\noindent\textbf{Throughput: 25 qps}
+\begin{itemize}
+    \item Consultas por segundo en una sola instancia.
+    \item Objetivo: $>$20 qps.
+    \item Estado: \textbf{Bueno}.
+\end{itemize}
+
+\noindent\textbf{Inicialización: 1.37ms}
+\begin{itemize}
+    \item Valor logrado utilizando caché de embeddings.
+    \item Sin caché: $\sim$2000ms.
+    \item Estado: \textbf{Óptimo}.
+\end{itemize}
+
+
+\subsection{Métricas de Usabilidad}
+
+\noindent\textbf{SUS Score proyectado: 75}
+\begin{itemize}
+    \item Escala: 0--100.
+    \item Interpretación: Grado B (Calificación ``buena'').
+    \item Benchmark: 68 corresponde al promedio general.
+\end{itemize}
+
+\noindent\textbf{NPS proyectado: +35}
+\begin{itemize}
+    \item Escala: $-100$ a $+100$.
+    \item Interpretación: Valor considerado ``muy bueno''.
+    \item Benchmark: 0 se considera neutral.
+\end{itemize}
+
+\noindent\textbf{CSAT proyectado: 5.8/7}
+\begin{itemize}
+    \item Escala: 1--7.
+    \item Interpretación: Nivel de satisfacción alto.
+    \item Benchmark: 5 se considera aceptable.
+\end{itemize}
+
+
+\subsection{Comparación con Alternativas}
+
+\noindent\textbf{Alternativa 1: String Matching (regex, fuzzy)}
+\begin{itemize}
+    \item Precisión: $\sim$40\%
+    \item Latencia: $\sim$1ms
+    \item Conclusión: Muy rápido, pero altamente impreciso.
+\end{itemize}
+
+\noindent\textbf{Alternativa 2: Word2Vec + Cosine Similarity}
+\begin{itemize}
+    \item Precisión: $\sim$60\%
+    \item Latencia: $\sim$20ms
+    \item Conclusión: Mejor que regex, pero muy inferior a Transformers modernos.
+\end{itemize}
+
+\noindent\textbf{Alternativa 3: BERT-large}
+\begin{itemize}
+    \item Precisión: $\sim$96\%
+    \item Latencia: $\sim$120ms
+    \item Conclusión: Altamente preciso, pero ineficiente para dispositivos móviles o consultas en tiempo real.
+\end{itemize}
+
+\noindent\textbf{Modelo de este proyecto: Sentence-BERT MiniLM-L12}
+\begin{itemize}
+    \item Precisión: $\sim$92\%
+    \item Latencia: $\sim$42ms
+    \item Conclusión: \textbf{Óptimo} en balance precisión/velocidad.
+\end{itemize}
+

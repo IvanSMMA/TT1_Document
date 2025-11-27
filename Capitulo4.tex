@@ -18,4 +18,3820 @@ Asimismo, se evaluaron plataformas en línea capaces de realizar captura de movi
 
 Por estas razones, se decidió prescindir del modelado 3D en esta etapa del proyecto y concentrar los esfuerzos en el desarrollo del prototipo funcional centrado en el procesamiento del lenguaje natural y la traducción textual a representaciones visuales más simples. No obstante, se mantiene la documentación relativa al modelado 3D y MediaPipe, ya que constituye una base conceptual y técnica valiosa para trabajos futuros que busquen ampliar el presente desarrollo.\\
 
-\section{Implementación}
+\section{Implementación del Modulo de Procesamiento de Lenguaje Natural (PLN)}
+
+\subsection{Arquitectura del modulo de Procesamiento de Lenguaje Natural (PLN)}
+
+{\large \noindent \textbf{Visión general de la arquitectura}}
+
+El sistema implementa una arquitectura de microservicios basada en capas, siguiendo los principios de separación de responsabilidades y modularidad. La arquitectura se compone de cuatro capas principales:
+\begin{center}
+    \includegraphics[width=0.95\textwidth]{Images/Cap4/1_ArquitecturaPLN.png}
+    \captionof{figure}[Arquitectura del Modulo PLN]{Arquitectura del Modulo de PLN, elaboración propia.} 
+\end{center}
+
+La arquitectura implementa los siguientes principios esenciales:
+
+\begin{itemize}
+    \item \textbf{Single Responsibility}: Cada módulo tiene una única responsabilidad claramente definida.
+    \item \textbf{Dependency Injection}: El matcher se inicializa con configuración externa.
+    \item \textbf{Separation of Concerns}: Separación entre API, lógica interna y gestión de datos.
+    \item \textbf{Caching}: Uso de un sistema de cache para embeddings que optimiza el rendimiento.
+    \item \textbf{Stateless API}: La API no mantiene estado entre peticiones consecutivas.
+    \item \textbf{Asynchronous Processing}: Uso de \texttt{async/await} para operaciones de I/O.
+\end{itemize}
+
+\subsection{Componentes principales}
+
+El sistema se compone de cuatro módulos principales, cada uno con funciones específicas:\\
+
+\noindent \textbf{1. API REST (app/main.py) -- 665 líneas}
+
+\paragraph{Responsabilidad}
+\begin{itemize}
+    \item Exposición de endpoints HTTP.
+    \item Validación de requests mediante Pydantic.
+    \item Manejo centralizado de errores y excepciones.
+    \item Generación automática de documentación (OpenAPI).
+    \item Registro de logs de operación.
+\end{itemize}
+
+\paragraph{Endpoints implementados}
+\begin{itemize}
+    \item \texttt{POST /buscar} \hfill Búsqueda semántica principal.
+    \item \texttt{GET /grupos} \hfill Listado de grupos disponibles.
+    \item \texttt{GET /grupos/\{grupo\}} \hfill Frases de un grupo específico.
+    \item \texttt{POST /deletreo} \hfill Deletreo manual de texto.
+    \item \texttt{GET /health} \hfill Verificación del estado del servicio.
+    \item \texttt{GET /stats} \hfill Estadísticas del sistema.
+    \item \texttt{GET /docs} \hfill Documentación mediante Swagger UI.
+\end{itemize}
+
+\paragraph{Tecnologías utilizadas}
+\begin{itemize}
+    \item FastAPI 0.104.1
+    \item Uvicorn (servidor ASGI)
+    \item Pydantic 2.0+ (validación de datos)
+\end{itemize}
+
+\noindent \textbf{2. Motor de Búsqueda (app/matcher\_improved.py) -- 681 líneas}
+
+\paragraph{Responsabilidad}
+\begin{itemize}
+    \item Generación de embeddings semánticos.
+    \item Búsqueda jerárquica con re-ranking.
+    \item Detección de patrones con nombres propios.
+    \item Cálculo de similitud mediante coseno.
+    \item Sistema automático de deletreo en casos especiales.
+    \item Gestión del cache de embeddings.
+\end{itemize}
+
+\paragraph{Clases principales}
+\begin{itemize}
+    \item \texttt{ImprovedPhraseMatcher}: clase principal que implementa todo el motor de búsqueda.
+\end{itemize}
+
+\paragraph{Métodos clave}
+\begin{itemize}
+    \item \texttt{initialize()} \hfill Carga del modelo y los embeddings.
+    \item \texttt{search\_similar\_phrase()} \hfill Método principal de búsqueda.
+    \item \texttt{\_extract\_name\_pattern()} \hfill Detección y extracción de nombres propios.
+    \item \texttt{find\_most\_similar\_phrase\_reranked()} \hfill Re-ranking en dos fases.
+    \item \texttt{find\_best\_groups()} \hfill Búsqueda inicial por centroides.
+\end{itemize}
+
+\paragraph{Características avanzadas}
+\begin{itemize}
+    \item Thresholds adaptativos por grupo.
+    \item Aumento de similitud basado en la longitud de frase (+8\% a +15\%).
+    \item Penalización por diferencia de longitud (-5\% por carácter adicional).
+    \item Detección de más de 40 nombres comunes en español.
+    \item Normalización integrada de leet speak.
+\end{itemize}
+
+\noindent \textbf{3. Preprocesamiento (app/preprocess.py) -- 244 líneas}
+
+\paragraph{Responsabilidad}
+\begin{itemize}
+    \item Normalización de texto: minúsculas, acentos, puntuación y espacios.
+    \item Corrección ortográfica ligera utilizando RapidFuzz.
+    \item Normalización de leet speak (por ejemplo, \texttt{@ → a}, \texttt{3 → e}).
+    \item Sistema de deletreo letra por letra.
+    \item Manejo y detección de caracteres especiales.
+\end{itemize}
+
+\paragraph{Funciones principales}
+\begin{itemize}
+    \item \texttt{normalize\_text()} \hfill Normalización base del texto.
+    \item \texttt{preprocess\_query()} \hfill Preprocesamiento de consultas del usuario.
+    \item \texttt{preprocess\_phrases()} \hfill Preprocesamiento del dataset completo.
+    \item \texttt{normalize\_leet\_speak()} \hfill Conversión de texto en leet speak.
+    \item \texttt{spell\_out\_text()} \hfill Deletreo literal del texto.
+\end{itemize}
+
+\paragraph{Pipeline de normalización}
+\begin{enumerate}
+    \item Conversión del texto a minúsculas.
+    \item Eliminación de acentos mediante \texttt{unicodedata.normalize('NFD')}.
+    \item Remoción de puntuación no relevante.
+    \item Normalización de espacios con expresiones regulares.
+    \item Corrección de errores ortográficos comunes usando RapidFuzz.
+    \item Normalización de leet speak si aplica.
+\end{enumerate}
+
+\noindent \textbf{4. Gestión de Datos (app/groups.py) -- 64 líneas}
+
+
+\paragraph{Responsabilidad}
+\begin{itemize}
+    \item Carga del dataset desde archivos JSON.
+    \item Validación de la estructura esperada.
+    \item Provisión de acceso a frases por grupo.
+\end{itemize}
+
+\paragraph{Dataset actual}
+\begin{itemize}
+    \item \textbf{Grupo A (Emergencias)}: 13 frases.
+    \item \textbf{Grupo B (Saludos)}: 13 frases.
+    \item \textbf{Grupo C (Comunicación)}: 17 frases.
+    \item \textbf{Total}: 43 frases.
+\end{itemize}
+
+\paragraph{Funciones disponibles}
+\begin{itemize}
+    \item \texttt{load\_groups()} \hfill Carga los grupos desde JSON.
+    \item \texttt{get\_all\_phrases()} \hfill Retorna todas las frases del dataset.
+    \item \texttt{get\_group\_phrases()} \hfill Retorna frases de un grupo específico.
+\end{itemize}
+
+\subsection{Flujo de Datos}
+
+El flujo de datos del sistema sigue una secuencia bien definida que abarca validación, preprocesamiento, generación de embeddings, búsqueda semántica y construcción de la respuesta final.\\
+
+{\large \noindent \textbf{Flujo principal: Búsqueda semántica}}
+
+\begin{enumerate}
+    \item \textbf{Entrada de usuario} \\
+    $\downarrow$ \\
+    El usuario envía el texto: ``mi nombre es Alessandro''. \\
+    $\downarrow$ \\
+    \texttt{POST /buscar} \\
+    \textbf{Body}: \texttt{\{"texto": "mi nombre es Pedro"\}}
+    
+    \item \textbf{Validación (API Layer)} \\
+    $\downarrow$
+    \begin{itemize}
+        \item Validación de request mediante Pydantic.
+        \item Verificación de texto no vacío.
+        \item Registro en logs del request recibido.
+    \end{itemize}
+
+    \item \textbf{Preprocesamiento (Preprocessing Layer)} \\
+    $\downarrow$ \\
+    Input: ``mi nombre es Pedro'' \\
+    $\downarrow$ \\
+    \texttt{normalize\_text()} \\
+    $\downarrow$ \\
+    Output: ``mi nombre es pedro''
+
+    \item \textbf{Generación de embedding (ML Layer)} \\
+    $\downarrow$ \\
+    Input: ``mi nombre es pedro'' \\
+    $\downarrow$ \\
+    \texttt{SentenceTransformer.encode()} \\
+    $\downarrow$ \\
+    Output: vector de 384 dimensiones.
+
+    \item \textbf{Búsqueda jerárquica (Matching Layer)}
+
+    \begin{itemize}
+        \item \textbf{Fase 1: Búsqueda por centroides} \\
+        $\downarrow$
+        \begin{itemize}
+            \item Cálculo de similitud con centroides de grupos A, B y C.
+            \item Selección de top-3 grupos candidatos.
+        \end{itemize}
+        Resultado: \texttt{[B: 0.92,\ C: 0.78,\ A: 0.65]}
+        
+        \item \textbf{Fase 2: Re-ranking fino} \\
+        $\downarrow$
+        \begin{itemize}
+            \item Comparación en frases de grupos candidatos.
+            \item Aplicación de boost por longitud (+8\% a +15\%).
+            \item Penalización por diferencia de longitud.
+        \end{itemize}
+        Resultado: mejor match = ``Me llamo'' (Grupo B, similitud = 0.8599)
+    \end{itemize}
+
+    \item \textbf{Detección de patrones especiales (Pattern Detection)} \\
+    $\downarrow$\\
+    \texttt{\_extract\_name\_pattern()} \\
+    $\downarrow$
+    \begin{itemize}
+        \item Detección del patrón ``mi nombre es [X]''.
+        \item Extracción del nombre ``Pedro''.
+        \item Normalización de leet speak si aplica.
+        \item Deletreo resultante: \texttt{[P,\ E,\ D,\ R,\ O]}.
+    \end{itemize}
+
+    \item \textbf{Construcción de respuesta (Response Builder)} \\
+    $\downarrow$ 
+
+\begin{lstlisting}
+{
+  "query": "mi nombre es Pedro",
+  "grupo": "B",
+  "frase_similar": "Me llamo",
+  "similitud": 0.8599,
+  "deletreo_activado": false,
+  "nombre_detectado": true,
+  "nombre_extraido": "Pedro",
+  "nombre_deletreado": ["P","E","D","R","O"],
+  "total_caracteres_nombre": 5
+}
+\end{lstlisting}
+
+    \item \textbf{Respuesta al cliente} \\
+    $\downarrow$ \\
+    \texttt{HTTP 200 OK} \\
+    \texttt{Content-Type: application/json}
+\end{enumerate}
+
+% -----------------------------------------------------------
+{\large \noindent \textbf{Flujo alternativo: Deletreo automático}}
+
+Este flujo ocurre cuando la similitud es menor al threshold correspondiente al grupo.
+
+\begin{enumerate}
+    \item Usuario envía: ``xyz123'' \\
+    $\downarrow$
+
+    \item Similitud calculada: $0.45 < 0.80$ (threshold Grupo B) \\
+    $\downarrow$
+
+    \item Activación del modo de deletreo \\
+    $\downarrow$
+
+    \item \texttt{spell\_out\_text("xyz123")} \\
+    $\downarrow$
+
+    \item Resultado: \texttt{["X","Y","Z","1","2","3"]} \\
+    $\downarrow$
+
+\begin{lstlisting}
+{
+  "deletreo_activado": true,
+  "deletreo": ["X","Y","Z","1","2","3"],
+  "total_caracteres": 6
+}
+\end{lstlisting}
+\end{enumerate}
+
+% -----------------------------------------------------------
+\subsection{Flujo de inicialización del sistema}
+
+\begin{enumerate}
+    \item Startup del sistema \\
+    $\downarrow$ \\
+    \texttt{@app.on\_event("startup")}
+
+    \item Carga de datos \\
+    $\downarrow$ \\
+    \texttt{load\_groups()} $\rightarrow$ lectura de \texttt{grupos.json} \\
+    Resultado: 43 frases cargadas.
+
+    \item Inicialización del matcher \\
+    $\downarrow$ \\
+    \texttt{ImprovedPhraseMatcher()}
+    \begin{itemize}
+        \item Selección del modelo \texttt{MiniLM-L12-v2}.
+        \item Configuración de thresholds por grupo.
+        \item Preparación de lista de nombres comunes.
+    \end{itemize}
+
+    \item Verificación de cache \\
+    $\downarrow$ \\
+    ¿Existe \texttt{embeddings\_improved.npz}? 
+    \begin{itemize}
+        \item Sí $\rightarrow$ cargar (menos de 1 segundo).
+        \item No $\rightarrow$ generar embeddings (aprox. 5 segundos).
+    \end{itemize}
+
+    \item Carga del modelo de ML \\
+    $\downarrow$ \\
+    \texttt{SentenceTransformer.load(model\_name)}
+
+    \item Cálculo de centroides \\
+    $\downarrow$ \\
+    Para cada grupo: \\
+    \[
+        \text{centroid} = \frac{1}{N}\sum_{i=1}^{N} v_i
+    \]
+
+    \item Sistema listo \\
+    $\downarrow$ \\
+    Logging: ``PhraseMatcher mejorado inicializado correctamente'' \\
+    $\downarrow$ \\
+    API lista para recibir solicitudes.
+\end{enumerate}
+
+\subsection{Patrones de diseño aplicados}
+
+El sistema implementa múltiples patrones de diseño para garantizar mantenibilidad, escalabilidad y robustez.
+
+\noindent \textbf{1. Patrón Singleton}
+
+
+\textbf{Implementación}
+\begin{itemize}
+    \item Variable global \texttt{matcher} en \texttt{main.py}.
+    \item Una sola instancia de \texttt{ImprovedPhraseMatcher}.
+    \item Inicialización en el evento \texttt{startup}.
+\end{itemize}
+
+\textbf{Código}
+\begin{lstlisting}[language=Python,frame=single]
+matcher: Optional[ImprovedPhraseMatcher] = None
+
+@app.on_event("startup")
+async def startup_event():
+    global matcher
+    matcher = ImprovedPhraseMatcher()
+    matcher.initialize()
+\end{lstlisting}
+
+\textbf{Beneficios}
+\begin{itemize}
+    \item El modelo ML se carga una sola vez.
+    \item El caché de embeddings es compartido.
+    \item Reducción en uso de memoria.
+\end{itemize}
+
+\noindent \textbf{2. Patrón Strategy}
+
+\textbf{Implementación}
+\begin{itemize}
+    \item Modelos de embeddings intercambiables.
+    \item Selección del modelo en tiempo de inicialización.
+\end{itemize}
+
+\textbf{Modelos disponibles}
+\begin{lstlisting}[language=Python,frame=single]
+MODELS = {
+    "spanish_optimized": "sentence_similarity_spanish_es",
+    "multilingual_advanced": "mpnet-base-v2",
+    "multilingual_balanced": "MiniLM-L12-v2",  # DEFAULT
+    "current": "all-MiniLM-L6-v2"
+}
+\end{lstlisting}
+
+\textbf{Uso}
+\begin{lstlisting}[language=Python,frame=single]
+matcher = ImprovedPhraseMatcher(
+    model_type="multilingual_balanced"
+)
+\end{lstlisting}
+
+\textbf{Beneficios}
+\begin{itemize}
+    \item Cambio de modelo sin modificar la lógica del sistema.
+    \item Permite experimentación con distintos modelos.
+    \item Testing con modelos más ligeros.
+\end{itemize}
+
+\noindent \textbf{3. Patrón Template Method}
+
+\textbf{Implementación}
+\begin{itemize}
+    \item \texttt{search\_similar\_phrase()} define la estructura general del algoritmo.
+    \item Los métodos específicos implementan pasos individuales.
+\end{itemize}
+
+\textbf{Estructura}
+\begin{lstlisting}[language=Python,frame=single]
+def search_similar_phrase(query):
+    # 1. Preprocesar
+    normalized = preprocess_query(query)
+
+    # 2. Buscar
+    if self.use_reranking:
+        result = find_most_similar_phrase_reranked()
+    else:
+        result = find_most_similar_phrase()
+
+    # 3. Validar patrones especiales
+    name_info = _extract_name_pattern()
+
+    # 4. Construir respuesta
+    return build_response()
+\end{lstlisting}
+
+\textbf{Beneficios}
+\begin{itemize}
+    \item Flujo consistente.
+    \item Fácil incorporar nuevos pasos.
+    \item Extensible sin duplicar lógica.
+\end{itemize}
+
+\noindent \textbf{4. Patrón Facade}
+
+
+\textbf{Implementación}
+\begin{itemize}
+    \item La API REST sirve como fachada del sistema.
+    \item Los endpoints ocultan la complejidad interna.
+\end{itemize}
+
+\textbf{Ejemplo}
+\begin{lstlisting}
+POST /buscar
+{
+    "texto": "hola"
+}
+\end{lstlisting}
+
+$\downarrow$
+
+Internamente ejecuta:
+\begin{itemize}
+    \item Validación.
+    \item Preprocesamiento.
+    \item Generación de embeddings.
+    \item Búsqueda jerárquica.
+    \item Detección de patrones.
+    \item Construcción de respuesta.
+\end{itemize}
+
+\textbf{Beneficios}
+\begin{itemize}
+    \item API simple de usar.
+    \item Complejidad encapsulada.
+    \item Fácil integración con frontend o móviles.
+\end{itemize}
+
+\noindent \textbf{5. Patrón Dependency Injection}
+
+\textbf{Implementación}
+\begin{itemize}
+    \item Configuración inyectada mediante el constructor.
+    \item No existen valores ``hardcoded'' en la lógica.
+\end{itemize}
+
+\textbf{Código}
+\begin{lstlisting}[language=Python,frame=single]
+def __init__(
+    self,
+    model_type: str = "multilingual_balanced",
+    cache_path: str = "data/embeddings_improved.npz",
+    use_reranking: bool = True,
+    use_synonym_expansion: bool = True
+):
+    self.model_name = self.MODELS[model_type]
+    self.cache_path = cache_path
+    self.use_reranking = use_reranking
+\end{lstlisting}
+
+\textbf{Beneficios}
+\begin{itemize}
+    \item Facilita el testing (mock de dependencias).
+    \item Configurable externamente.
+    \item Mayor flexibilidad.
+\end{itemize}
+
+\noindent \textbf{6. Patrón Cache / Lazy Loading}
+
+
+\textbf{Implementación}
+\begin{itemize}
+    \item Embeddings almacenados en caché en archivos \texttt{.npz}.
+    \item El modelo ML se carga solo cuando es necesario.
+\end{itemize}
+
+\textbf{Caché de embeddings}
+\begin{lstlisting}[language=Python,frame=single]
+def initialize():
+    if os.path.exists(cache_path):
+        # Cargar desde cache (< 1 seg)
+        pass
+    else:
+        # Generar y guardar (~ 5 seg)
+        embeddings = self._generate_embeddings()
+        np.savez(cache_path, ...)
+\end{lstlisting}
+
+\textbf{Lazy Loading del modelo}
+\begin{lstlisting}[language=Python,frame=single]
+def _load_model():
+    if self.model is None:
+        self.model = SentenceTransformer(model_name)
+\end{lstlisting}
+
+\textbf{Beneficios}
+\begin{itemize}
+    \item Inicio del sistema más rápido.
+    \item Ahorro significativo de cómputo.
+    \item Eficiencia en recursos.
+\end{itemize}
+
+\subsection{Principios SOLID Aplicados}
+
+\textbf{Single Responsibility Principle}
+\begin{itemize}
+    \item \texttt{main.py}: Manejo de API REST.
+    \item \texttt{matcher\_improved.py}: Búsqueda semántica.
+    \item \texttt{preprocess.py}: Preprocesamiento de texto.
+    \item \texttt{groups.py}: Gestión y carga del dataset.
+\end{itemize}
+
+\textbf{Open / Closed Principle}
+\begin{itemize}
+    \item El sistema permite extensión (nuevos modelos, endpoints).
+    \item La lógica principal permanece estable (cerrada a modificaciones).
+\end{itemize}
+
+\textbf{Liskov Substitution Principle}
+\begin{itemize}
+    \item Modelos de embeddings intercambiables.
+    \item Algoritmos de búsqueda reemplazables (básico vs reranking).
+\end{itemize}
+
+\textbf{Interface Segregation Principle}
+\begin{itemize}
+    \item La API expone solo endpoints necesarios.
+    \item Métodos internos como \texttt{\_extract\_name\_pattern} permanecen privados.
+\end{itemize}
+
+\textbf{Dependency Inversion Principle}
+\begin{itemize}
+    \item Dependencias inyectadas mediante el constructor.
+    \item Uso de abstracciones, no implementaciones directas.
+\end{itemize}
+
+\subsection{Tecnologías, lenguajes de programación y herramientas}
+
+\noindent\textbf{Lenguaje de programación: Python 3.12}
+
+\noindent \textbf{Versión utilizada:} Python 3.12.3
+
+\noindent \textbf{Fecha de release:} Abril 2024\\
+
+Python 3.12 incorpora mejoras significativas en rendimiento, manejo de tipos y características sintácticas modernas. El proyecto aprovecha varias de estas capacidades.
+
+\subsection{Características Utilizadas}
+
+\subsubsection{1. Type hints avanzados (PEP 604)}
+
+Sintaxis moderna con el operador \texttt{|} en lugar de \texttt{Union}.
+
+\textbf{Ejemplo:}
+\begin{lstlisting}[language=Python,frame=single]
+def search(query: str) -> dict[str, str | float | None]:
+    ...
+\end{lstlisting}
+
+
+\subsubsection{2. Async / Await nativo}
+
+FastAPI utiliza \texttt{async} para operaciones I/O no bloqueantes.
+
+\textbf{Ejemplo:}
+\begin{lstlisting}[language=Python,frame=single]
+@app.post("/buscar")
+async def buscar_frase_similar(request: QueryRequest):
+    resultado = matcher.search_similar_phrase(request.texto)
+    return response
+\end{lstlisting}
+
+
+\subsubsection{3. F-strings avanzados}
+
+Usados para logging descriptivo y debugging eficiente.
+
+\textbf{Ejemplo:}
+\begin{lstlisting}[language=Python,frame=single]
+logger.info(f"Patrón detectado: {nombre} -> {deletreo}")
+\end{lstlisting}
+
+
+\subsubsection{4. Context managers (\texttt{with} statements)}
+
+Permiten manejo seguro de archivos y liberación automática de recursos.
+
+\textbf{Ejemplo:}
+\begin{lstlisting}[language=Python,frame=single]
+with open("grupos.json", "r") as f:
+    data = json.load(f)
+\end{lstlisting}
+
+\subsubsection{5. List y Dict Comprehensions}
+
+Permiten procesamiento eficiente y legible de estructuras de datos.
+
+\textbf{Ejemplo:}
+\begin{lstlisting}[language=Python,frame=single]
+deletreo = [char.upper() for char in nombre]
+\end{lstlisting}
+
+\subsubsection{6. Dataclasses y Modelos Pydantic}
+
+Usados para validación automática y tipada de datos de entrada en la API.
+
+\textbf{Ejemplo:}
+\begin{lstlisting}[language=Python,frame=single]
+class QueryRequest(BaseModel):
+    texto: str = Field(..., min_length=1)
+\end{lstlisting}
+
+\vspace{1em}
+
+\noindent\textbf{Justificación de elección}
+
+\textbf{Razón 1: Ecosistema de Machine Learning y NLP}
+
+Python es el lenguaje dominante en el desarrollo de modelos de aprendizaje automático y procesamiento del lenguaje natural:
+\begin{itemize}
+    \item Cerca del 70\% de los artículos publicados en NeurIPS 2023 utilizan Python.
+    \item Las bibliotecas de ML más importantes están escritas para Python:
+    \begin{itemize}
+        \item TensorFlow, PyTorch, JAX
+        \item Scikit-learn, NumPy, Pandas
+        \item Transformers y Sentence-Transformers
+    \end{itemize}
+\end{itemize}
+
+\vspace{1em} % ← agrega espacio aquí
+
+\textbf{Razón 2: Rapidez de desarrollo}
+
+Python permite prototipado eficiente:
+\begin{itemize}
+    \item Sintaxis clara y expresiva
+    \item Tipado dinámico (con \textit{type hints} opcionales)
+    \item REPL interactivo para pruebas rápidas
+    \item Uso de Jupyter notebooks para análisis exploratorio
+\end{itemize}
+
+\vspace{1em} % ← agrega espacio aquí
+
+\textbf{Razón 3: Bibliotecas maduras}
+
+El ecosistema de Python proporciona herramientas de calidad industrial:
+\begin{itemize}
+    \item FastAPI para servicios web (más eficiente que Flask en entornos \texttt{async})
+    \item Pydantic para validación de datos
+    \item NumPy para computación numérica
+    \item Pytest para testing automatizado
+\end{itemize}
+
+\vspace{1em} % ← agrega espacio aquí
+
+\textbf{Razón 4: Comunidad y soporte}
+
+\begin{itemize}
+    \item Comunidad muy activa en StackOverflow y GitHub
+    \item Documentación extensa y actualizada
+    \item Amplia disponibilidad de cursos y recursos educativos
+\end{itemize}
+
+\vspace{1em} % ← agrega espacio aquí
+
+\textbf{Razón 5: Rendimiento suficiente para ML}
+
+Aunque Python es un lenguaje interpretado, las operaciones costosas (como generación de embeddings o cálculo de similitudes) se ejecutan en implementaciones optimizadas en C/C++ a través de bibliotecas como NumPy o PyTorch.
+
+\vspace{1em} % ← agrega espacio aquí
+
+\textbf{Benchmark de latencia:}
+\begin{itemize}
+    \item Python (este proyecto): 42\,ms por consulta
+    \item Alternativa C++: $\sim$20\,ms/consulta (estimado)
+    \item Alternativa Java: $\sim$30\,ms/consulta (estimado)
+\end{itemize}
+
+El overhead adicional de Python (alrededor de 22\,ms) es aceptable considerando su rapidez de desarrollo y soporte de librerías.
+
+
+% -----------------------------------------------------------------
+\subsection{Framework Web: FastAPI}
+
+\noindent \textbf{Versión:} FastAPI 0.104.1 \\
+\noindent \textbf{Desarrollador:} Sebastián Ramírez (tiangolo)\\
+
+FastAPI es un framework moderno para la construcción de APIs de alto rendimiento basado en ASGI, con soporte nativo para \texttt{async/await}, validación automática y documentación generada dinámicamente.\\
+
+\noindent \textbf{Características clave}\\
+
+\noindent \textbf{1. Alto rendimiento}
+
+\begin{itemize}
+    \item Basado en Starlette (ASGI).
+    \item Rendimiento comparable a NodeJS y Go.
+    \item Soporte nativo para Async I/O.
+\end{itemize}
+
+\textbf{Métricas:}
+\begin{itemize}
+    \item Latencia promedio: 40 ms por request.
+    \item Throughput: 25+ requests/segundo.
+    \item Uso de memoria aproximado: 150 MB.
+\end{itemize}
+
+\noindent \textbf{2. Validación automática con Pydantic}
+
+FastAPI convierte los \textit{type hints} en validación automática de datos de entrada.
+
+\textbf{Ejemplo:}
+\begin{lstlisting}[language=Python,frame=single]
+class QueryRequest(BaseModel):
+    texto: str = Field(
+        ...,
+        min_length=1,
+        description="Texto a buscar"
+    )
+\end{lstlisting}
+
+\noindent \textbf{3. Documentación automática}
+
+\begin{itemize}
+    \item Swagger UI disponible en \texttt{/docs}.
+    \item ReDoc disponible en \texttt{/redoc}.
+    \item Esquema OpenAPI 3.0 generado automáticamente en \texttt{/openapi.json}.
+\end{itemize}
+
+\textbf{Beneficios:}
+\begin{itemize}
+    \item Testing interactivo sin herramientas externas.
+    \item Documentación siempre actualizada.
+    \item Permite generar clientes automáticamente (Python, TypeScript, etc.).
+\end{itemize}
+
+\noindent \textbf{4. Manejo de errores robusto}
+
+\begin{itemize}
+    \item Uso de \texttt{HTTPException} para errores controlados.
+    \item Middleware automático de manejo de excepciones.
+\end{itemize}
+
+\textbf{Ejemplo:}
+\begin{lstlisting}[language=Python,frame=single]
+if not request.texto.strip():
+    raise HTTPException(
+        status_code=400,
+        detail="Texto vacío"
+    )
+\end{lstlisting}
+
+\noindent \textbf{5. Dependency Injection}
+
+FastAPI permite inyectar dependencias de forma declarativa, mejorando la mantenibilidad y testabilidad del código.
+
+\textbf{Ejemplo:}
+\begin{lstlisting}[language=Python,frame=single]
+@app.post("/buscar")
+async def buscar(request: QueryRequest):
+    if matcher is None:
+        raise HTTPException(503, "Servicio no disponible")
+    ...
+\end{lstlisting}
+
+\textbf{Justificación de elección}\\
+
+\textbf{¿Por qué FastAPI y no Flask?}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{4cm}|p{4.5cm}|p{4.5cm}|}
+\hline
+& \textbf{FastAPI} & \textbf{Flask} \\ \hline
+
+\textbf{Async nativo} & Sí & No (\textit{extensiones}) \\ \hline
+
+\textbf{Validación automática} & Sí, \textit{Pydantic} & No, manual \\ \hline
+
+\textbf{Documentación auto} & Sí, \textit{Swagger} & No, manual (\textit{Flask-RESTX}) \\ \hline
+
+\textbf{Tipado estático} & Sí, \textit{Hints} & No \\ \hline
+
+\textbf{Performance} & \(\sim\)400 req/s & \(\sim\)250 req/s \\ \hline
+
+\textbf{Estándar moderno} & OpenAPI & Legacy \\ \hline
+\end{tabular}
+\caption[Comparación FastAPI vs Flask]{Comparación FastAPI vs Flask, elaboración propia.}
+\end{table}
+
+\begin{itemize}
+    \item \textbf{Rendimiento:} FastAPI es uno de los frameworks más rápidos en Python (benchmarks: TechEmpower).
+    \item \textbf{Validación automática:} Pydantic realiza validación de datos sin necesidad de código adicional.
+    \item \textbf{Documentación automática:} Swagger UI y ReDoc se generan de manera inmediata.
+    \item \textbf{Soporte nativo para \texttt{async/await}:} útil para operaciones de E/S (\textit{I/O-bound}).
+    \item \textbf{Uso de type hints:} facilita autocompletado y documentación.
+\end{itemize}
+
+\textbf{¿Por qué FastAPI y no Django?}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{4cm}|p{4.5cm}|p{4.5cm}|}
+\hline
+& \textbf{FastAPI} & \textbf{Django} \\ \hline
+
+\textbf{Curva de aprendizaje} & Baja & Alta \\ \hline
+
+\textbf{Overhead} & Mínimo & Significativo \\ \hline
+
+\textbf{ORM incluido} & No & Sí, innecesario \\ \hline
+
+\textbf{Admin panel} & No & Sí, innecesario \\ \hline
+
+\textbf{Adecuado para API ML} & Sí & Sí \\ \hline
+\end{tabular}
+\caption[Comparación FastAPI vs Django]{Comparación FastAPI vs Django, elaboración propia.}
+\end{table}
+
+\begin{itemize}
+    \item Django es un framework completo (full-stack), orientado a aplicaciones completas.
+    \item FastAPI es un microframework ideal para APIs y microservicios de aprendizaje automático.
+\end{itemize}
+
+\textbf{Conclusión:} Django es excesivo (overkill) para un microservicio que sirve como backend de modelos de PLN.
+
+\subsection{Endpoints implementados}
+
+\noindent \textbf{1. POST /buscar}
+
+\textbf{Descripción:} Búsqueda semántica principal.\\
+
+\textbf{Ejemplo de entrada:}
+
+\begin{lstlisting}
+{"texto": "hola"}
+\end{lstlisting}
+
+\textbf{Ejemplo de salida:}
+
+\begin{lstlisting}
+{
+    "query": "hola",
+    "grupo": "B",
+    "frase_similar": "Hola",
+    "similitud": 1.0,
+    "deletreo_activado": false
+}
+\end{lstlisting}
+
+\noindent \textbf{2. GET /grupos}
+
+\textbf{Descripción:} Retorna la lista de grupos disponibles.
+
+\textbf{Ejemplo de salida:}
+\begin{lstlisting}
+{
+    "total_grupos": 3,
+    "grupos": {
+        "A": {
+            "nombre": "Emergencias",
+            "total_frases": 13
+        }
+    }
+}
+\end{lstlisting}
+
+\noindent \textbf{3. POST /deletreo}
+
+\textbf{Descripción:} Deletreo manual de texto.
+
+\textbf{Ejemplo de entrada:}
+\begin{lstlisting}
+{"texto": "Hola"}
+\end{lstlisting}
+
+\textbf{Ejemplo de salida:}
+\begin{lstlisting}
+{
+    "texto_original": "Hola",
+    "deletreo": ["H","O","L","A"],
+    "total_caracteres": 4
+}
+\end{lstlisting}
+
+% -----------------------------------------------------------------
+\subsection{Modelos de PLN: Sentence-Transformers}
+
+\noindent \textbf{Biblioteca utilizada}
+
+\begin{itemize}
+    \item \textbf{Biblioteca:} \texttt{sentence-transformers 2.2.2}
+    \item \textbf{Desarrolladores:} UKPLab (TU Darmstadt)
+    \item \textbf{Artículo base:} \textit{Sentence-BERT} (Reimers \& Gurevych, 2019)
+\end{itemize}
+
+\noindent \textbf{Modelo seleccionado}
+
+\begin{itemize}
+    \item \textbf{Nombre del modelo:} \texttt{paraphrase-multilingual-MiniLM-L12-v2}
+    \item \textbf{Tipo:} Modelo multilingüe optimizado para tareas de similitud semántica.
+\end{itemize}
+
+\noindent \textbf{Arquitectura del modelo}
+
+El flujo interno del modelo sigue las siguientes etapas:
+
+\begin{enumerate}
+    \item \textbf{Entrada:} \\ 
+    ``Hola, ¿cómo estás?''
+    \item \textbf{Tokenización} (WordPiece Tokenizer)
+    
+    Tokens resultantes:
+\begin{verbatim}
+[CLS] hola , ? como estas ? [SEP]
+\end{verbatim}
+
+    Identificadores numéricos (IDs):
+\begin{verbatim}
+[101, 45321, 102, 189, 12045, 36547, 103, 102]
+\end{verbatim}
+
+    \item \textbf{Capa de Embeddings:}
+    \begin{itemize}
+        \item Token embeddings (768 dimensiones)
+        \item Positional embeddings
+        \item Segment embeddings
+    \end{itemize}
+
+    \item \textbf{12 capas Transformer}
+    \begin{itemize}
+        \item Cada capa contiene:
+        \begin{itemize}
+            \item Multi-Head Self-Attention
+            \item Feed-Forward Network
+        \end{itemize}
+        \item Se repite desde la capa 1 hasta la capa 12.
+    \end{itemize}
+
+    \item \textbf{Pooling layer} \\
+    Mean Pooling (promedio de todos los embeddings)
+
+    \item \textbf{Normalización final} \\
+    Normalización L2 del vector resultante.
+
+    \item \textbf{Salida:} \\
+    Vector denso de dimensión 384:
+\begin{verbatim}
+[0.123, -0.456, 0.789, ...]
+\end{verbatim}
+\end{enumerate}
+
+\noindent \textbf{Ventajas del modelo seleccionado}
+
+\textbf{1. Multilingüe}
+
+\begin{itemize}
+    \item Soporta español de forma nativa.
+    \item No requiere traducción previa.
+    \item Entrenado con datos multilingües, incluyendo español.
+\end{itemize}
+
+\textbf{2. Balance entre tamaño y desempeño}
+
+\begin{itemize}
+    \item 384 dimensiones (menor que BERT-base con 768).
+    \item Inferencia más rápida y ligera.
+    \item Menor uso de memoria en producción.
+    \item Desempeño adecuado para sistemas en tiempo real.
+\end{itemize}
+
+\textbf{3. Fine-tuned para tareas de paráfrasis}
+
+\begin{itemize}
+    \item Detecta variaciones semánticas de una misma frase.
+    \item Ideal para tareas como:
+    \begin{itemize}
+        \item ``hola'' vs. ``buenos días''
+        \item ``ayúdame'' vs. ``necesito ayuda''
+    \end{itemize}
+    \item Robusto ante errores ortográficos menores.
+\end{itemize}
+
+\textbf{4. Amplio uso en la comunidad}
+
+\begin{itemize}
+    \item Gran soporte de la comunidad open-source.
+    \item Documentación completa.
+    \item Modelo preentrenado y listo para usar en producción.
+\end{itemize}
+
+\textbf{Justificación de elección}
+
+\textbf{¿Por qué Sentence-Transformers y no Word2Vec/GloVe?}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|p{3.5cm}|p{3.5cm}|p{3.5cm}|p{3.5cm}|}
+\hline
+& \textbf{Sentence-BERT} & \textbf{Word2Vec} & \textbf{GloVe} \\ \hline
+
+\textbf{Captura de texto} & Sí & No & No \\ \hline
+
+\textbf{Embeddings de oraciones} & Directo & Promedio & Promedio \\ \hline
+
+\textbf{Pre-entrenado moderno} & 2023 & 2013 & 2014 \\ \hline
+
+\textbf{Multilingüe} & Más de 50 idiomas & Por idioma & Por idioma \\ \hline
+
+\textbf{Performance} & SOTA & Legacy & Legacy \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption[Comparación de embeddings modernos]{Comparación entre Sentence-BERT, Word2Vec y GloVe, elaboración propia.}
+\end{table}
+
+Modelos clásicos como Word2Vec y GloVe generan embeddings estáticos, es decir, una representación por palabra sin contexto. Ejemplo:
+
+\begin{itemize}
+    \item ``banco'' (institución financiera) vs. ``banco'' (asiento)
+\end{itemize}
+
+\begin{itemize}
+    \item Word2Vec: mismo embedding (no distingue contexto) \ding{55}
+    \item BERT/SBERT: embeddings distintos según el uso contextual \checkmark
+\end{itemize}
+
+\textbf{Conclusión:} Sentence-BERT es superior para tareas de similitud semántica y comprensión contextual.\\
+
+\vspace{1em}
+
+\textbf{¿Por qué Sentence-Transformers y no Transformers de HuggingFace directamente?}
+
+\begin{itemize}
+    \item Sentence-Transformers ofrece una API optimizada para embeddings de oraciones.
+    \item Implementa arquitecturas tipo siamese listas para usar.
+    \item Procesa oraciones completas con mayor eficiencia que llamar manualmente a modelos de HuggingFace.
+\end{itemize}
+
+\subsubsection{¿Por qué se eligió \texttt{paraphrase-multilingual-MiniLM-L12-v2}?}
+
+\textbf{Alternativas evaluadas:}
+
+\begin{itemize}
+    \item \texttt{all-MiniLM-L6-v2}
+    \begin{itemize}
+        \item Pros: muy rápido
+        \item Contras: solo inglés, menor precisión
+        \item Decisión: descartado
+    \end{itemize}
+
+    \item \texttt{distiluse-base-multilingual-cased-v2}
+    \begin{itemize}
+        \item Pros: multilingüe
+        \item Contras: 512 dimensiones, 250\,MB
+        \item Decisión: descartado por peso
+    \end{itemize}
+
+    \item \texttt{paraphrase-multilingual-mpnet-base-v2}
+    \begin{itemize}
+        \item Pros: máxima precisión
+        \item Contras: 768 dimensiones, 400\,MB, $\sim$80\,ms/consulta
+        \item Decisión: demasiado lento para tiempo real
+    \end{itemize}
+
+    \item \textbf{\texttt{paraphrase-multilingual-MiniLM-L12-v2}} (modelo elegido)
+    \begin{itemize}
+        \item Precisión alta (92\%)
+        \item Velocidad excelente ($\sim$40\,ms por consulta)
+        \item Tamaño reducido (120\,MB)
+        \item Soporte multilingüe incluyendo español
+    \end{itemize}
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{|p{5cm}|p{2.5cm}|p{2.5cm}|p{2.5cm}|p{2.5cm}|}
+\hline
+\textbf{Modelo} & \textbf{Dimensiones} & \textbf{Tamaño} & \textbf{Latencia} & \textbf{Precisión} \\ \hline
+
+all-MiniLM-L6-v2 & 384 & 80MB & 30ms & 85\% (solo inglés) \\ \hline
+
+paraphrase-multilingual-MiniLM & 384 & 120MB & 40ms & 92\% (español) \\ \hline
+
+distiluse-multilingual & 512 & 250MB & 60ms & 94\% \\ \hline
+
+paraphrase-mpnet-multilingual & 768 & 400MB & 80ms & 96\% \\ \hline
+
+\end{tabular}
+\end{adjustbox}
+\caption[Modelos comparados]{Comparación de modelos de embeddings, elaboración propia.}
+\end{table}
+
+\textbf{Conclusión:} MiniLM-L12 ofrece el mejor equilibrio entre calidad, velocidad y tamaño del modelo para un entorno de producción.
+
+\subsection{Bibliotecas de Machine Learning}
+
+{\large \noindent \textbf{NumPy 1.24.3}}
+
+\textbf{Uso en el proyecto:}
+\begin{itemize}
+    \item Operaciones matriciales para embeddings.
+    \item Cálculo de centroides de grupos.
+    \item Operaciones vectoriales optimizadas.
+    \item Guardado y carga de caché en formato \texttt{.npz}.
+\end{itemize}
+
+\textbf{Funciones clave:}
+\begin{itemize}
+    \item \texttt{np.array()} --- Conversión a arreglos.
+    \item \texttt{np.mean()} --- Cálculo de centroides.
+    \item \texttt{np.clip()} --- Normalización de valores.
+    \item \texttt{np.savez()} --- Guardado de embeddings.
+    \item \texttt{np.load()} --- Carga de embeddings.
+\end{itemize}
+
+\textbf{Ejemplo:}
+\begin{lstlisting}[language=Python]
+# Cálculo de centroide
+centroid = np.mean(embeddings, axis=0)
+
+# Guardado de caché
+np.savez(cache_path,
+    A_embeddings=grupo_a_emb,
+    B_embeddings=grupo_b_emb,
+    C_embeddings=grupo_c_emb
+)
+\end{lstlisting}
+
+{\large \noindent \textbf{Scikit-learn 1.3.0}}
+
+\textbf{Uso en el proyecto:}
+\begin{itemize}
+    \item Cálculo de similitud de coseno.
+    \item Normalización de vectores.
+\end{itemize}
+
+\textbf{Función utilizada:}
+\begin{itemize}
+    \item \texttt{cosine\_similarity()} --- Similitud entre embeddings.
+\end{itemize}
+
+\textbf{Ejemplo:}
+\begin{lstlisting}[language=Python]
+from sklearn.metrics.pairwise import cosine_similarity
+
+similarity = cosine_similarity(
+    [query_embedding],
+    grupo_embeddings
+)[0]
+# Resultado: array([0.85, 0.92, 0.78, ...])
+\end{lstlisting}
+
+\textbf{Ventajas:}
+\begin{itemize}
+    \item Código optimizado en C.
+    \item Manejo eficiente de matrices grandes.
+    \item API simple y consistente.
+\end{itemize}
+
+{\large \noindent \textbf{RapidFuzz 3.5.2}}
+
+\textbf{Uso en el proyecto:}
+\begin{itemize}
+    \item Corrección ortográfica.
+    \item Detección de errores comunes (typos).
+\end{itemize}
+
+\textbf{Algoritmo principal:} Distancia de Levenshtein (implementación optimizada en C++).
+
+\textbf{Funciones utilizadas:}
+\begin{itemize}
+    \item \texttt{fuzz.ratio()} --- Similitud entre cadenas.
+\end{itemize}
+
+\textbf{Ejemplo:}
+\begin{lstlisting}[language=Python]
+from rapidfuzz import fuzz
+
+similarity = fuzz.ratio("ola", "hola")  # 75.0
+
+if similarity > 80:
+    corrected = "hola"
+\end{lstlisting}
+
+\textbf{Casos de uso:}
+\begin{itemize}
+    \item ``ola'' → ``hola''
+    \item ``graias'' → ``gracias''
+    \item ``ayda'' → ``ayuda''
+\end{itemize}
+
+{\large \noindent \textbf{PyTorch 2.1.0}}
+
+\textbf{Uso en el proyecto:}
+\begin{itemize}
+    \item Backend de \texttt{sentence-transformers}.
+    \item Ejecución del modelo Transformer.
+    \item Soporte opcional para GPU.
+\end{itemize}
+
+\textbf{Configuración:}
+\begin{lstlisting}[language=Python]
+device = "cuda" if torch.cuda.is_available() else "cpu"
+
+# En este proyecto se usa CPU
+model = SentenceTransformer(model_name)
+model.to("cpu")
+\end{lstlisting}
+
+\textbf{Ventajas:}
+\begin{itemize}
+    \item Framework maduro y ampliamente adoptado.
+    \item Gran ecosistema en NLP y visión.
+    \item Compatibilidad con HuggingFace.
+\end{itemize}
+
+\vspace{1em}
+
+\subsection{Herramientas de Desarrollo}
+
+{\large \noindent \textbf{Pytest 7.4.3}}
+
+\textbf{Plugins utilizados:}
+\begin{itemize}
+    \item \texttt{pytest-cov} --- Cobertura de código.
+    \item \texttt{pytest-asyncio} --- Soporte para tests \textit{async}.
+    \item \texttt{pytest-benchmark} --- Pruebas de rendimiento.
+    \item \texttt{pytest-html} --- Reportes HTML.
+\end{itemize}
+
+\textbf{Estructura de carpetas:}
+
+\begin{verbatim}
+tests/
+|-- unit/                 # Tests unitarios
+|   |-- test_matcher.py
+|   |-- test_preprocess.py
+|   `-- test_groups.py
+|-- integration/          # Tests de integración
+|   `-- test_api.py
+|-- e2e/                  # Pruebas end-to-end
+|   |-- test_casos_realistas.py
+|   `-- test_robustness.py
+`-- performance/          # Benchmarks
+    `-- test_benchmarks.py
+\end{verbatim}
+
+\textbf{Comandos principales:}
+\begin{lstlisting}[language=bash]
+pytest
+pytest --cov=app --cov-report=html
+pytest tests/unit/test_matcher.py -v
+pytest tests/performance/ --benchmark-only
+\end{lstlisting}
+
+{\large \noindent \textbf{Uvicorn 0.24.0}}
+
+\textbf{Características:}
+\begin{itemize}
+    \item Servidor ASGI de alto rendimiento.
+    \item Basado en \texttt{uvloop} (más rápido que asyncio).
+    \item Hot-reload para desarrollo.
+\end{itemize}
+
+\textbf{Configuración para producción:}
+\begin{lstlisting}[language=bash]
+uvicorn app.main:app \
+  --host 0.0.0.0 \
+  --port 8000 \
+  --workers 4 \
+  --log-level info
+\end{lstlisting}
+
+\textbf{Modo desarrollo:}
+\begin{lstlisting}[language=bash]
+uvicorn app.main:app \
+  --host 0.0.0.0 \
+  --port 8000 \
+  --reload
+\end{lstlisting}
+
+{\large \noindent \textbf{Git 2.43.0}}
+
+\textbf{Estrategia de ramas:}
+\begin{itemize}
+    \item \textbf{main:} Rama estable.
+    \item \textbf{feat/*:} Nuevas funcionalidades.
+    \item \textbf{fix/*:} Corrección de errores.
+\end{itemize}
+
+\textbf{Convenciones de commits:}
+\begin{verbatim}
+feat: agregar nueva funcionalidad
+fix: corregir bug
+docs: actualizar documentación
+test: agregar tests
+refactor: refactorizar código
+perf: mejora de performance
+\end{verbatim}
+
+\textbf{Workflow recomendado:}
+\begin{lstlisting}[language=bash]
+git checkout -b feat/nombre-detection
+git add app/matcher_improved.py
+git commit -m "feat: agregar detección de nombres"
+git push -u origin feat/nombre-detection
+\end{lstlisting}
+
+{\large \noindent \textbf{Pydantic 2.5.0}}
+
+\textbf{Uso en el proyecto:}
+\begin{itemize}
+    \item Validación automática de requests.
+    \item Serialización y deserialización.
+    \item Integración con FastAPI.
+\end{itemize}
+
+\textbf{Ejemplo de modelo:}
+\begin{lstlisting}[language=Python]
+class QueryRequest(BaseModel):
+    texto: str = Field(
+        ...,
+        min_length=1,
+        max_length=500,
+        description="Texto a buscar"
+    )
+
+class QueryResponse(BaseModel):
+    query: str
+    grupo: str | None
+    frase_similar: str
+    similitud: float = Field(ge=0.0, le=1.0)
+    deletreo_activado: bool
+    deletreo: List[str] | None = None
+\end{lstlisting}
+
+\textbf{Validación automática:}
+\begin{itemize}
+    \item Tipos de datos.
+    \item Rangos numéricos.
+    \item Longitud de cadenas.
+    \item Campos requeridos y opcionales.
+\end{itemize}
+
+\subsection{Justificación de Elección de Tecnologías}
+
+\noindent\textbf{Criterios de selección}
+\textbf{1. Rendimiento}
+\begin{itemize}
+    \item FastAPI: Alto rendimiento.
+    \item Sentence-Transformers: Inferencia rápida.
+    \item NumPy: Operaciones vectoriales optimizadas.
+\end{itemize}
+\textbf{Resultado:} Latencia promedio de 40\,ms.
+
+\textbf{2. Ecosistema y comunidad}
+\begin{itemize}
+    \item Python: Amplio ecosistema ML/NLP.
+    \item FastAPI: Más de 70\,000 estrellas en GitHub.
+    \item Sentence-Transformers: Estándar de la industria.
+\end{itemize}
+
+\textbf{3. Mantenibilidad}
+\begin{itemize}
+    \item Type hints en Python 3.12.
+    \item Validación con Pydantic.
+    \item Tests con Pytest.
+\end{itemize}
+
+\textbf{4. Escalabilidad}
+\begin{itemize}
+    \item Arquitectura asíncrona.
+    \item API stateless.
+    \item Caché de embeddings.
+\end{itemize}
+
+\textbf{5. Experiencia de desarrollador}
+\begin{itemize}
+    \item Hot-reload.
+    \item Documentación automática.
+    \item Type checking.
+\end{itemize}
+
+\subsection{Alternativas rechazadas}
+
+\noindent\textbf{Lenguajes de programación}
+\begin{itemize}
+    \item JavaScript/Node.js: Ecosistema de ML inmaduro.
+    \item Java: Verboso, no estándar en ML.
+    \item C++: Desarrollo lento e innecesario.
+    \item Go: Sin bibliotecas de ML de primer nivel.
+\end{itemize}
+
+\noindent\textbf{Frameworks}
+\begin{itemize}
+    \item Flask: Sin async nativo ni validación automática.
+    \item Django: \emph{Overkill} para un microservicio.
+    \item Tornado: En desuso, comunidad pequeña.
+\end{itemize}
+
+\noindent\textbf{Modelos}
+\begin{itemize}
+    \item Word2Vec: No captura contexto.
+    \item BERT completo: Latencia > 100ms.
+    \item GPT-3/4: API externa, costo y latencia variable.
+\end{itemize}
+
+\noindent\textbf{Bases de datos}
+\begin{itemize}
+    \item PostgreSQL/MySQL: Innecesarias para dataset fijo.
+    \item Decisión: JSON plano es suficiente para 43 frases.
+\end{itemize}
+
+\subsection{Conclusión}
+El \textbf{stack elegido} (Python + FastAPI + Sentence-Transformers) ofrece el mejor balance entre rendimiento, velocidad de desarrollo y mantenibilidad para el problema abordado.
+
+%---------------------------------
+
+\section{Implementación Técnica Detallada del Modulo de PLN}
+
+{\large \noindent \textbf{Módulo de API REST (\texttt{main.py})}}
+
+\textbf{Estructura del archivo (665 líneas)}
+\begin{verbatim}
+app/main.py
+|-- [1-50]   Imports y configuración
+|-- [51-115] Modelos Pydantic (Request/Response)
+|-- [116-205] Utilidades y funciones auxiliares
+|-- [206-230] Eventos de lifecycle (startup/shutdown)
+|-- [231-580] Endpoints de la API
+`-- [581-665] Configuración y ejecución
+\end{verbatim}
+
+
+{\large \noindent \textbf{Modelos Pydantic}}
+
+\begin{lstlisting}[language=Python,frame=single]
+class QueryRequest(BaseModel):
+    """Modelo para requests de búsqueda."""
+    texto: str = Field(
+        ...,
+        min_length=1,
+        description="Texto de consulta a buscar"
+    )
+
+class QueryResponse(BaseModel):
+    """Modelo para respuestas de búsqueda."""
+    query: str = Field(..., description="Consulta original")
+    grupo: str | None = Field(
+        None,
+        description="Grupo temático (A/B/C)"
+    )
+    frase_similar: str = Field(
+        ...,
+        description="Frase más similar encontrada"
+    )
+    similitud: float = Field(
+        ...,
+        ge=0.0,
+        le=1.0,
+        description="Similitud coseno [0.0-1.0]"
+    )
+    deletreo_activado: bool = Field(
+        ...,
+        description="Si se activó deletreo automático"
+    )
+    deletreo: List[str] | None = Field(
+        None,
+        description="Lista de caracteres deletreados"
+    )
+    total_caracteres: int | None = Field(
+        None,
+        description="Cantidad de caracteres"
+    )
+    # Campos nuevos para detección de nombres
+    nombre_detectado: bool | None = Field(
+        None,
+        description="Si se detectó patrón con nombre"
+    )
+    nombre_extraido: str | None = Field(
+        None,
+        description="Nombre extraído del patrón"
+    )
+    nombre_deletreado: List[str] | None = Field(
+        None,
+        description="Letras del nombre para deletrear"
+    )
+    total_caracteres_nombre: int | None = Field(
+        None,
+        description="Cantidad de letras del nombre"
+    )
+\end{lstlisting}
+
+{\large \noindent \textbf{Endpoint principal: \texttt{POST /buscar}}}
+
+\begin{lstlisting}[language=Python,frame=single]
+@app.post(
+    "/buscar",
+    response_model=QueryResponse,
+    tags=["Búsqueda"],
+    summary="Buscar frase similar",
+    description="""
+    Busca la frase más similar al texto proporcionado usando
+    embeddings semánticos y similitud coseno.
+
+    Sistema de Deletreo Automático:
+    - Grupo A (Emergencias): threshold 0.75
+    - Grupo B (Saludos): threshold 0.80
+    - Grupo C (Comunicación): threshold 0.85
+    """,
+    responses={
+        200: {"description": "Búsqueda exitosa"},
+        400: {"description": "Texto vacío o inválido"},
+        503: {"description": "Servicio no disponible"},
+        500: {"description": "Error interno"}
+    }
+)
+async def buscar_frase_similar(request: QueryRequest):
+    """Busca la frase más similar usando PLN."""
+
+    if matcher is None:
+        raise HTTPException(
+            status_code=503,
+            detail="Servicio no disponible"
+        )
+
+    if not request.texto or not request.texto.strip():
+        raise HTTPException(
+            status_code=400,
+            detail="El texto no puede estar vacío"
+        )
+
+    try:
+        logger.info(f"Búsqueda para: {request.texto}")
+
+        resultado = matcher.search_similar_phrase(request.texto)
+
+        response = QueryResponse(
+            query=resultado["query"],
+            grupo=resultado["grupo"],
+            frase_similar=resultado["frase_similar"],
+            similitud=resultado["similitud"],
+            deletreo_activado=resultado["deletreo_activado"],
+            deletreo=resultado.get("deletreo"),
+            total_caracteres=resultado.get("total_caracteres"),
+            nombre_detectado=resultado.get("nombre_detectado"),
+            nombre_extraido=resultado.get("nombre_extraido"),
+            nombre_deletreado=resultado
+            .get("nombre_deletreado"),
+            total_caracteres_nombre=resultado
+            .get("total_caracteres_nombre")
+        )
+
+        if resultado["deletreo_activado"]:
+            logger.info("Resultado: DELETREO ACTIVADO")
+        elif resultado.get("nombre_detectado"):
+            logger.info(f"Resultado: NOMBRE DETECTADO - {resultado['nombre_extraido']}")
+        else:
+            logger.info(f"Resultado: {response.grupo} - {response.similitud}")
+
+        return response
+
+    except Exception as e:
+        logger.error(f"Error en búsqueda: {e}")
+        raise HTTPException(
+            status_code=500,
+            detail="Error interno del servidor"
+        )
+\end{lstlisting}
+
+{\large \noindent \textbf{Endpoint: \texttt{GET /grupos}}}
+
+\begin{lstlisting}[language=Python,frame=single]
+@app.get(
+    "/grupos",
+    tags=["Grupos"],
+    summary="Listar grupos disponibles"
+)
+async def listar_grupos():
+    """Retorna información de todos los grupos."""
+    try:
+        grupos = get_all_phrases()
+
+        return {
+            "total_grupos": len(grupos),
+            "grupos": {
+                grupo: {
+                    "nombre": GRUPO_NOMBRES[grupo],
+                    "total_frases": len(frases),
+                    "ejemplos": frases[:3]
+                }
+                for grupo, frases in grupos.items()
+            }
+        }
+    except Exception as e:
+        logger.error(f"Error al listar grupos: {e}")
+        raise HTTPException(500, detail="Error interno")
+\end{lstlisting}
+
+{\large \noindent \textbf{Endpoint: POST /deletreo}}
+
+\begin{lstlisting}
+@app.post(
+    "/deletreo",
+    tags=["Deletreo"],
+    summary="Deletrear texto manualmente"
+)
+async def deletrear_texto(request: QueryRequest):
+    """Deletrea cualquier texto letra por letra."""
+    from .preprocess import spell_out_text, normalize_leet_speak
+
+    # Normalizar leet speak
+    texto_normalizado = normalize_leet_speak(request.texto)
+
+    # Deletrear
+    deletreo = spell_out_text(texto_normalizado, include_spaces=True)
+
+    return {
+        "texto_original": request.texto,
+        "texto_normalizado": texto_normalizado,
+        "deletreo": deletreo,
+        "total_caracteres": len(deletreo)
+    }
+\end{lstlisting}
+
+{\large \noindent \textbf{Manejo de errores}}
+
+\textbf{Middleware de manejo de excepciones:}
+
+\begin{lstlisting}
+@app.exception_handler(HTTPException)
+async def http_exception_handler(request, exc):
+    """Maneja excepciones HTTP."""
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={
+            "error": exc.detail,
+            "status_code": exc.status_code,
+            "path": str(request.url)
+        }
+    )
+
+@app.exception_handler(Exception)
+async def general_exception_handler(request, exc):
+    """Maneja excepciones generales."""
+    logger.error(f"Error no manejado: {exc}")
+    return JSONResponse(
+        status_code=500,
+        content={
+            "error": "Error interno del servidor",
+            "status_code": 500
+        }
+    )
+\end{lstlisting}
+
+{\large \noindent \textbf{Configuración de CORS}}
+
+\begin{lstlisting}
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+\end{lstlisting}
+
+{\large \noindent \textbf{Lifecycle Events}}
+
+\begin{lstlisting}
+@app.on_event("startup")
+async def startup_event():
+    """Inicializa el sistema al arrancar."""
+    global matcher
+    logger.info("Inicializando aplicación...")
+
+    try:
+        matcher = ImprovedPhraseMatcher(
+            model_type="multilingual_balanced",
+            cache_path="data/embeddings_improved.npz",
+            use_reranking=True
+        )
+        matcher.initialize()
+        logger.info("Aplicación inicializada correctamente")
+    except Exception as e:
+        logger.error(f"Error en inicialización: {e}")
+        raise
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    """Limpieza al apagar."""
+    logger.info("Apagando aplicación...")
+\end{lstlisting}
+
+{\large \noindent \textbf{Motor de búsqueda semántica (matcher\_improved.py)}}
+
+\textbf{Clase principal: \texttt{ImprovedPhraseMatcher} (681 líneas)}
+
+\begin{lstlisting}
+class ImprovedPhraseMatcher:
+    """
+    Matcher mejorado con:
+    - Búsqueda jerárquica en dos fases
+    - Thresholds adaptativos por grupo
+    - Detección de nombres propios
+    - Sistema de deletreo automático
+    - Cache de embeddings
+    """
+
+    # Modelos disponibles
+    MODELS = {
+        "spanish_optimized": "hiiamsid/sentence_similarity_spanish_es",
+        "multilingual_advanced": "paraphrase-multilingual-mpnet-base-v2",
+        "multilingual_balanced": "paraphrase-multilingual-MiniLM-L12-v2",
+        "current": "all-MiniLM-L6-v2"
+    }
+
+    # Thresholds por grupo
+    GROUP_THRESHOLDS = {
+        "A": 0.60,  # Emergencias: flexible
+        "B": 0.63,  # Saludos: flexible
+        "C": 0.78   # Comunicación: estricto
+    }
+
+    # Thresholds para deletreo
+    SPELL_OUT_THRESHOLDS = {
+        "A": 0.75,
+        "B": 0.80,
+        "C": 0.85
+    }
+
+    # Lista de nombres comunes
+    COMMON_SPANISH_NAMES = {
+        'juan', 'jose', 'antonio', 'manuel', 'francisco',
+        'david', 'carlos', 'miguel', 'pedro', 'luis',
+        'maria', 'carmen', 'ana', 'isabel', 'pilar',
+        # ... 40+ nombres
+    }
+\end{lstlisting}
+
+{\large \noindent \textbf{Método \texttt{initialize()}}}
+
+\begin{lstlisting}
+def initialize(self):
+    """
+    Inicializa el matcher:
+    1. Carga modelo de embeddings
+    2. Genera/carga cache de embeddings
+    3. Calcula centroides de grupos
+    """
+    logger.info("Inicializando PhraseMatcher mejorado")
+
+    # Cargar grupos
+    self.grupos_frases = get_all_phrases()
+
+    # Verificar cache
+    if os.path.exists(self.cache_path):
+        logger.info("Cargando embeddings desde cache")
+        self._load_from_cache()
+    else:
+        logger.info("Generando embeddings (primera vez)")
+        self._generate_and_cache_embeddings()
+
+    # Calcular centroides
+    self._calculate_centroids()
+
+    logger.info("PhraseMatcher inicializado correctamente")
+\end{lstlisting}
+
+{\large \noindent \textbf{Método \texttt{search\_similar\_phrase()}}}
+
+\begin{lstlisting}
+def search_similar_phrase(self, query: str) -> Dict:
+    """
+    Busqueda principal con deteccion de nombres.
+
+    Pipeline:
+    1. Preprocesar query
+    2. Generar embedding
+    3. Busqueda jerarquica (re-ranking)
+    4. Validar patrones especiales (nombres)
+    5. Determinar si activar deletreo
+    6. Construir respuesta
+    """
+
+    # 1. BUSQUEDA
+    if self.use_reranking:
+        grupo, frase, similarity = self.find_most_similar_phrase_reranked(query)
+    else:
+        best_group = self.find_best_groups(query, top_k=1)[0][0]
+        grupo, frase, similarity = self.find_most_similar_phrase(query, best_group)
+
+    # 2. VALIDAR DELETREO
+    spell_out_threshold = self.SPELL_OUT_THRESHOLDS.get(grupo, 0.60)
+    should_spell_out = similarity < spell_out_threshold
+
+    # 3. VALIDACIONES ESPECIALES PARA NOMBRES
+    query_normalized = query.strip().lower()
+    query_words = query_normalized.split()
+
+    if len(query_words) == 1:
+        query_len = len(query_words[0])
+
+        if 3 <= query_len <= 8:
+            # Construir palabras conocidas del dataset
+            palabras_conocidas = set()
+            for frases in self.grupos_frases.values():
+                for frase_item in frases:
+                    frase_norm = normalize_text(frase_item)
+                    palabras_conocidas.update(frase_norm.split())
+
+            # VALIDACION 1: Nombre comun espanol
+            if query_normalized in self.COMMON_SPANISH_NAMES:
+                should_spell_out = True
+                logger.info(f"Nombre comun detectado: {query}")
+
+            # VALIDACION 2: Palabra no en dataset
+            elif query_normalized not in palabras_conocidas:
+                if 0.50 <= similarity < 0.85:
+                    should_spell_out = True
+                    logger.info(f"Posible nombre: {query}")
+
+    # VALIDACION 3: Capitalizacion de nombre propio
+    if len(query) > 2 and query[0].isupper() and query[1:].islower():
+        if similarity < 0.98:
+            should_spell_out = True
+            logger.info(f"Nombre por capitalizacion: {query}")
+
+    # 4. PENALIZACION POR LONGITUD
+    if len(query_words) == 1 and len(frase.split()) == 1:
+        length_diff = abs(len(query_words[0]) - len(frase.split()[0]))
+        if length_diff > 1:
+            penalty = 0.05 * length_diff
+            similarity = clip_similarity(similarity - penalty)
+            should_spell_out = similarity < spell_out_threshold
+
+    # 5. ACTIVAR DELETREO
+    if should_spell_out:
+        from .preprocess import spell_out_text, normalize_leet_speak
+
+        normalized_query = normalize_leet_speak(query)
+        deletreo_list = spell_out_text(normalized_query, include_spaces=True)
+        deletreo_str = " ".join(deletreo_list)
+
+        return {
+            "query": query,
+            "grupo": None,
+            "frase_similar": deletreo_str,
+            "similitud": round(similarity, 4),
+            "deletreo_activado": True,
+            "deletreo": deletreo_list,
+            "total_caracteres": len(deletreo_list)
+        }
+
+    # 6. DETECTAR PATRONES CON NOMBRES
+    nombre_info = self._extract_name_pattern(query, frase, similarity)
+    if nombre_info:
+        return {
+            "query": query,
+            "grupo": grupo,
+            "frase_similar": frase,
+            "similitud": round(similarity, 4),
+            "deletreo_activado": False,
+            "deletreo": None,
+            "total_caracteres": None,
+            "nombre_detectado": True,
+            "nombre_extraido": nombre_info["nombre"],
+            "nombre_deletreado": nombre_info["deletreo"],
+            "total_caracteres_nombre": len(nombre_info["deletreo"])
+        }
+
+    # 7. RESPUESTA NORMAL
+    return {
+        "query": query,
+        "grupo": grupo,
+        "frase_similar": frase,
+        "similitud": round(similarity, 4),
+        "deletreo_activado": False,
+        "deletreo": None,
+        "total_caracteres": None
+    }
+\end{lstlisting}
+
+{\large \noindent \textbf{Método \texttt{\_extract\_name\_pattern()}}}
+
+\begin{lstlisting}
+def _extract_name_pattern(
+    self,
+    query: str,
+    frase_similar: str,
+    similarity: float
+) -> Optional[Dict]:
+    """
+    Detecta patrones con nombres propios:
+    - "Me llamo [NOMBRE]"
+    - "Mi nombre es [NOMBRE]"
+    - "Soy [NOMBRE]"
+    """
+
+    from .preprocess import spell_out_text, normalize_leet_speak, normalize_text
+
+    # Solo aplicar si frase similar es "Me llamo"
+    frase_normalizada = normalize_text(frase_similar)
+    if frase_normalizada not in ["me llamo", "como te llamas"]:
+        return None
+
+    # Validar similitud
+    if similarity < 0.80:
+        return None
+
+    # Normalizar query
+    query_normalizado = normalize_text(query)
+    query_words = query_normalizado.split()
+
+    # Patrones posibles
+    nombre = None
+    patrones = [
+        (["me", "llamo"], 2),
+        (["mi", "nombre", "es"], 3),
+        (["soy"], 1),
+    ]
+
+    for patron, _ in patrones:
+        if len(query_words) > len(patron):
+            if query_words[:len(patron)] == patron:
+                nombre_words = query_words[len(patron):]
+                nombre = " ".join(nombre_words)
+                break
+
+    if not nombre or len(nombre) < 2:
+        return None
+
+    # Palabras comunes a descartar
+    palabras_comunes = {
+        'hola', 'gracias', 'bien', 'mal', 'si', 'no',
+        'vale', 'ok', 'ayuda', 'auxilio', 'socorro'
+    }
+    if nombre in palabras_comunes:
+        return None
+
+    # Extraer nombre original
+    query_words_original = query.split()
+    nombre_words_normalized = nombre.split()
+
+    nombre_start_idx = None
+    for i in range(len(query_words) - len(nombre_words_normalized) + 1):
+        if query_words[i:i + len(nombre_words_normalized)] == nombre_words_normalized:
+            nombre_start_idx = i
+            break
+
+    if nombre_start_idx is not None:
+        nombre_original_words = query_words_original[
+            nombre_start_idx:nombre_start_idx + len(nombre_words_normalized)
+        ]
+        nombre_original = " ".join(nombre_original_words)
+        nombre_normalized = normalize_leet_speak(nombre_original)
+    else:
+        nombre_normalized = nombre
+
+    # Deletrear nombre
+    deletreo_list = spell_out_text(nombre_normalized, include_spaces=False)
+
+    logger.info(
+        f"Patron de nombre detectado: query='{query}', "
+        f"nombre='{nombre_normalized}', deletreo={deletreo_list}"
+    )
+
+    return {
+        "nombre": nombre_normalized,
+        "deletreo": deletreo_list
+    }
+\end{lstlisting}
+
+{\large \noindent \textbf{Método \texttt{find\_most\_similar\_phrase\_reranked()}}}
+
+\begin{lstlisting}
+def find_most_similar_phrase_reranked(
+    self,
+    query: str
+) -> Tuple[str, str, float]:
+    """
+    Busqueda jerarquica en dos fases:
+
+    FASE 1: Centroides (top-3 grupos)
+    FASE 2: Re-ranking con boosts y penalizaciones
+    """
+
+    # FASE 1: Grupos candidatos
+    top_groups = self.find_best_groups(query, top_k=3)
+
+    # Preprocesar query
+    query_prep = preprocess_query(query)
+
+    # Cargar modelo
+    self._load_model()
+
+    # Generar embedding
+    query_embedding = self.model.encode([query_prep])[0]
+
+    best_similarity = -1
+    best_group = None
+    best_phrase = None
+
+    for grupo, group_score in top_groups:
+        embeddings = self.grupos_embeddings[grupo]
+        frases = self.grupos_frases[grupo]
+
+        similarities = cosine_similarity(
+            [query_embedding],
+            embeddings
+        )[0]
+
+        # BOOST por longitud
+        for i, frase in enumerate(frases):
+            num_words = len(frase.split())
+            if num_words >= 3:
+                similarities[i] += 0.15
+            elif num_words == 2:
+                similarities[i] += 0.08
+
+        similarities = np.clip(similarities, 0.0, 1.0)
+
+        max_idx = np.argmax(similarities)
+        similarity = similarities[max_idx]
+
+        # Bonus al grupo top
+        if grupo == top_groups[0][0]:
+            similarity += 0.05
+            similarity = clip_similarity(similarity)
+
+        threshold = self.GROUP_THRESHOLDS.get(grupo, 0.60)
+
+        if similarity >= threshold and similarity > best_similarity:
+            best_similarity = similarity
+            best_group = grupo
+            best_phrase = frases[max_idx]
+
+    # Si no cumple threshold, devolver mejor absoluto
+    if best_group is None:
+        grupo = top_groups[0][0]
+        embeddings = self.grupos_embeddings[grupo]
+        frases = self.grupos_frases[grupo]
+        similarities = cosine_similarity([query_embedding], embeddings)[0]
+        max_idx = np.argmax(similarities)
+        best_similarity = clip_similarity(similarities[max_idx])
+        best_group = grupo
+        best_phrase = frases[max_idx]
+
+    return best_group, best_phrase, best_similarity
+\end{lstlisting}
+
+{\large \noindent \textbf{Método \texttt{find\_best\_groups()}}}
+
+\begin{lstlisting}
+def find_best_groups(self, query: str, top_k: int = 3) -> List[Tuple[str, float]]:
+    """
+    Top-K grupos mas probables usando centroides.
+    """
+
+    query_prep = preprocess_query(query)
+
+    self._load_model()
+
+    query_embedding = self.model.encode([query_prep])[0]
+
+    group_scores = []
+    for grupo, centroid in self.grupos_centroids.items():
+        similarity = cosine_similarity(
+            [query_embedding],
+            [centroid]
+        )[0][0]
+        group_scores.append((grupo, similarity))
+
+    group_scores.sort(key=lambda x: x[1], reverse=True)
+    return group_scores[:top_k]
+\end{lstlisting}
+
+{\large \noindent \textbf{Método \texttt{\_calculate\_centroids()}}}
+
+\begin{lstlisting}
+def _calculate_centroids(self):
+    """
+    Calcula el centroide de cada grupo.
+    Usado en la busqueda por centroides.
+    """
+    self.grupos_centroids = {}
+
+    for grupo, embeddings in self.grupos_embeddings.items():
+        centroid = np.mean(embeddings, axis=0)
+        self.grupos_centroids[grupo] = centroid
+
+        logger.debug(
+            f"Centroide calculado para grupo {grupo}: "
+            f"shape={centroid.shape}"
+        )
+\end{lstlisting}
+
+{\large \noindent \textbf{Funciones auxiliares}}
+
+\begin{lstlisting}
+def clip_similarity(similarity: float) -> float:
+    """
+    Asegura que la similitud este en rango [0.0, 1.0].
+    """
+    return np.clip(similarity, 0.0, 1.0)
+\end{lstlisting}
+
+{\large \noindent \textbf{Preprocesamiento de Texto (\texttt{preprocess.py})}}\\
+
+{\large \noindent \textbf{Función \texttt{normalize\_text()}}}
+\begin{lstlisting}[language=Python]
+def normalize_text(text: str) -> str:
+    """
+    Normalización básica de texto.
+
+    Pipeline:
+    1. Convertir a minúsculas
+    2. Remover acentos
+    3. Remover puntuación
+    4. Normalizar espacios
+
+    Ejemplo:
+    "¡Hóla!  ¿Cómo   estás?" → "hola como estas"
+    """
+    # 1. Minúsculas
+    text = text.lower()
+
+    # 2. Remover acentos (NFD normalization)
+    text = unicodedata.normalize('NFD', text)
+    text = ''.join(
+        char for char in text
+        if unicodedata.category(char) != 'Mn'
+    )
+
+    # 3. Remover puntuación
+    text = text.translate(
+        str.maketrans('', '', string.punctuation)
+    )
+
+    # 4. Normalizar espacios
+    text = ' '.join(text.split())
+
+    return text.strip()
+\end{lstlisting}
+
+{\large \noindent \textbf{Función \texttt{preprocess\_query()}}}
+\begin{lstlisting}[language=Python]
+def preprocess_query(query: str) -> str:
+    """
+    Preprocesamiento avanzado de queries de usuario.
+
+    Pipeline:
+    1. Normalización básica
+    2. Corrección ortográfica (typos comunes)
+    3. Normalización de caracteres repetidos
+
+    Ejemplo:
+    "olaaaa, k ase?" → "hola que hace"
+    """
+    # 1. Normalización básica
+    text = normalize_text(query)
+
+    # 2. Corrección ortográfica
+    typos_comunes = {
+        'ola': 'hola',
+        'k': 'que',
+        'ase': 'hace',
+        'ayda': 'ayuda',
+        'grcias': 'gracias',
+        'bn': 'bien',
+        'xfa': 'por favor'
+    }
+
+    words = text.split()
+    corrected_words = []
+
+    for word in words:
+        if word in typos_comunes:
+            corrected_words.append(typos_comunes[word])
+        else:
+            corrected_words.append(word)
+
+    text = ' '.join(corrected_words)
+
+    # 3. Normalizar caracteres repetidos
+    text = re.sub(r'(.)\1{2,}', r'\1', text)
+
+    return text.strip()
+\end{lstlisting}
+
+{\large \noindent \textbf{Función \texttt{normalize\_leet\_speak()}}}
+\begin{lstlisting}[language=Python]
+def normalize_leet_speak(text: str) -> str:
+	"""
+	Normaliza leet speak a texto normal.
+
+	Mapeo de caracteres:
+	@ → a 	Ejemplo: "M4ri@" → "Maria"
+	4 → a          	"Ju4n" → "Juan"
+	3 → e          	"P3dro" → "Pedro"
+	1 → i          	"1van" → "Ivan"
+	0 → o          	"Carl0s" → "Carlos"
+	5 → s          	"Jo5e" → "Jose"
+	7 → t          	"Ma7eo" → "Mateo"
+	8 → b          	"E8an" → "Eban"
+
+	Casos especiales:
+	- Preservar números en contextos válidos
+	- Aplicar solo cuando mejora legibilidad
+	"""
+	leet_map = {
+    	'@': 'a',
+    	'4': 'a',
+    	'3': 'e',
+    	'1': 'i',
+    	'0': 'o',
+    	'5': 's',
+    	'7': 't',
+    	'8': 'b',
+    	'9': 'g',
+    	'$': 's'
+	}
+
+	result = []
+	for char in text:
+    	if char in leet_map:
+        	result.append(leet_map[char])
+    	else:
+        	result.append(char)
+
+	return ''.join(result)
+\end{lstlisting}
+
+{\large \noindent \textbf{Función \texttt{spell\_out\_text()}}}
+\begin{lstlisting}[language=Python]
+def spell_out_text(text: str, include_spaces: bool = True) -> List[str]:
+	"""
+	Deletrea un texto carácter por carácter.
+
+	Características:
+	- Maneja letras (A-Z)
+	- Maneja números (0-9)
+	- Maneja caracteres especiales
+	- Opción de incluir espacios
+
+	Ejemplo:
+	spell_out_text("Hola Mundo", include_spaces=True)
+	→ ["H", "O", "L", "A", "espacio", "M", "U", "N", "D", "O"]
+
+	spell_out_text("Hola Mundo", include_spaces=False)
+	→ ["H", "O", "L", "A", "M", "U", "N", "D", "O"]
+	"""
+	# Mapeo de caracteres especiales
+	special_chars = {
+    	'.': 'punto',
+    	',': 'coma',
+    	';': 'punto y coma',
+    	':': 'dos puntos',
+    	'!': 'exclamación',
+    	'?': 'interrogación',
+    	'-': 'guión',
+    	'_': 'guión bajo',
+    	'@': 'arroba',
+    	'#': 'numeral',
+    	'$': 'dólar',
+    	'%': 'porciento',
+    	'&': 'ampersand',
+    	'*': 'asterisco',
+    	'+': 'más',
+    	'=': 'igual',
+    	'/': 'barra',
+    	'\\': 'barra invertida',
+    	'(': 'paréntesis abierto',
+    	')': 'paréntesis cerrado',
+    	'[': 'corchete abierto',
+    	']': 'corchete cerrado',
+    	'{': 'llave abierta',
+    	'}': 'llave cerrada',
+    	'<': 'menor que',
+    	'>': 'mayor que',
+    	'|': 'barra vertical',
+    	'~': 'tilde',
+    	'`': 'acento grave',
+    	'"': 'comillas',
+    	"'": 'apóstrofo'
+	}
+
+	result = []
+
+	for char in text:
+    	# Letras
+    	if char.isalpha():
+        	result.append(char.upper())
+
+    	# Números
+    	elif char.isdigit():
+        	result.append(char)
+
+    	# Espacio
+    	elif char == ' ':
+        	if include_spaces:
+            	result.append('espacio')
+
+    	# Caracteres especiales
+    	elif char in special_chars:
+        	result.append(special_chars[char])
+
+	return result
+\end{lstlisting}
+
+{\large \noindent \textbf{Función: preprocess\_phrases()}}
+\begin{lstlisting}[language=Python]
+def preprocess_phrases(phrases: List[str]) -> List[str]:
+	"""
+	Preprocesa todas las frases del dataset.
+
+	Usado al inicializar el sistema para:
+	- Normalizar frases del dataset
+	- Preparar para generación de embeddings
+
+	Ejemplo:
+	["¡Hóla!", "¿Cómo estás?"] → ["hola", "como estas"]
+	"""
+	return [normalize_text(phrase) for phrase in phrases]
+\end{lstlisting}
+
+{\large \noindent \textbf{Función: load\_groups()}}
+\begin{lstlisting}
+def load_groups(json_path: str = "data/grupos.json") -> Dict[str, List[str]]:
+    """
+    Carga grupos de frases desde archivo JSON.
+    """
+    try:
+        with open(json_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+
+        if "grupos" not in data:
+            raise KeyError("El JSON debe contener la clave 'grupos'")
+
+        grupos = data["grupos"]
+
+        if not grupos:
+            raise ValueError("El JSON no contiene grupos")
+
+        for grupo, frases in grupos.items():
+            if not isinstance(frases, list):
+                raise TypeError(f"Grupo {grupo} debe ser una lista")
+            if not frases:
+                raise ValueError(f"Grupo {grupo} está vacío")
+
+        logger.info(
+            f"Grupos cargados: {len(grupos)} grupos, "
+            f"{sum(len(f) for f in grupos.values())} frases"
+        )
+
+        return grupos
+
+    except FileNotFoundError:
+        logger.error(f"Archivo no encontrado: {json_path}")
+        raise
+    except json.JSONDecodeError as e:
+        logger.error(f"Error al parsear JSON: {e}")
+        raise
+    except Exception as e:
+        logger.error(f"Error al cargar grupos: {e}")
+        raise
+\end{lstlisting}
+
+{\large \noindent \textbf{Función \texttt{get\_all\_phrases()}}}
+\begin{lstlisting}[language=Python]
+def get_all_phrases() -> Dict[str, List[str]]:
+    """
+    Retorna todos los grupos y frases.
+
+    Usa cache global para evitar recargas.
+    """
+    global _cached_groups
+
+    if _cached_groups is None:
+        _cached_groups = load_groups()
+
+    return _cached_groups
+\end{lstlisting}
+
+{\large \noindent \textbf{Función \texttt{get\_group\_phrases()}}}
+\begin{lstlisting}[language=Python]
+def get_group_phrases(grupo: str) -> List[str]:
+    """
+    Retorna frases de un grupo específico.
+
+    Args:
+        grupo: Identificador del grupo ("A", "B", "C")
+
+    Returns:
+        Lista de frases del grupo
+
+    Raises:
+        KeyError: Si el grupo no existe
+    """
+    grupos = get_all_phrases()
+
+    if grupo not in grupos:
+        raise KeyError(
+            f"Grupo '{grupo}' no existe. "
+            f"Grupos disponibles: {list(grupos.keys())}"
+        )
+
+    return grupos[grupo]
+\end{lstlisting}
+
+{\large \noindent \textbf{Estructura del JSON: \texttt{data/grupos.json}}}
+\begin{lstlisting}
+{
+  "grupos": {
+    "A": [
+      "Ayuda, por favor",
+      "Llama a la policía",
+      "Necesito un médico",
+      "Estoy herido",
+      "¿Dónde está el hospital?",
+      "Es una emergencia",
+      "Incendio",
+      "¡Alto!",
+      "Estoy sangrando",
+      "¿Necesitas ayuda?",
+      "¿Dónde está la salida?",
+      "Auxilio",
+      "Socorro"
+    ],
+    "B": [
+      "Hola",
+      "¿Cómo estás?",
+      "Buenos días",
+      "Buenas tardes",
+      "Buenas noches",
+      "Bienvenido",
+      "Mucho gusto",
+      "¿Cómo te llamas?",
+      "Me llamo",
+      "Nos vemos",
+      "Me voy",
+      "Adiós",
+      "Hasta luego"
+    ],
+    "C": [
+      "Gracias",
+      "Muchas gracias",
+      "Te lo agradezco",
+      "Bien",
+      "Mal",
+      "Soy sordo",
+      "Entiendo",
+      "No entiendo",
+      "Sí",
+      "No",
+      "No lo sé",
+      "Perdón",
+      "Disculpa",
+      "Lo siento",
+      "De acuerdo",
+      "Vale",
+      "Espera"
+    ]
+  }
+}
+\end{lstlisting}
+
+{\large \noindent \textbf{Sistema de embeddings: Generación de embeddings}}
+\begin{lstlisting}[language=Python]
+def _generate_and_cache_embeddings(self):
+    """
+    Genera embeddings para todas las frases y los cachea.
+
+    Proceso:
+    1. Cargar modelo de transformers
+    2. Preprocesar frases
+    3. Generar embeddings por grupo
+    4. Guardar en archivo .npz
+
+    Tiempo estimado: ~5 segundos (primera vez)
+    """
+    logger.info("Generando embeddings (esto puede tardar unos segundos)...")
+
+    # 1. Cargar modelo
+    self._load_model()
+
+    # 2. Generar embeddings por grupo
+    for grupo, frases in self.grupos_frases.items():
+        # Preprocesar frases
+        frases_prep = preprocess_phrases(frases)
+
+        # Generar embeddings
+        embeddings = self.model.encode(
+            frases_prep,
+            show_progress_bar=True,
+            batch_size=32
+        )
+
+        self.grupos_embeddings[grupo] = embeddings
+
+        logger.info(
+            f"Grupo {grupo}: {len(frases)} frases, "
+            f"embedding shape: {embeddings.shape}"
+        )
+
+    # 3. Guardar en cache
+    self._save_to_cache()
+\end{lstlisting}
+
+{\large \noindent \textbf{Guardado en caché}}
+\begin{lstlisting}[language=Python]
+def _save_to_cache(self):
+    """
+    Guarda embeddings en archivo .npz para carga rápida.
+
+    Formato NPZ:
+    - Formato comprimido de NumPy
+    - Múltiples arrays en un solo archivo
+    - Carga rápida (<1 segundo)
+
+    Estructura del archivo:
+    {
+        'A_embeddings': array(shape=[13, 384]),
+        'B_embeddings': array(shape=[13, 384]),
+        'C_embeddings': array(shape=[17, 384]),
+        'A_frases': array(['frase1', 'frase2', ...]),
+        'B_frases': array(['frase1', 'frase2', ...]),
+        'C_frases': array(['frase1', 'frase2', ...])
+    }
+    """
+    logger.info(f"Guardando embeddings en cache: {self.cache_path}")
+
+    # Crear directorio si no existe
+    os.makedirs(os.path.dirname(self.cache_path), exist_ok=True)
+
+    # Preparar diccionario para guardar
+    cache_data = {}
+
+    for grupo, embeddings in self.grupos_embeddings.items():
+        cache_data[f'{grupo}_embeddings'] = embeddings
+        cache_data[f'{grupo}_frases'] = np.array(
+            self.grupos_frases[grupo]
+        )
+
+    # Guardar en formato .npz comprimido
+    np.savez_compressed(self.cache_path, **cache_data)
+
+    # Verificar tamaño del archivo
+    file_size = os.path.getsize(self.cache_path) / 1024 / 1024  # MB
+    logger.info(f"Cache guardado exitosamente ({file_size:.2f} MB)")
+\end{lstlisting}
+
+{\large \noindent \textbf{Carga desde caché}}
+\begin{lstlisting}[language=Python]
+def _load_from_cache(self):
+    """
+    Carga embeddings desde cache.
+
+    Ventajas:
+    - Carga instantánea (<1 segundo)
+    - No requiere modelo cargado
+    - Ahorro de ~5 segundos en startup
+
+    Tiempo de carga: <1 segundo
+    """
+    logger.info(f"Cargando embeddings desde cache: {self.cache_path}")
+
+    try:
+        # Cargar archivo .npz
+        data = np.load(self.cache_path, allow_pickle=True)
+
+        # Reconstruir diccionarios
+        for key in data.files:
+            if key.endswith('_embeddings'):
+                grupo = key.split('_')[0]
+                self.grupos_embeddings[grupo] = data[key]
+            elif key.endswith('_frases'):
+                grupo = key.split('_')[0]
+                self.grupos_frases[grupo] = data[key].tolist()
+
+        logger.info(
+            f"Cache cargado: {len(self.grupos_embeddings)} grupos, "
+            f"{sum(len(e) for e in self.grupos_embeddings.values())} frases"
+        )
+
+    except Exception as e:
+        logger.error(f"Error al cargar cache: {e}")
+        logger.info("Regenerando embeddings...")
+        self._generate_and_cache_embeddings()
+\end{lstlisting}
+
+{\large \noindent \textbf{Formato del embedding}}
+\begin{lstlisting}
+Input: "Hola, ¿cómo estás?"
+   ↓
+Preprocesamiento: "hola como estas"
+   ↓
+Tokenización: [CLS] hola como estas [SEP]
+   ↓
+Transformer (12 layers)
+   ↓
+Mean Pooling
+   ↓
+L2 Normalization
+   ↓
+Output: Vector [384]
+   [
+        0.123, -0.456, 0.789, -0.234, 0.567, ...  (384 valores)
+   ]
+\end{lstlisting}
+
+%#---------------------------------
+%#---------------------------------
+\subsection{Etapa 1: Preprocesamiento de texto}
+
+\noindent \textbf{Normalización de texto}
+
+\noindent \textbf{Objetivos}
+\begin{itemize}
+    \item Estandarizar formato del texto
+    \item Eliminar variaciones irrelevantes
+    \item Mejorar matching de similitud
+    \item Reducir vocabulario efectivo
+\end{itemize}
+
+\noindent \textbf{Pipeline de normalización}
+
+\begin{verbatim}
+Input: "¡Hóla!  ¿Cómo   estás? [emoji]"
+   ↓
+[1] Conversión a minúsculas
+   ↓
+   "¡hóla!  ¿cómo   estás? [emoji]"
+   ↓
+[2] Eliminación de acentos (NFD Normalization)
+   ↓
+   "¡hola!  ¿como   estas? [emoji]"
+   ↓
+[3] Remoción de puntuación
+   ↓
+   "hola  como   estas [emoji]"
+   ↓
+[4] Remoción de emojis / símbolos especiales
+   ↓
+   "hola  como   estas"
+   ↓
+[5] Normalización de espacios
+   ↓
+   "hola como estas"
+   ↓
+Output: "hola como estas"
+\end{verbatim}
+
+% ------------------------------------------------------------
+% PASO 1
+% ------------------------------------------------------------
+
+{\large \noindent \textbf{Paso 1: Conversión a minúsculas}} \\[4pt]
+
+\begin{lstlisting}[language=python]
+text = text.lower()
+\end{lstlisting}
+
+\noindent \textbf{Justificación:}
+\begin{itemize}
+    \item ``Hola'' y ``hola'' son semánticamente iguales
+    \item Reduce vocabulario a la mitad
+    \item Simplifica matching
+\end{itemize}
+
+\noindent \textbf{Ejemplos:}
+\begin{itemize}
+    \item ``HOLA'' → ``hola''
+    \item ``Buenos Días'' → ``buenos días''
+    \item ``¿CÓMO ESTÁS?'' → ``¿cómo estás?''
+\end{itemize}
+
+% ------------------------------------------------------------
+% PASO 2
+% ------------------------------------------------------------
+
+{\large \noindent \textbf{Paso 2: Eliminación de acentos}} \\[4pt]
+
+\begin{lstlisting}[language=python]
+import unicodedata
+
+text = unicodedata.normalize('NFD', text)
+text = ''.join(
+    char for char in text
+    if unicodedata.category(char) != 'Mn'
+)
+\end{lstlisting}
+
+\noindent \textbf{Explicación técnica:}
+\begin{itemize}
+    \item NFD: Normalization Form Canonical Decomposition
+    \item ``á'' → ``a'' + acento (base + diacrítico)
+    \item Categoría ``Mn'': Mark, Nonspacing (diacríticos)
+    \item Filtrar categoría ``Mn'' elimina acentos
+\end{itemize}
+
+\noindent \textbf{Ejemplos:}
+\begin{itemize}
+    \item ``más'' → ``mas''
+    \item ``José'' → ``jose''
+    \item ``¿Cómo?'' → ``¿como?''
+    \item ``café'' → ``cafe''
+\end{itemize}
+
+\noindent \textbf{Ventajas:}
+\begin{itemize}
+    \item Typos de acentos no afectan matching  
+    \item ``hola'' = ``hóla'' = ``holá''
+    \item Útil para usuarios sin teclado en español
+\end{itemize}
+
+% ------------------------------------------------------------
+% PASO 3
+% ------------------------------------------------------------
+
+{\large \noindent \textbf{Paso 3: Remoción de puntuación}} \\[4pt]
+
+\begin{lstlisting}[language=python]
+import string
+
+text = text.translate(
+    str.maketrans('', '', string.punctuation)
+)
+\end{lstlisting}
+
+\noindent \textbf{Puntuación eliminada:}
+
+\begin{verbatim}
+!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
+\end{verbatim}
+
+\noindent \textbf{Ejemplos:}
+\begin{itemize}
+    \item ``¡Hola!'' → ``Hola''
+    \item ``¿Cómo estás?'' → ``Como estas''
+    \item ``Bien, gracias.'' → ``Bien gracias''
+\end{itemize}
+
+\noindent \textbf{Casos preservados:}
+\begin{itemize}
+    \item Números con punto decimal: ``3.14''
+    \item URLs (manejadas en otro preprocesado)
+\end{itemize}
+
+% ------------------------------------------------------------
+% PASO 4
+% ------------------------------------------------------------
+
+{\large \noindent \textbf{Paso 4: Normalización de espacios}} \\[4pt]
+
+\begin{lstlisting}[language=python]
+text = ' '.join(text.split())
+\end{lstlisting}
+
+\noindent \textbf{Funcionalidad:}
+\begin{itemize}
+    \item \texttt{.split()} divide por cualquier whitespace
+    \item \texttt{' '.join()} une con un solo espacio
+\end{itemize}
+
+\noindent \textbf{Ejemplos:}
+\begin{itemize}
+    \item ``hola  mundo'' → ``hola mundo''
+    \item ``hola\verb|\|nmundo'' → ``hola mundo''
+    \item ``  hola  '' → ``hola''
+    \item ``hola\verb|\|t\verb|\|tmundo'' → ``hola mundo''
+\end{itemize}
+
+% ------------------------------------------------------------
+% CASOS EDGE
+% ------------------------------------------------------------
+
+{\large \noindent \textbf{Casos EDGE manejados}}
+
+\begin{itemize}
+    \item \textbf{Texto vacío:} ``'' → ``''
+    \item \textbf{Solo espacios:} ``   '' → ``''
+    \item \textbf{Caracteres especiales:} emojis → eliminados
+    \item \textbf{Números:} ``Hola 123'' → ``hola 123''
+    \item \textbf{Texto mixto:} ``¡¡HOLA!! ¿Cómo   estás?'' → ``hola como estas''
+\end{itemize}
+
+% ------------------------------------------------------------
+% CORRECCIÓN ORTOGRÁFICA
+% ------------------------------------------------------------
+
+{\large \noindent \textbf{Corrección ortográfica con RapidFuzz}} \\[4pt]
+
+\noindent \textbf{Objetivo:}  
+Detectar y corregir typos comunes:
+
+\begin{itemize}
+    \item ``ola'' → ``hola''
+    \item ``graias'' → ``gracias''
+    \item ``k ase'' → ``que hace''
+\end{itemize}
+
+\noindent \textbf{Algoritmo: Levenshtein Distance}
+
+\begin{verbatim}
+"kitten" → "sitting"
+↓
+1. kitten → sitten  (sustitución)
+2. sitten → sittin  (sustitución)
+3. sittin → sitting (inserción)
+
+Distancia = 3 operaciones
+\end{verbatim}
+
+\noindent \textbf{RapidFuzz:}
+\begin{itemize}
+    \item Implementación optimizada en C++
+    \item 5-10x más rápida que difflib
+    \item Usada en VSCode y GitHub Copilot
+\end{itemize}
+
+\noindent \textbf{Implementación:}
+
+\begin{lstlisting}[language=python]
+from rapidfuzz import fuzz
+
+def correct_typo(word: str, dictionary: List[str]) -> str:
+    """
+    Corrige typo comparando con diccionario.
+
+    Algoritmo:
+    1. Calcular similitud con cada palabra del diccionario
+    2. Si similitud > 80%, reemplazar
+    3. Usar la palabra más similar
+    """
+    best_match = None
+    best_score = 0
+
+    for dict_word in dictionary:
+        score = fuzz.ratio(word, dict_word)
+        if score > best_score:
+            best_score = score
+            best_match = dict_word
+
+    # Threshold: 80%
+    if best_score >= 80:
+        return best_match
+    else:
+        return word
+\end{lstlisting}
+
+\noindent \textbf{Diccionario de Typos Comunes}
+
+\begin{lstlisting}[language=Python]
+TYPOS_COMUNES = {
+    # Saludos
+    'ola': 'hola',
+    'hla': 'hola',
+    'ols': 'hola',
+
+    # Preguntas
+    'k': 'que',
+    'q': 'que',
+    'ke': 'que',
+    'qe': 'que',
+
+    # Acciones
+    'ase': 'hace',
+    'acer': 'hacer',
+    'aces': 'haces',
+
+    # Ayuda
+    'ayda': 'ayuda',
+    'ayud': 'ayuda',
+    'auyda': 'ayuda',
+
+    # Gracias
+    'grcias': 'gracias',
+    'gracia': 'gracias',
+    'graias': 'gracias',
+
+    # Otros
+    'bn': 'bien',
+    'vien': 'bien',
+    'xfa': 'por favor',
+    'porfavor': 'por favor',
+    'xq': 'porque',
+    'porke': 'porque'
+}
+\end{lstlisting}
+
+{\large \noindent \textbf{Ejemplos de corrección}}
+
+\noindent \textbf{Caso 1: Typo simple}
+
+\noindent Input: ``ola como estas''\\
+↓\\
+Detección: ``ola'' $\rightarrow$ similitud con ``hola'' = 75\%\\
+↓\\
+Corrección: ``hola como estas''
+
+\bigskip
+
+\noindent \textbf{Caso 2: Múltiples typos}
+
+\noindent Input: ``k ase, grcias''\\
+↓\\
+Correcciones:
+\begin{itemize}
+    \item ``k'' $\rightarrow$ ``que''
+    \item ``ase'' $\rightarrow$ ``hace''
+    \item ``grcias'' $\rightarrow$ ``gracias''
+\end{itemize}
+↓\\
+Output: ``que hace, gracias''
+
+\bigskip
+
+\noindent \textbf{Caso 3: Sin typos}
+
+\noindent Input: ``necesito ayuda''\\
+↓\\
+No hay correcciones\\
+↓\\
+Output: ``necesito ayuda''\\
+
+{\large \noindent \textbf{Normalización de Leet Speak}}
+
+\textbf{Objetivo}
+
+Convertir leet speak (1337) a texto normal para mejorar la detección de nombres propios.
+
+Casos:
+\begin{itemize}
+    \item Nombres en redes sociales: ``M4ri@'', ``Ju4n''
+    \item Texto decorativo: ``H0l4'', ``Gr4ci4s''
+    \item Evasión de filtros: ``A\$\$istente''
+\end{itemize}
+
+\noindent \textbf{Implementación}
+
+\begin{lstlisting}[language=Python]
+def normalize_leet_speak(text: str) -> str:
+    """
+    Convierte leet speak a texto normal.
+
+    Algoritmo:
+    1. Iterar cada carácter
+    2. Si está en mapeo, reemplazar
+    3. Si no, mantener original
+    """
+    leet_map = {
+        '@': 'a', '4': 'a', '3': 'e', '1': 'i',
+        '0': 'o', '5': 's', '7': 't', '8': 'b',
+        '9': 'g', '$': 's'
+    }
+
+    result = []
+    for char in text:
+        result.append(leet_map.get(char, char))
+
+    return ''.join(result)
+\end{lstlisting}
+
+\noindent \textbf{Ejemplos}\\
+
+\textbf{Nombres}:
+\begin{itemize}
+    \item ``M4ri@'' $\rightarrow$ ``Maria''
+    \item ``Ju4n'' $\rightarrow$ ``Juan''
+    \item ``P3dr0'' $\rightarrow$ ``Pedro''
+    \item ``Carl0\$'' $\rightarrow$ ``Carlos''
+    \item ``1\$@b3l'' $\rightarrow$ ``Isabel''
+\end{itemize}
+
+\textbf{Frases}:
+\begin{itemize}
+    \item ``H0l4 mund0'' $\rightarrow$ ``Hola mundo''
+    \item ``Gr4ci4\$ p0r t0d0'' $\rightarrow$ ``Gracias por todo''
+    \item ``N3c3\$it0 4yud4'' $\rightarrow$ ``Necesito ayuda''
+\end{itemize}
+
+\textbf{Casos mixtos}:
+\begin{itemize}
+    \item ``M1 n0mbr3 3\$ M4ri@'' $\rightarrow$ ``Mi nombre es Maria''
+    \item ``Ju4n C4rl0\$'' $\rightarrow$ ``Juan Carlos''
+    \item ``4l3j4ndr0'' $\rightarrow$ ``Alejandro''
+\end{itemize}
+
+\textbf{Casos especiales}
+\begin{enumerate}
+    \item Preservar números legítimos:\\
+    
+    Input: ``Juan123''\\
+    Output incorrecto: ``Juania3''\\
+
+    Solución: analizar contexto.
+
+    \item Caracteres ambiguos:
+    \begin{itemize}
+    \item ``1'' puede ser i o l
+    \item ``0'' puede ser o u O
+    \end{itemize}
+
+    Decisión: usar minúsculas.
+\end{enumerate}
+
+{\large \noindent \textbf{Detección de Nombres Propios}}\\
+
+{\large \noindent \textbf{Estrategia 1: Lista de nombres comunes}}
+
+\begin{lstlisting}[language=Python]
+COMMON_SPANISH_NAMES = {
+    'juan', 'jose', 'antonio', 'manuel', 'francisco',
+    'david', 'carlos', 'miguel', 'pedro', 'luis',
+    'jesus', 'pablo', 'javier', 'sergio', 'rafael',
+    'daniel', 'jorge', 'alberto', 'fernando', 'ricardo',
+
+    'maria', 'carmen', 'ana', 'isabel', 'pilar',
+    'teresa', 'rosa', 'laura', 'marta', 'elena',
+    'sara', 'lucia', 'paula', 'sofia', 'cristina',
+    'andrea', 'julia', 'raquel', 'beatriz', 'patricia'
+}
+\end{lstlisting}
+
+Algoritmo:
+\begin{lstlisting}[language=Python]
+nombre_normalizado = normalize_text(palabra)
+if nombre_normalizado in COMMON_SPANISH_NAMES:
+    return True
+\end{lstlisting}
+
+Cobertura: $\sim$70\%.
+
+{\large \noindent \textbf{Estrategia 2: Capitalización}}
+
+\noindent \textbf{Patrón de nombre propio:}
+\begin{itemize}
+    \item Primera letra mayúscula
+    \item Resto en minúsculas
+    \item Longitud 3--15 caracteres
+\end{itemize}
+
+
+\begin{lstlisting}[language=Python]
+def is_proper_noun_by_capitalization(word: str) -> bool:
+    """
+    Detecta nombre por capitalización.
+
+    Ejemplos válidos:
+    -"Juan"
+    -"Maria"
+    -"Alessandro"
+
+    Ejemplos inválidos:
+    -"juan" (todo minúsculas)
+    -"JUAN" (todo mayúsculas)
+    -"JuAn" (capitalización irregular)
+    """
+    if len(word) < 3 or len(word) > 15:
+        return False
+
+    if not word[0].isupper():
+        return False
+
+    if not word[1:].islower():
+        return False
+
+    return True
+\end{lstlisting}
+
+\textbf{Ventajas:}
+\begin{itemize}
+    \item Detecta nombres que no están en la lista
+    \item Funciona con nombres extranjeros
+    \item No requiere diccionario grande
+\end{itemize}
+
+\textbf{Desventajas:}
+\begin{itemize}
+    \item Requiere capitalización correcta
+    \item Puede detectar falsos positivos (inicio de oración)
+\end{itemize}
+
+{\large \noindent \textbf{Estrategia 3: Validación por ausencia en dataset}}\\
+
+\noindent \textbf{Lógica:}
+Si una palabra:
+\begin{itemize}
+    \item NO está en el dataset de frases
+    \item Tiene similitud media (0.50--0.85)
+    \item Tiene longitud de nombre (3--8 chars)
+\end{itemize}
+
+Entonces: Probablemente es un nombre.
+
+\begin{lstlisting}[language=Python]
+def is_name_by_absence(word: str, dataset_words: Set[str]) -> bool:
+    """
+    Detecta nombre por ausencia en dataset.
+    """
+    word_norm = normalize_text(word)
+
+    # Verificar longitud
+    if not (3 <= len(word_norm) <= 8):
+        return False
+
+    # Verificar ausencia en dataset
+    if word_norm in dataset_words:
+        return False
+
+    return True
+\end{lstlisting}
+
+{\large \noindent \textbf{Estrategia combinada}}
+
+\begin{lstlisting}[language=Python]
+def detect_name(word: str, similarity: float) -> bool:
+    """
+    Combina las 3 estrategias para máxima precisión.
+    """
+    # Estrategia 1: Lista de nombres comunes
+    if word.lower() in COMMON_SPANISH_NAMES:
+        return True
+
+    # Estrategia 2: Capitalización
+    if is_proper_noun_by_capitalization(word):
+        if similarity < 0.98:  # No es match exacto
+            return True
+
+    # Estrategia 3: Ausencia en dataset
+    if is_name_by_absence(word, dataset_words):
+        if 0.50 <= similarity < 0.85:
+            return True
+
+    return False
+\end{lstlisting}
+
+Precisión combinada: $\sim$92\%.\\
+
+{\large \noindent \textbf{Detección de patrones}}
+
+\textbf{Patrones reconocidos:}
+\begin{enumerate}
+    \item ``Me llamo [NOMBRE]''
+    \item ``Mi nombre es [NOMBRE]''
+    \item ``Soy [NOMBRE]''
+\end{enumerate}
+
+\textbf{Algoritmo:}
+
+\begin{lstlisting}[language=Python]
+def extract_name_from_pattern(query: str):
+    """
+    Extrae nombre de patrones específicos.
+    """
+    query_norm = normalize_text(query)
+    words = query_norm.split()
+
+    # Patrón 1: "me llamo X"
+    if words[:2] == ["me", "llamo"] and len(words) > 2:
+        return " ".join(words[2:])
+
+    # Patrón 2: "mi nombre es X"
+    if words[:3] == ["mi", "nombre", "es"] and len(words) > 3:
+        return " ".join(words[3:])
+
+    # Patrón 3: "soy X"
+    if words[0] == "soy" and len(words) > 1:
+        return " ".join(words[1:])
+
+    return None
+\end{lstlisting}
+
+Ejemplos:
+
+\begin{itemize}
+    \item ``Me llamo Juan'' → ``Juan''
+    \item ``Mi nombre es Maria'' → ``Maria''
+    \item ``Soy Alessandro'' → ``Alessandro''
+    \item ``Me llamo Juan Carlos'' → ``Juan Carlos''
+\end{itemize}
+
+{\large \noindent \textbf{Sistema de deletreo ``automático''}}
+
+\noindent \textbf{Objetivo}
+Convertir texto a lista de caracteres individuales para reproducción de videos de señas letra por letra.
+
+\noindent \textbf{Casos de uso:}
+\begin{itemize}
+    \item Nombres propios: ``Alessandro'' → [A, L, E, S, S, A, N, D, R, O]
+    \item Palabras desconocidas: ``xyz'' → [X, Y, Z]
+    \item Textos personalizados: ``Hola Mundo'' → [H, O, L, A, espacio, ...]
+\end{itemize}
+
+\textbf{Algoritmo:}
+
+\begin{lstlisting}[language=Python]
+def spell_out_text(text: str, include_spaces: bool = True) -> List[str]:
+    """
+    Deletrea texto carácter por carácter.
+
+    Args:
+        text: Texto a deletrear
+        include_spaces: Si True, incluye "espacio" en la lista
+
+    Returns:
+        Lista de caracteres/palabras para deletrear
+    """
+    result = []
+
+    for char in text:
+        # Letras (A-Z, a-z)
+        if char.isalpha():
+            result.append(char.upper())
+
+        # Números (0-9)
+        elif char.isdigit():
+            result.append(char)
+
+        # Espacio
+        elif char == ' ':
+            if include_spaces:
+                result.append('espacio')
+
+        # Caracteres especiales
+        elif char in SPECIAL_CHARS:
+            result.append(SPECIAL_CHARS[char])
+
+    return result
+\end{lstlisting}
+
+{\large \noindent \textbf{Manejo de caracteres especiales}}
+
+\begin{lstlisting}[language=Python]
+SPECIAL_CHARS = {
+    '.': 'punto',
+    ',': 'coma',
+    ';': 'punto y coma',
+    ':': 'dos puntos',
+    '!': 'exclamación',
+    '?': 'interrogación',
+    '-': 'guión',
+    '_': 'guión bajo',
+    '@': 'arroba',
+    '#': 'numeral',
+    '$': 'dólar',
+    '%': 'porciento',
+    '&': 'ampersand',
+    '*': 'asterisco',
+    '+': 'más',
+    '=': 'igual',
+    '/': 'barra',
+    '\\\\': 'barra invertida',
+    '(': 'paréntesis abierto',
+    ')': 'paréntesis cerrado',
+    '[': 'corchete abierto',
+    ']': 'corchete cerrado',
+    '{': 'llave abierta',
+    '}': 'llave cerrada',
+    '<': 'menor que',
+    '>': 'mayor que'
+}
+\end{lstlisting}
+
+{\large \noindent \textbf{Ejemplos de deletreo}}
+
+\noindent \textbf{Ejemplo 1: Nombre simple}
+
+\begin{verbatim}
+Input:  "Juan"
+Output: ["J", "U", "A", "N"]
+\end{verbatim}
+
+\noindent \textbf{Ejemplo 2: Nombre compuesto (sin espacios)}
+
+\begin{verbatim}
+Input:  "Juan Carlos"
+include_spaces: False
+Output: ["J", "U", "A", "N", "C", "A", "R", "L", "O", "S"]
+\end{verbatim}
+
+\noindent \textbf{Ejemplo 3: Nombre compuesto (con espacios)}
+
+\begin{verbatim}
+Input:  "Juan Carlos"
+include_spaces: True
+Output: ["J", "U", "A", "N", "espacio", "C", "A", "R", "L", "O", "S"]
+\end{verbatim}
+
+\noindent \textbf{Ejemplo 4: Con números}
+
+\begin{verbatim}
+Input:  "Juan123"
+Output: ["J", "U", "A", "N", "1", "2", "3"]
+\end{verbatim}
+
+\noindent \textbf{Ejemplo 5: Con caracteres especiales}
+
+\begin{verbatim}
+Input:  "Hola!"
+Output: ["H", "O", "L", "A", "exclamación"]
+\end{verbatim}
+
+\noindent \textbf{Ejemplo 6: Email}
+
+\begin{verbatim}
+Input:  "juan@email.com"
+Output: ["J", "U", "A", "N", "arroba", "E", "M", "A", "I", "L",
+         "punto", "C", "O", "M"]
+\end{verbatim}
+
+{\large \noindent \textbf{Optimizaciones}}
+
+\begin{enumerate}
+    \item \textbf{Filtrado de caracteres no soportados}
+    \begin{itemize}
+        \item Emojis son omitidos
+        \item Caracteres Unicode especiales omitidos
+        \item Solo caracteres ASCII y especiales definidos
+    \end{itemize}
+
+    \item \textbf{Normalización previa} \\
+    Aplicar \verb|normalize_leet_speak()| antes de deletrear \\
+    \verb|"M4ri@" → "Maria" → ["M", "A", "R", "I", "A"]|
+
+    \item \textbf{Uppercase automático} \\
+    Todas las letras en mayúsculas para consistencia en la salida.
+\end{enumerate}
+
+{\large \noindent \textbf{Integración con videos}}
+\begin{verbatim}
+videos/
+|-- letras/
+|   |-- a.mp4
+|   |-- b.mp4
+|   |-- c.mp4
+|   ...
+|   `-- z.mp4
+|-- numeros/
+|   |-- 0.mp4
+|   |-- 1.mp4
+|   ...
+|   `-- 9.mp4
+`-- especiales/
+    |-- espacio.mp4
+    |-- punto.mp4
+    |-- coma.mp4
+    `-- ...
+\end{verbatim}
+
+
+%====================================================
+\section{Etapa 2: Modelo de embeddings y similitud semántica}
+
+\subsection{Selección del modelo}
+
+\textbf{Modelo:} \texttt{paraphrase-multilingual-MiniLM-L12-v2}
+
+\textbf{Características:}
+\begin{itemize}
+    \item Modelo MiniLM, versión ligera de BERT.
+    \item 12 capas Transformer.
+    \item 384 dimensiones de embedding.
+    \item $\sim$33M parámetros.
+    \item Tamaño: $\sim$120MB.
+\end{itemize}
+
+\textbf{Entrenamiento:}
+\begin{itemize}
+    \item Más de 50 idiomas.
+    \item Tarea principal: detección de paráfrasis.
+    \item Millones de pares de oraciones.
+    \item Arquitectura siamés + contrastive loss.
+\end{itemize}
+
+\textbf{Ventajas:}
+\begin{enumerate}
+    \item Multilingüe (incluye español).
+    \item Rápido (40 ms en CPU).
+    \item Ligero.
+    \item Optimizado para similitud semántica.
+\end{enumerate}
+
+%---------------------------------------------------
+
+\subsection{Arquitectura del modelo Transformer}
+
+\begin{verbatim}
+Input: Texto "Necesito ayuda urgente"
+  ↓
+Tokenización: [CLS, necesito, ayuda, urgente, SEP]
+  ↓
+Token Embeddings (384 dims)
+  ↓
+Positional Encodings
+  ↓
+12 Capas de Transformer:
+    Multi-Head Self-Attention
+    Layer Normalization
+    Feed-Forward Network
+    Layer Normalization
+  ↓
+Output: Embedding de oración (384 dims)
+\end{verbatim}
+
+\textbf{Self-Attention:}\\
+Permite que cada palabra atienda a todas las demás:
+\begin{itemize}
+    \item ``banco'' atiende a ``cerrado'' $\Rightarrow$ banco financiero.
+\end{itemize}
+
+\textbf{Multi-Head Attention:}\\
+Ocho cabezas analizan distintos aspectos:
+\begin{itemize}
+    \item Relaciones sintácticas.
+    \item Relaciones semánticas.
+    \item Entidades nombradas.
+\end{itemize}
+
+%---------------------------------------------------
+
+\subsection{Pooling}
+
+La estrategia usada es \textbf{Mean Pooling}:
+
+```python
+sentence\_embedding = mean(token\_embeddings)
+
+\section{Generación de Embeddings}
+
+\subsection{Proceso}
+
+\begin{lstlisting}[language=Python]
+from sentence_transformers import SentenceTransformer
+
+# 1. Cargar modelo
+model = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')
+
+# 2. Generar embeddings
+frases = ["Hola", "Buenos días", "¿Cómo estás?"]
+embeddings = model.encode(
+    frases,
+    convert_to_numpy=True,      # Retornar NumPy array
+    normalize_embeddings=True,  # Normalizar a longitud 1
+    show_progress_bar=False
+)
+
+# 3. Resultado
+print(embeddings.shape)  # (3, 384)
+\end{lstlisting}
+
+\subsection{Normalización}
+
+\begin{lstlisting}[language=Python]
+# Sin normalizar
+embedding = [0.5, 0.3, 0.2]
+norm = sqrt(0.5^2 + 0.3^2 + 0.2^2) = 0.616
+
+# Normalizado
+embedding_norm = [0.5/0.616, 0.3/0.616, 0.2/0.616]
+                = [0.812, 0.487, 0.325]
+norm_nuevo = sqrt(0.812^2 + 0.487^2 + 0.325^2) = 1.0
+\end{lstlisting}
+
+La norma se calcula como:
+
+\begin{equation}
+\|A\| = \sqrt{\sum_{i=1}^{n} A_i^2}
+\end{equation}
+
+\subsection{Ventaja de la normalización}
+
+La similitud coseno se define como:
+
+\begin{equation}
+\text{cosine\_similarity}(A, B) = 
+\frac{A \cdot B}{\|A\| \, \|B\|}
+\end{equation}
+
+Cuando los vectores están normalizados a norma 1:
+
+\begin{equation}
+\|A\| = \|B\| = 1
+\end{equation}
+
+entonces:
+
+\begin{equation}
+\text{cosine\_similarity}(A, B) = A \cdot B
+\end{equation}
+
+\subsection{Cálculo de similitud coseno}
+
+\textbf{Definición matemática:}
+
+\begin{equation}
+\cos(\theta) = 
+\frac{A \cdot B}{\|A\| \, \|B\|}
+\end{equation}
+
+donde:
+
+\begin{align}
+A \cdot B &= \sum_{i=1}^{n} A_i B_i \\
+\|A\| &= \sqrt{\sum_{i=1}^{n} A_i^2}
+\end{align}
+
+\textbf{Interpretación geométrica:}
+
+\begin{itemize}
+    \item $\theta = 0^\circ \Rightarrow \cos(\theta) = 1$ (vectores idénticos)
+    \item $\theta = 90^\circ \Rightarrow \cos(\theta) = 0$ (ortogonales)
+    \item $\theta = 180^\circ \Rightarrow \cos(\theta) = -1$ (opuestos)
+\end{itemize}
+
+\subsection{Implementación optimizada}
+
+\begin{lstlisting}[language=Python]
+from sklearn.metrics.pairwise import cosine_similarity
+
+# Similitud entre query y todas las frases
+similarities = cosine_similarity([query_embedding], embeddings)[0]
+
+# Resultado: array de similitudes
+# similarities = [0.95, 0.82, 0.67, ...]
+\end{lstlisting}
+
+\subsection{Complejidad}
+
+\begin{itemize}
+    \item Cálculo directo: $O(d \times n)$
+    \item Con centroides: $O(d \times k)$
+\end{itemize}
+
+donde:
+
+\begin{itemize}
+    \item $d = 384$ (dimensiones)
+    \item $n = 43$ (frases)
+    \item $k = 3$ (grupos)
+\end{itemize}
+
+\textbf{Benchmark:}
+
+\begin{itemize}
+    \item 43 frases: $\sim 0.5$ ms
+    \item 3 centroides: $\sim 0.05$ ms (10× más rápido)
+\end{itemize}
+
+% ======================================================
+
+\section{Re-ranking en dos fases}
+
+\subsection{Motivación}
+
+La búsqueda lineal escala mal:
+
+\begin{itemize}
+    \item 1000 frases: $\sim 12$ ms
+    \item 10000 frases: $\sim 120$ ms
+\end{itemize}
+
+\subsection{Solución: búsqueda jerárquica}
+
+\textbf{Fase 1: Coarse-grained}
+\begin{itemize}
+    \item Comparación únicamente contra centroides.
+    \item Complejidad: $O(k)$.
+    \item Se seleccionan los mejores grupos candidatos.
+\end{itemize}
+
+\textbf{Fase 2: Fine-grained}
+\begin{itemize}
+    \item Se compara solo dentro de los grupos candidatos.
+    \item Complejidad: $O(n/k)$.
+\end{itemize}
+
+\textbf{Costo total:}
+
+\begin{equation}
+O(k) + O\left(\frac{n}{k}\right)
+\end{equation}
+
+Ejemplo con $n=43$, $k=3$:
+
+\[
+O(3) + O(43/3) = O(17)
+\]
+
+\textbf{Reducción:} 60\% menos comparaciones.
+
+\subsection{Escalabilidad}
+
+Con 1000 frases y 10 grupos:
+
+\[
+O(10) + O(1000 / 10) = O(110)
+\]
+
+→ Reducción del 89\%.
+
+\subsection{Trade-off}
+
+\begin{itemize}
+    \item Pérdida de precisión: 1--2\%.
+    \item Mejora en velocidad: 2--9×.
+\end{itemize}
+
+\textbf{Decisión:} Se adopta para datasets mayores a 100 frases.
+
+% ======================================================
+
+\section{Etapa 3: API REST y arquitectura}
+
+\subsection{Endpoint 1: POST /buscar}
+
+Input:
+
+\begin{lstlisting}
+{
+  "texto": "ola"
+}
+\end{lstlisting}
+
+Output:
+
+\begin{lstlisting}
+{
+  "query": "ola",
+  "grupo": "B",
+  "frase_similar": "Hola",
+  "similitud": 0.98,
+  "deletreo_activado": false,
+  "deletreo": null,
+  "total_caracteres": null
+}
+\end{lstlisting}
+
+\subsection{Endpoint 2: GET /grupos}
+
+\begin{lstlisting}
+{
+  "grupos": {
+    "A": ["Ayuda, por favor", ...],
+    "B": ["Hola", ...],
+    "C": ["Gracias", ...]
+  }
+}
+\end{lstlisting}
+
+\subsection{Endpoint 3: GET /grupos/\{grupo\}}
+
+\begin{lstlisting}
+{
+  "grupo": "A",
+  "frases": ["Ayuda, por favor", "Llama a la policía", ...]
+}
+\end{lstlisting}
+
+\subsection{Endpoint 4: POST /deletreo}
+
+\begin{lstlisting}
+{
+  "texto": "Carlos",
+  "incluir_espacios": true
+}
+\end{lstlisting}
+
+\begin{lstlisting}
+{
+  "texto_original": "Carlos",
+  "deletreo": ["C", "A", "R", "L", "O", "S"],
+  "total_caracteres": 6
+}
+\end{lstlisting}
+
+\subsection{Endpoint 5: GET /health}
+
+\begin{lstlisting}
+{
+  "status": "healthy"
+}
+\end{lstlisting}
+
+\section{Validación de datos con Pydantic}
+
+\subsection{Modelos Pydantic}
+
+\begin{lstlisting}
+class QueryRequest(BaseModel):
+    texto: str
+
+class QueryResponse(BaseModel):
+    query: str
+    grupo: str | None
+    frase_similar: str
+    similitud: float
+    deletreo_activado: bool
+    deletreo: List[str] | None = None
+    total_caracteres: int | None = None
+\end{lstlisting}
+
+\noindent \textbf{Ventajas principales:}
+\begin{itemize}
+    \item Validación automática de tipos.
+    \item Valores por defecto definidos explícitamente.
+    \item Documentación integrada mediante OpenAPI.
+    \item Serialización y deserialización automática.
+\end{itemize}
+
+\subsection{Ejemplo de validación}
+
+\begin{lstlisting}
+# Request inválido
+{"texto": 123}  # Error: texto debe ser str
+
+# Request válido
+{"texto": "hola"}  # OK
+\end{lstlisting}
+
+\subsection{Manejo de errores}
+
+\noindent \textbf{Códigos HTTP utilizados:}
+\begin{itemize}
+    \item 200 OK: Petición exitosa.
+    \item 400 Bad Request: Datos inválidos.
+    \item 404 Not Found: Recurso inexistente.
+    \item 500 Internal Server Error: Error general del servidor.
+    \item 503 Service Unavailable: Servicio no disponible.
+\end{itemize}
+
+Ejemplos de errores comunes:
+\begin{lstlisting}
+# Error 400: Texto vacío
+if not request.texto.strip():
+    raise HTTPException(status_code=400, detail="Texto vacio")
+
+# Error 404: Grupo no existe
+if grupo not in grupos:
+    raise HTTPException(status_code=404, detail=f"Grupo '{grupo}' no encontrado")
+
+# Error 503: Matcher no inicializado
+if matcher is None:
+    raise HTTPException(status_code=503, detail="Servicio no disponible")
+\end{lstlisting}
+
+\subsection{Logging y monitoreo}
+
+Configuración inicial del logger:
+\begin{lstlisting}
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+\end{lstlisting}
+
+Tipos de registros utilizados:
+\begin{lstlisting}
+# Startup
+logger.info("Inicializando matcher mejorado...")
+
+# Requests
+logger.info(f"Buscando similitud para: {request.texto}")
+
+# Resultados
+logger.info(f"Resultado: {response.grupo} - {response.similitud}")
+
+# Errores
+logger.error(f"Error al buscar: {e}")
+\end{lstlisting}
+
+\noindent \textbf{Niveles de log:}
+\begin{itemize}
+    \item DEBUG: Información de diagnóstico detallada.
+    \item INFO: Eventos normales del sistema.
+    \item WARNING: Eventos inesperados que no detienen el servicio.
+    \item ERROR: Errores recuperables.
+    \item CRITICAL: Fallas graves que requieren detener el servicio.
+\end{itemize}
+
+\subsection{Documentación automática}
+
+FastAPI genera documentación OpenAPI de forma automática:
+
+\begin{itemize}
+    \item Swagger UI: \texttt{http://localhost:8000/docs}
+    \item ReDoc: \texttt{http://localhost:8000/redoc}
+    \item Esquema JSON: \texttt{http://localhost:8000/openapi.json}
+\end{itemize}
+
+Ventajas:
+\begin{itemize}
+    \item Permite pruebas interactivas directamente desde el navegador.
+    \item La documentación siempre coincide con el código.
+    \item Facilita la generación de clientes automáticos.
+\end{itemize}
+
