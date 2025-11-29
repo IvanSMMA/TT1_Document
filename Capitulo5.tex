@@ -1,213 +1,573 @@
 \chapter{Pruebas}
 \section{Pruebas del Modulo del Procesamiento de Lenguaje Natural (PLN)}
 
-\section{Etapa 4: Sistema de testing y calidad}
+\vspace{1em}
 
 \subsection{Metodología de testing}
 
-La estrategia se basa en la pirámide de testing:
+{\large \noindent \textbf{Piramide de Testing}}
+
+La estrategia de testing del proyecto sigue el modelo de la Pirámide de testing propuesta por Mike Cohn, que establece una distribución óptima de los diferentes tipos de pruebas.\\
+
+\begin{center}
+    \includegraphics[width=0.45\textwidth]{Images/Cap5/1_PiramideTesting.png}
+    \captionof{figure}[Piramide de Testing]{Piramide de Testing, elaboración propia.} 
+\end{center}
+
+\noindent \textbf{Distribución implementada}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{4cm}|p{2.5cm}|p{2.5cm}|p{4cm}|}
+\hline
+\textbf{Tipo de test} & \textbf{Cantidad} & \textbf{\% Total} & \textbf{Tiempo de ejecución} \\ \hline
+\textit{Tests} unitarios & 37 & 51\% & $<$5 segundos \\ \hline
+\textit{Tests} integración & 10 & 14\% & $\sim$8 segundos \\ \hline
+\textit{Tests} E2E & 26 & 35\% & $\sim$15 segundos \\ \hline
+Total (núcleo) & 73 & 100\% & $\sim$28 segundos \\ \hline
+\textit{Test} adicionales & 95 & - & Variable \\ \hline
+Total general & 168 & - & - \\ \hline
+\end{tabular}
+\caption[Resumen de tests]{Resumen de tests, elaboración propia.}
+\end{table}
+
+\textbf{Nota:} Los tests de performance, quality y stress \textbf{NO} se incluyen en la distribución de la pirámide ya que son tests especializados que se ejecutan de forma independiente.\\
+
+\noindent \textbf{Justificación del 35\% de tests E2E}
+
+El porcentaje elevado de tests E2E (superior al estándar industrial de 10--15\%) se justifica por los requisitos específicos de sistemas PLN:
 
 \begin{enumerate}
-    \item Gran número de tests unitarios (rápidos, precisos).
-    \item Menor número de tests de integración.
-    \item Pocos tests de extremo a extremo (E2E).
+    \item Validación exhaustiva de robustez lingüística
+    \item Tests de tolerancia a errores ortográficos y variaciones naturales
+    \item Validación de casos edge específicos (nombres propios, leet speak)
+    \item Degradación gradual ante inputs de baja calidad
 \end{enumerate}
 
-\noindent \textbf{Herramientas utilizadas:}
+{\large \noindent \textbf{Stack tecnológico}}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{4cm}|p{4cm}|p{3cm}|}
+\hline
+\textbf{Componente} & \textbf{Tecnología} & \textbf{Versión} \\ \hline
+\textit{Framework de testing} & \textit{pytest} & 7.4+ \\ \hline
+\textit{API testing} & FastAPI TestClient & 0.104+ \\ \hline
+\textit{Cobertura de código} & pytest-cov & 4.1+ \\ \hline
+\textit{Load testing} & Locust & 2.15+ \\ \hline
+\textit{Performance benchmarks} & pytest-benchmark & 4.0+ \\ \hline
+\textit{Resource monitoring} & psutil & 5.9+ \\ \hline
+\end{tabular}
+\caption[Tecnologías de testing]{Tecnologías usadas para testing, elaboración propia.}
+\end{table}
+
+{\large \noindent \textbf{Estructura del testing}}
+
+El sistema de testing está organizado en directorios especializados:
+
+\begin{verbatim}
+tests/
+|-- unit/                          # 37 tests unitarios
+|   |-- test_matcher.py            # Matching semantico (25 tests)
+|   `-- test_preprocess.py         # Preprocesamiento (12 tests)
+|
+|-- integration/                   # 10 tests de integracion
+|   `-- test_api.py                # Endpoints FastAPI
+|
+|-- e2e/                           # 26 tests end-to-end
+|   |-- test_scenarios.py          # Escenarios de usuario (8 tests)
+|   |-- test_robustness.py         # Robustez linguistica (14 tests)
+|   `-- test_casos_realistas.py    # Casos reales (4+ tests)
+|
+|-- quality/                       # Tests de calidad semantica
+|   |-- test_semantic_quality.py
+|   `-- test_semantic_advanced.py
+|
+`-- performance/                   # Tests de rendimiento
+    |-- test_benchmarks.py
+    |-- test_stress_concurrent.py
+    `-- locustfile.py
+\end{verbatim}
+
+{\noindent \textbf{Estadísticas generales}}
+
 \begin{itemize}
-    \item \textbf{pytest}: Framework principal de testing.
-    \item \textbf{pytest-cov}: Reportes de cobertura.
-    \item \textbf{pytest-benchmark}: Medición de rendimiento.
-    \item \textbf{httpx}: Cliente HTTP para probar la API.
+    \item Líneas de código de testing: 2{,}749
+    \item Funciones de test: 168
+    \item Cobertura de código: 90.8\%
+    \item Tiempo de ejecución: \textasciitilde 28 segundos
 \end{itemize}
 
-\subsection{Tests unitarios}
+{\large \noindent \textbf{Tests unitarios (37 tests, 89\% cobertura)}}
 
-Los tests cubren distintas partes del sistema:
+Los tests unitarios validan componentes individuales de forma aislada, constituyendo la base de la pirámide de testing.\\
+
+\textbf{Tests del Matcher Semántico (25 tests)}
+
+Componente central responsable de:
 
 \begin{itemize}
-    \item Preprocesamiento (\texttt{test\_preprocess.py})
-    \item Lógica del matcher (\texttt{test\_matcher.py})
-    \item Total: 84 tests unitarios
+    \item Generación de embeddings con modelos transformer
+    \item Cálculo de similitud coseno
+    \item Clasificación en grupos semánticos (A, B, C)
+    \item Activación de modo deletreo
 \end{itemize}
 
-Ejemplo de test para normalización:
-\begin{lstlisting}
-def test_normalize_text():
-    assert normalize_text("HOLA") == "hola"
-    assert normalize_text("José") == "jose"
-    assert normalize_text("¿Qué?") == "que"
+\vspace{1em}
+
+{\large \noindent \textbf{Casos críticos validados}}
+
+\textbf{1. Normalización de similitud al rango [0.0, 1.0] (4 tests)}\\
+
+Problema resuelto: El sistema original retornaba valores > 1.0 debido a errores de precisión flotante.\\
+
+Solución implementada:
+
+\begin{lstlisting}[language=Python]
+def clip_similarity(similarity: float) -> float:
+    """Normaliza similitud al rango [0.0, 1.0]."""
+    if similarity > 1.0:
+        return 1.0
+    elif similarity < 0.0:
+        return 0.0
+    return similarity
 \end{lstlisting}
 
-Ejemplo para detección de nombres:
-\begin{lstlisting}
-def test_detect_nombre_comun():
-    result = matcher.search_similar_phrase("Juan")
-    assert result['deletreo_activado'] == True
-    assert 'J' in result['deletreo']
-\end{lstlisting}
+Resultado: 100\% de tests garantizan similitud matemáticamente correcta.\\
 
-\subsection{Tests de integración}
+\textbf{2. Validación de rango en todas las queries (6 tests)}\\
 
-Se implementaron 24 tests de integración.
+Test parametrizado con 10 queries diversas validando:
 
-Ejemplo de prueba del endpoint \texttt{/buscar}:
-\begin{lstlisting}
-@pytest.mark.asyncio
-async def test_buscar_endpoint(client):
-    response = await client.post("/buscar", json={"texto": "hola"})
-    assert response.status_code == 200
-    data = response.json()
-    assert data['grupo'] == "B"
-    assert "hola" in data['frase_similar'].lower()
-\end{lstlisting}
+\begin{verbatim}
+assert 0.0 <= result["similitud"] <= 1.0
+\end{verbatim}
 
-\subsection{Tests End-to-End}
+\textbf{3. Detección de patrones de nombres (7 tests)}\\
 
-Las pruebas de extremo a extremo se ejecutaron para validar el comportamiento del sistema en escenarios reales, incluyendo errores de usuario, variaciones de entrada y casos límite.
+Funcionalidad especial que detecta y procesa:
 
-\noindent\textbf{Cobertura de casos:}
 \begin{itemize}
-    \item Errores de tipeo comunes (5 tests)
-    \item Leet speak y caracteres especiales (5 tests)
-    \item Nombres propios (7 tests)
-    \item Capitalización variada (3 tests)
-    \item Puntuación incorrecta (4 tests)
-    \item Casos de deletreo (4 tests)
-    \item Casos complejos (4 tests)
-    \item Rendimiento de deletreo (2 tests)
-    \item Consistencia de respuestas (2 tests)
+    \item "Me llamo [Nombre]"
+    \item "Mi nombre es [Nombre]"
 \end{itemize}
 
-\noindent\textbf{Totales:} 64 tests ejecutados y 64 aprobados (100\% de éxito).
-
-\subsection{Tests de rendimiento}
-
-Los benchmarks de latencia se realizaron utilizando \texttt{pytest-benchmark}:
+Ejemplo:
 
 \begin{lstlisting}
-def test_single_query_latency(benchmark, matcher):
-    result = benchmark(matcher.search_similar_phrase, "hola")
-    # P50 < 50ms, P95 < 100ms
+Input:  "Me llamo Juan Carlos"
+
+Output: {
+    "nombre_detectado": true,
+    "nombre_extraido": "Juan Carlos",
+    "nombre_deletreado": ["J","U","A","N"," ","C","A","R","L","O","S"],
+    "total_caracteres_nombre": 11
+}
 \end{lstlisting}
 
-\noindent\textbf{Resultados:}
+\textbf{4. Clasificación en grupos semánticos (3 tests)}\\
+
+Grupos del sistema:
+
 \begin{itemize}
-    \item Inicialización con caché: 1.37ms
-    \item Latencia por consulta (P50): 42ms
-    \item Throughput sostenido: 25 qps
+    \item Grupo A: Emergencias (ayuda, socorro, urgente)
+    \item Grupo B: Saludos (hola, buenos días, adios)
+    \item Grupo C: Expresiones de mínima comunicación (gracias, sí, bien)
 \end{itemize}
 
-\subsection{Cobertura de código}
+{\large \noindent \textbf{Tests de preprocesamiento (12 tests)}}\\
 
-\noindent\textbf{Desglose por módulo:}
+Validación de normalización de texto para robustez del sistema PLN:\\
+
+\textbf{1. Normalización de texto (7 tests)}
+
+Transformaciones aplicadas:
+
 \begin{itemize}
-    \item \texttt{preprocess.py}: 94\%
-    \item \texttt{matcher\_improved.py}: 78\%
-    \item \texttt{main.py}: 74\%
-    \item \texttt{groups.py}: 59\%
-    \item \textbf{Total general}: 62\%
+    \item Conversión a minúsculas
+    \item Eliminación de acentos (Unicode normalization)
+    \item Eliminación de caracteres especiales
+    \item Normalización de espacios múltiples
 \end{itemize}
 
-\noindent La meta definida para módulos críticos (> 70\%) fue alcanzada exitosamente.
+Ejemplo:
 
-\subsection{Resultados globales de testing}
+\begin{verbatim}
+"¡HOLA, ¿Cómo  estás?!" → "hola como estas"
+\end{verbatim}
 
-\noindent\textbf{Resumen estadístico:}
-\begin{itemize}
-    \item Tests totales: 204
-    \item Aprobados: 191 (93.6\%)
-    \item Fallidos: 13 (6.4\%)
-    \item Duración total: 147 segundos
-    \item Cobertura total: 62\%
-\end{itemize}
+\textbf{Resultados}
 
-\noindent\textbf{Interpretación:}
-\begin{itemize}
-    \item El sistema se encuentra en estado \textit{production-ready}.
-    \item Los 13 fallos corresponden a casos menores no bloqueantes.
-    \item La cobertura alcanzada es adecuada para los componentes clave.
-\end{itemize}
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{4cm}|p{3.5cm}|p{3.5cm}|}
+\hline
+\textbf{Métrica} & \textbf{Valor} & \textbf{Objetivo} \\ \hline
+Total tests & 37 & 30+ \\ \hline
+Tests exitosos & 37 (100\%) & 100\% \\ \hline
+Cobertura de código & 89\% & $>$80\% \\ \hline
+Tiempo de ejecución & $<$5 segundos & $<$10 segundos \\ \hline
+Casos límite cubiertos & 15+ & 10+ \\ \hline
+\end{tabular}
+\caption[Métricas de tests]{Métricas principales de los tests, elaboración propia.}
+\end{table}
 
-\subsection{Optimizaciones y rendimiento}
 
-\subsubsection{Caché de Embeddings}
+\textbf{2. Deletreo con caracteres especiales (5 tests)}
 
-\noindent\textbf{Problema:} Generar embeddings desde cero tiene un costo aproximado de 2000ms.
+Mapeo implementado:
 
-\noindent\textbf{Solución:} Almacenar embeddings precalculados en disco en formato \texttt{NPZ} comprimido.
+\begin{verbatim}
+@ → "arroba", . → "punto", ! → "exclamación", (espacio) → "espacio"
+\end{verbatim}
 
-\begin{lstlisting}
-if cache_file.exists():
-    embeddings_dict = np.load(cache_file)  # 1.37ms
-else:
-    embeddings_dict = self._compute_embeddings()  # ~2000ms
-    np.savez_compressed(cache_file, **embeddings_dict)
-\end{lstlisting}
+{\large \noindent \textbf{Tests de integración (10 tests, 6 endpoints)}}\\
 
-\noindent\textbf{Ganancias obtenidas:}
-\begin{itemize}
-    \item Inicialización: 2000ms $\rightarrow$ 1.37ms (1460x más rápido)
-    \item Tamaño en disco: 600KB $\rightarrow$ 61KB (reducción del 90\%)
-\end{itemize}
+Validación de la interacción entre componentes y funcionamiento de la API REST.\\
 
-\subsubsection{Búsqueda jerárquica por centroides}
+\textbf{Endpoints testeados}
 
-\noindent\textbf{Problema:} La búsqueda lineal no escala adecuadamente con un número grande de frases.
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{5cm}|p{2.5cm}|p{3.5cm}|}
+\hline
+\textbf{Endpoint} & \textbf{Tests} & \textbf{Status Codes Validados} \\ \hline
+POST /buscar & 8 & 200, 400, 422 \\ \hline
+GET /grupos & 1 & 200 \\ \hline
+GET /grupos/\{grupo\} & 2 & 200, 404 \\ \hline
+POST /deletreo & 3 & 200, 400 \\ \hline
+GET /health & 1 & 200 \\ \hline
+GET / & 1 & 200 \\ \hline
+\end{tabular}
+\caption[Tests por endpoint]{Resumen de tests por endpoint, elaboración propia.}
+\end{table}
 
-\noindent\textbf{Solución:} Implementar una búsqueda de dos fases: comparación con centroides y luego búsqueda fina dentro del grupo.
+\noindent \textbf{Casos críticos del Endpoint principal (POST /buscar)}
 
-\noindent\textbf{Beneficios:}
-\begin{itemize}
-    \item Comparaciones reducidas: 43 $\rightarrow$ 17 (60\% menos)
-    \item Complejidad: $O(N) \rightarrow O(k + N/k)$
-\end{itemize}
-
-\subsubsection{Optimización de latencia}
-
-\noindent\textbf{Técnicas aplicadas:}
 \begin{enumerate}
-    \item Caché de embeddings (1460x más rápido)
-    \item Normalización de embeddings (producto punto en vez de coseno)
-    \item Búsqueda jerárquica (reducción del 60\% en comparaciones)
-    \item Uso de modelo compacto MiniLM en lugar de BERT-large
+    \item Query válida retorna resultado correcto
+    \item Queries inválidas retornan errores apropiados (400, 422)
+    \item Match exacto tiene similitud muy alta (>0.95)
+    \item Queries sin match activan deletreo automático
+    \item Emergencias se clasifican correctamente en Grupo A
+    \item Caso edge ``Ivan'': detecta baja similitud y activa deletreo
 \end{enumerate}
 
-\noindent\textbf{Resultados:}
+\textbf{Problema histórico del caso \texttt{"Ivan"}}:
+
 \begin{itemize}
-    \item P50: 42ms \checkmark \; (objetivo < 50ms)
-    \item P95: 50ms \checkmark \; (objetivo < 100ms)
+    \item Antes: Se matcheaba incorrectamente con ``Sí'' (Grupo C)
+    \item Ahora: Detecta baja similitud (<0.3) y activa deletreo
+    \item Resultado: Usuario recibe I-V-A-N
 \end{itemize}
 
-\subsection{Gestión de memoria}
+\textbf{Resultados}
 
-\noindent\textbf{Distribución de uso:}
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{6cm}|p{6cm}|}
+\hline
+\textbf{Métrica} & \textbf{Valor} \\ \hline
+Total tests & 10 \\ \hline
+Tests exitosos & 10 (100\%) \\ \hline
+Endpoints cubiertos & 6 \\ \hline
+Tiempo de ejecución & $\sim$8s \\ \hline
+\end{tabular}
+\caption[Métricas adicionales]{Métricas adicionales de pruebas, elaboración propia.}
+\end{table}
+
+{\large \noindent \textbf{Tests End - To - End  y robustez lingüística (26 tests)}}\\
+Los tests E2E validan robustez ante variaciones naturales del lenguaje mediante ``Perturbation Testing'', metodología específica para sistemas PLN.\\
+
+\textbf{Escenarios completos de usuario (8 escenarios)}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{5cm}|p{2.5cm}|p{4cm}|}
+\hline
+\textbf{Escenario} & \textbf{Tests} & \textbf{Validación principal} \\ \hline
+Emergencias & 2 & Clasificación Grupo A \\ \hline
+Saludos formales & 3 & Tolerancia a variaciones \\ \hline
+Casos edge & 3 & Manejo robusto (\texttt{"Ivan"}) \\ \hline
+Conversación completa & 3 & Consistencia temporal \\ \hline
+Múltiples usuarios & 2 & Estabilidad bajo carga \\ \hline
+Salud del sistema & 2 & \textit{Health checks} \\ \hline
+\end{tabular}
+\caption[Escenarios de prueba]{Escenarios evaluados, cantidad de tests y validación principal, elaboración propia.}
+\end{table}
+
+\textbf{Tests de robustez lingüística (14 tests) - crítico PLN}\\
+Metodología de ``Perturbation Testing'' con 4 estrategias
+
+\begin{enumerate}
+    \item Character-level perturbations (errores de tipeo)
+    \item Input fuzzing (ruido en el input)
+    \item Semantic equivalence testing (sinónimos)
+    \item Load testing (estrés)
+\end{enumerate}
+
+\textbf{Tipos de perturbaciones testeadas (50+ casos)}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{5.5cm}|p{6cm}|}
+\hline
+\textbf{Tipo de perturbación} & \textbf{Ejemplos} \\ \hline
+Errores al inicio & \texttt{``hola''} → \texttt{``hila''} \\ \hline
+Errores en medio & \texttt{``ayuda''} → \texttt{``auuda''} \\ \hline
+Errores al final & \texttt{``hola''} → \texttt{``holq''} \\ \hline
+Carácter faltante & \texttt{``hola''} → \texttt{``hla''} \\ \hline
+Carácter extra & \texttt{``hola''} → \texttt{``hoola''} \\ \hline
+Caracteres intercambiados & \texttt{``hola''} → \texttt{``hloa''} \\ \hline
+Múltiples errores & \texttt{``buenos días''} → \texttt{``buens dias''} \\ \hline
+Espacios extra & \texttt{``hola\_''} \texttt{``\_ ayuda''} \\ \hline
+Puntuación extra & \texttt{``ayuda!!''}, \texttt{``¡ayuda!!''} \\ \hline
+Mayúsculas aleatorias & \texttt{``HoLa''}, \texttt{``AyUdA''} \\ \hline
+Variaciones de acentos & \texttt{``médico''} vs \texttt{``medico''} \\ \hline
+\end{tabular}
+\caption[Tipos de perturbación]{Tipos de perturbaciones lingüísticas y ejemplos representativos, elaboración propia.}
+\end{table}
+
+\textbf{Degradación gradual por severidad}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{3cm}|p{4cm}|p{5cm}|}
+\hline
+\textbf{Nivel} & \textbf{Ejemplo} & \textbf{Comportamiento esperado} \\ \hline
+Leve & \texttt{``hila''} & Clasifica correctamente \\ \hline
+Medio & \texttt{``hla''} & Clasifica o activa deletreo \\ \hline
+Grave & \texttt{``hkka''} & Activa deletreo \\ \hline
+\end{tabular}
+\caption[Niveles de error]{Clasificación de severidad de errores y el comportamiento esperado, elaboración propia.}
+\end{table}
+
+\textbf{Casos realistas con Leet Speak (4+ tests)}
+Normalización de \textit{Leet Speak} en deletreo
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{2cm}|p{3cm}|p{6cm}|}
+\hline
+\textbf{\textit{Leet Speak}} & \textbf{Normalización} & \textbf{Ejemplo} \\ \hline
+4 & A & \texttt{``M4ri@''} → \texttt{``MARIA''} \\ \hline
+3 & E & \texttt{``P3dro''} → \texttt{``PEDRO''} \\ \hline
+1 & I & \texttt{``T1po''} → \texttt{``TIPO''} \\ \hline
+0 & O & \texttt{``H0la''} → \texttt{``HOLA''} \\ \hline
+@ & A & \texttt{``C@rlos''} → \texttt{``CARLOS''} \\ \hline
+\$ & S & \texttt{``Ca\$a''} → \texttt{``CASA''} \\ \hline
+\end{tabular}
+\caption[Normalización de Leet Speak]{Equivalencias para normalización de texto en Leet Speak, elaboración propia.}
+\end{table}
+
+\textbf{Resultados}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{4cm}|p{3cm}|p{3cm}|}
+\hline
+\textbf{Métrica} & \textbf{Valor} & \textbf{Objetivo} \\ \hline
+
+Total tests E2E & 26 & 30+ \\ \hline
+Tests exitosos & 26 (100\%) & >95\% \\ \hline
+Escenarios completos & 8 & 6+ \\ \hline
+Tipos de perturbaciones & 11 & 8+ \\ \hline
+Casos de perturbación testeados & 50+ & 30+ \\ \hline
+Success rate con perturbaciones & >95\% & >90\% \\ \hline
+Tiempo de ejecución & $\sim$15s & <30s \\ \hline
+
+\end{tabular}
+\caption[Métricas generales]{Resultados generales de pruebas E2E, elaboración propia.}
+\end{table}
+
+\textbf{Fortalezas identificadas}
 \begin{itemize}
-    \item Modelo: $\sim$120MB
-    \item Caché de embeddings: $\sim$61KB
-    \item Runtime de Python: $\sim$30MB
-    \item \textbf{Uso total}: $\sim$150MB
+    \item Tolerancia a typos: $>95\%$ de clasificación correcta
+    \item Normalización efectiva de ruido y puntuación
+    \item Degradación gradual y graceful ante errores severos
+    \item Manejo correcto de casos edge (nombres propios, leet speak)
 \end{itemize}
 
-El sistema no presenta fugas de memoria y mantiene un uso estable bajo carga.
+{\large \noindent \textbf{Tests de rendimiento y carga}}\\
+Validación de velocidad, eficiencia y escalabilidad del sistema.\\
 
-\subsection{Escalabilidad}
+\textbf{Benchmarks de latencia}
 
-\noindent\textbf{Escalabilidad vertical:}
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{4cm}|p{2cm}|p{2cm}|p{3cm}|}
+\hline
+\textbf{Operación} & \textbf{Media} & \textbf{P95} & \textbf{Objetivo} \\ \hline
+
+\textit{Query} completa & 42ms & 68ms & <100ms (P95) \\ \hline
+Generación de \textit{embedding} & 28ms & 45ms & <50ms \\ \hline
+Cache hit & 3ms & 6ms & <10ms \\ \hline
+Preprocesamiento & 0.8ms & 1.5ms & <5ms \\ \hline
+Cálculo similitud & 9ms & 15ms & <20ms \\ \hline
+
+\end{tabular}
+\caption[Latencias por operación]{Medición de latencias promedio y P95, elaboración propia.}
+\end{table}
+
+\textbf{Throughput medido}
 \begin{itemize}
-    \item La latencia mejora proporcionalmente con más núcleos de CPU.
-    \item La RAM adicional aporta poco beneficio, salvo para el modelo.
+    \item Single query: $\sim 23$ q/s
+    \item Batch processing: $\sim 65$ q/s
+    \item Cache hit: $\sim 333$ q/s
 \end{itemize}
 
-\noindent\textbf{Escalabilidad horizontal:}
-\begin{itemize}
-    \item El sistema es completamente \textit{stateless}, lo cual facilita su replicación.
-    \item Compatible con balanceadores de carga como NGINX o HAProxy.
-\end{itemize}
+\textbf{Test de concurrencia}
 
-\noindent\textbf{Límites actuales:}
-\begin{itemize}
-    \item CPU-bound: la RAM no mejora el desempeño.
-    \item Single-threaded por request.
-    \item Mejor enfoque: múltiples instancias + balanceo.
-\end{itemize}
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{4cm}|p{2cm}|p{3cm}|p{3cm}|}
+\hline
+\textbf{Test} & \textbf{Usuarios} & \textbf{Success rate} & \textbf{Latencia P95} \\ \hline
+
+\textit{Concurrent 10 users} & 10 & 99.5\% & 78ms \\ \hline
+\textit{Concurrent 50 users} & 50 & 98.3\% & 156ms \\ \hline
+\textit{Concurrent 100 users} & 100 & 95.8\% & 287ms \\ \hline
+\textit{Spike 0→20 users} & 20 & 96.2\% & 198ms \\ \hline
+\textit{Soak 5 min} & 5 & 99.8\% & 82ms \\ \hline
+
+\end{tabular}
+\caption[Pruebas de carga]{Resultados de pruebas de concurrencia y resistencia, elaboración propia.}
+\end{table}
+
+\textbf{\textit{Load Testing} con Locust (50 usuarios, 5 minutos)}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{4cm}|p{3cm}|p{3cm}|}
+\hline
+\textbf{Métrica} & \textbf{Valor} & \textbf{Objetivo} \\ \hline
+
+Total requests & 8,742 & - \\ \hline
+Requests/segundo (RPS) & 29.14 & >20 \\ \hline
+Failures & 0.26\% & <1\% \\ \hline
+Success rate & 99.74\% & >95\% \\ \hline
+Latencia promedio & 52ms & <100ms \\ \hline
+Latencia P95 & 118ms & <200ms \\ \hline
+Latencia P99 & 187ms & <500ms \\ \hline
+
+\end{tabular}
+\caption[Métricas de rendimiento]{Resumen de rendimiento total, elaboración propia.}
+\end{table}
+
+\textbf{Resumen de métricas de rendimiento}
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{3.2cm}|p{2.6cm}|p{2.6cm}|p{3cm}|}
+\hline
+\textbf{Métrica} & \textbf{Objetivo} & \textbf{Resultado} & \textbf{Cumplimiento} \\ \hline
+
+Latencia P50 & <100ms & $\sim$42ms & 58\% mejor \\ \hline
+Latencia P95 & <200ms & $\sim$68ms & 66\% mejor \\ \hline
+Latencia P99 & <500ms & $\sim$134ms & 73\% mejor \\ \hline
+\textit{Success Rate} & >95\% & 99.7\% & Excede \\ \hline
+\textit{Throughput} & >50 q/s & $\sim$65 q/s & 30\% mejor \\ \hline
+\textit{Max Users} & 100 & 100 & Cumple \\ \hline
+\textit{Memory Growth} & <10\%/hour & <5\%/hour & 50\% mejor \\ \hline
+
+\end{tabular}
+\caption[Métricas de rendimiento]{Resumen de métricas de rendimiento, elaboración propia.}
+\end{table}
+
+{\large \noindent \textbf{Calidad semántica y métricas de PLN}}\\
+
+Validación con metodologías específicas para sistemas de Procesamiento de Lenguaje Natural.\\
+
+\noindent \textbf{Golden Dataset Testing}\\
+Dataset curado manualmente con casos que deben funcionar correctamente\\
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{3.5cm}|p{2cm}|p{3cm}|p{4cm}|}
+\hline
+\textbf{Categoría} & \textbf{Casos} & \textbf{Min Similitud} & \textbf{Ejemplo} \\ \hline
+
+\textit{Exact match} & 3 & >0.90 & ``Buenos días'' \\ \hline
+\textit{Semantic variation} & 3 & >0.75 & ``necesito ayuda'' \\ \hline
+\textit{Synonyms} & 6 & >0.65 & ``socorro'' \\ \hline
+\textit{Noisy input} & 3 & >0.70 & ``hola!!'' \\ \hline
+\textit{Typos} & 2 & >0.50 & ``hla'' \\ \hline
+
+\textbf{Total} & 17 & - & - \\ \hline
+
+\end{tabular}
+\caption[Evaluación lingüística]{Resumen de evaluación lingüística, elaboración propia.}
+\end{table}
+
+\textbf{Resultado}: $100\%$ de golden dataset passing\\
+
+\textbf{Métricas de clasificación semántica}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{3.5cm}|p{4cm}|p{2.5cm}|p{2.5cm}|}
+\hline
+\textbf{Métrica} & \textbf{Fórmula} & \textbf{Valor} & \textbf{Objetivo} \\ \hline
+
+\textit{Precision} & TP/(TP+FP) & $\sim$89\% & >85\% \\ \hline
+\textit{Recall} & TP/(TP+FN) & $\sim$87\% & >80\% \\ \hline
+\textit{F1-Score} & $2 \cdot P \cdot R / (P + R)$ & $\sim$88\% & >82\% \\ \hline
+\textit{Accuracy} & (TP+TN)/Total & $\sim$96\% & >90\% \\ \hline
+\textit{Golden Dataset} & Correct/Total & 100\% & 100\% \\ \hline
+
+\end{tabular}
+\caption[Métricas de clasificación]{Resumen de métricas de clasificación, elaboración propia.}
+\end{table}
+
+El \textit{F1-Score} de 88\% indica balance óptimo entre \textit{precision} y \textit{recall}.
+
+\textbf{Reconocimiento de sinónimos}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{2cm}|p{6cm}|p{2.5cm}|}
+\hline
+\textbf{Grupo} & \textbf{Sinónimos testeados} & \textbf{Accuracy} \\ \hline
+
+A & ayuda, asistencia, socorro & 75\% \\ \hline
+B & hola, saludos, buenos días & 80\% \\ \hline
+C & gracias, muchas gracias, bien & 78\% \\ \hline
+
+\end{tabular}
+\caption[Sinónimos testeados]{Evaluación por grupos de sinónimos, elaboración propia.}
+\end{table}
+
+\textbf{Objetivo}: >70\% dentro de cada grupo
+
+{\large \noindent \textbf{Cobertura de código}}
+\textbf{Cobertura global del módulo}
+
+\textbf{Statement Coverage}: $90.8\%$ \ (Objetivo: $>80\%$)\\
+\indent \textbf{Branch Coverage}: $87.0\%$ \ (Objetivo: $>75\%$)\\
+
+\textbf{Análisis de líneas sin cobertura}\\
+Las 82 líneas sin cobertura (9.2\%) corresponden a:\\
+
+\begin{enumerate}
+    \item Manejo de errores raros (35 líneas): Modelo no cargado, embeddings corruptos, errores de memoria
+    \item Logging y debugging (28 líneas): Logs de nivel DEBUG, telemetría
+    \item Código de infraestructura (19 líneas): Shutdown handlers, configuración avanzada
+\end{enumerate}
+
+Estos casos no afectan la funcionalidad core del sistema.

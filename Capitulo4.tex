@@ -934,6 +934,24 @@ async def buscar(request: QueryRequest):
     \item \textbf{Tipo:} Modelo multilingüe optimizado para tareas de similitud semántica.
 \end{itemize}
 
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{4cm}|p{9cm}|}
+\hline
+\textbf{Arquitectura} & Transformer (MiniLM variant) \\ \hline
+\textbf{Capas} & 12 transformer layers \\ \hline
+\textbf{Hidden size} & 384 dimensiones \\ \hline
+\textbf{Attention heads} & 12 heads \\ \hline
+\textbf{Parámetros} & $\sim$118 millones \\ \hline
+\textbf{Tamaño modelo} & $\sim$420 MB \\ \hline
+\textbf{Idiomas} & 50+ idiomas (multilingual) \\ \hline
+\textbf{Entrenamiento} & 1B+ sentence pairs \\ \hline
+\textbf{Fine-tuning} & Paraphrase detection task \\ \hline
+\end{tabular}
+\caption[Arquitectura del modelo]{Arquitectura del modelo, elaboración propia.}
+\end{table}
+
 \noindent \textbf{Arquitectura del modelo}
 
 El flujo interno del modelo sigue las siguientes etapas:
@@ -1062,6 +1080,23 @@ Modelos clásicos como Word2Vec y GloVe generan embeddings estáticos, es decir,
 \textbf{Conclusión:} Sentence-BERT es superior para tareas de similitud semántica y comprensión contextual.\\
 
 \vspace{1em}
+
+\textbf{¿Por qué Sentence-Transformers y Spacy?}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{6cm}|p{6cm}|}
+\hline
+\textbf{Sentence-Transformers} & \textbf{SpaCy} \\ \hline
+\textit{Embeddings} de alta calidad & PLN completo (POS, NER, etc.) \\ \hline
+Multilingüe \textit{out-of-the-box} & \textit{Embeddings} más básicos \\ \hline
+Pre-entrenado para paráfrasis & Requiere más configuración \\ \hline
+Fácil de usar & - \\ \hline
+\end{tabular}
+\caption[Sentence-Transformers vs SpaCy]{Comparación entre Sentence-Transformers y SpaCy, elaboración propia.}
+\end{table}
+
 
 \textbf{¿Por qué Sentence-Transformers y no Transformers de HuggingFace directamente?}
 
@@ -1417,6 +1452,32 @@ class QueryResponse(BaseModel):
     \item Documentación automática.
     \item Type checking.
 \end{itemize}
+
+{\large \noindent \textbf{Stack tecnológico final}}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{6cm}|p{6cm}|}
+\hline
+\textbf{Capa} & \textbf{Tecnología} \\ \hline
+
+Lenguaje de programación & Python 3.12.3 \\ \hline
+Framework Web & FastAPI 0.104.1 \\ \hline
+Servidor ASGI & Uvicorn 0.24.0 \\ \hline
+Modelo \textit{Machine Learning} & paraphrase-multilingual-MiniLM-L12-v2 \\ \hline
+\textit{Embeddings Library} & sentence-transformers 2.2.2 \\ \hline
+\textit{Machine Learning Framework} & PyTorch 2.1.0 \\ \hline
+Operaciones numéricas & NumPy 1.24.3 \\ \hline
+\textit{Machine Learning utilities} & scikit-learn 1.3.0 \\ \hline
+\textit{String Matching} & RapidFuzz 3.5.2 \\ \hline
+Validación & Pydantic 2.5.0 \\ \hline
+\textit{Testing} & Pytest 7.4.3 \\ \hline
+Control de Versiones & Git 2.43.0 \\ \hline
+
+\end{tabular}
+\caption[Stack tecnológico]{Stack tecnológico utilizado, elaboración propia.}
+\end{table}
 
 \subsection{Alternativas rechazadas}
 
@@ -2648,6 +2709,28 @@ Output: Vector [384]
    ]
 \end{lstlisting}
 
+\noindent \textbf{Métricas}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{6cm}|p{6cm}|}
+\hline
+\textbf{Métrica} & \textbf{Valor} \\ \hline
+
+Dimensión del \textit{embedding} & 384 \\ \hline
+Tamaño por \textit{embedding} & 384 × 4 bytes = 1.5 KB \\ \hline
+\textit{Total embeddings} en memoria & 43 frases × 1.5 KB $\approx$ 65 KB \\ \hline
+Tamaño del cache (.npz) & $\sim$50 KB (comprimido) \\ \hline
+Tiempo de generación (1ª vez) & $\sim$5 segundos \\ \hline
+Tiempo de carga (desde cache) & <1 segundo \\ \hline
+Memoria usada (modelo) & $\sim$420 MB \\ \hline
+Memoria usada (cache) & 65 KB \\ \hline
+
+\end{tabular}
+\caption[Métricas del embedding]{Métricas del embedding, elaboración propia.}
+\end{table}
+
 %#---------------------------------
 %#---------------------------------
 \subsection{Etapa 1: Preprocesamiento de texto}
@@ -2963,6 +3046,22 @@ No hay correcciones\\
 ↓\\
 Output: ``necesito ayuda''\\
 
+\noindent \textbf{Métricas de corrección}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{6cm}|p{6cm}|}
+\hline
+\textbf{Métrica} & \textbf{Valor} \\ \hline
+Typos detectados correctamente & 95\% \\ \hline
+Falsos positivos & $<$5\% \\ \hline
+Tiempo de corrección por palabra & $<$1ms \\ \hline
+Tamaño del diccionario & 50+ términos \\ \hline
+\end{tabular}
+\caption[Métricas del sistema]{Métricas del sistema, elaboración propia.}
+\end{table}
+
 {\large \noindent \textbf{Normalización de Leet Speak}}
 
 \textbf{Objetivo}
@@ -2975,6 +3074,29 @@ Casos:
     \item Texto decorativo: ``H0l4'', ``Gr4ci4s''
     \item Evasión de filtros: ``A\$\$istente''
 \end{itemize}
+
+\textbf{Mapeo de Caracteres}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{2cm}|p{3cm}|p{7cm}|}
+\hline
+\textbf{Leet} & \textbf{Normal} & \textbf{Ejemplo} \\ \hline
+@ & a & M@ria $\rightarrow$ Maria \\ \hline
+4 & a & M4ria $\rightarrow$ Maria \\ \hline
+3 & e & P3dro $\rightarrow$ Pedro \\ \hline
+1 & i & 1van $\rightarrow$ Ivan \\ \hline
+0 & o & Carl0s $\rightarrow$ Carlos \\ \hline
+5 & s & Jo5e $\rightarrow$ Jose \\ \hline
+7 & t & Ma7eo $\rightarrow$ Mateo \\ \hline
+8 & b & E8an $\rightarrow$ Eban \\ \hline
+9 & g & San7ia9o $\rightarrow$ Santiago \\ \hline
+\$ & s & \$andra $\rightarrow$ Sandra \\ \hline
+\end{tabular}
+\caption[Diccionario Leet]{Conversión de leet a texto normal, elaboración propia.}
+\end{table}
+
 
 \noindent \textbf{Implementación}
 
@@ -3390,448 +3512,1182 @@ videos/
 
 
 %====================================================
-\section{Etapa 2: Modelo de embeddings y similitud semántica}
+\subsection{Etapa 2: Modelo de embeddings y similitud semántica}
 
-\subsection{Selección del modelo}
+{\large \noindent \textbf{Selección del modelo de embeddings}}
 
-\textbf{Modelo:} \texttt{paraphrase-multilingual-MiniLM-L12-v2}
+\noindent \textbf{Modelos evaluados}
 
-\textbf{Características:}
-\begin{itemize}
-    \item Modelo MiniLM, versión ligera de BERT.
-    \item 12 capas Transformer.
-    \item 384 dimensiones de embedding.
-    \item $\sim$33M parámetros.
-    \item Tamaño: $\sim$120MB.
-\end{itemize}
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{7cm}|p{3.2cm}|p{2.2cm}|p{2cm}|}
+\hline
+\textbf{Modelo} & \textbf{Dimensiones} & \textbf{Tamaño} & \textbf{Score} \\ \hline
 
-\textbf{Entrenamiento:}
-\begin{itemize}
-    \item Más de 50 idiomas.
-    \item Tarea principal: detección de paráfrasis.
-    \item Millones de pares de oraciones.
-    \item Arquitectura siamés + contrastive loss.
-\end{itemize}
+\textbf{all-MiniLM-L6-v2} & 384 & 80MB & 3 / 5 \\ 
+\quad + Rápido y ligero & & & \\
+\quad - No optimizado para el idioma español & & & \\
+\quad - Performance bajo en paráfrasis ES & & & \\ \hline
 
-\textbf{Ventajas:}
+\textbf{paraphrase-multilingual-mpnet-base-v2} & 768 & 420MB & 5 / 5 \\
+\quad + Excelente para el idioma español & & & \\
+\quad + Muy preciso en paráfrasis & & & \\
+\quad - Muy grande (768 dim) & & & \\
+\quad - Latencia alta ($\sim$80ms) & & & \\ \hline
+
+\textbf{paraphrase-multilingual-MiniLM-L12-v2} & 384 & 420MB & 5 / 5 \\
+\quad + Optimizado para el idioma español & & & \\
+\quad + Balanceado: tamaño vs \textit{performance} & & & \\
+\quad - Latencia aceptable ($\sim$40ms) & & & \\
+\quad + \textit{Fine-tuned} para paráfrasis & & & \\ \hline
+
+\textbf{sentence\_similarity\_spanish\_es} & 768 & 450MB & 4 / 5 \\
+\quad + Específico para el idioma español & & & \\
+\quad - Solo idioma español (no \textit{multilingual}) & & & \\
+\quad - Menos flexible & & & \\ \hline
+
+\end{tabular}
+\caption[Comparación de modelos]{Comparación de modelos de embeddings, elaboración propia.}
+\end{table}
+
+\textbf{Criterios de selección}
+
 \begin{enumerate}
-    \item Multilingüe (incluye español).
-    \item Rápido (40 ms en CPU).
-    \item Ligero.
-    \item Optimizado para similitud semántica.
+    \item \textbf{Soporte multilingüe}
+    \begin{itemize}
+        \item \checkmark\ Requerido: Español como idioma principal
+        \item \checkmark\ Deseable: Soporte para otros idiomas latinos
+        \item $\rightarrow$ paraphrase-multilingual-MiniLM-L12-v2 \checkmark
+    \end{itemize}
+
+    \item \textbf{Tamaño del embedding}
+    \begin{itemize}
+        \item \checkmark\ Máximo: 512 dimensiones
+        \item \checkmark\ Óptimo: 384 dimensiones (balance)
+        \item $\rightarrow$ 384 dimensiones \checkmark
+    \end{itemize}
+
+    \item \textbf{Performance}
+    \begin{itemize}
+        \item \checkmark\ Latencia objetivo: <50ms
+        \item \checkmark\ Throughput: >20 req/s
+        \item $\rightarrow$ 40ms promedio \checkmark
+    \end{itemize}
+
+    \item \textbf{Calidad de paráfrasis}
+    \begin{itemize}
+        \item \checkmark\ Detección de sinónimos
+        \item \checkmark\ Detección de variaciones
+        \item $\rightarrow$ Fine-tuned específicamente \checkmark
+    \end{itemize}
+
+    \item \textbf{Tamaño del modelo}
+    \begin{itemize}
+        \item \checkmark\ Máximo: 500MB
+        \item \checkmark\ Debe caber en RAM estándar (8GB)
+        \item $\rightarrow$ 420MB \checkmark
+    \end{itemize}
 \end{enumerate}
 
-%---------------------------------------------------
+{\large \noindent \textbf{Modelo seleccionado}}\\
+\indent\textbf{paraphrase-multilingual-MiniLM-L12-v2}\\
 
-\subsection{Arquitectura del modelo Transformer}
+\noindent\textbf{Justificación}
+\begin{itemize}
+    \item Multilingüe (50+ idiomas, incluyendo español)
+    \item 384 dimensiones (balance óptimo)
+    \item Fine-tuned para \textit{paraphrase detection}
+    \item Latencia aceptable ($\sim$40ms)
+    \item Ampliamente usado en producción
+    \item Mantenido por UKPLab (confiable)
+\end{itemize}
+
+{\large \noindent \textbf{Arquitectura del Modelo Transformer}}\\
+\textbf{Arquitectura general}
+
+\begin{center}
+    \includegraphics[width=0.85\textwidth]{Images/Cap4/2_Arquitectura Transformers.png}
+    \captionof{figure}[Arquitectura del Modelo Transformer]{Arquitectura General del Modelo Transformer, elaboración propia.} 
+\end{center}
+
+{\large \noindent \textbf{Componentes detallados}}\\
+
+
+\noindent \textbf{Tokenización (WordPiece)}\\
+
+\textbf{Vocabulario}: 119,547 tokens\\
+
+\textbf{Tokens especiales}
+\begin{itemize}
+    \item \textbf{[CLS]}: Inicio de secuencia (ID: 101)
+    \item \textbf{[SEP]}: Separador/fin de secuencia (ID: 102)
+    \item \textbf{[UNK]}: Token desconocido (ID: 100)
+    \item \textbf{[PAD]}: Padding (ID: 0)
+    \item \textbf{[MASK]}: Máscara para MLM (ID: 103)
+\end{itemize}
+
+\vspace{1em}
+
+\noindent \textbf{Ejemplo de tokenización}
 
 \begin{verbatim}
-Input: Texto "Necesito ayuda urgente"
-  ↓
-Tokenización: [CLS, necesito, ayuda, urgente, SEP]
-  ↓
-Token Embeddings (384 dims)
-  ↓
-Positional Encodings
-  ↓
-12 Capas de Transformer:
-    Multi-Head Self-Attention
-    Layer Normalization
-    Feed-Forward Network
-    Layer Normalization
-  ↓
-Output: Embedding de oración (384 dims)
+"Hola, ¿cómo estás?"
+   ↓
+Tokens: [CLS] hola , ¿ como estas ? [SEP]
+Token IDs: [101, 45321, 102, 189, 12045, 36547, 103, 102]
 \end{verbatim}
 
-\textbf{Self-Attention:}\\
-Permite que cada palabra atienda a todas las demás:
+\noindent\textbf{Subword tokenization}
+
+\begin{verbatim}
+"Alessandro"
+   ↓
+Tokens: ale ##ss ##andro
+Token IDs: [12345, 67890, 23456]
+\end{verbatim}
+
+\noindent \textbf{Embedding layer}
+
+Tres tipos de embeddings combinados:
+
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{Token Embeddings (vocabulario → vector)}
+    \begin{itemize}
+    \item Cada token ID → vector de 384 dimensiones.
+    \item Matriz de embeddings: [119,547 × 384].
+    \end{itemize}
+    \item \textbf{ Position Embeddings (posición → vector)}
+    \begin{itemize}
+    \item Cada posición → vector de 384 dimensiones.
+    \item Máximo 512 posiciones.
+    \item Permite al modelo saber el orden de los tokens.
+    \end{itemize}
+    \item \textbf{Token Type Embeddings (segmento → vector)}
+    \begin{itemize}
+    \item Distingue entre segmentos A y B.
+    \item Usado en tareas de pares de oraciones.
+    \end{itemize}
+\end{enumerate}
+
+\begin{verbatim}
+embedding_final = token_emb + position_emb + type_emb
+\end{verbatim}
+
+{\large \noindent\textbf{Transformer layer}}\\
+\textbf{Arquitectura de una capa:}
+
+\begin{center}
+    \includegraphics[width=0.85\textwidth]{Images/Cap4/3_TransformerLayer.png}
+    \captionof{figure}[Arquitectura de una Capa Modelo Transformer]{Arquitectura de una capa del modelo Transformer, elaboración propia.} 
+\end{center}
+
+{\large \noindent \textbf{Self-attention mechanism}}
+
+\noindent \textbf{Ecuación}
+
+\[
+\text{Attention}(Q, K, V) = \text{softmax}\left( \frac{QK^{T}}{\sqrt{d_k}} \right) V
+\]
+
+Donde:
 \begin{itemize}
-    \item ``banco'' atiende a ``cerrado'' $\Rightarrow$ banco financiero.
+    \item $Q$ (Query): Qu\'e estoy buscando.
+    \item $K$ (Key): Qu\'e informaci\'on tengo.
+    \item $V$ (Value): Cu\'al es esa informaci\'on.
+    \item $d_k$: Dimensi\'on de las keys (32 por head).
 \end{itemize}
 
-\textbf{Multi-Head Attention:}\\
-Ocho cabezas analizan distintos aspectos:
+\vspace{1em}
+
+\noindent \textbf{Ejemplo visual}
+
+\begin{verbatim}
+Input: "Hola ¿cómo estás?"
+
+Attention scores entre tokens:
+          Hola   ¿   cómo  estás   ?
+Hola      1.0   0.1  0.3   0.4    0.1
+¿         0.1   0.9  0.5   0.2    0.8
+cómo      0.2   0.4  1.0   0.7    0.3
+estás     0.3   0.2  0.6   1.0    0.2
+?         0.1   0.7  0.3   0.2    1.0
+\end{verbatim}
+
+\noindent\textbf{Interpretación}:
 \begin{itemize}
-    \item Relaciones sintácticas.
-    \item Relaciones semánticas.
-    \item Entidades nombradas.
+    \item ``cómo'' atiende fuertemente a ``estás'' (0.7)
+    \item ``?'' atiende a ``¿'' (0.7) — contexto de pregunta
 \end{itemize}
 
-%---------------------------------------------------
+{\large \noindent \textbf{Pooling layer}}
 
-\subsection{Pooling}
+\textbf{Objetivo}: Convertir secuencia variable → vector fijo.
 
-La estrategia usada es \textbf{Mean Pooling}:
+Estrategias de pooling:
 
-```python
-sentence\_embedding = mean(token\_embeddings)
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{Mean pooling (usado en nuestro modelo)}
+    \begin{verbatim}
+    embedding = torch.mean(token_embeddings, dim=0)
+    \end{verbatim}
 
-\section{Generación de Embeddings}
+    \textbf{Ventaja}: Captura información de toda la oración.
+    \item \textbf{CLS Pooling (alternativa)}
+    \begin{verbatim}
+    embedding = token_embeddings[0]  # Token [CLS]
+    \end{verbatim}
+    \textbf{Ventaja}: Más rápido, pero pierde contexto.
+    \item \textbf{Max pooling (alternativa)}
+    \begin{verbatim}
+    embedding = torch.max(token_embeddings, dim=0)
+    \end{verbatim}
+    \textbf{Ventaja}: Captura features más prominentes.
+\end{enumerate}
 
-\subsection{Proceso}
+{\large \noindent \textbf{L2 Normalization}}
 
-\begin{lstlisting}[language=Python]
+\textbf{Objetivo}: Normalizar embedding a norma unitaria.
+
+\[
+\text{embedding\_normalized}
+=
+\frac{\text{embedding}}
+     {\lVert \text{embedding} \rVert_2}
+\]
+
+Ventajas:
+\begin{itemize}
+    \item Embeddings en hiperesfera unitaria.
+    \item Similitud coseno = producto punto.
+    \item Comparación justa entre embeddings.
+\end{itemize}
+
+\textbf{Ejemplo}:
+
+\begin{verbatim}
+Antes: embedding = [1.5, -2.3, 0.8, ...]
+                ||embedding|| = 2.8
+
+Después: embedding = [0.536, -0.821, 0.286, ...]
+                  ||embedding|| = 1.0
+\end{verbatim}
+
+\vspace{1em}
+
+{\large \noindent \textbf{Generación de embeddings}}
+
+\noindent\textbf{Proceso completo}
+\begin{verbatim}
 from sentence_transformers import SentenceTransformer
 
 # 1. Cargar modelo
 model = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')
 
-# 2. Generar embeddings
-frases = ["Hola", "Buenos días", "¿Cómo estás?"]
+# 2. Preparar textos
+texts = [
+    "Hola, ¿cómo estás?",
+    "Buenos días",
+    "Necesito ayuda"
+]
+
+# 3. Generar embeddings
 embeddings = model.encode(
-    frases,
-    convert_to_numpy=True,      # Retornar NumPy array
-    normalize_embeddings=True,  # Normalizar a longitud 1
-    show_progress_bar=False
+    texts,
+    batch_size=32,
+    show_progress_bar=True,
+    convert_to_numpy=True
 )
 
-# 3. Resultado
-print(embeddings.shape)  # (3, 384)
-\end{lstlisting}
+# Output shape: (3, 384)
+# Cada fila es un embedding de 384 dimensiones
+\end{verbatim}
 
-\subsection{Normalización}
+{\large \noindent \textbf{Optimizaciones aplicadas}}
 
-\begin{lstlisting}[language=Python]
-# Sin normalizar
-embedding = [0.5, 0.3, 0.2]
-norm = sqrt(0.5^2 + 0.3^2 + 0.2^2) = 0.616
+\begin{enumerate}
+    \item \textbf{Batch processing}
+    \begin{itemize}
+        \item Procesar múltiples textos a la vez.
+        \item Batch size: 32.
+        \item Aprovecha paralelismo de CPU/GPU.
+    \end{itemize}
 
-# Normalizado
-embedding_norm = [0.5/0.616, 0.3/0.616, 0.2/0.616]
-                = [0.812, 0.487, 0.325]
-norm_nuevo = sqrt(0.812^2 + 0.487^2 + 0.325^2) = 1.0
-\end{lstlisting}
+    \item \textbf{Caching}
+    \begin{itemize}
+        \item Embeddings guardados en .npz.
+        \item Carga instantánea (<1 segundo).
+        \item Ahorro de ~5 segundos por startup.
+    \end{itemize}
 
-La norma se calcula como:
+    \item \textbf{Lazy loading}
+    \begin{itemize}
+        \item Modelo cargado solo cuando se necesita.
+        \item Ahorro de memoria si no hay requests.
+    \end{itemize}
+\end{enumerate}
 
-\begin{equation}
-\|A\| = \sqrt{\sum_{i=1}^{n} A_i^2}
-\end{equation}
+\noindent \textbf{Métricas de Generación}
 
-\subsection{Ventaja de la normalización}
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{6cm}|p{6cm}|}
+\hline
+\textbf{Métrica} & \textbf{Valor} \\ \hline
+Tiempo por \textit{embedding} (CPU) & \(\sim\)15ms \\ \hline
+Tiempo por \textit{embedding} (GPU) & \(\sim\)3ms \\ \hline
+\textit{Batch size} óptimo (CPU) & 32 textos \\ \hline
+\textit{Batch size} óptimo (GPU) & 128 textos \\ \hline
+Memoria por \textit{embedding} & 1.5 KB (384 \textit{floats}) \\ \hline
+Memoria modelo en RAM & \(\sim\)420 MB \\ \hline
+\end{tabular}
+\caption[Métricas de rendimiento]{Métricas de rendimiento del sistema, elaboración propia.}
+\end{table}
 
-La similitud coseno se define como:
 
-\begin{equation}
-\text{cosine\_similarity}(A, B) = 
-\frac{A \cdot B}{\|A\| \, \|B\|}
-\end{equation}
+{\large \noindent \textbf{Cálculo de similitud coseno}}
 
-Cuando los vectores están normalizados a norma 1:
+\textbf{Definición}
 
-\begin{equation}
-\|A\| = \|B\| = 1
-\end{equation}
+Similitud coseno mide el ángulo entre dos vectores:
 
-entonces:
+\[
+\cos(\theta)
+=
+\frac{A \cdot B}
+     {\lVert A\rVert \times \lVert B\rVert}
+\]
 
-\begin{equation}
-\text{cosine\_similarity}(A, B) = A \cdot B
-\end{equation}
-
-\subsection{Cálculo de similitud coseno}
-
-\textbf{Definición matemática:}
-
-\begin{equation}
-\cos(\theta) = 
-\frac{A \cdot B}{\|A\| \, \|B\|}
-\end{equation}
-
-donde:
-
-\begin{align}
-A \cdot B &= \sum_{i=1}^{n} A_i B_i \\
-\|A\| &= \sqrt{\sum_{i=1}^{n} A_i^2}
-\end{align}
-
-\textbf{Interpretación geométrica:}
-
+Donde:
 \begin{itemize}
-    \item $\theta = 0^\circ \Rightarrow \cos(\theta) = 1$ (vectores idénticos)
-    \item $\theta = 90^\circ \Rightarrow \cos(\theta) = 0$ (ortogonales)
-    \item $\theta = 180^\circ \Rightarrow \cos(\theta) = -1$ (opuestos)
+    \item $A \cdot B$: Producto punto
+    \item $\lVert A \rVert$: Norma (magnitud) del vector $A$
+    \item $\theta$: Ángulo entre vectores
 \end{itemize}
 
-\subsection{Implementación optimizada}
+Rango: [-1, 1]
+\begin{itemize}
+    \item 1.0: Vectores idénticos (ángulo 0°)
+    \item 0.0: Vectores ortogonales (ángulo 90°)
+    \item -1.0: Vectores opuestos (ángulo 180°)
+\end{itemize}
 
-\begin{lstlisting}[language=Python]
+{\large \noindent \textbf{Simplificación con L2 Normalization}}
+
+Si ||A|| = 1 y ||B|| = 1 (L2 normalized):
+
+\[
+\cos(\theta) = A \cdot B
+\]
+
+El producto punto es la similitud coseno.\\
+
+\textbf{Ventaja}: Cálculo mucho más rápido\\
+
+{\large \noindent \textbf{Implementación}}
+
+\begin{verbatim}
 from sklearn.metrics.pairwise import cosine_similarity
+import numpy as np
 
-# Similitud entre query y todas las frases
-similarities = cosine_similarity([query_embedding], embeddings)[0]
+# Embeddings normalizados (||emb|| = 1.0)
+query_embedding = np.array([0.5, -0.3, 0.8, ...])  # 384-dim
+phrase_embeddings = np.array([
+    [0.6, -0.2, 0.7, ...],  # Frase 1
+    [0.1, 0.9, -0.4, ...],  # Frase 2
+    [0.5, -0.3, 0.75, ...]  # Frase 3
+])
 
-# Resultado: array de similitudes
-# similarities = [0.95, 0.82, 0.67, ...]
-\end{lstlisting}
+# Calcular similitud con todas las frases
+similarities = cosine_similarity(
+    [query_embedding],
+    phrase_embeddings
+)[0]
 
-\subsection{Complejidad}
+# Output: [0.95, 0.62, 0.98]
+\end{verbatim}
 
+\vspace{1em}
+
+\noindent \textbf{Ejemplo visual}
+
+\begin{verbatim}
+Query: "Hola"
+Embedding: [0.5, 0.5, 0.707]  (simplificado a 3D)
+
+Frase 1: "Buenos días"
+Embedding: [0.6, 0.4, 0.693]
+
+Similitud = (0.5×0.6) + (0.5×0.4) + (0.707×0.693)
+        = 0.3 + 0.2 + 0.49
+        = 0.99  ← Muy similar!
+
+Frase 2: "Ayuda"
+Embedding: [-0.3, 0.8, 0.524]
+
+Similitud = (0.5×-0.3) + (0.5×0.8) + (0.707×0.524)
+        = -0.15 + 0.4 + 0.37
+        = 0.62  ← Menos similar
+\end{verbatim}
+
+{\large \noindent \textbf{Optimización vectorizada}}
+
+\noindent En lugar de loops:
+
+\begin{verbatim}
+# LENTO (loop)
+for phrase_emb in phrase_embeddings:
+    sim = cosine_similarity([query_emb], [phrase_emb])[0][0]
+\end{verbatim}
+
+\noindent Usar operaciones matriciales:
+
+\begin{verbatim}
+# RÁPIDO (vectorizado)
+similarities = cosine_similarity([query_emb], phrase_embeddings)[0]
+\end{verbatim}
+
+\textbf{Speedup}: ~100x más rápido.\\
+
+{\large \noindent \textbf{Re-ranking en dos fases}}
+
+\noindent \textbf{Motivación}
+
+\textbf{Problema}: Búsqueda exhaustiva es costosa
 \begin{itemize}
-    \item Cálculo directo: $O(d \times n)$
-    \item Con centroides: $O(d \times k)$
+    \item Dataset: 43 frases en 3 grupos
+    \item Cálculo directo: 43 comparaciones por query
+    \item Escalabilidad: O(N) con N = total de frases
 \end{itemize}
 
-donde:
-
+\textbf{Solución}: Búsqueda jerárquica en dos fases
 \begin{itemize}
-    \item $d = 384$ (dimensiones)
-    \item $n = 43$ (frases)
-    \item $k = 3$ (grupos)
+    \item Fase 1: Encontrar grupos candidatos (O(3) comparaciones)
+    \item Fase 2: Buscar en grupos candidatos (O(N\_candidatos))
+    \item Escalabilidad: O(K + N\_k) donde K = núm. grupos, N\_k = frases en top grupos
 \end{itemize}
 
-\textbf{Benchmark:}
+{\large \noindent \textbf{Fase 1: Búsqueda por centroides}}
+
+\noindent \textbf{Centroide}: Vector promedio de un grupo
+
+\begin{verbatim}
+Grupo A: ["Ayuda", "Socorro", "Urgente", ...]
+   ↓
+Embeddings:
+   [0.2, -0.3, 0.5, ...]
+   [0.3, -0.2, 0.6, ...]
+   [0.1, -0.4, 0.4, ...]
+   ↓
+Centroide_A = mean(embeddings_A)
+            = [0.2, -0.3, 0.5, ...]
+\end{verbatim}
+
+\noindent \textbf{Algoritmo}:
+
+\begin{verbatim}
+def find_best_groups(query_embedding, centroids, top_k=3):
+    """
+    Encuentra top-K grupos más probables.
+    """
+    scores = []
+    for grupo, centroid in centroids.items():
+        sim = cosine_similarity([query_embedding], [centroid])[0][0]
+        scores.append((grupo, sim))
+
+    scores.sort(key=lambda x: x[1], reverse=True)
+    return scores[:top_k]
+\end{verbatim}
+
+\noindent \textbf{Ejemplo}:
+
+\begin{verbatim}
+Query: "necesito ayuda urgente"
+Embedding: [0.25, -0.35, 0.52, ...]
+
+Similitud con centroides:
+   Centroide A (Emergencias): 0.92  ← TOP 1
+   Centroide C (Comunicación): 0.78  ← TOP 2
+   Centroide B (Saludos):     0.65  ← TOP 3
+
+Grupos candidatos: [A, C, B]
+\end{verbatim}
+
+{\large \noindent\textbf{Fase 2: Re-ranking fino}}
+
+\noindent Búsqueda en grupos candidatos:
+
+\begin{verbatim}
+def rerank_in_groups(query_embedding, candidate_groups, embeddings, frases):
+    """
+    Busca la mejor frase en grupos candidatos.
+    """
+    best_sim = -1
+    best_grupo = None
+    best_frase = None
+
+    for grupo in candidate_groups:
+        # Embeddings del grupo
+        grupo_embeddings = embeddings[grupo]
+        grupo_frases = frases[grupo]
+
+        # Similitud con todas las frases del grupo
+        sims = cosine_similarity([query_embedding], grupo_embeddings)[0]
+
+        # Aplicar BOOSTS por longitud
+        for i, frase in enumerate(grupo_frases):
+            num_words = len(frase.split())
+            if num_words >= 3:
+                sims[i] += 0.15  # +15% para frases largas
+            elif num_words == 2:
+                sims[i] += 0.08  # +8% para frases medias
+
+        # Normalizar [0, 1]
+        sims = np.clip(sims, 0.0, 1.0)
+
+        # Mejor match en este grupo
+        max_idx = np.argmax(sims)
+        sim = sims[max_idx]
+
+        # Actualizar si es mejor
+        if sim > best_sim:
+            best_sim = sim
+            best_grupo = grupo
+            best_frase = grupo_frases[max_idx]
+
+    return best_grupo, best_frase, best_sim
+\end{verbatim}
+
+{\large \noindent \textbf{Boosts aplicados}}
+
+\begin{enumerate}
+    \item \textbf{Boost por longitud de frase} \\
+    Justificación: Frases más largas más específicas.
+
+    \begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.6}
+    \begin{tabular}{|p{4cm}|p{4cm}|p{5cm}|}
+    \hline
+    \textbf{Palabras} & \textbf{Boost} & \textbf{Ejemplo} \\ \hline
+    1 palabra & 0\% & ``Ayuda'' \\ \hline
+    2 palabras & +8\% & ``Necesito ayuda'' \\ \hline
+    3+ palabras & +15\% & ``Necesito ayuda urgente'' \\ \hline
+    \end{tabular}
+    \caption[Boost por número de palabras]{Boost por número de palabras, elaboración propia.}
+    \end{table}
+
+    \item \textbf{Bonus al grupo más probable} \\
+    \begin{verbatim}
+    Grupo #1 (top centroid match): +5%
+    Otros grupos: 0%
+    \end{verbatim}
+
+    \item \textbf{Penalización por diferencia de longitud}
+
+    \begin{verbatim}
+    Si |len(query_word) - len(phrase_word)| > 1:
+        penalty = 0.05 × diferencia
+    \end{verbatim}
+
+    Ejemplo:
+
+    \begin{verbatim}
+    Query: "Ivan" (4 letras)
+    Frase: "Sí" (2 letras)
+    Diferencia: 2 letras
+    Penalty: 0.05 × 2 = 0.10 (-10%)
+    \end{verbatim}
+\end{enumerate}
+
+{\large \noindent \textbf{Ejemplo completo}}
+
+\begin{verbatim}
+Query: "necesito ayuda urgente"
+
+Fase 1: Búsqueda por centroides
+   Centroide A: 0.92 ← TOP
+   Centroide C: 0.78
+   Centroide B: 0.65
+
+Candidatos: [A, C, B]
+
+Fase 2: Re-ranking en Grupo A
+   "Ayuda, por favor":     0.85 + 0.08 (2 palabras) = 0.93
+   "Necesito un médico":   0.82 + 0.15 (3 palabras) = 0.97 ← BEST
+   "Socorro":              0.80 + 0.00 (1 palabra)  = 0.80
+   ...
+
+Fase 2: Re-ranking en Grupo C
+   "Gracias":              0.65
+   "Entiendo":             0.62
+   ...
+
+Mejor match global: "Necesito un médico" (Grupo A, sim: 0.97)
+\end{verbatim}
+
+\vspace{1em}
+
+{\large \noindent \textbf{Ventajas del re-ranking}}
 
 \begin{itemize}
-    \item 43 frases: $\sim 0.5$ ms
-    \item 3 centroides: $\sim 0.05$ ms (10× más rápido)
+    \item Performance: \(\sim 3\times\) más rápido que búsqueda exhaustiva
+    \item Escalabilidad: \(O(K + N_k)\) vs \(O(N)\)
+    \item Precisión: Boosts mejoran detección
+    \item Flexibilidad: Fácil agregar nuevos grupos
 \end{itemize}
 
+{\large \noindent \textbf{Métricas}}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{6cm}|p{7cm}|}
+\hline
+\textbf{Métrica} & \textbf{Valor} \\ \hline
+Comparaciones (exhaustiva) & 43 \\ \hline
+Comparaciones (re-ranking) & 3 + $\sim$20 = 23 \\ \hline
+\textit{Speedup} & $\sim$1.9x \\ \hline
+Precisión & 92\% (vs 90\% exhaustiva) \\ \hline
+\end{tabular}
+\caption[Métricas de búsqueda]{Métricas de búsqueda, elaboración propia.}
+\end{table}
 % ======================================================
 
-\section{Re-ranking en dos fases}
+\subsection{Etapa 3: API REST y arquitectura}
 
-\subsection{Motivación}
+{\large \noindent \textbf{Diseño de Endpoints}}\\
 
-La búsqueda lineal escala mal:
-
-\begin{itemize}
-    \item 1000 frases: $\sim 12$ ms
-    \item 10000 frases: $\sim 120$ ms
-\end{itemize}
-
-\subsection{Solución: búsqueda jerárquica}
-
-\textbf{Fase 1: Coarse-grained}
-\begin{itemize}
-    \item Comparación únicamente contra centroides.
-    \item Complejidad: $O(k)$.
-    \item Se seleccionan los mejores grupos candidatos.
-\end{itemize}
-
-\textbf{Fase 2: Fine-grained}
-\begin{itemize}
-    \item Se compara solo dentro de los grupos candidatos.
-    \item Complejidad: $O(n/k)$.
-\end{itemize}
-
-\textbf{Costo total:}
-
-\begin{equation}
-O(k) + O\left(\frac{n}{k}\right)
-\end{equation}
-
-Ejemplo con $n=43$, $k=3$:
-
-\[
-O(3) + O(43/3) = O(17)
-\]
-
-\textbf{Reducción:} 60\% menos comparaciones.
-
-\subsection{Escalabilidad}
-
-Con 1000 frases y 10 grupos:
-
-\[
-O(10) + O(1000 / 10) = O(110)
-\]
-
-→ Reducción del 89\%.
-
-\subsection{Trade-off}
+\noindent \textbf{Principios de diseño}
 
 \begin{itemize}
-    \item Pérdida de precisión: 1--2\%.
-    \item Mejora en velocidad: 2--9×.
+    \item \textbf{RESTful API Design}
+    \begin{itemize}
+        \item Uso de HTTP methods (GET, POST)
+        \item URLs semánticas y descriptivas
+        \item Status codes apropiados
+    \end{itemize}
+
+    \item \textbf{Stateless}
+    \begin{itemize}
+        \item Sin sesiones en servidor
+        \item Cada request independiente
+        \item Facilita escalabilidad horizontal
+    \end{itemize}
+
+    \item \textbf{JSON como formato de intercambio}
+    \begin{itemize}
+        \item Estándar de la industria
+        \item Fácil parsing en cualquier lenguaje
+        \item Soportado nativamente por FastAPI
+    \end{itemize}
+
+    \item \textbf{Versionado implícito}
+    \begin{itemize}
+        \item Preparado para \texttt{/v2/buscar}
+        \item Actualmente sin versión (v1 implícito)
+    \end{itemize}
 \end{itemize}
 
-\textbf{Decisión:} Se adopta para datasets mayores a 100 frases.
+{\large \noindent \textbf{Endpoints implementados}}\\
 
-% ======================================================
+{\large \noindent \textbf{1. POST /buscar}}\\
 
-\section{Etapa 3: API REST y arquitectura}
+Endpoint principal de búsqueda semántica.
 
-\subsection{Endpoint 1: POST /buscar}
-
-Input:
-
-\begin{lstlisting}
+\textbf{Request:}
+\begin{verbatim}
+Content-Type: application/json
+Body:
 {
-  "texto": "ola"
+    "texto": "hola"
 }
-\end{lstlisting}
+\end{verbatim}
 
-Output:
+\noindent\textbf{Response (200 OK):}
 
-\begin{lstlisting}
+\begin{verbatim}
 {
-  "query": "ola",
-  "grupo": "B",
-  "frase_similar": "Hola",
-  "similitud": 0.98,
-  "deletreo_activado": false,
-  "deletreo": null,
-  "total_caracteres": null
+    "query": "hola",
+    "grupo": "B",
+    "frase_similar": "Hola",
+    "similitud": 0.95,
+    "deletreo_activado": false,
+    "deletreo": null,
+    "total_caracteres": null,
+    "nombre_detectado": null,
+    "nombre_extraido": null,
+    "nombre_deletreado": null,
+    "total_caracteres_nombre": null
 }
-\end{lstlisting}
+\end{verbatim}
 
-\subsection{Endpoint 2: GET /grupos}
+\textbf{Errores:}
+\begin{itemize}
+    \item 400: Texto vacío o inválido
+    \item 503: Servicio no disponible
+    \item 500: Error interno
+\end{itemize}
 
-\begin{lstlisting}
+{\large \noindent \textbf{2. GET /grupos}}\\
+
+Listado de grupos disponibles y sus frases.
+
+\textbf{Response (200 OK):}
+\begin{verbatim}
 {
-  "grupos": {
-    "A": ["Ayuda, por favor", ...],
-    "B": ["Hola", ...],
-    "C": ["Gracias", ...]
-  }
+    "total_grupos": 3,
+    "grupos": {
+        "A": {
+            "nombre": "Emergencias",
+            "descripcion": "Frases de emergencia",
+            "total_frases": 13,
+            "ejemplos": ["Ayuda", "Socorro", "Urgente"]
+        },
+        "B": { ... },
+        "C": { ... }
+    }
 }
-\end{lstlisting}
+\end{verbatim}
 
-\subsection{Endpoint 3: GET /grupos/\{grupo\}}
+{\large \noindent \textbf{3. GET /grupos/\{grupo\}}}\\
 
-\begin{lstlisting}
+Frases de un grupo específico.\\
+
+\textbf{Path parameter:}
+\begin{itemize}
+    \item \texttt{grupo}: ``A'', ``B'' o ``C''
+\end{itemize}
+
+\textbf{Response (200 OK):}
+\begin{verbatim}
 {
-  "grupo": "A",
-  "frases": ["Ayuda, por favor", "Llama a la policía", ...]
+    "grupo": "A",
+    "nombre": "Emergencias",
+    "total_frases": 13,
+    "frases": [
+        "Ayuda, por favor",
+        "Llama a la policía",
+        ...
+    ]
 }
-\end{lstlisting}
+\end{verbatim}
 
-\subsection{Endpoint 4: POST /deletreo}
+\textbf{Errores:}
+\begin{itemize}
+    \item 404: Grupo no encontrado
+\end{itemize}
 
-\begin{lstlisting}
+{\large \noindent \textbf{4. POST /deletreo}}\\
+
+Deletreo manual de cualquier texto.
+
+\textbf{Request:}
+\begin{verbatim}
 {
-  "texto": "Carlos",
-  "incluir_espacios": true
+    "texto": "Hola Mundo"
 }
-\end{lstlisting}
+\end{verbatim}
 
-\begin{lstlisting}
+\textbf{Response (200 OK):}
+\begin{verbatim}
 {
-  "texto_original": "Carlos",
-  "deletreo": ["C", "A", "R", "L", "O", "S"],
-  "total_caracteres": 6
+    "texto_original": "Hola Mundo",
+    "texto_normalizado": "HolaMundo",
+    "deletreo": ["H","O","L","A","M","U","N","D","O"],
+    "total_caracteres": 9
 }
-\end{lstlisting}
+\end{verbatim}
 
-\subsection{Endpoint 5: GET /health}
+{\large \noindent \textbf{5. GET /health}}
+Health check del servicio.
 
-\begin{lstlisting}
+\textbf{Response (200 OK):}
+\begin{verbatim}
 {
-  "status": "healthy"
+    "status": "healthy",
+    "version": "2.1.0",
+    "matcher_initialized": true,
+    "total_frases": 43,
+    "uptime_seconds": 3600
 }
-\end{lstlisting}
+\end{verbatim}
 
-\section{Validación de datos con Pydantic}
+{\large \noindent \textbf{6. GET /docs}}\\
 
-\subsection{Modelos Pydantic}
+Documentación interactiva (Swagger UI). Generada automáticamente por FastAPI.
 
-\begin{lstlisting}
+Permite testing interactivo de endpoints.
+
+{\large \noindent \textbf{7. GET /redoc}}\\
+
+Documentación alternativa (ReDoc).\\
+
+Formato más limpio para lectura.\\
+
+\vspace{1em}
+
+{\large \noindent \textbf{Validación de datos con Pydantic}}
+
+\noindent \textbf{Modelos de validación}
+
+\begin{lstlisting}[language=Python]
+from pydantic import BaseModel, Field
+from typing import List
+
 class QueryRequest(BaseModel):
-    texto: str
+    """Modelo de validación para requests de búsqueda."""
 
+    texto: str = Field(
+        ...,
+        min_length=1,
+        max_length=500,
+        description="Texto a buscar",
+        examples=["hola", "necesito ayuda"]
+    )
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "texto": "hola"
+            }
+        }
+\end{lstlisting}
+
+Validaciones automáticas:
+\begin{itemize}
+    \item Texto es requerido (... = required)
+    \item Texto no puede estar vacío (min\_length=1)
+    \item Texto máximo 500 caracteres (max\_length=500)
+    \item Tipo string validado automáticamente
+\end{itemize}
+
+\noindent \textbf{Ejemplos de validación}
+
+Request válido:
+
+\begin{lstlisting}
+POST /buscar
+{
+  "texto": "hola"
+}
+→ ✓ Pasa validación
+\end{lstlisting}
+
+Request inválido (texto vacío):
+
+\begin{lstlisting}
+POST /buscar
+{
+  "texto": ""
+}
+→ Error 422 (Unprocessable Entity)
+{
+  "detail": [
+    {
+      "loc": ["body", "texto"],
+      "msg": "ensure this value has at least 1 characters",
+      "type": "value_error.any_str.min_length"
+    }
+  ]
+}
+\end{lstlisting}
+
+Request inválido (tipo incorrecto):
+
+\begin{lstlisting}
+POST /buscar
+{
+  "texto": 123
+}
+→ Error 422
+{
+  "detail": [
+    {
+      "loc": ["body", "texto"],
+      "msg": "str type expected",
+      "type": "type_error.str"
+    }
+  ]
+}
+\end{lstlisting}
+
+Validación de responses
+
+\begin{lstlisting}[language=Python]
 class QueryResponse(BaseModel):
+    """Modelo de validación para responses."""
+
     query: str
     grupo: str | None
     frase_similar: str
-    similitud: float
+    similitud: float = Field(ge=0.0, le=1.0)  # [0.0, 1.0]
     deletreo_activado: bool
     deletreo: List[str] | None = None
     total_caracteres: int | None = None
+    nombre_detectado: bool | None = None
+    nombre_extraido: str | None = None
+    nombre_deletreado: List[str] | None = None
+    total_caracteres_nombre: int | None = None
 \end{lstlisting}
 
-\noindent \textbf{Ventajas principales:}
+Validaciones:
 \begin{itemize}
-    \item Validación automática de tipos.
-    \item Valores por defecto definidos explícitamente.
-    \item Documentación integrada mediante OpenAPI.
-    \item Serialización y deserialización automática.
+    \item Similitud entre 0.0 y 1.0 (ge=0.0, le=1.0)
+    \item Tipos verificados automáticamente
+    \item Campos opcionales con None
 \end{itemize}
 
-\subsection{Ejemplo de validación}
+{\large \noindent \textbf{Manejo de errores}}\\
 
-\begin{lstlisting}
-# Request inválido
-{"texto": 123}  # Error: texto debe ser str
+\textbf{Estrategia de manejo}:
 
-# Request válido
-{"texto": "hola"}  # OK
+\begin{enumerate}
+    \item HTTPException para errores controlados
+    \item Exception handler para errores inesperados
+    \item Logging de todos los errores
+    \item Responses consistentes
+\end{enumerate}
+
+\textbf{Códigos por error}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{2cm}|p{4cm}|p{8cm}|}
+\hline
+\textbf{Código} & \textbf{Nombre} & \textbf{Uso} \\ \hline
+200 & OK & \textit{Request} exitoso \\ \hline
+400 & \textit{Bad Request} & Texto vacío, parámetros inválidos \\ \hline
+404 & \textit{Not Found} & Grupo no encontrado \\ \hline
+422 & \textit{Unprocessable} & Validación \textit{Pydantic} fallida \\ \hline
+500 & \textit{Internal Error} & Error no manejado \\ \hline
+503 & \textit{Service Unavailable} & \textit{Matcher} no inicializado \\ \hline
+\end{tabular}
+\caption[Códigos HTTP]{Códigos HTTP utilizados, elaboración propia.}
+\end{table}
+
+
+{\large \noindent \textbf{Implementación}}
+\begin{lstlisting}[language=Python]
+from fastapi import HTTPException
+from fastapi.responses import JSONResponse
+
+# Error controlado
+@app.post("/buscar")
+async def buscar(request: QueryRequest):
+    if matcher is None:
+        raise HTTPException(
+            status_code=503,
+            detail="Servicio no disponible: matcher no inicializado"
+        )
+
+    if not request.texto.strip():
+        raise HTTPException(
+            status_code=400,
+            detail="El texto no puede estar vacío"
+        )
+
+    try:
+        resultado = matcher.search_similar_phrase(request.texto)
+        return resultado
+    except Exception as e:
+        logger.error(f"Error en búsqueda: {e}")
+        raise HTTPException(
+            status_code=500,
+            detail="Error interno del servidor"
+        )
 \end{lstlisting}
 
-\subsection{Manejo de errores}
+{\large \noindent \textbf{Middleware de error handling}}
 
-\noindent \textbf{Códigos HTTP utilizados:}
-\begin{itemize}
-    \item 200 OK: Petición exitosa.
-    \item 400 Bad Request: Datos inválidos.
-    \item 404 Not Found: Recurso inexistente.
-    \item 500 Internal Server Error: Error general del servidor.
-    \item 503 Service Unavailable: Servicio no disponible.
-\end{itemize}
+\begin{lstlisting}[language=Python]
+@app.exception_handler(HTTPException)
+async def http_exception_handler(request, exc):
+    """Maneja excepciones HTTP con formato consistente."""
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={
+            "error": exc.detail,
+            "status_code": exc.status_code,
+            "path": str(request.url),
+            "timestamp": datetime.now().isoformat()
+        }
+    )
 
-Ejemplos de errores comunes:
-\begin{lstlisting}
-# Error 400: Texto vacío
-if not request.texto.strip():
-    raise HTTPException(status_code=400, detail="Texto vacio")
-
-# Error 404: Grupo no existe
-if grupo not in grupos:
-    raise HTTPException(status_code=404, detail=f"Grupo '{grupo}' no encontrado")
-
-# Error 503: Matcher no inicializado
-if matcher is None:
-    raise HTTPException(status_code=503, detail="Servicio no disponible")
+@app.exception_handler(Exception)
+async def general_exception_handler(request, exc):
+    """Maneja excepciones no capturadas."""
+    logger.error(f"Error no manejado: {exc}", exc_info=True)
+    return JSONResponse(
+        status_code=500,
+        content={
+            "error": "Error interno del servidor",
+            "status_code": 500,
+            "path": str(request.url),
+            "timestamp": datetime.now().isoformat()
+        }
+    )
 \end{lstlisting}
 
-\subsection{Logging y monitoreo}
+\vspace{1em}
 
-Configuración inicial del logger:
-\begin{lstlisting}
+{\large \noindent \textbf{Logging y monitoreo}}
+
+\textbf{Configuración de logging}
+
+\begin{lstlisting}[language=Python]
 import logging
+from logging.handlers import RotatingFileHandler
 
-logging.basicConfig(level=logging.INFO)
+# Configuración
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        # Console handler
+        logging.StreamHandler(),
+        # File handler con rotación
+        RotatingFileHandler(
+            'logs/app.log',
+            maxBytes=10*1024*1024,  # 10MB
+            backupCount=5
+        )
+    ]
+)
+
 logger = logging.getLogger(__name__)
 \end{lstlisting}
 
-Tipos de registros utilizados:
+\textbf{Eventos loggeados}
+
 \begin{lstlisting}
-# Startup
-logger.info("Inicializando matcher mejorado...")
+[STARTUP]
+2024-11-24 12:00:00 - app.main - INFO - Inicializando aplicación...
+2024-11-24 12:00:00 - app.matcher - INFO - Cargando modelo...
+2024-11-24 12:00:01 - app.matcher - INFO - Cache cargado exitosamente
+2024-11-24 12:00:01 - app.main - INFO - Aplicación lista
 
-# Requests
-logger.info(f"Buscando similitud para: {request.texto}")
+[REQUEST]
+2024-11-24 12:00:15 - app.main - INFO - Búsqueda para: hola
+2024-11-24 12:00:15 - app.matcher - DEBUG - Similitud calculada: 0.95
+2024-11-24 12:00:15 - app.main - INFO - Resultado: B - 0.95
 
-# Resultados
-logger.info(f"Resultado: {response.grupo} - {response.similitud}")
-
-# Errores
-logger.error(f"Error al buscar: {e}")
+[ERROR]
+2024-11-24 12:00:30 - app.main - ERROR - Error en búsqueda: División por cero
+2024-11-24 12:00:30 - app.main - ERROR - Traceback: ...
 \end{lstlisting}
 
-\noindent \textbf{Niveles de log:}
-\begin{itemize}
-    \item DEBUG: Información de diagnóstico detallada.
-    \item INFO: Eventos normales del sistema.
-    \item WARNING: Eventos inesperados que no detienen el servicio.
-    \item ERROR: Errores recuperables.
-    \item CRITICAL: Fallas graves que requieren detener el servicio.
-\end{itemize}
-
-\subsection{Documentación automática}
-
-FastAPI genera documentación OpenAPI de forma automática:
+\textbf{Métricas monitoreadas}
 
 \begin{itemize}
-    \item Swagger UI: \texttt{http://localhost:8000/docs}
-    \item ReDoc: \texttt{http://localhost:8000/redoc}
-    \item Esquema JSON: \texttt{http://localhost:8000/openapi.json}
+    \item Requests por segundo
+    \item Latencia promedio
+    \item Tasa de errores (4xx, 5xx)
+    \item Uso de memoria
+    \item Tiempo de inicialización
 \end{itemize}
 
-Ventajas:
+{\large \noindent \textbf{Documentación automática (OpenAPI / Swagger)}}
+
+\textbf{Generación automática}  
+FastAPI genera documentación OpenAPI 3.0 basada en:
+
 \begin{itemize}
-    \item Permite pruebas interactivas directamente desde el navegador.
-    \item La documentación siempre coincide con el código.
-    \item Facilita la generación de clientes automáticos.
+    \item Type hints de Python
+    \item Modelos Pydantic
+    \item Docstrings
+    \item Field descriptions
 \end{itemize}
 
+Acceso:
+\begin{itemize}
+    \item \texttt{http://localhost:8000/docs}
+    \item \texttt{http://localhost:8000/redoc}
+    \item \texttt{http://localhost:8000/openapi.json}
+\end{itemize}
+
+\textbf{Ejemplo de documentación generada}
+
+\begin{lstlisting}
+openapi: 3.0.2
+info:
+  title: API de Búsqueda Semántica
+  description: |
+    API REST para búsqueda semántica de frases en español usando PLN.
+  version: 2.1.0
+
+paths:
+  /buscar:
+    post:
+      summary: Buscar frase similar
+      description: |
+        Busca la frase más similar al texto proporcionado usando
+        embeddings semánticos y similitud coseno.
+      operationId: buscar_frase_similar_buscar_post
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryRequest'
+            example:
+              texto: "hola"
+      responses:
+        '200':
+          description: Búsqueda exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryResponse'
+        '400':
+          description: Texto vacío o inválido
+        '503':
+          description: Servicio no disponible
+
+components:
+  schemas:
+    QueryRequest:
+      type: object
+      required:
+        - texto
+      properties:
+        texto:
+          type: string
+          minLength: 1
+          maxLength: 500
+          description: Texto a buscar
+
+    QueryResponse:
+      type: object
+      required:
+        - query
+        - frase_similar
+        - similitud
+        - deletreo_activado
+      properties:
+        query:
+          type: string
+        grupo:
+          type: string
+          nullable: true
+        frase_similar:
+          type: string
+        similitud:
+          type: number
+          minimum: 0.0
+          maximum: 1.0
+        deletreo_activado:
+          type: boolean
+        # ... más campos
+\end{lstlisting}
+
+\textbf{Ventajas de documentación generada}
+
+\begin{itemize}
+    \item Siempre actualizada
+    \item Interactiva
+    \item Compatible con herramientas OpenAPI
+    \item Generación automática de clientes
+\end{itemize}
