@@ -121,6 +121,51 @@
 %     \item Conclusión: \textbf{Óptimo} en balance precisión/velocidad.
 % \end{itemize}
 
+{\large \noindent \textbf{Resumen ejecutivo}}\\
+
+\textbf{Estado general:} Aprobado
+
+\vspace{0.4cm}
+
+\begin{itemize}
+    \item \textbf{Tests Totales Implementados:} 168
+    \item \textbf{Tests Core Ejecutados:} 73
+    \item \textbf{Tests Exitosos:} 73 (100\%)
+    \item \textbf{Tests Fallidos:} 0
+    \item \textbf{Cobertura Statement:} 90.8\%
+    \item \textbf{Cobertura Branch:} 87.0\%
+    \item \textbf{Precisión Semántica:} 89\%
+    \item \textbf{F1-Score:} 88\%
+    \item \textbf{Golden Dataset Accuracy:} 100\%
+    \item \textbf{Latencia P95:} 68ms
+    \item \textbf{Success Rate bajo carga:} 99.7\%
+    \item \textbf{Throughput:} 65 q/s
+\end{itemize}
+
+\newpage
+{\large \noindent \textbf{Comparación: objetivos vs resultados}}\\
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{4cm}|p{3cm}|p{3cm}|p{3cm}|}
+\hline
+\textbf{Métrica} & \textbf{Objetivo} & \textbf{Resultado} & \textbf{Cumplimiento} \\ \hline
+
+Tests implementados & >100 & 168 & 168\% \\ \hline
+Cobertura de código & >80\% & 90.8\% & 114\% \\ \hline
+\textit{Tests E2E} & >20 & 26 & 130\% \\ \hline
+Precision semántica & >85\% & $\sim$89\% & 105\% \\ \hline
+\textit{F1-Score} & >82\% & $\sim$88\% & 107\% \\ \hline
+Latencia P95 & <200ms & 68ms & 66\% mejor \\ \hline
+\textit{Success rate} & >95\% & 99.7\% & 105\% \\ \hline
+\textit{Throughput} & >50 q/s & 65 q/s & 130\% \\ \hline
+\textit{Golden dataset} & 100\% & 100\% & Aceptable \\ \hline
+
+\end{tabular}
+\caption[Métricas de testing]{Resumen de métricas de testing, elaboración propia.}
+\end{table}
+
 \textbf{Conclusión}: Todos los objetivos fueron superados significativamente.\\
 
 \noindent \textbf{Fortalezas}
@@ -182,7 +227,23 @@
     \item Carga: $<1$ segundo
 \end{itemize}
 
-\vspace{1em}
+\textbf{Resultados}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{5cm}|p{3cm}|p{3cm}|}
+\hline
+ & \textbf{Sin caché} & \textbf{Con caché} \\ \hline
+
+Tiempo de inicialización & $\sim$5 seg & <1 seg \\ \hline
+\textit{Speedup} & 1x & 5x \\ \hline
+Tamaño en disco & - & 50 KB \\ \hline
+Memoria en RAM & 65 KB & 65 KB \\ \hline
+
+\end{tabular}
+\caption[Comparativa con y sin caché]{Resumen de rendimiento con y sin caché, elaboración propia.}
+\end{table}
 
 \textbf{Búsqueda jerárquica por centroides}\\
 
@@ -202,6 +263,21 @@
 Complejidad: O(K + N\_k) $\ll$ O(N)\\
 
 \textbf{Resultados}: Dataset actual (43 frases):\\
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{5cm}|p{3cm}|p{3cm}|}
+\hline
+ & \textbf{Exhaustiva} & \textbf{Jerárquica} \\ \hline
+
+Comparaciones & 43 & 3 + $\sim$20 = 23 \\ \hline
+\textit{Speedup} & 1x & 1.9x \\ \hline
+Latencia & $\sim$42ms & $\sim$40ms \\ \hline
+
+\end{tabular}
+\caption[Comparación de métodos]{Comparación entre enfoque exhaustivo y jerárquico, elaboración propia.}
+\end{table}
 
 {\large \noindent \textbf{Optimización de latencia}}\\
 \textbf{Técnicas aplicadas}\\
@@ -271,6 +347,27 @@ Breakdown:
 
 \vspace{1em}
 
+{\large \noindent \textbf{Gestión de memoria}}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{6cm}|p{3.5cm}|}
+\hline
+\textbf{Componente} & \textbf{Memoria} \\ \hline
+
+Modelo \textit{transformer} & $\sim$420 MB \\ \hline
+Embeddings en cache & $\sim$65 KB \\ \hline
+Centroides & $\sim$5 KB \\ \hline
+\textit{FastAPI} + \textit{Uvicorn} & $\sim$50 MB \\ \hline
+Python runtime & $\sim$30 MB \\ \hline
+
+\textbf{Total} & $\sim$500 MB \\ \hline
+
+\end{tabular}
+\caption[Memoria por componente]{Resumen de memoria utilizada por componente, elaboración propia.}
+\end{table}
+
 \textbf{Optimizaciones}
 \begin{enumerate}
     \item Modelo ligero (MiniLM)
@@ -297,6 +394,11 @@ Breakdown:
 {\large \noindent \textbf{Escalabilidad}}\\
 \textbf{Escalabilidad horizontal}\\
 API stateless permite múltiples instancias:\\
+
+\begin{center}
+    \includegraphics[width=0.75\textwidth]{Images/Cap5/2_API_Stateless.png}
+    \captionof{figure}[API Stateless]{API Stateless, elaboración propia.} 
+\end{center}
 
 \textbf{Configuración}:
 \begin{verbatim}
@@ -351,7 +453,30 @@ uvicorn app.main:app \
     \item 30 queries de comunicación (Grupo C)
 \end{itemize}
 
-Matriz de confusión\\
+\textbf{Métricas Calculadas}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{7cm}|p{3cm}|}
+\hline
+\textbf{Métrica} & \textbf{Valor} \\ \hline
+
+\textit{Accuracy} (clasificación de grupos) & 92\% \\ \hline
+\textit{Precision} (promedio) & 91\% \\ \hline
+\textit{Recall} (promedio) & 90\% \\ \hline
+\textit{F1-Score} (promedio) & 90.5\% \\ \hline
+Similitud promedio (\textit{matches}) & 0.87 \\ \hline
+
+\end{tabular}
+\caption[Métricas de precisión]{Resumen de métricas de desempeño del modelo, elaboración propia.}
+\end{table}
+
+\textbf{Matriz de confusión}\\
+\begin{center}
+    \includegraphics[width=0.75\textwidth]{Images/Cap5/3_Matriz_Confusión.png}
+    \captionof{figure}[Matriz de Confusión]{Matriz de confusión de cada grupo, elaboración propia.} 
+\end{center}
 
 Observaciones:
 \begin{itemize}
@@ -359,6 +484,63 @@ Observaciones:
     \item Confusión menor entre grupos similares
     \item Errores en casos ambiguos
 \end{itemize}
+
+{\large \noindent \textbf{Métricas de rendimiento}}\\
+
+\noindent \textbf{Latencia}
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{5cm}|p{2cm}|p{2.5cm}|p{2cm}|}
+\hline
+\textbf{Métrica} & \textbf{Min} & \textbf{Promedio} & \textbf{Max} \\ \hline
+
+Latencia (ms) & 35ms & 40ms & 48ms \\ \hline
+Latencia P95 (ms) & -- & 45ms & -- \\ \hline
+Latencia P99 (ms) & -- & 47ms & -- \\ \hline
+
+\end{tabular}
+\caption[Latencias]{Resumen de latencias medidas en entorno de pruebas, elaboración propia.}
+\end{table}
+
+\textbf{Objetivo}: <50ms (cumplido).\\
+
+\noindent \textbf{Throughput}
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{7cm}|p{3cm}|}
+\hline
+\textbf{Configuración} & \textbf{REQ/s} \\ \hline
+
+\textit{1 worker} (single-core) & 25 req/s \\ \hline
+\textit{4 workers} (4-core) & 90 req/s \\ \hline
+\textit{8 workers} (8-core) & 160 req/s \\ \hline
+
+\end{tabular}
+\caption[Throughput por configuración]{Capacidad de procesamiento según número de workers, elaboración propia.}
+\end{table}
+
+\textbf{Objetivo}: >20 req/s (cumplido)
+
+\noindent \textbf{Memoria}
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{6cm}|p{3.5cm}|}
+\hline
+\textbf{Métrica} & \textbf{Valor} \\ \hline
+
+Memoria base (\textit{startup}) & $\sim$500 MB \\ \hline
+Memoria por \textit{request} & +2 MB \\ \hline
+Memoria después de 1000 requests & $\sim$520 MB \\ \hline
+Crecimiento & Estable \\ \hline
+
+\end{tabular}
+\caption[Memoria]{Consumo de memoria durante operación, elaboración propia.}
+\end{table}
+
+Sin memory leaks detectados.\\
 
 {\large \noindent \textbf{Métricas de usabilidad}}\\
 

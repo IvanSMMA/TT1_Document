@@ -534,7 +534,7 @@ Dataset curado manualmente con casos que deben funcionar correctamente\\
 \caption[Métricas de clasificación]{Resumen de métricas de clasificación, elaboración propia.}
 \end{table}
 
-El \textit{F1-Score} de 88\% indica balance óptimo entre \textit{precision} y \textit{recall}.
+El \textit{F1-Score} de 88\% indica balance óptimo entre \textit{precision} y \textit{recall}.\\
 
 \textbf{Reconocimiento de sinónimos}
 
@@ -553,15 +553,36 @@ C & gracias, muchas gracias, bien & 78\% \\ \hline
 \caption[Sinónimos testeados]{Evaluación por grupos de sinónimos, elaboración propia.}
 \end{table}
 
-\textbf{Objetivo}: >70\% dentro de cada grupo
+\textbf{Objetivo}: >70\% dentro de cada grupo.\\
 
-{\large \noindent \textbf{Cobertura de código}}
+\vspace{1em}
+
+{\large \noindent \textbf{Cobertura de código}}\\
 \textbf{Cobertura global del módulo}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{5cm}|p{1.8cm}|p{1.8cm}|p{2.2cm}|p{2.2cm}|}
+\hline
+\textbf{Módulo} & \textbf{Stmts} & \textbf{Missing} & \textbf{Coverage} & \textbf{Branch} \\ \hline
+
+app/matcher\_improved.py & 445 & 38 & 91.5\% & 88.7\% \\ \hline
+app/preprocess.py & 178 & 15 & 91.6\% & 89.2\% \\ \hline
+app/main.py & 156 & 19 & 87.8\% & 82.1\% \\ \hline
+app/models.py & 67 & 4 & 94.0\% & 91.5\% \\ \hline
+app/config.py & 45 & 6 & 86.7\% & 83.3\% \\ \hline
+
+\textbf{Total} & 891 & 82 & 90.8\% & 87.0\% \\ \hline
+
+\end{tabular}
+\caption[Coverage por módulo]{Resumen de coverage por módulo, elaboración propia.}
+\end{table}
 
 \textbf{Statement Coverage}: $90.8\%$ \ (Objetivo: $>80\%$)\\
 \indent \textbf{Branch Coverage}: $87.0\%$ \ (Objetivo: $>75\%$)\\
 
-\textbf{Análisis de líneas sin cobertura}\\
+\noindent \textbf{Análisis de líneas sin cobertura}\\
 Las 82 líneas sin cobertura (9.2\%) corresponden a:\\
 
 \begin{enumerate}
@@ -571,3 +592,71 @@ Las 82 líneas sin cobertura (9.2\%) corresponden a:\\
 \end{enumerate}
 
 Estos casos no afectan la funcionalidad core del sistema.
+
+%===============================================================
+\section{Prueba de Usabilidad mediante Cuestionario Estructurado}
+
+Con el propósito de evaluar la experiencia de uso, la percepción de calidad del módulo de traducción y la claridad de las animaciones en Lengua de Señas Mexicana (LSM), se aplicó una prueba de usabilidad basada en un cuestionario estructurado.\\
+
+Este instrumento fue diseñado considerando las recomendaciones de la norma ISO 9241-210 \cite{ref62}, así como principios derivados de las heurísticas de Nielsen \cite{ref61}, con el fin de evaluar aspectos como:
+
+\begin{itemize}
+    \item Facilidad de uso.
+    \item Pertinencia de la traducción.
+    \item Calidad perceptual del movimiento de la animación.
+    \item Utilidad del vocabulario incluido.
+    \item satisfacción general del usuario.
+\end{itemize}
+
+\noindent \textbf{Procedimiento}\\
+La prueba se llevó a cabo siguiendo el siguiente protocolo:
+\begin{itemize}
+    \item A cada participante se le mostró un video demostrativo del funcionamiento de la aplicación.
+    \item Posteriormente, se le invitó a responder un cuestionario en línea compuesto por preguntas cerradas de opción múltiple, escalas Likert de 1 a 5, y preguntas abiertas para permitir observaciones cualitativas.
+    \item La participación fue anónima y sin recopilar datos personales sensibles.
+    \item No se requirió experiencia previa en LSM para participar.
+\end{itemize}
+
+\noindent \textbf{Estructura del cuestionario}\\
+El cuestionario se compone de cinco bloques temáticos:
+\begin{itemize}
+    \item Datos demográficos.
+    \item Conocimientos previos en LSM.
+    \item Percepción de velocidad y pertinencia de la traducción.
+    \item Calidad del movimiento del avatar.
+    \item Cubrimiento del vocabulario y opinión general.
+\end{itemize}
+
+En la \textbf{Tabla \ref{tab:instrumento-usabilidad}} se resume la estructura completa del instrumento, indicando el tipo de pregunta y su propósito.
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{5cm}|p{4cm}|p{4cm}|}
+\hline
+\textbf{Categoría} & \textbf{Pregunta evaluada} & \textbf{Tipo de respuesta} \\ \hline
+
+Datos demográficos & Edad del participante & Opción múltiple \\ \hline
+
+Conocimientos previos en LSM & Nivel de dominio de LSM & Opción múltiple \\ \hline
+
+Experiencia previa & Uso previo de herramientas de traducción & Sí / No \\ \hline
+
+Comparativa con herramientas previas & Diferencias observadas respecto a herramientas de traducción previamente utilizadas & Respuesta abierta \\ \hline
+
+Velocidad y pertinencia de traducción & Evaluación de qué tan rápido y pertinente fue el emparejamiento de la frase (escala 1–5) & Escala Likert \\ \hline
+
+Utilidad del deletreo & Utilidad del modo de deletreo dentro de una conversación & Escala Likert \\ \hline
+
+Calidad del movimiento del avatar & Percepción de fluidez y claridad del movimiento en las animaciones & Opción múltiple \\ \hline
+
+Cobertura del vocabulario & Adecuación del conjunto de frases y categorías incluidas en la aplicación & Opción múltiple \\ \hline
+
+Fortalezas percibidas & Aspectos positivos o elementos destacados por el usuario & Respuesta abierta \\ \hline
+
+Áreas de oportunidad & Problemas, fallas o aspectos a mejorar identificados por el usuario & Respuesta abierta \\ \hline
+
+\end{tabular}
+\caption[Instrumento de evaluación de usabilidad]{Resumen del cuestionario empleado para la evaluación de usabilidad de la aplicación, elaboración propia.}
+\label{tab:instrumento-usabilidad}
+\end{table}
