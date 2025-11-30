@@ -721,6 +721,7 @@ De igual manera, la IA emplea diferentes técnicas, las cuales se enlistan a con
 
 En este Trabajo Terminal nos centraremos en la técnica de Procesamiento de Lenguaje Natural (PLN). En el siguiente apartado se profundizará más en el concepto, características y usos del PLN.\\
 
+\newpage
 \section{Procesamiento de Lenguaje Natural (PLN)}
 El Procesamiento de Lenguaje Natural (PLN, o NLP por sus siglas en inglés) es el campo de estudio que busca entender cómo funciona el lenguaje, su construcción, la generación de nuevo lenguaje, así como todas las tareas que tienen relación con el tratamiento del lenguaje como lo es la generación de texto, traductores, generadores de resúmenes, chatbots, entre otros \cite{ref45}.\\
 
@@ -835,7 +836,7 @@ A partir de un listado de palabras \textit{Stop words}, se hace una busqueda de 
 Para poder hacer el reconocimiento de las diferentes entidades, se utilizan una serie de aproximaciones, siendo necesario ademas, tener una noción del contexto en el cual se encuentra cada una de las entidades para determinar su significado. Finalmente, dentro de las posibles entidades se realiza una asociación con los conceptos del contexto dentro de una base de datos de conocimiento.
 \begin{center}
 	\makebox[\textwidth]{%
-		\includegraphics[width=1\textwidth]{Images/Cap 2/NER.png}
+		\includegraphics[width=0.95\textwidth]{Images/Cap 2/NER.png}
 	}
     \captionof{figure}[Reconocimiento de Entidades Nombradas (NER)]{Reconocimiento de Entidades Nombradas (NER), obtenido de \cite{ref47}}  % Pie de foto manual
 \end{center}
@@ -869,7 +870,7 @@ Los embeddings semánticos constituyen una forma de representar palabras, frases
 
 Para obtener estas representaciones, se emplean algoritmos de aprendizaje automático entrenados con grandes volúmenes de texto, como libros, artículos científicos o recopilaciones masivas de contenido web. Durante el entrenamiento, el modelo identifica patrones, asociaciones y regularidades en el uso del lenguaje. De esta manera, aprende a ubicar cada palabra dentro de un espacio vectorial de muchas dimensiones, donde la proximidad entre vectores refleja su similitud semántica. Así, términos relacionados aparecen cercanos entre sí, mientras que aquellos con significados distintos se separan en el espacio \cite{refebd1}.\\
 
-\noindent \textbf{Vectores semánticos o representaciones vectoriales}
+\textbf{Vectores semánticos o representaciones vectoriales}
 
 Los vectores semánticos, también denominados representaciones vectoriales o simplemente embeddings, son la base del procesamiento moderno del significado en modelos computacionales. Un vector puede entenderse como una secuencia ordenada de números que define un punto dentro de un espacio con múltiples dimensiones; cada una de estas dimensiones expresa alguna característica aprendida por el modelo durante su entrenamiento \cite{refebd1}.\\
 
@@ -882,7 +883,7 @@ En la práctica, los embeddings suelen ser representaciones densas de alta dimen
     \captionof{figure}[Representación Vectorial]{Representación vectorial, obtenido de \cite{refebd1}.}  % Pie de foto manual
 \end{center}
 
-\noindent \textbf{Dimensiones de un embedding como una analogía con mapas}
+\textbf{Dimensiones de un embedding como una analogía con mapas}
 
 Las dimensiones de un vector semántico pueden entenderse del mismo modo que las coordenadas que ubican un punto en un mapa. Sin embargo, en lugar de señalar una posición geográfica, cada dimensión sitúa una palabra o frase dentro de un espacio semántico abstracto. Cada una de estas dimensiones refleja alguna característica latente del significado, como matices emocionales, atributos gramaticales o cualquier otro rasgo aprendido por el modelo durante el entrenamiento \cite{refebd2}.\\
 
@@ -890,7 +891,7 @@ Cuando todas las dimensiones se combinan, forman una especie de “mapa conceptu
 
 Por ejemplo, si una de las dimensiones capturara aspectos relacionados con la polaridad emocional, podría esperarse que palabras como “feliz” o “alegre” obtuvieran valores similares, mientras que palabras como “triste” o “deprimido” se localizarían en posiciones opuestas dentro de esa misma dimensión.\\
 
-\noindent \textbf{Cómo los vectores representan el significado en los textos}
+\textbf{Cómo los vectores representan el significado en los textos}
 
 Los embeddings permiten que un sistema automático comprenda el significado de un texto al reflejar patrones de uso y coocurrencia entre las palabras. Aquellos términos que suelen aparecer en contextos similares tienden a adquirir vectores parecidos. De esta manera, palabras como rey y reina se ubicarán cerca entre sí porque suelen relacionarse con conceptos comunes, como la monarquía o el poder \cite{refebd3}.\\
 
@@ -907,12 +908,13 @@ Si bien los modelos reales manejan estructuras mucho más complejas, este tipo d
 
 Los embeddings actuales, como los generados por modelos avanzados de Google, OpenAI y otros sistemas basados en redes neuronales, suelen tener cientos o miles de dimensiones. Estas dimensiones no están definidas manualmente; surgen de manera automática durante el entrenamiento y cada una representa un aspecto abstracto del significado aprendido por el modelo \cite{refebd1}.\\
 
+\newpage
 El uso de una gran cantidad de dimensiones permite representar los textos con un nivel de detalle muy elevado, similar a disponer de un mapa extremadamente preciso con numerosas coordenadas. Gracias a esta alta dimensionalidad, los modelos pueden capturar relaciones semánticas complejas, matices contextuales, analogías y diferentes sentidos de una misma palabra \cite{refebd1}.\\
 
 Por ejemplo, el siguiente vector podría representar el embedding de la frase “La materia no se crea ni se destruye, solo se transforma”:\\
 
 \begin{center}
-    \includegraphics[width=0.5\textwidth]{Images/Cap 2/Embeddings/3_RepresentaciónEmbedding.png}
+    \includegraphics[width=0.45\textwidth]{Images/Cap 2/Embeddings/3_RepresentaciónEmbedding.png}
     \captionof{figure}[Representación Vectorial de un embedding]{Representación vectorial de un embedding, obtenido de \cite{refebd1}.}  % Pie de foto manual
 \end{center}
 
@@ -920,7 +922,7 @@ En dicho vector, cada componente corresponde a una dimensión del espacio semán
 
 De este modo, cuando se genera el embedding de otra frase con un significado parecido. Por ejemplo: “La energía no desaparece, únicamente cambia de forma”, ambos vectores tienden a aparecer muy próximos dentro del espacio semántico, ya que comparten patrones conceptuales y contextuales. Esta cercanía numérica refleja la similitud entre las ideas expresadas en ambas oraciones.\\
 
-\noindent \textbf{Entrenamiento de los modelos de embedding (usualmente con 768 dimensiones)}
+\textbf{Entrenamiento de los modelos de embedding (usualmente con 768 dimensiones)}
 
 Los modelos encargados de producir embeddings se entrenan utilizando cantidades masivas de texto, que pueden incluir libros, artículos científicos, publicaciones web, código y diversos tipos de documentos. En los últimos años, este proceso ha escalado de forma significativa, con modelos que se entrenan sobre volúmenes de datos cada vez mayores \cite{refebd4}.\\
 
@@ -935,7 +937,7 @@ El número de dimensiones que tendrá cada embedding se establece como un parám
 
 Además de comprender el concepto general de los embeddings, es importante reconocer que existen diversas técnicas para generarlos. Estas técnicas han evolucionado con el tiempo y pueden clasificarse en dos grandes categorías: los métodos clásicos, que producen representaciones estáticas, y los métodos modernos, que generan representaciones contextuales capaces de capturar matices más complejos del lenguaje. A continuación, se describen brevemente los modelos más representativos de cada categoría.\\
 
-\noindent \textbf{Técnicas clásicas de generación de embeddings}
+\textbf{Técnicas clásicas de generación de embeddings}
 
 Los métodos clásicos fueron pioneros en la representación vectorial del lenguaje y permitieron reemplazar las palabras por vectores que conservaban relaciones semánticas básicas. Entre los modelos más influyentes se encuentran:
 
@@ -947,7 +949,7 @@ Los métodos clásicos fueron pioneros en la representación vectorial del lengu
 
 Estos modelos producen embeddings estáticos: cada palabra posee un único vector sin importar el contexto en el que aparece.\\
 
-\noindent \textbf{Técnicas modernas (embeddings contextuales)}
+\textbf{Técnicas modernas (embeddings contextuales)}
 
 Con el desarrollo de arquitecturas más avanzadas, como redes bidireccionales y modelos transformers, surgieron métodos capaces de generar embeddings que dependen del contexto de cada oración. Esto permite capturar significados más finos y relaciones más complejas entre las palabras. Entre los modelos destacados se encuentran:
 
@@ -980,15 +982,14 @@ El cálculo consiste en obtener el coseno del ángulo formado por dos vectores d
     \item \textbf{-1} representa direcciones totalmente opuestas, lo cual se interpreta como máxima disimilitud.
 \end{itemize}
 
+\newpage
 Esta medida puede visualizarse como la comparación entre dos flechas: si ambas apuntan hacia el mismo lugar, la similitud es alta; si forman un ángulo recto, no guardan relación; y si se orientan en direcciones contrarias, son totalmente diferentes.\\
 
 En el ámbito del Machine Learning, Procesamiento de Lenguaje Natural (PLN) e Inteligencia Artificial, la similitud del coseno resulta fundamental debido a que estos sistemas operan con datos representados como vectores (por ejemplo, embeddings de texto). Al convertir palabras, frases o documentos en vectores numéricos, se pueden comparar semánticamente mediante esta métrica \cite{refcos2}.\\
 
 Por ejemplo, un chatbot puede transformar una consulta en un embedding, compararlo con los vectores almacenados en una base de datos y emplear la similitud del coseno para identificar cuál respuesta es la más cercana en significado. Este proceso permite medir cuánta relación existe entre dos representaciones vectoriales y seleccionar la opción más adecuada \cite{refcos2}\cite{refcos3}.\\
 
-En resumen, la similitud del coseno es la métrica estándar para comparar embeddings, ya que ofrece una forma robusta de evaluar el parecido semántico entre textos mediante la orientación de sus vectores en el espacio \cite{refcos3}.\\
-
-\noindent \textbf{Definición matemática:}
+\textbf{Definición matemática:}
 
 La similitud del coseno se define a partir de la relación angular entre dos vectores. Matemáticamente, se expresa como \cite{refcos1}\cite{refcos2}:
 
@@ -1006,7 +1007,7 @@ donde:
 
 Esta formulación permite medir qué tan alineados están dos vectores dentro de un espacio multidimensional, lo cual es fundamental para comparar representaciones semánticas en tareas de PLN.\\
 
-\noindent \textbf{Propiedades}:
+\textbf{Propiedades}:
 
 La similitud coseno presenta características que la hacen especialmente útil en modelos basados en embeddings:
 
@@ -1043,7 +1044,7 @@ A continuación, se describen los elementos esenciales que conforman la arquitec
     \item \textbf{Embeddings}. Cada token del texto se representa como un vector denso de alta dimensionalidad. Esto permite trabajar con significado numérico en lugar de cadenas de texto.
     \item \textbf{Codificación posicional}: Como el modelo no es secuencial, se introduce información sobre el orden de los tokens usando vectores posicionales, normalmente basados en funciones senoidales.
     \begin{center}
-        \includegraphics[width=0.95\textwidth]{Images/Cap 2/Transformers/Transformers1.jpg}
+        \includegraphics[width=0.60\textwidth]{Images/Cap 2/Transformers/Transformers1.jpg}
         \captionof{figure}[Vectores Posicionales]{Vectores Posicionales, obtenido de \cite{reftrans1}.}  % Pie de foto manual
     \end{center}
     \item \textbf{Mecanismo de atención (Self-Attention)}: Este mecanismo permite que cada token “preste atención” a otros tokens de la secuencia para capturar relaciones contextuales. Se utilizan tres vectores: query, key y value.
@@ -1052,7 +1053,7 @@ A continuación, se describen los elementos esenciales que conforman la arquitec
     \item \textbf{Normalización y conexiones residuales}: Estas técnicas estabilizan el entrenamiento y ayudan a preservar el flujo de información.
 \end{enumerate}
 
-\noindent \textbf{Arquitectura general: encoder y decoder}
+\textbf{Arquitectura general: encoder y decoder}
 
 El Transformer original está compuesto por dos bloques principales \cite{reftrans1}:
 \begin{itemize}
@@ -1061,7 +1062,7 @@ El Transformer original está compuesto por dos bloques principales \cite{reftra
 \end{itemize}
 
 \begin{center}
-    \includegraphics[width=0.95\textwidth]{Images/Cap 2/Transformers/Transformers2.jpg}
+    \includegraphics[width=0.80\textwidth]{Images/Cap 2/Transformers/Transformers2.jpg}
     \captionof{figure}[Arquitectura General Transformer]{Arquitectura General de un Transformer, obtenido de \cite{reftrans1}.}  % Pie de foto manual
 \end{center}
 
@@ -1072,7 +1073,7 @@ Dependiendo del tipo de modelo, puede utilizarse solo una de estas partes \cite{
     \item \textbf{Modelos encoder–decoder}: Como T5, útiles para tareas de traducción o reformulación.
 \end{itemize}
 
-\noindent \textbf{Procesamiento general de un Transformer}
+\textbf{Procesamiento general de un Transformer}
 \begin{enumerate}
     \item Tokenización del texto de entrada.
     \item Conversión de tokens a embeddings.
@@ -1081,6 +1082,8 @@ Dependiendo del tipo de modelo, puede utilizarse solo una de estas partes \cite{
     \item (En modelos de generación) aplicación de atención enmascarada para controlar el orden autoregresivo.
     \item Obtención del siguiente token mediante una capa final softmax.
 \end{enumerate}
+
+\vspace{0.8em}
 
 En términos generales, la arquitectura Transformer integra los componentes que se describen a continuación \cite{reftrans1}:
 \begin{itemize}
@@ -1092,9 +1095,11 @@ En términos generales, la arquitectura Transformer integra los componentes que 
     \item \textbf{Positional Encoding}: incorpora información relativa al orden.
 \end{itemize}
 
-A continuación, se enlistan algunos modelos pre-entrenados basados en Transformers.\\
+\vspace{0.8em}
 
-\noindent \textbf{BERT (Bidirectional Encoder Representations from Transformers)}
+Algunos modelos pre-entrenados basados en Transformers son:\\
+
+\textbf{BERT (Bidirectional Encoder Representations from Transformers)}
 
 \begin{itemize}
     \item Entrenado con grandes corpus como Wikipedia y BookCorpus (aprox. 3.3B palabras) \cite{refebd9}.
@@ -1106,7 +1111,7 @@ A continuación, se enlistan algunos modelos pre-entrenados basados en Transform
     \item Su naturaleza bidireccional lo hace ideal para tareas de comprensión del lenguaje.
 \end{itemize}
 
-\noindent \textbf{SENTENCE-TRANSFORMERS (BERT)}
+\textbf{SENTENCE-TRANSFORMERS (BERT)}
 
 Extensión de BERT adaptada para generar embeddings semánticos de oraciones con alta calidad \cite{refebd10}. Se caracteriza por:
 \begin{itemize}
@@ -1114,6 +1119,8 @@ Extensión de BERT adaptada para generar embeddings semánticos de oraciones con
     \item Optimización específica para tareas de búsqueda semántica, clustering y clasificación basada en similitud.
     \item Disponibilidad de modelos especializados para distintos idiomas y aplicaciones.
 \end{itemize}
+
+\vspace{1em}
 
 El modelo utilizado en este Trabajo Terminal es paraphrase-multilingual-MiniLM-L12-v2. Sus características principales son:
 \begin{itemize}
@@ -1201,6 +1208,7 @@ Las características principales de Expo son las siguientes \cite{refexpo2}:
     \item \textbf{Bibliotecas integradas}: incluye múltiples API preconstruidas que permiten acceder fácilmente a funcionalidades nativas del dispositivo.
 \end{itemize}
 
+\newpage
 Las herramientas destacadas del ecosistema de Expo incluyen \cite{refexpo3}:
 \begin{itemize}
     \item \textbf{Expo Go App}: aplicación móvil que permite visualizar y probar el proyecto en tiempo real, sin necesidad de compilarlo por completo.
@@ -1217,9 +1225,11 @@ A continuación, se enlistan las ventajas de utilizar Expo para el desarrollo de
 
 Expo para React Native constituye una solución potente y optimizada para acelerar el desarrollo de aplicaciones móviles sin perder flexibilidad. Ya sea para la creación de prototipos o proyectos multiplataforma, Expo proporciona un ecosistema integral de herramientas y servicios que simplifican el flujo de trabajo y mejoran la eficiencia en todo el proceso \cite{refexpo3}.\\
 
+\newpage
 \section{API}
 Las API (del inglés Application Programming Interfaces) son mecanismos que permiten la comunicación entre dos componentes de software mediante definiciones, protocolos y reglas de intercambio. Actúan como un contrato de servicio que especifica cómo deben comunicarse las aplicaciones a través de solicitudes y respuestas estructuradas \cite{refapi1}. En este modelo, el cliente envía la solicitud y el servidor la procesa y devuelve una respuesta, permitiendo la integración entre distintos sistemas \cite{refapi1}.\\
-\newline \textbf{Tipos de API según su funcionamiento}
+
+\textbf{Tipos de API según su funcionamiento}
 
 \begin{center}
     \includegraphics[width=0.8\textwidth]{Images/Cap 2/API.png}
@@ -1234,7 +1244,7 @@ Las API pueden operar de distintas formas \cite{refapi1}:
     \item \textbf{REST}: es el tipo más utilizado, basado en HTTP y en el intercambio de datos entre cliente y servidor.
 \end{itemize}
 
-\noindent\textbf{Clasificación por ámbito y uso}
+\textbf{Clasificación por ámbito y uso}
 
 Según su alcance y aplicación, las API se agrupan en \cite{refapi1}\cite{refapi2}:
 \begin{itemize}
@@ -1267,6 +1277,7 @@ Entre las principales ventajas de las API destacan \cite{refapi4}:
 \subsection{API REST}
 La Transferencia de Estado Representacional (REST, por sus siglas en inglés) constituye un estilo arquitectónico que define un conjunto de principios para el diseño de interfaces entre sistemas. Su propósito es establecer reglas que permitan crear APIs capaces de comunicarse de forma eficiente, escalable y fiable, incluso en entornos distribuidos como Internet. Una arquitectura basada en REST se caracteriza por ser flexible, fácil de mantener y por ofrecer portabilidad entre distintas plataformas, lo que la vuelve una opción común para el desarrollo de servicios web modernos \cite{refapi5}.\\
 
+\newpage
 Cuando una API se implementa siguiendo estos principios, se le denomina API REST o API RESTful. Del mismo modo, los servicios web construidos bajo esta arquitectura reciben el nombre de servicios web RESTful. En la práctica, los términos REST API y RESTful API suelen emplearse como equivalentes \cite{refapi5}.\\
 
 A continuación, se describen los principales lineamientos que definen el estilo REST \cite{refapi5}:
@@ -1293,7 +1304,7 @@ Una API RESTful es una interfaz que permite que dos sistemas informáticos inter
 
 Las API diseñadas bajo el estilo REST facilitan este tipo de integración, ya que emplean estándares abiertos y bien definidos que permiten una comunicación eficiente, confiable y sencilla de mantener \cite{refapi6}.\\
 
-\noindent \textbf{Principios fundamentales de REST}
+\textbf{Principios fundamentales de REST}
 
 Los servicios RESTful se basan en una serie de principios arquitectónicos que garantizan interoperabilidad, escalabilidad y simplicidad \cite{refapi6}:
 
@@ -1305,7 +1316,7 @@ Los servicios RESTful se basan en una serie de principios arquitectónicos que g
     \item \textbf{Sistema en capas}: La arquitectura puede incluir múltiples capas como seguridad, balanceo de carga o intermediarios sin que el cliente necesite conocer su existencia.
 \end{enumerate}
 
-\noindent \textbf{Métodos HTTP utilizados en REST}
+\textbf{Métodos HTTP utilizados en REST}
 
 Los servicios RESTful emplean los métodos del protocolo HTTP para definir la operación que se desea realizar sobre un recurso \cite{refapi6}:
 
@@ -1317,7 +1328,7 @@ Los servicios RESTful emplean los métodos del protocolo HTTP para definir la op
     \item \textbf{DELETE}: Elimina el recurso identificado por la URI.
 \end{itemize}
 
-\noindent \textbf{Códigos de estado HTTP}
+\textbf{Códigos de estado HTTP}
 
 Las respuestas de una API RESTful utilizan códigos de estado estándar para indicar el resultado de la operación \cite{refapi6}:
 
@@ -1381,7 +1392,7 @@ Los servicios en la nube son soluciones tecnológicas que permiten a usuarios y 
 El funcionamiento de la nube se basa en la virtualización de recursos que residen en servidores físicos ubicados en centros de datos gestionados por los proveedores. Los usuarios acceden a estos recursos mediante una conexión a internet, almacenando y procesando la información en servidores remotos en lugar de en equipos locales. Generalmente, el uso de la nube se cobra por suscripción o consumo, lo que representa una alternativa más económica frente al mantenimiento de infraestructura propia \cite{refnub1}.\\
 
 \begin{center}
-    \includegraphics[width=0.8\textwidth]{Images/Cap 2/Nube.png}
+    \includegraphics[width=0.7\textwidth]{Images/Cap 2/Nube.png}
     \captionof{figure}[Servicios en la Nube]{Funcionamiento de los Servicios en la Nube, obtenido de \cite{refnub2}.} 
 \end{center}
 
@@ -1404,7 +1415,7 @@ Los servicios de nube se clasifican comúnmente en tres modelos principales, con
     \item \textbf{Todo como servicio (XaaS)}: extiende el modelo a cualquier recurso tecnológico disponible como servicio bajo demanda.
 \end{itemize}
 
-\vspace{1em} % ← agrega espacio aquí
+\vspace{1em} 
 
 Contar con un proveedor especializado en la nube aporta beneficios adicionales \cite{refnub3}, como lo son:
 \begin{itemize}
