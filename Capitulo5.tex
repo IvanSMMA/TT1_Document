@@ -39,10 +39,10 @@ Total general & 168 & - & - \\ \hline
 El porcentaje elevado de tests E2E (superior al estándar industrial de 10--15\%) se justifica por los requisitos específicos de sistemas PLN:
 
 \begin{enumerate}
-    \item Validación exhaustiva de robustez lingüística
-    \item Tests de tolerancia a errores ortográficos y variaciones naturales
-    \item Validación de casos edge específicos (nombres propios, leet speak)
-    \item Degradación gradual ante inputs de baja calidad
+    \item Validación exhaustiva de robustez lingüística.
+    \item Tests de tolerancia a errores ortográficos y variaciones naturales.
+    \item Validación de casos edge específicos (nombres propios, leet speak).
+    \item Degradación gradual ante inputs de baja calidad.
 \end{enumerate}
 
 {\large \noindent \textbf{Stack tecnológico}}
@@ -94,10 +94,10 @@ tests/
 {\noindent \textbf{Estadísticas generales}}
 
 \begin{itemize}
-    \item Líneas de código de testing: 2{,}749
-    \item Funciones de test: 168
-    \item Cobertura de código: 90.8\%
-    \item Tiempo de ejecución: \textasciitilde 28 segundos
+    \item Líneas de código de testing: 2{,}749.
+    \item Funciones de test: 168.
+    \item Cobertura de código: 90.8\%.
+    \item Tiempo de ejecución: \textasciitilde 28 segundos.
 \end{itemize}
 
 {\large \noindent \textbf{Tests unitarios (37 tests, 89\% cobertura)}}
@@ -109,10 +109,10 @@ Los tests unitarios validan componentes individuales de forma aislada, constituy
 Componente central responsable de:
 
 \begin{itemize}
-    \item Generación de embeddings con modelos transformer
-    \item Cálculo de similitud coseno
-    \item Clasificación en grupos semánticos (A, B, C)
-    \item Activación de modo deletreo
+    \item Generación de embeddings con modelos transformer.
+    \item Cálculo de similitud coseno.
+    \item Clasificación en grupos semánticos (A, B, C).
+    \item Activación de modo deletreo.
 \end{itemize}
 
 \vspace{1em}
@@ -172,9 +172,9 @@ Output: {
 Grupos del sistema:
 
 \begin{itemize}
-    \item Grupo A: Emergencias (ayuda, socorro, urgente)
-    \item Grupo B: Saludos (hola, buenos días, adios)
-    \item Grupo C: Expresiones de mínima comunicación (gracias, sí, bien)
+    \item Grupo A: Emergencias (ayuda, socorro, urgente).
+    \item Grupo B: Saludos (hola, buenos días, adios).
+    \item Grupo C: Expresiones de mínima comunicación (gracias, sí, bien).
 \end{itemize}
 
 {\large \noindent \textbf{Tests de preprocesamiento (12 tests)}}\\
@@ -186,10 +186,10 @@ Validación de normalización de texto para robustez del sistema PLN:\\
 Transformaciones aplicadas:
 
 \begin{itemize}
-    \item Conversión a minúsculas
-    \item Eliminación de acentos (Unicode normalization)
-    \item Eliminación de caracteres especiales
-    \item Normalización de espacios múltiples
+    \item Conversión a minúsculas.
+    \item Eliminación de acentos (Unicode normalization).
+    \item Eliminación de caracteres especiales.
+    \item Normalización de espacios múltiples.
 \end{itemize}
 
 Ejemplo:
@@ -249,20 +249,20 @@ GET / & 1 & 200 \\ \hline
 \noindent \textbf{Casos críticos del Endpoint principal (POST /buscar)}
 
 \begin{enumerate}
-    \item Query válida retorna resultado correcto
-    \item Queries inválidas retornan errores apropiados (400, 422)
-    \item Match exacto tiene similitud muy alta (>0.95)
-    \item Queries sin match activan deletreo automático
-    \item Emergencias se clasifican correctamente en Grupo A
-    \item Caso edge ``Ivan'': detecta baja similitud y activa deletreo
+    \item Query válida retorna resultado correcto.
+    \item Queries inválidas retornan errores apropiados (400, 422).
+    \item Match exacto tiene similitud muy alta (>0.95).
+    \item Queries sin match activan deletreo automático.
+    \item Emergencias se clasifican correctamente en Grupo A.
+    \item Caso edge ``Ivan'': detecta baja similitud y activa deletreo.
 \end{enumerate}
 
 \textbf{Problema histórico del caso \texttt{"Ivan"}}:
 
 \begin{itemize}
-    \item Antes: Se matcheaba incorrectamente con ``Sí'' (Grupo C)
-    \item Ahora: Detecta baja similitud (<0.3) y activa deletreo
-    \item Resultado: Usuario recibe I-V-A-N
+    \item Antes: Se matcheaba incorrectamente con ``Sí'' (Grupo C).
+    \item Ahora: Detecta baja similitud (<0.3) y activa deletreo.
+    \item Resultado: Usuario recibe I-V-A-N.
 \end{itemize}
 
 \textbf{Resultados}
@@ -306,10 +306,10 @@ Salud del sistema & 2 & \textit{Health checks} \\ \hline
 Metodología de ``Perturbation Testing'' con 4 estrategias
 
 \begin{enumerate}
-    \item Character-level perturbations (errores de tipeo)
-    \item Input fuzzing (ruido en el input)
-    \item Semantic equivalence testing (sinónimos)
-    \item Load testing (estrés)
+    \item Character-level perturbations (errores de tipeo).
+    \item Input fuzzing (ruido en el input).
+    \item Semantic equivalence testing (sinónimos).
+    \item Load testing (estrés).
 \end{enumerate}
 
 \textbf{Tipos de perturbaciones testeadas (50+ casos)}
@@ -392,10 +392,10 @@ Tiempo de ejecución & $\sim$15s & <30s \\ \hline
 
 \textbf{Fortalezas identificadas}
 \begin{itemize}
-    \item Tolerancia a typos: $>95\%$ de clasificación correcta
-    \item Normalización efectiva de ruido y puntuación
-    \item Degradación gradual y graceful ante errores severos
-    \item Manejo correcto de casos edge (nombres propios, leet speak)
+    \item Tolerancia a typos: $>95\%$ de clasificación correcta.
+    \item Normalización efectiva de ruido y puntuación.
+    \item Degradación gradual y graceful ante errores severos.
+    \item Manejo correcto de casos edge (nombres propios, leet speak).
 \end{itemize}
 
 {\large \noindent \textbf{Tests de rendimiento y carga}}\\
@@ -422,9 +422,9 @@ Cálculo similitud & 9ms & 15ms & <20ms \\ \hline
 
 \textbf{Throughput medido}
 \begin{itemize}
-    \item Single query: $\sim 23$ q/s
-    \item Batch processing: $\sim 65$ q/s
-    \item Cache hit: $\sim 333$ q/s
+    \item Single query: $\sim 23$ q/s.
+    \item Batch processing: $\sim 65$ q/s.
+    \item Cache hit: $\sim 333$ q/s.
 \end{itemize}
 
 \textbf{Test de concurrencia}
@@ -586,9 +586,9 @@ app/config.py & 45 & 6 & 86.7\% & 83.3\% \\ \hline
 Las 82 líneas sin cobertura (9.2\%) corresponden a:\\
 
 \begin{enumerate}
-    \item Manejo de errores raros (35 líneas): Modelo no cargado, embeddings corruptos, errores de memoria
-    \item Logging y debugging (28 líneas): Logs de nivel DEBUG, telemetría
-    \item Código de infraestructura (19 líneas): Shutdown handlers, configuración avanzada
+    \item Manejo de errores raros (35 líneas): Modelo no cargado, embeddings corruptos, errores de memoria.
+    \item Logging y debugging (28 líneas): Logs de nivel DEBUG, telemetría.
+    \item Código de infraestructura (19 líneas): Shutdown handlers, configuración avanzada.
 \end{enumerate}
 
 Estos casos no afectan la funcionalidad core del sistema.

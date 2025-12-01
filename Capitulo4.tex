@@ -188,15 +188,15 @@ El flujo de datos del sistema sigue una secuencia bien definida que abarca valid
 
     \item \textbf{Preprocesamiento (Preprocessing Layer)} \\
     $\downarrow$ \\
-    Input: ``mi nombre es Pedro'' \\
+    Input: ``mi nombre es Pedro''. \\
     $\downarrow$ \\
     \texttt{normalize\_text()} \\
     $\downarrow$ \\
-    Output: ``mi nombre es pedro''
+    Output: ``mi nombre es pedro.''
 
     \item \textbf{Generación de embedding (ML Layer)} \\
     $\downarrow$ \\
-    Input: ``mi nombre es pedro'' \\
+    Input: ``mi nombre es pedro.'' \\
     $\downarrow$ \\
     \texttt{SentenceTransformer.encode()} \\
     $\downarrow$ \\
@@ -220,7 +220,7 @@ El flujo de datos del sistema sigue una secuencia bien definida que abarca valid
             \item Aplicación de boost por longitud (+8\% a +15\%).
             \item Penalización por diferencia de longitud.
         \end{itemize}
-        Resultado: mejor match = ``Me llamo'' (Grupo B, similitud = 0.8599)
+        Resultado: mejor match = ``Me llamo'' (Grupo B, similitud = 0.8599).
     \end{itemize}
 
     \item \textbf{Detección de patrones especiales (Pattern Detection)} \\
@@ -254,7 +254,8 @@ El flujo de datos del sistema sigue una secuencia bien definida que abarca valid
     \item \textbf{Respuesta al cliente} \\
     $\downarrow$ \\
     \texttt{HTTP 200 OK} \\
-    \texttt{Content-Type: application/json}
+    \texttt{Content-Type: application/json}\\
+    \texttt{Response: \{...\}}
 \end{enumerate}
 
 % -----------------------------------------------------------
@@ -263,19 +264,19 @@ El flujo de datos del sistema sigue una secuencia bien definida que abarca valid
 Este flujo ocurre cuando la similitud es menor al threshold correspondiente al grupo.
 
 \begin{enumerate}
-    \item Usuario envía: ``xyz123'' \\
+    \item Usuario envía: ``xyz123''. \\
     $\downarrow$
 
-    \item Similitud calculada: $0.45 < 0.80$ (threshold Grupo B) \\
+    \item Similitud calculada: $0.45 < 0.80$ (threshold Grupo B). \\
     $\downarrow$
 
-    \item Activación del modo de deletreo \\
+    \item Activación del modo de deletreo. \\
     $\downarrow$
 
     \item \texttt{spell\_out\_text("xyz123")} \\
     $\downarrow$
 
-    \item Resultado: \texttt{["X","Y","Z","1","2","3"]} \\
+    \item Resultado: \texttt{["X","Y","Z","1","2","3"]}. \\
     $\downarrow$
 
 \begin{lstlisting}
@@ -325,12 +326,12 @@ Este flujo ocurre cuando la similitud es menor al threshold correspondiente al g
     $\downarrow$ \\
     Para cada grupo: \\
     \[
-        \text{centroid} = \frac{1}{N}\sum_{i=1}^{N} v_i
+        \text{centroid} = \texttt{mean(embeddings)}
     \]
 
     \item Sistema listo \\
     $\downarrow$ \\
-    Logging: ``PhraseMatcher mejorado inicializado correctamente'' \\
+    Logging: ``PhraseMatcher mejorado inicializado correctamente''. \\
     $\downarrow$ \\
     API lista para recibir solicitudes.
 \end{enumerate}
@@ -653,9 +654,9 @@ Python es el lenguaje dominante en el desarrollo de modelos de aprendizaje autom
     \item Cerca del 70\% de los artículos publicados en NeurIPS 2023 utilizan Python.
     \item Las bibliotecas de ML más importantes están escritas para Python:
     \begin{itemize}
-        \item TensorFlow, PyTorch, JAX
-        \item Scikit-learn, NumPy, Pandas
-        \item Transformers y Sentence-Transformers
+        \item TensorFlow, PyTorch, JAX.
+        \item Scikit-learn, NumPy, Pandas.
+        \item Transformers y Sentence-Transformers.
     \end{itemize}
 \end{itemize}
 
@@ -924,7 +925,7 @@ async def buscar(request: QueryRequest):
 \begin{itemize}
     \item \textbf{Biblioteca:} \texttt{sentence-transformers 2.2.2}
     \item \textbf{Desarrolladores:} UKPLab (TU Darmstadt)
-    \item \textbf{Artículo base:} \textit{Sentence-BERT} (Reimers \& Gurevych, 2019)
+    \item \textbf{Artículo base:} \textit{Sentence-BERT} \cite{refebd10}
 \end{itemize}
 
 \noindent \textbf{Modelo seleccionado}
@@ -2424,7 +2425,9 @@ def preprocess_phrases(phrases: List[str]) -> List[str]:
 	return [normalize_text(phrase) for phrase in phrases]
 \end{lstlisting}
 
-{\large \noindent \textbf{Función: load\_groups()}}
+{\large \noindent \textbf{Gestión de datos (\texttt{groups.py})}}
+
+{\noindent \textbf{Función: load\_groups()}}
 \begin{lstlisting}
 def load_groups(json_path: str = "data/grupos.json") -> Dict[str, List[str]]:
     """
@@ -2466,7 +2469,7 @@ def load_groups(json_path: str = "data/grupos.json") -> Dict[str, List[str]]:
         raise
 \end{lstlisting}
 
-{\large \noindent \textbf{Función \texttt{get\_all\_phrases()}}}
+{\noindent \textbf{Función \texttt{get\_all\_phrases()}}}
 \begin{lstlisting}[language=Python]
 def get_all_phrases() -> Dict[str, List[str]]:
     """
@@ -2482,7 +2485,7 @@ def get_all_phrases() -> Dict[str, List[str]]:
     return _cached_groups
 \end{lstlisting}
 
-{\large \noindent \textbf{Función \texttt{get\_group\_phrases()}}}
+{\noindent \textbf{Función \texttt{get\_group\_phrases()}}}
 \begin{lstlisting}[language=Python]
 def get_group_phrases(grupo: str) -> List[str]:
     """
@@ -2508,7 +2511,7 @@ def get_group_phrases(grupo: str) -> List[str]:
     return grupos[grupo]
 \end{lstlisting}
 
-{\large \noindent \textbf{Estructura del JSON: \texttt{data/grupos.json}}}
+{\noindent \textbf{Estructura del JSON: \texttt{data/grupos.json}}}
 \begin{lstlisting}
 {
   "grupos": {
@@ -2565,7 +2568,8 @@ def get_group_phrases(grupo: str) -> List[str]:
 }
 \end{lstlisting}
 
-{\large \noindent \textbf{Sistema de embeddings: Generación de embeddings}}
+{\large \noindent \textbf{Sistema de embeddings}}\\
+{\textbf \textbf{Generación de Embeddings}}
 \begin{lstlisting}[language=Python]
 def _generate_and_cache_embeddings(self):
     """
@@ -2607,7 +2611,7 @@ def _generate_and_cache_embeddings(self):
     self._save_to_cache()
 \end{lstlisting}
 
-{\large \noindent \textbf{Guardado en caché}}
+{\noindent \textbf{Guardado en caché}}
 \begin{lstlisting}[language=Python]
 def _save_to_cache(self):
     """
@@ -2650,7 +2654,7 @@ def _save_to_cache(self):
     logger.info(f"Cache guardado exitosamente ({file_size:.2f} MB)")
 \end{lstlisting}
 
-{\large \noindent \textbf{Carga desde caché}}
+{\noindent \textbf{Carga desde caché}}
 \begin{lstlisting}[language=Python]
 def _load_from_cache(self):
     """
@@ -2689,7 +2693,7 @@ def _load_from_cache(self):
         self._generate_and_cache_embeddings()
 \end{lstlisting}
 
-{\large \noindent \textbf{Formato del embedding}}
+{\noindent \textbf{Formato del embedding}}
 \begin{lstlisting}
 Input: "Hola, ¿cómo estás?"
    ↓
@@ -2739,10 +2743,10 @@ Memoria usada (cache) & 65 KB \\ \hline
 
 \noindent \textbf{Objetivos}
 \begin{itemize}
-    \item Estandarizar formato del texto
-    \item Eliminar variaciones irrelevantes
-    \item Mejorar matching de similitud
-    \item Reducir vocabulario efectivo
+    \item Estandarizar formato del texto.
+    \item Eliminar variaciones irrelevantes.
+    \item Mejorar matching de similitud.
+    \item Reducir vocabulario efectivo.
 \end{itemize}
 
 \noindent \textbf{Pipeline de normalización}
@@ -2777,7 +2781,8 @@ Output: "hola como estas"
 % PASO 1
 % ------------------------------------------------------------
 
-{\large \noindent \textbf{Paso 1: Conversión a minúsculas}} \\[4pt]
+{\large \noindent \textbf{Implementación paso a paso}} \\
+{\large \noindent \textbf{Paso 1: Conversión a minúsculas}} \\
 
 \begin{lstlisting}[language=python]
 text = text.lower()
@@ -2785,16 +2790,16 @@ text = text.lower()
 
 \noindent \textbf{Justificación:}
 \begin{itemize}
-    \item ``Hola'' y ``hola'' son semánticamente iguales
-    \item Reduce vocabulario a la mitad
-    \item Simplifica matching
+    \item ``Hola'' y ``hola'' son semánticamente iguales.
+    \item Reduce vocabulario a la mitad.
+    \item Simplifica matching.
 \end{itemize}
 
 \noindent \textbf{Ejemplos:}
 \begin{itemize}
-    \item ``HOLA'' → ``hola''
-    \item ``Buenos Días'' → ``buenos días''
-    \item ``¿CÓMO ESTÁS?'' → ``¿cómo estás?''
+    \item ``HOLA'' → ``hola''.
+    \item ``Buenos Días'' → ``buenos días''.
+    \item ``¿CÓMO ESTÁS?'' → ``¿cómo estás?''.
 \end{itemize}
 
 % ------------------------------------------------------------
@@ -2815,25 +2820,25 @@ text = ''.join(
 
 \noindent \textbf{Explicación técnica:}
 \begin{itemize}
-    \item NFD: Normalization Form Canonical Decomposition
-    \item ``á'' → ``a'' + acento (base + diacrítico)
-    \item Categoría ``Mn'': Mark, Nonspacing (diacríticos)
-    \item Filtrar categoría ``Mn'' elimina acentos
+    \item NFD: Normalization Form Canonical Decomposition.
+    \item ``á'' → ``a'' + acento (base + diacrítico).
+    \item Categoría ``Mn'': Mark, Nonspacing (diacríticos).
+    \item Filtrar categoría ``Mn'' elimina acentos.
 \end{itemize}
 
 \noindent \textbf{Ejemplos:}
 \begin{itemize}
-    \item ``más'' → ``mas''
-    \item ``José'' → ``jose''
-    \item ``¿Cómo?'' → ``¿como?''
-    \item ``café'' → ``cafe''
+    \item ``más'' → ``mas''.
+    \item ``José'' → ``jose''.
+    \item ``¿Cómo?'' → ``¿como?''.
+    \item ``café'' → ``cafe''.
 \end{itemize}
 
 \noindent \textbf{Ventajas:}
 \begin{itemize}
-    \item Typos de acentos no afectan matching  
-    \item ``hola'' = ``hóla'' = ``holá''
-    \item Útil para usuarios sin teclado en español
+    \item Typos de acentos no afectan matching.
+    \item ``hola'' = ``hóla'' = ``holá''.
+    \item Útil para usuarios sin teclado en español.
 \end{itemize}
 
 % ------------------------------------------------------------
@@ -2858,15 +2863,15 @@ text = text.translate(
 
 \noindent \textbf{Ejemplos:}
 \begin{itemize}
-    \item ``¡Hola!'' → ``Hola''
-    \item ``¿Cómo estás?'' → ``Como estas''
-    \item ``Bien, gracias.'' → ``Bien gracias''
+    \item ``¡Hola!'' → ``Hola''.
+    \item ``¿Cómo estás?'' → ``Como estas''.
+    \item ``Bien, gracias.'' → ``Bien gracias''.
 \end{itemize}
 
 \noindent \textbf{Casos preservados:}
 \begin{itemize}
-    \item Números con punto decimal: ``3.14''
-    \item URLs (manejadas en otro preprocesado)
+    \item Números con punto decimal: ``3.14''.
+    \item URLs (manejadas en otro preprocesado).
 \end{itemize}
 
 % ------------------------------------------------------------
@@ -2881,16 +2886,16 @@ text = ' '.join(text.split())
 
 \noindent \textbf{Funcionalidad:}
 \begin{itemize}
-    \item \texttt{.split()} divide por cualquier whitespace
-    \item \texttt{' '.join()} une con un solo espacio
+    \item \texttt{.split()} divide por cualquier whitespace.
+    \item \texttt{' '.join()} une con un solo espacio.
 \end{itemize}
 
 \noindent \textbf{Ejemplos:}
 \begin{itemize}
-    \item ``hola  mundo'' → ``hola mundo''
-    \item ``hola\verb|\|nmundo'' → ``hola mundo''
-    \item ``  hola  '' → ``hola''
-    \item ``hola\verb|\|t\verb|\|tmundo'' → ``hola mundo''
+    \item ``hola  mundo'' → ``hola mundo''.
+    \item ``hola\verb|\|nmundo'' → ``hola mundo''.
+    \item ``  hola  '' → ``hola''.
+    \item ``hola\verb|\|t\verb|\|tmundo'' → ``hola mundo''.
 \end{itemize}
 
 % ------------------------------------------------------------
@@ -2917,9 +2922,9 @@ text = ' '.join(text.split())
 Detectar y corregir typos comunes:
 
 \begin{itemize}
-    \item ``ola'' → ``hola''
-    \item ``graias'' → ``gracias''
-    \item ``k ase'' → ``que hace''
+    \item ``ola'' → ``hola''.
+    \item ``graias'' → ``gracias''.
+    \item ``k ase'' → ``que hace''.
 \end{itemize}
 
 \noindent \textbf{Algoritmo: Levenshtein Distance}
@@ -2936,9 +2941,9 @@ Distancia = 3 operaciones
 
 \noindent \textbf{RapidFuzz:}
 \begin{itemize}
-    \item Implementación optimizada en C++
-    \item 5-10x más rápida que difflib
-    \item Usada en VSCode y GitHub Copilot
+    \item Implementación optimizada en C++.
+    \item 5-10x más rápida que difflib.
+    \item Usada en VSCode y GitHub Copilot.
 \end{itemize}
 
 \noindent \textbf{Implementación:}
@@ -3070,9 +3075,9 @@ Convertir leet speak (1337) a texto normal para mejorar la detección de nombres
 
 Casos:
 \begin{itemize}
-    \item Nombres en redes sociales: ``M4ri@'', ``Ju4n''
-    \item Texto decorativo: ``H0l4'', ``Gr4ci4s''
-    \item Evasión de filtros: ``A\$\$istente''
+    \item Nombres en redes sociales: ``M4ri@'', ``Ju4n''.
+    \item Texto decorativo: ``H0l4'', ``Gr4ci4s''.
+    \item Evasión de filtros: ``A\$\$istente''.
 \end{itemize}
 
 \textbf{Mapeo de Caracteres}
@@ -3127,25 +3132,25 @@ def normalize_leet_speak(text: str) -> str:
 
 \textbf{Nombres}:
 \begin{itemize}
-    \item ``M4ri@'' $\rightarrow$ ``Maria''
-    \item ``Ju4n'' $\rightarrow$ ``Juan''
-    \item ``P3dr0'' $\rightarrow$ ``Pedro''
-    \item ``Carl0\$'' $\rightarrow$ ``Carlos''
-    \item ``1\$@b3l'' $\rightarrow$ ``Isabel''
+    \item ``M4ri@'' $\rightarrow$ ``Maria''.
+    \item ``Ju4n'' $\rightarrow$ ``Juan''.
+    \item ``P3dr0'' $\rightarrow$ ``Pedro''.
+    \item ``Carl0\$'' $\rightarrow$ ``Carlos''.
+    \item ``1\$@b3l'' $\rightarrow$ ``Isabel''.
 \end{itemize}
 
 \textbf{Frases}:
 \begin{itemize}
-    \item ``H0l4 mund0'' $\rightarrow$ ``Hola mundo''
-    \item ``Gr4ci4\$ p0r t0d0'' $\rightarrow$ ``Gracias por todo''
-    \item ``N3c3\$it0 4yud4'' $\rightarrow$ ``Necesito ayuda''
+    \item ``H0l4 mund0'' $\rightarrow$ ``Hola mundo''.
+    \item ``Gr4ci4\$ p0r t0d0'' $\rightarrow$ ``Gracias por todo''.
+    \item ``N3c3\$it0 4yud4'' $\rightarrow$ ``Necesito ayuda''.
 \end{itemize}
 
 \textbf{Casos mixtos}:
 \begin{itemize}
-    \item ``M1 n0mbr3 3\$ M4ri@'' $\rightarrow$ ``Mi nombre es Maria''
-    \item ``Ju4n C4rl0\$'' $\rightarrow$ ``Juan Carlos''
-    \item ``4l3j4ndr0'' $\rightarrow$ ``Alejandro''
+    \item ``M1 n0mbr3 3\$ M4ri@'' $\rightarrow$ ``Mi nombre es Maria''.
+    \item ``Ju4n C4rl0\$'' $\rightarrow$ ``Juan Carlos''.
+    \item ``4l3j4ndr0'' $\rightarrow$ ``Alejandro''.
 \end{itemize}
 
 \textbf{Casos especiales}
@@ -3159,8 +3164,8 @@ def normalize_leet_speak(text: str) -> str:
 
     \item Caracteres ambiguos:
     \begin{itemize}
-    \item ``1'' puede ser i o l
-    \item ``0'' puede ser o u O
+    \item ``1'' puede ser i o l.
+    \item ``0'' puede ser o u O.
     \end{itemize}
 
     Decisión: usar minúsculas.
@@ -3197,9 +3202,9 @@ Cobertura: $\sim$70\%.
 
 \noindent \textbf{Patrón de nombre propio:}
 \begin{itemize}
-    \item Primera letra mayúscula
-    \item Resto en minúsculas
-    \item Longitud 3--15 caracteres
+    \item Primera letra mayúscula.
+    \item Resto en minúsculas.
+    \item Longitud 3-15 caracteres.
 \end{itemize}
 
 
@@ -3232,15 +3237,15 @@ def is_proper_noun_by_capitalization(word: str) -> bool:
 
 \textbf{Ventajas:}
 \begin{itemize}
-    \item Detecta nombres que no están en la lista
-    \item Funciona con nombres extranjeros
-    \item No requiere diccionario grande
+    \item Detecta nombres que no están en la lista.
+    \item Funciona con nombres extranjeros.
+    \item No requiere diccionario grande.
 \end{itemize}
 
 \textbf{Desventajas:}
 \begin{itemize}
-    \item Requiere capitalización correcta
-    \item Puede detectar falsos positivos (inicio de oración)
+    \item Requiere capitalización correcta.
+    \item Puede detectar falsos positivos (inicio de oración).
 \end{itemize}
 
 {\large \noindent \textbf{Estrategia 3: Validación por ausencia en dataset}}\\
@@ -3248,9 +3253,9 @@ def is_proper_noun_by_capitalization(word: str) -> bool:
 \noindent \textbf{Lógica:}
 Si una palabra:
 \begin{itemize}
-    \item NO está en el dataset de frases
-    \item Tiene similitud media (0.50--0.85)
-    \item Tiene longitud de nombre (3--8 chars)
+    \item NO está en el dataset de frases.
+    \item Tiene similitud media (0.50-0.85).
+    \item Tiene longitud de nombre (3-8 chars).
 \end{itemize}
 
 Entonces: Probablemente es un nombre.
@@ -3303,9 +3308,9 @@ Precisión combinada: $\sim$92\%.\\
 
 \textbf{Patrones reconocidos:}
 \begin{enumerate}
-    \item ``Me llamo [NOMBRE]''
-    \item ``Mi nombre es [NOMBRE]''
-    \item ``Soy [NOMBRE]''
+    \item ``Me llamo [NOMBRE]''.
+    \item ``Mi nombre es [NOMBRE]''.
+    \item ``Soy [NOMBRE]''.
 \end{enumerate}
 
 \textbf{Algoritmo:}
@@ -3336,22 +3341,21 @@ def extract_name_from_pattern(query: str):
 Ejemplos:
 
 \begin{itemize}
-    \item ``Me llamo Juan'' → ``Juan''
-    \item ``Mi nombre es Maria'' → ``Maria''
-    \item ``Soy Alessandro'' → ``Alessandro''
-    \item ``Me llamo Juan Carlos'' → ``Juan Carlos''
+    \item ``Me llamo Juan'' → ``Juan''.
+    \item ``Mi nombre es Maria'' → ``Maria''.
+    \item ``Soy Alessandro'' → ``Alessandro''.
+    \item ``Me llamo Juan Carlos'' → ``Juan Carlos''.
 \end{itemize}
 
-{\large \noindent \textbf{Sistema de deletreo ``automático''}}
+{\large \noindent \textbf{Sistema de deletreo ``automático''}}\\
 
-\noindent \textbf{Objetivo}
-Convertir texto a lista de caracteres individuales para reproducción de videos de señas letra por letra.
+\noindent \textbf{Objetivo}: Convertir texto a lista de caracteres individuales para reproducción de videos de señas letra por letra.\\
 
 \noindent \textbf{Casos de uso:}
 \begin{itemize}
-    \item Nombres propios: ``Alessandro'' → [A, L, E, S, S, A, N, D, R, O]
-    \item Palabras desconocidas: ``xyz'' → [X, Y, Z]
-    \item Textos personalizados: ``Hola Mundo'' → [H, O, L, A, espacio, ...]
+    \item Nombres propios: ``Alessandro'' → [A, L, E, S, S, A, N, D, R, O].
+    \item Palabras desconocidas: ``xyz'' → [X, Y, Z].
+    \item Textos personalizados: ``Hola Mundo'' → [H, O, L, A, espacio, ...].
 \end{itemize}
 
 \textbf{Algoritmo:}
@@ -3476,9 +3480,9 @@ Output: ["J", "U", "A", "N", "arroba", "E", "M", "A", "I", "L",
 \begin{enumerate}
     \item \textbf{Filtrado de caracteres no soportados}
     \begin{itemize}
-        \item Emojis son omitidos
-        \item Caracteres Unicode especiales omitidos
-        \item Solo caracteres ASCII y especiales definidos
+        \item Emojis son omitidos.
+        \item Caracteres Unicode especiales omitidos.
+        \item Solo caracteres ASCII y especiales definidos.
     \end{itemize}
 
     \item \textbf{Normalización previa} \\
@@ -3556,37 +3560,37 @@ videos/
 \begin{enumerate}
     \item \textbf{Soporte multilingüe}
     \begin{itemize}
-        \item \checkmark\ Requerido: Español como idioma principal
-        \item \checkmark\ Deseable: Soporte para otros idiomas latinos
-        \item $\rightarrow$ paraphrase-multilingual-MiniLM-L12-v2 \checkmark
+        \item \checkmark\ Requerido: Español como idioma principal.
+        \item \checkmark\ Deseable: Soporte para otros idiomas latinos.
+        \item $\rightarrow$ paraphrase-multilingual-MiniLM-L12-v2 \checkmark.
     \end{itemize}
 
     \item \textbf{Tamaño del embedding}
     \begin{itemize}
-        \item \checkmark\ Máximo: 512 dimensiones
-        \item \checkmark\ Óptimo: 384 dimensiones (balance)
-        \item $\rightarrow$ 384 dimensiones \checkmark
+        \item \checkmark\ Máximo: 512 dimensiones.
+        \item \checkmark\ Óptimo: 384 dimensiones (balance).
+        \item $\rightarrow$ 384 dimensiones \checkmark.
     \end{itemize}
 
     \item \textbf{Performance}
     \begin{itemize}
-        \item \checkmark\ Latencia objetivo: <50ms
-        \item \checkmark\ Throughput: >20 req/s
-        \item $\rightarrow$ 40ms promedio \checkmark
+        \item \checkmark\ Latencia objetivo: <50ms.
+        \item \checkmark\ Throughput: >20 req/s.
+        \item $\rightarrow$ 40ms promedio \checkmark.
     \end{itemize}
 
     \item \textbf{Calidad de paráfrasis}
     \begin{itemize}
-        \item \checkmark\ Detección de sinónimos
-        \item \checkmark\ Detección de variaciones
-        \item $\rightarrow$ Fine-tuned específicamente \checkmark
+        \item \checkmark\ Detección de sinónimos.
+        \item \checkmark\ Detección de variaciones.
+        \item $\rightarrow$ Fine-tuned específicamente \checkmark.
     \end{itemize}
 
     \item \textbf{Tamaño del modelo}
     \begin{itemize}
-        \item \checkmark\ Máximo: 500MB
-        \item \checkmark\ Debe caber en RAM estándar (8GB)
-        \item $\rightarrow$ 420MB \checkmark
+        \item \checkmark\ Máximo: 500MB.
+        \item \checkmark\ Debe caber en RAM estándar (8GB).
+        \item $\rightarrow$ 420MB \checkmark.
     \end{itemize}
 \end{enumerate}
 
@@ -3595,12 +3599,12 @@ videos/
 
 \noindent\textbf{Justificación}
 \begin{itemize}
-    \item Multilingüe (50+ idiomas, incluyendo español)
-    \item 384 dimensiones (balance óptimo)
-    \item Fine-tuned para \textit{paraphrase detection}
-    \item Latencia aceptable ($\sim$40ms)
-    \item Ampliamente usado en producción
-    \item Mantenido por UKPLab (confiable)
+    \item Multilingüe (50+ idiomas, incluyendo español).
+    \item 384 dimensiones (balance óptimo).
+    \item Fine-tuned para \textit{paraphrase detection}.
+    \item Latencia aceptable ($\sim$40ms).
+    \item Ampliamente usado en producción.
+    \item Mantenido por UKPLab (confiable).
 \end{itemize}
 
 {\large \noindent \textbf{Arquitectura del Modelo Transformer}}\\
@@ -3616,15 +3620,15 @@ videos/
 
 \noindent \textbf{Tokenización (WordPiece)}\\
 
-\textbf{Vocabulario}: 119,547 tokens\\
+\textbf{Vocabulario}: 119,547 tokens.\\
 
 \textbf{Tokens especiales}
 \begin{itemize}
-    \item \textbf{[CLS]}: Inicio de secuencia (ID: 101)
-    \item \textbf{[SEP]}: Separador/fin de secuencia (ID: 102)
-    \item \textbf{[UNK]}: Token desconocido (ID: 100)
-    \item \textbf{[PAD]}: Padding (ID: 0)
-    \item \textbf{[MASK]}: Máscara para MLM (ID: 103)
+    \item \textbf{[CLS]}: Inicio de secuencia (ID: 101).
+    \item \textbf{[SEP]}: Separador/fin de secuencia (ID: 102).
+    \item \textbf{[UNK]}: Token desconocido (ID: 100).
+    \item \textbf{[PAD]}: Padding (ID: 0).
+    \item \textbf{[MASK]}: Máscara para MLM (ID: 103).
 \end{itemize}
 
 \vspace{1em}
@@ -3716,8 +3720,8 @@ estás     0.3   0.2  0.6   1.0    0.2
 
 \noindent\textbf{Interpretación}:
 \begin{itemize}
-    \item ``cómo'' atiende fuertemente a ``estás'' (0.7)
-    \item ``?'' atiende a ``¿'' (0.7) — contexto de pregunta
+    \item ``cómo'' atiende fuertemente a ``estás'' (0.7).
+    \item ``?'' atiende a ``¿'' (0.7) — contexto de pregunta.
 \end{itemize}
 
 {\large \noindent \textbf{Pooling layer}}
@@ -3861,16 +3865,16 @@ Similitud coseno mide el ángulo entre dos vectores:
 
 Donde:
 \begin{itemize}
-    \item $A \cdot B$: Producto punto
-    \item $\lVert A \rVert$: Norma (magnitud) del vector $A$
-    \item $\theta$: Ángulo entre vectores
+    \item $A \cdot B$: Producto punto.
+    \item $\lVert A \rVert$: Norma (magnitud) del vector $A$.
+    \item $\theta$: Ángulo entre vectores.
 \end{itemize}
 
 Rango: [-1, 1]
 \begin{itemize}
-    \item 1.0: Vectores idénticos (ángulo 0°)
-    \item 0.0: Vectores ortogonales (ángulo 90°)
-    \item -1.0: Vectores opuestos (ángulo 180°)
+    \item 1.0: Vectores idénticos (ángulo 0°).
+    \item 0.0: Vectores ortogonales (ángulo 90°).
+    \item -1.0: Vectores opuestos (ángulo 180°).
 \end{itemize}
 
 {\large \noindent \textbf{Simplificación con L2 Normalization}}
@@ -3954,23 +3958,25 @@ similarities = cosine_similarity([query_emb], phrase_embeddings)[0]
 
 \noindent \textbf{Motivación}
 
-\textbf{Problema}: Búsqueda exhaustiva es costosa
+\textbf{Problema}: Búsqueda exhaustiva es costosa.
 \begin{itemize}
-    \item Dataset: 43 frases en 3 grupos
-    \item Cálculo directo: 43 comparaciones por query
-    \item Escalabilidad: O(N) con N = total de frases
+    \item Dataset: 43 frases en 3 grupos.
+    \item Cálculo directo: 43 comparaciones por query.
+    \item Escalabilidad: O(N) con N = total de frases.
 \end{itemize}
 
-\textbf{Solución}: Búsqueda jerárquica en dos fases
+\vspace{0.7em}
+
+\textbf{Solución}: Búsqueda jerárquica en dos fases.
 \begin{itemize}
-    \item Fase 1: Encontrar grupos candidatos (O(3) comparaciones)
-    \item Fase 2: Buscar en grupos candidatos (O(N\_candidatos))
-    \item Escalabilidad: O(K + N\_k) donde K = núm. grupos, N\_k = frases en top grupos
+    \item Fase 1: Encontrar grupos candidatos (O(3) comparaciones).
+    \item Fase 2: Buscar en grupos candidatos (O(N\_candidatos)).
+    \item Escalabilidad: O(K + N\_k) donde K = núm. grupos, N\_k = frases en top grupos.
 \end{itemize}
 
 {\large \noindent \textbf{Fase 1: Búsqueda por centroides}}
 
-\noindent \textbf{Centroide}: Vector promedio de un grupo
+\noindent \textbf{Centroide}: Vector promedio de un grupo.
 
 \begin{verbatim}
 Grupo A: ["Ayuda", "Socorro", "Urgente", ...]
@@ -4011,7 +4017,7 @@ Similitud con centroides:
    Centroide C (Comunicación): 0.78  ← TOP 2
    Centroide B (Saludos):     0.65  ← TOP 3
 
-Grupos candidatos: [A, C, B]
+Grupos candidatos: [A, C, B].
 \end{verbatim}
 
 {\large \noindent\textbf{Fase 2: Re-ranking fino}}
@@ -4132,10 +4138,10 @@ Mejor match global: "Necesito un médico" (Grupo A, sim: 0.97)
 {\large \noindent \textbf{Ventajas del re-ranking}}
 
 \begin{itemize}
-    \item Performance: \(\sim 3\times\) más rápido que búsqueda exhaustiva
-    \item Escalabilidad: \(O(K + N_k)\) vs \(O(N)\)
-    \item Precisión: Boosts mejoran detección
-    \item Flexibilidad: Fácil agregar nuevos grupos
+    \item Performance: \(\sim 3\times\) más rápido que búsqueda exhaustiva.
+    \item Escalabilidad: \(O(K + N_k)\) vs \(O(N)\).
+    \item Precisión: Boosts mejoran detección.
+    \item Flexibilidad: Fácil agregar nuevos grupos.
 \end{itemize}
 
 {\large \noindent \textbf{Métricas}}
@@ -4164,29 +4170,29 @@ Precisión & 92\% (vs 90\% exhaustiva) \\ \hline
 \begin{itemize}
     \item \textbf{RESTful API Design}
     \begin{itemize}
-        \item Uso de HTTP methods (GET, POST)
-        \item URLs semánticas y descriptivas
-        \item Status codes apropiados
+        \item Uso de HTTP methods (GET, POST).
+        \item URLs semánticas y descriptivas.
+        \item Status codes apropiados.
     \end{itemize}
 
     \item \textbf{Stateless}
     \begin{itemize}
-        \item Sin sesiones en servidor
-        \item Cada request independiente
-        \item Facilita escalabilidad horizontal
+        \item Sin sesiones en servidor.
+        \item Cada request independiente.
+        \item Facilita escalabilidad horizontal.
     \end{itemize}
 
     \item \textbf{JSON como formato de intercambio}
     \begin{itemize}
-        \item Estándar de la industria
-        \item Fácil parsing en cualquier lenguaje
-        \item Soportado nativamente por FastAPI
+        \item Estándar de la industria.
+        \item Fácil parsing en cualquier lenguaje.
+        \item Soportado nativamente por FastAPI.
     \end{itemize}
 
     \item \textbf{Versionado implícito}
     \begin{itemize}
-        \item Preparado para \texttt{/v2/buscar}
-        \item Actualmente sin versión (v1 implícito)
+        \item Preparado para \texttt{/v2/buscar}.
+        \item Actualmente sin versión (v1 implícito).
     \end{itemize}
 \end{itemize}
 
@@ -4225,9 +4231,9 @@ Body:
 
 \textbf{Errores:}
 \begin{itemize}
-    \item 400: Texto vacío o inválido
-    \item 503: Servicio no disponible
-    \item 500: Error interno
+    \item 400: Texto vacío o inválido.
+    \item 503: Servicio no disponible.
+    \item 500: Error interno.
 \end{itemize}
 
 {\large \noindent \textbf{2. GET /grupos}}\\
@@ -4276,7 +4282,7 @@ Frases de un grupo específico.\\
 
 \textbf{Errores:}
 \begin{itemize}
-    \item 404: Grupo no encontrado
+    \item 404: Grupo no encontrado.
 \end{itemize}
 
 {\large \noindent \textbf{4. POST /deletreo}}\\
@@ -4314,17 +4320,17 @@ Health check del servicio.
 }
 \end{verbatim}
 
-{\large \noindent \textbf{6. GET /docs}}\\
+{\large \noindent \textbf{6. GET /docs}}
+\begin{itemize}
+    \item Documentación interactiva (Swagger UI). Generada automáticamente por FastAPI.
+    \item Permite testing interactivo de endpoints.
+\end{itemize}
 
-Documentación interactiva (Swagger UI). Generada automáticamente por FastAPI.
-
-Permite testing interactivo de endpoints.
-
-{\large \noindent \textbf{7. GET /redoc}}\\
-
-Documentación alternativa (ReDoc).\\
-
-Formato más limpio para lectura.\\
+{\large \noindent \textbf{7. GET /redoc}}
+\begin{itemize}
+    \item Documentación alternativa (ReDoc).
+    \item Formato más limpio para lectura.
+\end{itemize}
 
 \vspace{1em}
 
@@ -4357,11 +4363,13 @@ class QueryRequest(BaseModel):
 
 Validaciones automáticas:
 \begin{itemize}
-    \item Texto es requerido (... = required)
-    \item Texto no puede estar vacío (min\_length=1)
-    \item Texto máximo 500 caracteres (max\_length=500)
-    \item Tipo string validado automáticamente
+    \item Texto es requerido (... = required).
+    \item Texto no puede estar vacío (min\_length=1).
+    \item Texto máximo 500 caracteres (max\_length=500).
+    \item Tipo string validado automáticamente.
 \end{itemize}
+
+\vspace{0.7em}
 
 \noindent \textbf{Ejemplos de validación}
 
@@ -4434,9 +4442,9 @@ class QueryResponse(BaseModel):
 
 Validaciones:
 \begin{itemize}
-    \item Similitud entre 0.0 y 1.0 (ge=0.0, le=1.0)
-    \item Tipos verificados automáticamente
-    \item Campos opcionales con None
+    \item Similitud entre 0.0 y 1.0 (ge=0.0, le=1.0).
+    \item Tipos verificados automáticamente.
+    \item Campos opcionales con None.
 \end{itemize}
 
 {\large \noindent \textbf{Manejo de errores}}\\
@@ -4444,10 +4452,10 @@ Validaciones:
 \textbf{Estrategia de manejo}:
 
 \begin{enumerate}
-    \item HTTPException para errores controlados
-    \item Exception handler para errores inesperados
-    \item Logging de todos los errores
-    \item Responses consistentes
+    \item HTTPException para errores controlados.
+    \item Exception handler para errores inesperados.
+    \item Logging de todos los errores.
+    \item Responses consistentes.
 \end{enumerate}
 
 \textbf{Códigos por error}
@@ -4582,11 +4590,11 @@ logger = logging.getLogger(__name__)
 \textbf{Métricas monitoreadas}
 
 \begin{itemize}
-    \item Requests por segundo
-    \item Latencia promedio
-    \item Tasa de errores (4xx, 5xx)
-    \item Uso de memoria
-    \item Tiempo de inicialización
+    \item Requests por segundo.
+    \item Latencia promedio.
+    \item Tasa de errores (4xx, 5xx).
+    \item Uso de memoria.
+    \item Tiempo de inicialización.
 \end{itemize}
 
 {\large \noindent \textbf{Documentación automática (OpenAPI / Swagger)}}
@@ -4595,17 +4603,17 @@ logger = logging.getLogger(__name__)
 FastAPI genera documentación OpenAPI 3.0 basada en:
 
 \begin{itemize}
-    \item Type hints de Python
-    \item Modelos Pydantic
-    \item Docstrings
-    \item Field descriptions
+    \item Type hints de Python.
+    \item Modelos Pydantic.
+    \item Docstrings.
+    \item Field descriptions.
 \end{itemize}
 
 Acceso:
 \begin{itemize}
-    \item \texttt{http://localhost:8000/docs}
-    \item \texttt{http://localhost:8000/redoc}
-    \item \texttt{http://localhost:8000/openapi.json}
+    \item \texttt{http://localhost:8000/docs}.
+    \item \texttt{http://localhost:8000/redoc}.
+    \item \texttt{http://localhost:8000/openapi.json}.
 \end{itemize}
 
 \textbf{Ejemplo de documentación generada}
@@ -4686,8 +4694,8 @@ components:
 \textbf{Ventajas de documentación generada}
 
 \begin{itemize}
-    \item Siempre actualizada
-    \item Interactiva
-    \item Compatible con herramientas OpenAPI
-    \item Generación automática de clientes
+    \item Siempre actualizada.
+    \item Interactiva.
+    \item Compatible con herramientas OpenAPI.
+    \item Generación automática de clientes.
 \end{itemize}

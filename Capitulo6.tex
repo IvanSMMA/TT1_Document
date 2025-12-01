@@ -173,39 +173,39 @@ Latencia P95 & <200ms & 68ms & 66\% mejor \\ \hline
 \begin{enumerate}
     \item Cobertura exhaustiva
     \begin{itemize}[label=\checkmark]
-        \item 168 tests implementados en todos los niveles
-        \item 90.8\% de cobertura supera estándares industriales (80\%)
-        \item Distribución apropiada según pirámide de testing
+        \item 168 tests implementados en todos los niveles.
+        \item 90.8\% de cobertura supera estándares industriales (80\%).
+        \item Distribución apropiada según pirámide de testing.
     \end{itemize}
 
     \item Robustez lingüística mínima aceptable
     \begin{itemize}[label=\checkmark]
-        \item 50+ casos de perturbaciones validados
-        \item >95\% de tolerancia a errores ortográficos
-        \item Degradación gradual y graceful
-        \item Normalización efectiva de leet speak
+        \item 50+ casos de perturbaciones validados.
+        \item >95\% de tolerancia a errores ortográficos.
+        \item Degradación gradual y graceful.
+        \item Normalización efectiva de leet speak.
     \end{itemize}
 
     \item Calidad semántica aceptable
     \begin{itemize}[label=\checkmark]
-        \item F1-Score de 88\% demuestra balance precision/recall
-        \item 100\% de golden dataset passing
-        \item Reconocimiento de sinónimos >75\%
+        \item F1-Score de 88\% demuestra balance precision/recall.
+        \item 100\% de golden dataset passing.
+        \item Reconocimiento de sinónimos >75\%.
     \end{itemize}
 
     \item Rendimiento muy adecuado
     \begin{itemize}[label=\checkmark]
-        \item Latencia P95 de 68ms (66\% mejor que objetivo)
-        \item Success rate de 99.7\% bajo carga
-        \item Sistema estable hasta 100 usuarios concurrentes
+        \item Latencia P95 de 68ms (66\% mejor que objetivo).
+        \item Success rate de 99.7\% bajo carga.
+        \item Sistema estable hasta 100 usuarios concurrentes.
     \end{itemize}
 
     \item Validación de casos críticos
     \begin{itemize}[label=\checkmark]
-        \item Similitud matemáticamente correcta [0.0, 1.0] en 100\% de casos
-        \item Caso edge ``Ivan'' correctamente manejado
-        \item Detección de patrones ``Me llamo [NOMBRE]''
-        \item Manejo robusto de nombres propios
+        \item Similitud matemáticamente correcta [0.0, 1.0] en 100\% de casos.
+        \item Caso edge ``Ivan'' correctamente manejado.
+        \item Detección de patrones ``Me llamo [NOMBRE]''.
+        \item Manejo robusto de nombres propios.
     \end{itemize}
 \end{enumerate}
 
@@ -215,16 +215,16 @@ Latencia P95 & <200ms & 68ms & 66\% mejor \\ \hline
 
 \textbf{Problema}: Generar embeddings es costoso:
 \begin{itemize}
-    \item Tiempo: $\sim$5 segundos para 43 frases
-    \item Requiere modelo cargado en memoria
-    \item Se ejecuta en cada startup
+    \item Tiempo: $\sim$5 segundos para 43 frases.
+    \item Requiere modelo cargado en memoria.
+    \item Se ejecuta en cada startup.
 \end{itemize}
 
 \textbf{Solución}: Caché persistente en archivo .npz:
 \begin{itemize}
-    \item Formato: NumPy compressed (.npz)
-    \item Tamaño: $\sim$50 KB comprimido
-    \item Carga: $<1$ segundo
+    \item Formato: NumPy compressed (.npz).
+    \item Tamaño: $\sim$50 KB comprimido.
+    \item Carga: $<1$ segundo.
 \end{itemize}
 
 \textbf{Resultados}
@@ -249,15 +249,15 @@ Memoria en RAM & 65 KB & 65 KB \\ \hline
 
 \textbf{Problema}: Búsqueda exhaustiva en 43 frases:
 \begin{itemize}
-    \item O(N) comparaciones con N = 43
-    \item No escala bien con más frases
-    \item Ineficiente para datasets grandes
+    \item O(N) comparaciones con N = 43.
+    \item No escala bien con más frases.
+    \item Ineficiente para datasets grandes.
 \end{itemize}
 
 \textbf{Solución}: Búsqueda jerárquica en dos fases:
 \begin{enumerate}
-    \item Fase 1: Buscar top-3 grupos (O(K) con K=3)
-    \item Fase 2: Buscar en grupos candidatos (O(N\_k))
+    \item Fase 1: Buscar top-3 grupos (O(K) con K=3).
+    \item Fase 2: Buscar en grupos candidatos (O(N\_k)).
 \end{enumerate}
 
 Complejidad: O(K + N\_k) $\ll$ O(N)\\
@@ -294,7 +294,7 @@ for i, emb in enumerate(embeddings):
 # RÁPIDO: Vectorizado
 sims = cosine_similarity([query_emb], embeddings)[0]
     \end{verbatim}
-    Speedup: $\sim$100x\\[10pt]
+    Speedup: $\sim$100x.\\
 
     \item \textbf{Lazy loading del modelo}
     \\[4pt]
@@ -303,14 +303,14 @@ def _load_model(self):
     if self.model is None:
         self.model = SentenceTransformer(model_name)
     \end{verbatim}
-    Ahorro: No cargar modelo si no hay requests\\[10pt]
+    Ahorro: No cargar modelo si no hay requests.\\
 
     \item \textbf{Batch processing}
     \\[4pt]
     \begin{verbatim}
 embeddings = model.encode(texts, batch_size=32)
     \end{verbatim}
-    Speedup: $\sim$2x para múltiples textos\\[10pt]
+    Speedup: $\sim$2x para múltiples textos.\\
 
     \item \textbf{Async I/O (FastAPI)}
     \\[4pt]
@@ -319,7 +319,7 @@ embeddings = model.encode(texts, batch_size=32)
 async def buscar(request: QueryRequest):
     ...
     \end{verbatim}
-    Permite manejar múltiples requests concurrentes\\[6pt]
+    Permite manejar múltiples requests concurrentes.\\
 
 \end{enumerate}
 
@@ -328,21 +328,21 @@ async def buscar(request: QueryRequest):
 
 Breakdown:
 \begin{itemize}
-    \item Preprocesamiento: 2ms (5\%)
-    \item Generación de embedding: 15ms (37.5\%)
-    \item Búsqueda por centroides: 3ms (7.5\%)
-    \item Re-ranking: 10ms (25\%)
-    \item Detección de patrones: 5ms (12.5\%)
-    \item Construcción de respuesta: 3ms (7.5\%)
-    \item Overhead (FastAPI): 2ms (5\%)
+    \item Preprocesamiento: 2ms (5\%).
+    \item Generación de embedding: 15ms (37.5\%).
+    \item Búsqueda por centroides: 3ms (7.5\%).
+    \item Re-ranking: 10ms (25\%).
+    \item Detección de patrones: 5ms (12.5\%).
+    \item Construcción de respuesta: 3ms (7.5\%).
+    \item Overhead (FastAPI): 2ms (5\%).
 \end{itemize}
 
 \vspace{1em}
 
 \textbf{Cuellos de botella}:
 \begin{enumerate}
-    \item Generación de embedding (37.5\%) $\leftarrow$ Mayor oportunidad
-    \item Re-ranking (25\%)
+    \item Generación de embedding (37.5\%) $\leftarrow$ Mayor oportunidad.
+    \item Re-ranking (25\%).
 \end{enumerate}
 
 \vspace{1em}
@@ -372,16 +372,16 @@ Python runtime & $\sim$30 MB \\ \hline
 \begin{enumerate}
     \item Modelo ligero (MiniLM)
     \begin{itemize}
-        \item 384 dimensiones vs 768 (BERT base)
-        \item 420 MB vs 800 MB
-        \item Ahorro: 47.5\%
+        \item 384 dimensiones vs 768 (BERT base).
+        \item 420 MB vs 800 MB.
+        \item Ahorro: 47.5\%.
     \end{itemize}
 
     \item Embeddings comprimidos
     \begin{itemize}
-        \item Formato .npz comprimido
-        \item 50 KB vs $\sim$100 KB sin comprimir
-        \item Ahorro: 50\%
+        \item Formato .npz comprimido.
+        \item 50 KB vs $\sim$100 KB sin comprimir.
+        \item Ahorro: 50\%.
     \end{itemize}
 
     \item Garbage collection optimizado
@@ -429,15 +429,15 @@ uvicorn app.main:app \
 
 \textbf{Throughput}:
 \begin{itemize}
-    \item 1 worker: $\sim$25 req/s
-    \item 4 workers: $\sim$90 req/s (3.6x)
+    \item 1 worker: $\sim$25 req/s.
+    \item 4 workers: $\sim$90 req/s (3.6x).
 \end{itemize}
 
 \noindent \textbf{Limitaciones}
 \begin{itemize}
-    \item Modelo en memoria: $\sim$420 MB por worker
-    \item 4 workers: $\sim$1.7 GB memoria
-    \item Máximo recomendado: 8 workers en servidor 8GB RAM
+    \item Modelo en memoria: $\sim$420 MB por worker.
+    \item 4 workers: $\sim$1.7 GB memoria.
+    \item Máximo recomendado: 8 workers en servidor 8GB RAM.
 \end{itemize}
 
 \vspace{1em}
@@ -448,9 +448,9 @@ uvicorn app.main:app \
 \noindent \textbf{Dataset de evaluación}\\
 100 queries de prueba en 3 categorías:
 \begin{itemize}
-    \item 40 queries de emergencias (Grupo A)
-    \item 30 queries de saludos (Grupo B)
-    \item 30 queries de comunicación (Grupo C)
+    \item 40 queries de emergencias (Grupo A).
+    \item 30 queries de saludos (Grupo B).
+    \item 30 queries de comunicación (Grupo C).
 \end{itemize}
 
 \textbf{Métricas Calculadas}
@@ -480,9 +480,9 @@ Similitud promedio (\textit{matches}) & 0.87 \\ \hline
 
 Observaciones:
 \begin{itemize}
-    \item Grupo A (Emergencias): Mejor precisión (95\%)
-    \item Confusión menor entre grupos similares
-    \item Errores en casos ambiguos
+    \item Grupo A (Emergencias): Mejor precisión (95\%).
+    \item Confusión menor entre grupos similares.
+    \item Errores en casos ambiguos.
 \end{itemize}
 
 {\large \noindent \textbf{Métricas de rendimiento}}\\
@@ -521,7 +521,7 @@ Latencia P99 (ms) & -- & 47ms & -- \\ \hline
 \caption[Throughput por configuración]{Capacidad de procesamiento según número de workers, elaboración propia.}
 \end{table}
 
-\textbf{Objetivo}: >20 req/s (cumplido)
+\textbf{Objetivo}: >20 req/s (cumplido).
 
 \noindent \textbf{Memoria}
 \begin{table}[H]
@@ -546,20 +546,20 @@ Sin memory leaks detectados.\\
 
 \textbf{Swagger UI}
 \begin{itemize}[label= \checkmark]
-    \item Documentación automática
-    \item Testing interactivo
-    \item Ejemplos de requests
-    \item Schemas completos
-    \item Respuestas de error documentadas
+    \item Documentación automática.
+    \item Testing interactivo.
+    \item Ejemplos de requests.
+    \item Schemas completos.
+    \item Respuestas de error documentadas.
 \end{itemize}
 
 \textbf{API Consistency}
 \begin{itemize}[label= \checkmark]
-    \item Formato JSON consistente
-    \item Campos opcionales claramente marcados
-    \item Validación automática de requests
-    \item Mensajes de error descriptivos
-    \item HTTP status codes apropiados
+    \item Formato JSON consistente.
+    \item Campos opcionales claramente marcados.
+    \item Validación automática de requests.
+    \item Mensajes de error descriptivos.
+    \item HTTP status codes apropiados.
 \end{itemize}
 
 \vspace{1em}
@@ -568,14 +568,16 @@ Sin memory leaks detectados.\\
 
 \textbf{Ventajas del prototipo}
 \begin{itemize}[label= \checkmark]
-    \item Mayor precisión (92\% vs 60--75\%)
-    \item Manejo de paráfrasis
-    \item Detección de nombres propios
-    \item Sistema de deletreo automático
-    \item API bien documentada
-    \item Tests exhaustivos
-    \item Fácil de escalar
+    \item Mayor precisión (92\% vs 60--75\%).
+    \item Manejo de paráfrasis.
+    \item Detección de nombres propios.
+    \item Sistema de deletreo automático.
+    \item API bien documentada.
+    \item Tests exhaustivos.
+    \item Fácil de escalar.
 \end{itemize}
+
+\vspace{0.7em}
 
 \textbf{Desventajas}
 \begin{itemize}
