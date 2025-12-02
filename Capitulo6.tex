@@ -585,3 +585,210 @@ Sin memory leaks detectados.\\
     \item Mayor uso de memoria ($\sim$500MB vs 50--200MB)
     \item Requiere modelo pre-entrenado
 \end{itemize}
+
+\section{Resultados de la Evaluación de Usabilidad}
+A continuación se presentan los resultados obtenidos del cuestionario aplicado a los participantes. Las figuras muestran los resultados de las preguntas cerradas, mientras que las respuestas abiertas fueron analizadas siguiendo una codificación temática simple.\\
+
+\textbf{Perfil de los Participantes}\\
+La Figura \ref{fig:edad-participantes} muestra la distribución por edad de los participantes. El rango de 18–24 años abarca un 43.8\%, seguido del grupo de 25–50 años que abarca el mismo porcentaje (43.8\%), mientras que un 12.5\% pertenece al grupo de 50 años o más. Esta distribución es representativa del público potencial de la aplicación, principalmente jóvenes adultos.\\
+
+\begin{center}
+    \includegraphics[width=0.75\textwidth]{Images/Cap6/1_Edad.jpeg}
+    \captionof{figure}[Distribución por edad]{Distribución por edad de los participantes, elaboración propia.} 
+    \label{fig:edad-participantes}
+\end{center}
+
+En cuanto al nivel de dominio de LSM, los resultados indican una composición equilibrada:
+\begin{itemize}
+    \item 25\% sin experiencia previa.
+    \item 31.3\% con nivel básico.
+    \item 25\% con nivel intermedio.
+    \item 18.8\% con nivel avanzado o fluido.
+\end{itemize}
+
+\begin{center}
+    \includegraphics[width=0.95\textwidth]{Images/Cap6/2_Conocimientos_LSM.jpeg}
+    \captionof{figure}[Nivel de Dominio LSM]{Nivel de dominio de LSM, elaboración propia.} 
+    \label{fig:nivel_dominio_lsm}
+\end{center}
+
+\textbf{Experiencia previa con herramientas similares}\\
+El 62.5\% de los participantes indicó no haber utilizado herramientas de traducción similares, mientras que el 37.5\% sí tenía experiencia previa.\\
+
+\begin{center}
+    \includegraphics[width=0.75\textwidth]{Images/Cap6/3_Uso_Herramientas.jpeg}
+    \captionof{figure}[Experiencias previas con herramientas]{Experiencia previa con aplicaciones y herramientas similares por parte de los usuarios, elaboración propia.} 
+    \label{fig:uso_herramientas_existentes}
+\end{center}
+
+Solo 9 participantes reportaron haber utilizado previamente aplicaciones similares. Entre ellos, se identificaron tres diferencias principales:
+\begin{enumerate}
+    \item \textbf{Mayor naturalidad en la animación}\\
+    Varios participantes destacaron que la fluidez del avatar supera la de herramientas previas:
+    \begin{itemize}
+        \item “La fluidez de la animación”.
+        \item “Mejor calidad y velocidad percibida en los videos / animaciones”.
+    \end{itemize}
+
+    \item \textbf{Posibilidad de concatenar frases}\\
+    Una funcionalidad ampliamente valorada fue la capacidad de realizar traducciones por frase y no solo deletreo:
+    \begin{itemize}
+        \item “Se pueden concatenar las frases, eso es algo muy ventajoso”.
+        \item “Posibilidad de identificar frases y no solo deletreo”.
+    \end{itemize}
+
+    \item \textbf{Interfaz más clara o intuitiva}\\
+    Algunos comentarios reconocieron mejoras visuales:
+    \begin{itemize}
+        \item “Mejor distribución de colores”.
+    \end{itemize}
+\end{enumerate}
+
+En general, los usuarios con experiencia previa percibieron la herramienta como más intuitiva, más clara y con animaciones superiores. Esta proporción revela que la mayoría evaluó la aplicación sin sesgos comparativos y que una minoría pudo aportar información contextual respecto a soluciones existentes.\\
+
+\textbf{Percepción sobre la velocidad y pertinencia de la traducción}\\
+Los resultados mostraron una percepción predominantemente positiva. En la escala del 1 al 5:
+\begin{itemize}
+    \item 31.3\% calificó la traducción con 4.
+    \item 31.3\% la calificó con 5.
+    \item 25\% asignó un 3.
+    \item Solo 12.5\% la calificó con 2.
+    \item Ningún usuario seleccionó 1.
+\end{itemize}
+
+\begin{center}
+    \includegraphics[width=0.85\textwidth]{Images/Cap6/5_Fluidez.jpg}
+    \captionof{figure}[Velocidad y pertinencia de la traducción]{Velocidad y pertinencia de la traducción, elaboración propia.} 
+    \label{fig:fluidez}
+\end{center}
+
+Estos resultados indican que más del 60\% considera que la traducción es rápida, pertinente y adecuada, mientras que únicamente una minoría percibió lentitud o falta de pertinencia. Esto valida el diseño del módulo de emparejamiento implementado.\\
+
+\textbf{Utilidad del modo de deletreo}\\
+La valoración del modo de deletreo fue notablemente positiva:
+\begin{itemize}
+    \item 31.3\% lo considera “extremadamente útil”.
+    \item 25\% lo considera “muy útil”.
+    \item 25\% útil.
+    \item 12.5\% poco útil.
+    \item Solo 6.3\% lo percibe como nada útil.
+\end{itemize}
+
+\begin{center}
+    \includegraphics[width=0.85\textwidth]{Images/Cap6/6_Utilidad_Deletreo.jpeg}
+    \captionof{figure}[Utilidad del modo de deletreo]{Utilidad del modo de deletreo, elaboración propia.} 
+    \label{fig:utilidad_deletreo}
+\end{center}
+
+En conjunto, 81.3\% lo considera útil o muy útil, lo que confirma que este mecanismo funciona como un soporte importante en situaciones donde el vocabulario no está disponible o cuando se requiere precisión (como nombres propios).\\
+
+\textbf{Percepción del movimiento del avatar}\\
+El 75\% de los usuarios describió el movimiento del avatar como claro y natural, lo que indica que la animación es comprensible y suficientemente fluida para usuarios no expertos.\\
+
+Sin embargo:
+\begin{itemize}
+    \item 18.8\% señaló movimientos lentos o trabajados.
+    \item 6.3\% describió la animación como confusa.
+\end{itemize}
+
+\begin{center}
+    \includegraphics[width=0.85\textwidth]{Images/Cap6/7_Calidad_Movimiento.jpeg}
+    \captionof{figure}[Percepción del movimiento]{Percepción del movimiento del avatar, elaboración propia.} 
+    \label{fig:percepcion_movimiento}
+\end{center}
+
+Aunque la mayoría percibe una buena calidad de animación, estos resultados revelan oportunidades de mejora en la suavidad, velocidad y naturalidad de ciertos gestos.\\
+
+\textbf{Evaluación del vocabulario disponible}\\
+Finalmente, respecto a la cobertura del vocabulario:
+\begin{itemize}
+    \item 56.3\% considera que las frases y categorías incluidas cubren las necesidades básicas de comunicación.
+    \item 43.8\% opina que faltan frases o categorías importantes.
+    \item Ningún participante consideró que existieran frases innecesarias.
+\end{itemize}
+
+\begin{center}
+    \includegraphics[width=0.85\textwidth]{Images/Cap6/8_Seleccion_Frases.jpeg}
+    \captionof{figure}[Evaluación del vocabulario]{Evaluación del vocabulario seleccionado, elaboración propia.} 
+    \label{fig:evaluacion_vocabulario}
+\end{center}
+
+Este resultado sugiere que, si bien la base actual de frases es funcional, existe una expectativa clara de ampliar el repertorio para cubrir más contextos comunicativos cotidianos.\\
+
+\textbf{Fortalezas percibidas}\\
+Entre las 15 respuestas registradas, surgieron cinco temas recurrentes:
+\begin{enumerate}
+    \item \textbf{Concatenación y pertinencia de frases}\\
+    La capacidad de traducir frases completas fue mencionada como la principal fortaleza:
+    \begin{itemize}
+        \item “Su plus es que añadieron lo de concatenar las frases”
+        \item “Permite identificar frases y no solo deletreo”
+    \end{itemize}
+
+    \item \textbf{Fluidez y calidad de las animaciones}\\
+    Los usuarios destacaron la naturalidad del movimiento:
+    \begin{itemize}
+        \item “Las animaciones se ven bien, no es muy complicado usar la app”.
+        \item “Las animaciones no se traban”.
+    \end{itemize}
+
+    \item \textbf{Interfaz simple, limpia y no invasiva}\\
+    La aplicación fue percibida como fácil de usar:
+    \begin{itemize}
+        \item “La interfaz es simple y minimalista”.
+        \item “Excelente distribución de botones”.
+    \end{itemize}
+
+    \item \textbf{Utilidad para el aprendizaje de LSM}\\
+    Varios participantes valoraron la función educativa:
+    \begin{itemize}
+        \item “Aprender LSM por cómo en verdad se expresan las señas es lo más valioso”.
+        \item “Sirve para situaciones donde se necesita comunicar algo”.
+    \end{itemize}
+
+    \item \textbf{Respuesta inmediata y sistema fluido}\\
+    Comentarios recurrentes señalaron buen rendimiento:
+    \begin{itemize}
+        \item “La velocidad de los videos”.
+        \item “El tener siempre una respuesta del sistema hace que sea una aplicación completa”.
+    \end{itemize}
+\end{enumerate}
+
+En conjunto, los usuarios describen la aplicación como fluida, intuitiva y útil, especialmente para principiantes.\\
+
+\textbf{Áreas de oportunidad}\\
+Entre las 14 respuestas abiertas, se identificaron cuatro líneas principales de mejora:
+\begin{enumerate}
+    \item \textbf{Ampliación del vocabulario}\\
+    Fue el tema más mencionado:
+    \begin{itemize}
+        \item “Agregar más frases”.
+        \item “Faltan algunas categorías de frases o funciones extra”.
+        \item “A veces la seña va muy rápido y no se distingue”.
+    \end{itemize}
+
+    La percepción general indica que el vocabulario actual es funcional, pero insuficiente para cubrir situaciones más amplias.\\
+
+    \item \textbf{Mejora de la fluidez del avatar}\\
+    Aunque las animaciones son valoradas positivamente, algunos comentaron que podrían ser más naturales:
+    \begin{itemize}
+        \item “La seña va muy rápido y no se distingue”.
+        \item “Hacen falta gestos faciales o expresividad”.
+    \end{itemize}
+
+    \item \textbf{Mayor personalización}\\
+    Algunos usuarios desean opciones para adaptar la experiencia:
+    \begin{itemize}
+        \item “Quisiera poder tener mi propio personaje y guardar frases”.
+        \item “Poder crear tu propio video con tu animación”.
+    \end{itemize}
+
+    \item \textbf{Funcionalidades adicionales mediante IA}
+    Algunos participantes sugieren extender el sistema más allá de traducción a LSM:
+    \begin{itemize}
+        \item “Agregar reconocimiento de voz y texto en imágenes”.
+        \item “Un traductor que permita comunicación bidireccional”.
+    \end{itemize}
+\end{enumerate}
+
+En conjunto, las áreas de oportunidad se enfocan en ampliar categorías, mejorar expresividad del avatar y considerar nuevas funciones de interacción y reconocimiento.
