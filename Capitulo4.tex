@@ -2,7 +2,7 @@
 \section{Justificación de los cambios}
 \label{implementación:justificación_cambios}
 
-Durante la fase de planeación se estableció un conjunto de 30 frases, distribuidas en tres categorías principales: saludos, expresiones de emergencia y agradecimientos, con el propósito de representar situaciones comunes de comunicación básica. Sin embargo, se identificó que las frases correspondientes a la categoría de agradecimientos como “gracias”, “muchas gracias” o “te lo agradezco” compartían un mismo gesto en LSM. Esto generaba redundancia semántica y gestual, ya que diferentes frases se traducían a una única seña, sin aportar valor adicional al conjunto de datos ni al propósito comunicativo del prototipo.\\
+Durante la fase de planeación se estableció un conjunto de 33 frases, distribuidas en tres categorías principales: saludos, expresiones de emergencia y agradecimientos, con el propósito de representar situaciones comunes de comunicación básica. Sin embargo, se identificó que las frases correspondientes a la categoría de agradecimientos como “gracias”, “muchas gracias” o “te lo agradezco” compartían un mismo gesto en LSM. Esto generaba redundancia semántica y gestual, ya que diferentes frases se traducían a una única seña, sin aportar valor adicional al conjunto de datos ni al propósito comunicativo del prototipo.\\
 
 Se optó por sustituir la categoría de agradecimientos por una nueva categoría denominada expresiones de mínima comunicación, la cual incluye frases breves y funcionales utilizadas en interacciones cotidianas. Esta modificación permitió ampliar la cobertura comunicativa del prototipo, garantizando una mayor variedad de gestos en escenarios reales de comunicación entre personas oyentes y personas con discapacidad auditiva.\\
 
@@ -10,7 +10,7 @@ Por otro lado, en el capítulo 1 y 2 se indicó que el desarrollo del prototipo 
 
 MediaPipe permite capturar un esqueleto en forma de nube de puntos a partir de un video o en tiempo real, generando un archivo en formato JSON con las coordenadas de las articulaciones. Este archivo puede convertirse a formato BVH para su uso en software de animación como Blender. No obstante, se observó que MediaPipe no logra capturar la totalidad de las articulaciones del cuerpo humano, lo que ocasiona que el archivo BVH resultante esté incompleto al momento de su importación en Blender.\\
 
-Esta situación requería realizar un procesamiento manual de cada animación, lo que representaba una curva de aprendizaje considerable, dado que Blender es una herramienta compleja que demanda tiempo y experiencia para crear animaciones detalladas, especialmente aquellas que involucran movimientos de los dedos. Dado que el proyecto contemplaba 57 animaciones distintas, el tiempo y los recursos necesarios para completarlas excedían los límites establecidos para este Trabajo Terminal.\\
+Esta situación requería realizar un procesamiento manual de cada animación, lo que representaba una curva de aprendizaje considerable, dado que Blender es una herramienta compleja que demanda tiempo y experiencia para crear animaciones detalladas, especialmente aquellas que involucran movimientos de los dedos. Dado que el proyecto contemplaba 60 animaciones distintas, el tiempo y los recursos necesarios para completarlas excedían los límites establecidos para este Trabajo Terminal.\\
 
 También se consideró la posibilidad de utilizar captura de movimiento (\textit{motion capture}) mediante un traje de captura de movimiento, con el fin de mejorar la detección de dedos y gestos faciales. Sin embargo, esta alternativa implicaba una inversión económica elevada y la colaboración de expertos en animación, lo cual resultaba inviable dentro del alcance y recursos disponibles del proyecto.\\
 
@@ -33,12 +33,12 @@ El sistema implementa una arquitectura de microservicios basada en capas, siguie
 La arquitectura implementa los siguientes principios esenciales:
 
 \begin{itemize}
-    \item \textbf{Single Responsibility}: Cada módulo tiene una única responsabilidad claramente definida.
-    \item \textbf{Dependency Injection}: El matcher se inicializa con configuración externa.
-    \item \textbf{Separation of Concerns}: Separación entre API, lógica interna y gestión de datos.
-    \item \textbf{Caching}: Uso de un sistema de cache para embeddings que optimiza el rendimiento.
-    \item \textbf{Stateless API}: La API no mantiene estado entre peticiones consecutivas.
-    \item \textbf{Asynchronous Processing}: Uso de \texttt{async/await} para operaciones de I/O.
+    \item \textbf{\textit{Single Responsibility}}: Cada módulo tiene una única responsabilidad claramente definida.
+    \item \textbf{\textit{Dependency Injection}}: El matcher se inicializa con configuración externa.
+    \item \textbf{\textit{Separation of Concerns}}: Separación entre API, lógica interna y gestión de datos.
+    \item \textbf{\textit{Caching}}: Uso de un sistema de cache para \textit{embeddings} que optimiza el rendimiento.
+    \item \textbf{\textit{Stateless API}}: La API no mantiene estado entre peticiones consecutivas.
+    \item \textbf{\textit{Asynchronous Processing}}: Uso de \texttt{async/await} para operaciones de I/O.
 \end{itemize}
 
 \subsection{Componentes principales}
@@ -49,11 +49,11 @@ El sistema se compone de cuatro módulos principales, cada uno con funciones esp
 
 \paragraph{Responsabilidad}
 \begin{itemize}
-    \item Exposición de endpoints HTTP.
-    \item Validación de requests mediante Pydantic \cite{refimpl1}.
+    \item Exposición de \textit{endpoints} HTTP.
+    \item Validación de \textit{requests} mediante Pydantic \cite{refimpl1}.
     \item Manejo centralizado de errores y excepciones.
     \item Generación automática de documentación (OpenAPI).
-    \item Registro de logs de operación.
+    \item Registro de \textit{logs} de operación.
 \end{itemize}
 
 \paragraph{Endpoints implementados}
@@ -74,16 +74,18 @@ El sistema se compone de cuatro módulos principales, cada uno con funciones esp
     \item Pydantic 2.0+ (validación de datos) \cite{refimpl1}.
 \end{itemize}
 
+\vspace{0.7em}
+
 \noindent \textbf{2. Motor de Búsqueda (app/matcher\_improved.py) -- 681 líneas}
 
 \paragraph{Responsabilidad}
 \begin{itemize}
-    \item Generación de embeddings semánticos.
-    \item Búsqueda jerárquica con re-ranking.
+    \item Generación de \textit{embeddings} semánticos.
+    \item Búsqueda jerárquica con \textit{re-ranking}.
     \item Detección de patrones con nombres propios.
     \item Cálculo de similitud mediante coseno \cite{refcos1}.
     \item Sistema automático de deletreo en casos especiales.
-    \item Gestión del cache de embeddings.
+    \item Gestión del cache de \textit{embeddings}.
 \end{itemize}
 
 \paragraph{Clases principales}
@@ -93,29 +95,31 @@ El sistema se compone de cuatro módulos principales, cada uno con funciones esp
 
 \paragraph{Métodos clave}
 \begin{itemize}
-    \item \texttt{initialize()} \hfill Carga del modelo y los embeddings.
+    \item \texttt{initialize()} \hfill Carga del modelo y los \textit{embeddings}.
     \item \texttt{search\_similar\_phrase()} \hfill Método principal de búsqueda.
     \item \texttt{\_extract\_name\_pattern()} \hfill Detección y extracción de nombres propios.
-    \item \texttt{find\_most\_similar\_phrase\_reranked()} \hfill Re-ranking en dos fases.
+    \item \texttt{find\_most\_similar\_phrase\_reranked()} \hfill \textit{Re-ranking} en dos fases.
     \item \texttt{find\_best\_groups()} \hfill Búsqueda inicial por centroides.
 \end{itemize}
 
 \paragraph{Características avanzadas}
 \begin{itemize}
-    \item Thresholds adaptativos por grupo.
+    \item \textit{Thresholds} adaptativos por grupo.
     \item Aumento de similitud basado en la longitud de frase (+8\% a +15\%).
     \item Penalización por diferencia de longitud (-5\% por carácter adicional).
     \item Detección de más de 40 nombres comunes en español.
-    \item Normalización integrada de leet speak.
+    \item Normalización integrada de \textit{leet speak}.
 \end{itemize}
+
+\vspace{0.7em}
 
 \noindent \textbf{3. Preprocesamiento (app/preprocess.py) -- 244 líneas}
 
 \paragraph{Responsabilidad}
 \begin{itemize}
     \item Normalización de texto: minúsculas, acentos, puntuación y espacios.
-    \item Corrección ortográfica ligera utilizando RapidFuzz \cite{refimpl4}.
-    \item Normalización de leet speak (por ejemplo, \texttt{@ → a}, \texttt{3 → e}) \cite{refimpl5}.
+    \item Corrección ortográfica ligera utilizando \textit{RapidFuzz} \cite{refimpl4}.
+    \item Normalización de \textit{leet speak} (por ejemplo, \texttt{@ → a}, \texttt{3 → e}) \cite{refimpl5}.
     \item Sistema de deletreo letra por letra.
     \item Manejo y detección de caracteres especiales.
 \end{itemize}
@@ -125,7 +129,7 @@ El sistema se compone de cuatro módulos principales, cada uno con funciones esp
     \item \texttt{normalize\_text()} \hfill Normalización base del texto.
     \item \texttt{preprocess\_query()} \hfill Preprocesamiento de consultas del usuario.
     \item \texttt{preprocess\_phrases()} \hfill Preprocesamiento del dataset completo.
-    \item \texttt{normalize\_leet\_speak()} \hfill Conversión de texto en leet speak.
+    \item \texttt{normalize\_leet\_speak()} \hfill Conversión de texto en \textit{leet speak}.
     \item \texttt{spell\_out\_text()} \hfill Deletreo literal del texto.
 \end{itemize}
 
@@ -136,14 +140,16 @@ El sistema se compone de cuatro módulos principales, cada uno con funciones esp
     \item Remoción de puntuación no relevante.
     \item Normalización de espacios con expresiones regulares.
     \item Corrección de errores ortográficos comunes usando RapidFuzz \cite{refimpl4}.
-    \item Normalización de leet speak si aplica \cite{refimpl5}.
+    \item Normalización de \textit{leet speak} si aplica \cite{refimpl5}.
 \end{enumerate}
+
+\vspace{0.7em}
 
 \noindent \textbf{4. Gestión de Datos (app/groups.py) -- 64 líneas}
 
 \paragraph{Responsabilidad}
 \begin{itemize}
-    \item Carga del dataset desde archivos JSON.
+    \item Carga del \textit{dataset} desde archivos JSON.
     \item Validación de la estructura esperada.
     \item Provisión de acceso a frases por grupo.
 \end{itemize}
@@ -182,7 +188,7 @@ El flujo de datos del sistema sigue una secuencia bien definida que abarca valid
     \begin{itemize}
         \item Validación de request mediante Pydantic.
         \item Verificación de texto no vacío.
-        \item Registro en logs del request recibido.
+        \item Registro en \textit{logs} del request recibido.
     \end{itemize}
 
     \item \textbf{Preprocesamiento (Preprocessing Layer)} \\
@@ -216,7 +222,7 @@ El flujo de datos del sistema sigue una secuencia bien definida que abarca valid
         $\downarrow$
         \begin{itemize}
             \item Comparación en frases de grupos candidatos.
-            \item Aplicación de boost por longitud (+8\% a +15\%).
+            \item Aplicación de \textit{boost} por longitud (+8\% a +15\%).
             \item Penalización por diferencia de longitud.
         \end{itemize}
         Resultado: mejor match = ``Me llamo'' (Grupo B, similitud = 0.8599).
@@ -229,7 +235,7 @@ El flujo de datos del sistema sigue una secuencia bien definida que abarca valid
     \begin{itemize}
         \item Detección del patrón ``mi nombre es [X]''.
         \item Extracción del nombre ``Pedro''.
-        \item Normalización de leet speak si aplica.
+        \item Normalización de \textit{leet speak} si aplica.
         \item Deletreo resultante: \texttt{[P,\ E,\ D,\ R,\ O]}.
     \end{itemize}
 
@@ -260,7 +266,7 @@ El flujo de datos del sistema sigue una secuencia bien definida que abarca valid
 % -----------------------------------------------------------
 {\large \noindent \textbf{Flujo alternativo: Deletreo automático}}
 
-Este flujo ocurre cuando la similitud es menor al threshold correspondiente al grupo.
+Este flujo ocurre cuando la similitud es menor al \textit{threshold} correspondiente al grupo.
 
 \begin{enumerate}
     \item Usuario envía: ``xyz123''. \\
@@ -291,7 +297,7 @@ Este flujo ocurre cuando la similitud es menor al threshold correspondiente al g
 \subsection{Flujo de inicialización del sistema}
 
 \begin{enumerate}
-    \item Startup del sistema \\
+    \item \textit{Startup} del sistema \\
     $\downarrow$ \\
     \texttt{@app.on\_event("startup")}
 
@@ -300,12 +306,12 @@ Este flujo ocurre cuando la similitud es menor al threshold correspondiente al g
     \texttt{load\_groups()} $\rightarrow$ lectura de \texttt{grupos.json} \\
     Resultado: 43 frases cargadas.
 
-    \item Inicialización del matcher \\
+    \item Inicialización del \textit{matcher} \\
     $\downarrow$ \\
     \texttt{ImprovedPhraseMatcher()}
     \begin{itemize}
         \item Selección del modelo \texttt{MiniLM-L12-v2}.
-        \item Configuración de thresholds por grupo.
+        \item Configuración de \textit{thresholds} por grupo.
         \item Preparación de lista de nombres comunes.
     \end{itemize}
 
@@ -314,7 +320,7 @@ Este flujo ocurre cuando la similitud es menor al threshold correspondiente al g
     ¿Existe \texttt{embeddings\_improved.npz}? 
     \begin{itemize}
         \item Sí $\rightarrow$ cargar (menos de 1 segundo).
-        \item No $\rightarrow$ generar embeddings (aprox. 5 segundos).
+        \item No $\rightarrow$ generar \textit{embeddings} (aprox. 5 segundos).
     \end{itemize}
 
     \item Carga del modelo de ML \\
@@ -362,7 +368,7 @@ async def startup_event():
 \textbf{Beneficios}
 \begin{itemize}
     \item El modelo ML se carga una sola vez.
-    \item El caché de embeddings es compartido.
+    \item El caché de \textit{embeddings} es compartido.
     \item Reducción en uso de memoria.
 \end{itemize}
 
@@ -370,7 +376,7 @@ async def startup_event():
 
 \textbf{Implementación}
 \begin{itemize}
-    \item Modelos de embeddings intercambiables.
+    \item Modelos de \textit{embeddings} intercambiables.
     \item Selección del modelo en tiempo de inicialización.
 \end{itemize}
 
@@ -437,7 +443,7 @@ def search_similar_phrase(query):
 \textbf{Implementación}
 \begin{itemize}
     \item La API REST sirve como fachada del sistema.
-    \item Los endpoints ocultan la complejidad interna.
+    \item Los \textit{endpoints} ocultan la complejidad interna.
 \end{itemize}
 
 \textbf{Ejemplo}
@@ -454,7 +460,7 @@ Internamente ejecuta:
 \begin{itemize}
     \item Validación.
     \item Preprocesamiento.
-    \item Generación de embeddings.
+    \item Generación de \textit{embeddings}.
     \item Búsqueda jerárquica.
     \item Detección de patrones.
     \item Construcción de respuesta.
@@ -464,7 +470,7 @@ Internamente ejecuta:
 \begin{itemize}
     \item API simple de usar.
     \item Complejidad encapsulada.
-    \item Fácil integración con frontend o móviles.
+    \item Fácil integración con \textit{frontend} o móviles.
 \end{itemize}
 
 \noindent \textbf{5. Patrón Dependency Injection}
@@ -472,7 +478,7 @@ Internamente ejecuta:
 \textbf{Implementación}
 \begin{itemize}
     \item Configuración inyectada mediante el constructor.
-    \item No existen valores ``hardcoded'' en la lógica.
+    \item No existen valores \textit{``hardcoded''} en la lógica.
 \end{itemize}
 
 \textbf{Código}
@@ -491,7 +497,7 @@ def __init__(
 
 \textbf{Beneficios}
 \begin{itemize}
-    \item Facilita el testing (mock de dependencias).
+    \item Facilita el \textit{testing} (\textit{mock} de dependencias).
     \item Configurable externamente.
     \item Mayor flexibilidad.
 \end{itemize}
@@ -537,7 +543,7 @@ def _load_model():
     \item \texttt{main.py}: Manejo de API REST.
     \item \texttt{matcher\_improved.py}: Búsqueda semántica.
     \item \texttt{preprocess.py}: Preprocesamiento de texto.
-    \item \texttt{groups.py}: Gestión y carga del dataset.
+    \item \texttt{groups.py}: Gestión y carga del \textit{dataset}.
 \end{itemize}
 
 \textbf{Open / Closed Principle \cite{refimpl7}}
@@ -548,13 +554,13 @@ def _load_model():
 
 \textbf{Liskov Substitution Principle \cite{refimpl7}}
 \begin{itemize}
-    \item Modelos de embeddings intercambiables.
-    \item Algoritmos de búsqueda reemplazables (básico vs reranking).
+    \item Modelos de \textit{embeddings} intercambiables.
+    \item Algoritmos de búsqueda reemplazables (básico vs \textit{re-ranking}).
 \end{itemize}
 
 \textbf{Interface Segregation Principle \cite{refimpl7}}
 \begin{itemize}
-    \item La API expone solo endpoints necesarios.
+    \item La API expone solo \textit{endpoints} necesarios.
     \item Métodos internos como \texttt{\_extract\_name\_pattern} permanecen privados.
 \end{itemize}
 
@@ -576,7 +582,7 @@ Python 3.12 incorpora mejoras significativas en rendimiento, manejo de tipos y c
 
 \subsection{Características Utilizadas}
 
-\subsubsection{1. Type hints avanzados (PEP 604)}
+\noindent \textbf{1. Type hints avanzados (PEP 604)}
 
 Sintaxis moderna con el operador \texttt{|} en lugar de \texttt{Union}.
 
@@ -587,7 +593,7 @@ def search(query: str) -> dict[str, str | float | None]:
 \end{lstlisting}
 
 
-\subsubsection{2. Async / Await nativo}
+\noindent \textbf{2. Async / Await nativo}
 
 FastAPI utiliza \texttt{async} para operaciones I/O no bloqueantes.
 
@@ -600,9 +606,9 @@ async def buscar_frase_similar(request: QueryRequest):
 \end{lstlisting}
 
 
-\subsubsection{3. F-strings avanzados}
+\noindent \textbf{3. F-strings avanzados}
 
-Usados para logging descriptivo y debugging eficiente.
+Usados para \textit{logging} descriptivo y \textit{debugging} eficiente.
 
 \textbf{Ejemplo:}
 \begin{lstlisting}[language=Python,frame=single]
@@ -610,7 +616,7 @@ logger.info(f"Patrón detectado: {nombre} -> {deletreo}")
 \end{lstlisting}
 
 
-\subsubsection{4. Context managers (\texttt{with} statements)}
+\noindent \textbf{4. Context managers (\texttt{with} statements)}
 
 Permiten manejo seguro de archivos y liberación automática de recursos.
 
@@ -620,7 +626,7 @@ with open("grupos.json", "r") as f:
     data = json.load(f)
 \end{lstlisting}
 
-\subsubsection{5. List y Dict Comprehensions}
+\noindent \textbf{5. List y Dict Comprehensions}
 
 Permiten procesamiento eficiente y legible de estructuras de datos.
 
@@ -677,7 +683,7 @@ El ecosistema de Python proporciona herramientas de calidad industrial \cite{ref
     \item FastAPI para servicios web (más eficiente que Flask en entornos \texttt{async}).
     \item Pydantic para validación de datos.
     \item NumPy para computación numérica.
-    \item Pytest para testing automatizado.
+    \item Pytest para \textit{testing} automatizado.
 \end{itemize}
 
 \vspace{1em} % ← agrega espacio aquí
@@ -694,7 +700,7 @@ El ecosistema de Python proporciona herramientas de calidad industrial \cite{ref
 
 \textbf{Razón 5: Rendimiento suficiente para ML}
 
-Aunque Python es un lenguaje interpretado, las operaciones costosas (como generación de embeddings o cálculo de similitudes) se ejecutan en implementaciones optimizadas en C/C++ a través de bibliotecas como NumPy \cite{refimpl9} o PyTorch \cite{refimpl10}.
+Aunque Python es un lenguaje interpretado, las operaciones costosas (como generación de \textit{embeddings} o cálculo de similitudes) se ejecutan en implementaciones optimizadas en C/C++ a través de bibliotecas como NumPy \cite{refimpl9} o PyTorch \cite{refimpl10}.
 
 \vspace{1em} % ← agrega espacio aquí
 
@@ -705,7 +711,7 @@ Aunque Python es un lenguaje interpretado, las operaciones costosas (como genera
     \item Alternativa Java: $\sim$30\,ms/consulta (estimado).
 \end{itemize}
 
-El overhead adicional de Python (alrededor de 22\,ms) es aceptable considerando su rapidez de desarrollo y soporte de librerías.
+El \textit{overhead} adicional de Python (alrededor de 22\,ms) es aceptable considerando su rapidez de desarrollo y soporte de librerías.
 
 
 % -----------------------------------------------------------------
@@ -714,7 +720,7 @@ El overhead adicional de Python (alrededor de 22\,ms) es aceptable considerando 
 \noindent \textbf{Versión:} FastAPI 0.104.1 \\
 \noindent \textbf{Desarrollador:} Sebastián Ramírez Montaño \cite{refimpl2}.\\
 
-FastAPI es un framework moderno para la construcción de APIs de alto rendimiento basado en ASGI, con soporte nativo para \texttt{async/await}, validación automática y documentación generada dinámicamente \cite{refimpl2}.\\
+FastAPI es un \textit{framework} moderno para la construcción de APIs de alto rendimiento basado en ASGI, con soporte nativo para \texttt{async/await}, validación automática y documentación generada dinámicamente \cite{refimpl2}.\\
 
 \noindent \textbf{Características clave}\\
 
@@ -729,7 +735,7 @@ FastAPI es un framework moderno para la construcción de APIs de alto rendimient
 \textbf{Métricas:}
 \begin{itemize}
     \item Latencia promedio: 40 ms por request.
-    \item Throughput: 25+ requests/segundo.
+    \item \textit{Throughput}: 25+ requests/segundo.
     \item Uso de memoria aproximado: 150 MB.
 \end{itemize}
 
@@ -757,7 +763,7 @@ class QueryRequest(BaseModel):
 
 \textbf{Beneficios:}
 \begin{itemize}
-    \item Testing interactivo sin herramientas externas.
+    \item \textit{Testing} interactivo sin herramientas externas.
     \item Documentación siempre actualizada.
     \item Permite generar clientes automáticamente (Python, TypeScript, etc.).
 \end{itemize}
@@ -766,7 +772,7 @@ class QueryRequest(BaseModel):
 
 \begin{itemize}
     \item Uso de \texttt{HTTPException} para errores controlados.
-    \item Middleware automático de manejo de excepciones.
+    \item \textit{Middleware} automático de manejo de excepciones.
 \end{itemize}
 
 \textbf{Ejemplo:}
@@ -802,11 +808,11 @@ async def buscar(request: QueryRequest):
 \hline
 & \textbf{FastAPI} & \textbf{Flask} \\ \hline
 
-\textbf{Async nativo} & Sí & No (\textit{extensiones}) \\ \hline
+\textbf{Async nativo} & Sí & No (extensiones) \\ \hline
 
-\textbf{Validación automática} & Sí, \textit{Pydantic} & No, manual \\ \hline
+\textbf{Validación automática} & Sí, Pydantic & No, manual \\ \hline
 
-\textbf{Documentación auto} & Sí, \textit{Swagger} & No, manual (\textit{Flask-RESTX}) \\ \hline
+\textbf{Documentación auto} & Sí, Swagger & No, manual (Flask-RESTX) \\ \hline
 
 \textbf{Tipado estático} & Sí, \textit{Hints} & No \\ \hline
 
@@ -818,11 +824,11 @@ async def buscar(request: QueryRequest):
 \end{table}
 
 \begin{itemize}
-    \item \textbf{Rendimiento:} FastAPI es uno de los frameworks más rápidos en Python (benchmarks: TechEmpower) \cite{refimpl12}.
+    \item \textbf{Rendimiento:} FastAPI es uno de los \textit{frameworks} más rápidos en Python (\textit{benchmarks}: TechEmpower) \cite{refimpl12}.
     \item \textbf{Validación automática:} Pydantic realiza validación de datos sin necesidad de código adicional \cite{refimpl1}.
     \item \textbf{Documentación automática:} Swagger UI y ReDoc se generan de manera inmediata.
-    \item \textbf{Soporte nativo para \texttt{async/await}:} útil para operaciones de E/S (\textit{I/O-bound}).
-    \item \textbf{Uso de type hints:} facilita autocompletado y documentación.
+    \item \textbf{Soporte nativo para \texttt{async/await}:} útil para operaciones de E/S (I/O-bound).
+    \item \textbf{Uso de \textit{type hints}:} facilita autocompletado y documentación.
 \end{itemize}
 
 \textbf{¿Por qué FastAPI y no Django?}
@@ -848,11 +854,11 @@ async def buscar(request: QueryRequest):
 \end{table}
 
 \begin{itemize}
-    \item Django es un framework completo (full-stack), orientado a aplicaciones completas.
-    \item FastAPI es un microframework ideal para APIs y microservicios de aprendizaje automático \cite{refimpl12}.
+    \item Django es un \textit{framework} completo (\textit{full-stack}), orientado a aplicaciones completas.
+    \item FastAPI es un \textit{microframework} ideal para APIs y microservicios de aprendizaje automático \cite{refimpl12}.
 \end{itemize}
 
-\textbf{Conclusión:} Django es excesivo (overkill) para un microservicio que sirve como backend de modelos de PLN.
+\textbf{Conclusión:} Django es excesivo (\textit{overkill}) para un microservicio que sirve como \textit{backend} de modelos de PLN.
 
 \subsection{Endpoints implementados}
 
@@ -958,7 +964,7 @@ El flujo interno del modelo sigue las siguientes etapas:
     ``Hola, ¿cómo estás?''
     \item \textbf{Tokenización} (WordPiece Tokenizer)
     
-    Tokens resultantes:
+    \textit{Tokens} resultantes:
 \begin{verbatim}
 [CLS] hola , ? como estas ? [SEP]
 \end{verbatim}
@@ -970,23 +976,23 @@ El flujo interno del modelo sigue las siguientes etapas:
 
     \item \textbf{Capa de Embeddings:}
     \begin{itemize}
-        \item Token embeddings (768 dimensiones).
-        \item Positional embeddings.
-        \item Segment embeddings.
+        \item \textit{Token embeddings} (768 dimensiones).
+        \item \textit{Positional embeddings}.
+        \item \textit{Segment embeddings}.
     \end{itemize}
 
     \item \textbf{12 capas Transformer}
     \begin{itemize}
         \item Cada capa contiene:
         \begin{itemize}
-            \item Multi-Head Self-Attention.
-            \item Feed-Forward Network.
+            \item \textit{Multi-Head Self-Attention}.
+            \item \textit{Feed-Forward Network}.
         \end{itemize}
         \item Se repite desde la capa 1 hasta la capa 12.
     \end{itemize}
 
     \item \textbf{Pooling layer} \\
-    Mean Pooling (promedio de todos los embeddings).
+    \textit{Mean Pooling} (promedio de todos los embeddings).
 
     \item \textbf{Normalización final} \\
     Normalización L2 del vector resultante.
@@ -1063,15 +1069,12 @@ El flujo interno del modelo sigue las siguientes etapas:
 \caption[Comparación de embeddings modernos]{Comparación entre Sentence-BERT, Word2Vec y GloVe, elaboración propia.}
 \end{table}
 
-Modelos clásicos como Word2Vec y GloVe generan embeddings estáticos, es decir, una representación por palabra sin contexto. Ejemplo:
+Modelos clásicos como Word2Vec y GloVe generan \textit{embeddings} estáticos, es decir, una representación por palabra sin contexto. Ejemplo:
 
 \begin{itemize}
     \item ``banco'' (institución financiera) vs. ``banco'' (asiento).
-\end{itemize}
-
-\begin{itemize}
-    \item Word2Vec: mismo embedding (no distingue contexto) \ding{55}
-    \item BERT/SBERT: embeddings distintos según el uso contextual \checkmark
+    \item Word2Vec: mismo \textit{embedding} (no distingue contexto) \ding{55}
+    \item BERT/SBERT: \textit{embeddings} distintos según el uso contextual \checkmark
 \end{itemize}
 
 \textbf{Conclusión:} Sentence-BERT es superior para tareas de similitud semántica y comprensión contextual.\\
@@ -1167,7 +1170,7 @@ paraphrase-mpnet-multilingual & 768 & 400MB & 80ms & 96\% \\ \hline
 
 \textbf{Uso en el proyecto \cite{refimpl9}:}
 \begin{itemize}
-    \item Operaciones matriciales para embeddings.
+    \item Operaciones matriciales para \textit{embeddings}.
     \item Cálculo de centroides de grupos.
     \item Operaciones vectoriales optimizadas.
     \item Guardado y carga de caché en formato \texttt{.npz}.
@@ -1178,8 +1181,8 @@ paraphrase-mpnet-multilingual & 768 & 400MB & 80ms & 96\% \\ \hline
     \item \texttt{np.array()} --- Conversión a arreglos.
     \item \texttt{np.mean()} --- Cálculo de centroides.
     \item \texttt{np.clip()} --- Normalización de valores.
-    \item \texttt{np.savez()} --- Guardado de embeddings.
-    \item \texttt{np.load()} --- Carga de embeddings.
+    \item \texttt{np.savez()} --- Guardado de \textit{embeddings}.
+    \item \texttt{np.load()} --- Carga de \textit{embeddings}.
 \end{itemize}
 
 \textbf{Ejemplo:}
@@ -1205,7 +1208,7 @@ np.savez(cache_path,
 
 \textbf{Función utilizada:}
 \begin{itemize}
-    \item \texttt{cosine\_similarity()} --- Similitud entre embeddings.
+    \item \texttt{cosine\_similarity()} --- Similitud entre \textit{embeddings}.
 \end{itemize}
 
 \textbf{Ejemplo:}
@@ -1262,7 +1265,7 @@ if similarity > 80:
 
 \textbf{Uso en el proyecto \cite{refimpl10}:}
 \begin{itemize}
-    \item Backend de \texttt{sentence-transformers}.
+    \item \textit{Backend} de \texttt{sentence-transformers}.
     \item Ejecución del modelo Transformer.
     \item Soporte opcional para GPU.
 \end{itemize}
@@ -1278,7 +1281,7 @@ model.to("cpu")
 
 \textbf{Ventajas:}
 \begin{itemize}
-    \item Framework maduro y ampliamente adoptado.
+    \item \textit{Framework maduro} y ampliamente adoptado.
     \item Gran ecosistema en NLP y visión.
     \item Compatibilidad con HuggingFace.
 \end{itemize}
@@ -1328,7 +1331,7 @@ pytest tests/performance/ --benchmark-only
 \begin{itemize}
     \item Servidor ASGI de alto rendimiento.
     \item Basado en \texttt{uvloop} (más rápido que asyncio).
-    \item Hot-reload para desarrollo.
+    \item \textit{Hot-reload} para desarrollo.
 \end{itemize}
 
 \textbf{Configuración para producción:}
@@ -1379,7 +1382,7 @@ git push -u origin feat/nombre-detection
 
 \textbf{Uso en el proyecto \cite{refimpl1}:}
 \begin{itemize}
-    \item Validación automática de requests.
+    \item Validación automática de \textit{requests}.
     \item Serialización y deserialización.
     \item Integración con FastAPI.
 \end{itemize}
@@ -1431,7 +1434,7 @@ class QueryResponse(BaseModel):
 
 \textbf{3. Mantenibilidad}
 \begin{itemize}
-    \item Type hints en Python 3.12 \cite{refimpl8}.
+    \item \textit{Type hints} en Python 3.12 \cite{refimpl8}.
     \item Validación con Pydantic \cite{refimpl1}.
     \item Tests con Pytest \cite{refimpl15}.
 \end{itemize}
@@ -1439,15 +1442,15 @@ class QueryResponse(BaseModel):
 \textbf{4. Escalabilidad}
 \begin{itemize}
     \item Arquitectura asíncrona.
-    \item API stateless.
-    \item Caché de embeddings.
+    \item API \textit{stateless}.
+    \item Caché de \textit{embeddings}.
 \end{itemize}
 
 \textbf{5. Experiencia de desarrollador}
 \begin{itemize}
-    \item Hot-reload.
+    \item \textit{Hot-reload}.
     \item Documentación automática.
-    \item Type checking.
+    \item \textit{Type checking}.
 \end{itemize}
 
 {\large \noindent \textbf{Stack tecnológico final}}
@@ -1460,7 +1463,7 @@ class QueryResponse(BaseModel):
 \textbf{Capa} & \textbf{Tecnología} \\ \hline
 
 Lenguaje de programación & Python 3.12.3 \\ \hline
-Framework Web & FastAPI 0.104.1 \\ \hline
+\textit{Framework Web} & FastAPI 0.104.1 \\ \hline
 Servidor ASGI & Uvicorn 0.24.0 \\ \hline
 Modelo \textit{Machine Learning} & paraphrase-multilingual-MiniLM-L12-v2 \\ \hline
 \textit{Embeddings Library} & sentence-transformers 2.2.2 \\ \hline
@@ -1488,7 +1491,7 @@ Control de Versiones & Git 2.43.0 \\ \hline
 
 \noindent\textbf{Frameworks}
 \begin{itemize}
-    \item Flask: Sin async nativo ni validación automática.
+    \item Flask: Sin \textit{async} nativo ni validación automática.
     \item Django: \emph{Overkill} para un microservicio.
     \item Tornado: En desuso, comunidad pequeña.
 \end{itemize}
@@ -1502,7 +1505,7 @@ Control de Versiones & Git 2.43.0 \\ \hline
 
 \noindent\textbf{Bases de datos}
 \begin{itemize}
-    \item PostgreSQL/MySQL: Innecesarias para dataset fijo.
+    \item PostgreSQL/MySQL: Innecesarias para \textit{dataset} fijo.
     \item Decisión: JSON plano es suficiente para 43 frases.
 \end{itemize}
 
@@ -2565,7 +2568,7 @@ def get_group_phrases(grupo: str) -> List[str]:
 \end{lstlisting}
 
 {\large \noindent \textbf{Sistema de embeddings}}\\
-{\textbf \textbf{Generación de Embeddings}}
+{\textbf \textbf{Generación de \textit{Embeddings}}}
 \begin{lstlisting}[language=Python]
 def _generate_and_cache_embeddings(self):
     """
@@ -2728,7 +2731,7 @@ Memoria usada (modelo) & $\sim$420 MB \\ \hline
 Memoria usada (cache) & 65 KB \\ \hline
 
 \end{tabular}
-\caption[Métricas del embedding]{Métricas del embedding, elaboración propia.}
+\caption[Métricas del embedding]{Métricas del \textit{embedding}, elaboración propia.}
 \end{table}
 
 %#---------------------------------
@@ -2741,7 +2744,7 @@ Memoria usada (cache) & 65 KB \\ \hline
 \begin{itemize}
     \item Estandarizar formato del texto.
     \item Eliminar variaciones irrelevantes.
-    \item Mejorar matching de similitud.
+    \item Mejorar \textit{matching} de similitud.
     \item Reducir vocabulario efectivo.
 \end{itemize}
 
@@ -2788,7 +2791,7 @@ text = text.lower()
 \begin{itemize}
     \item ``Hola'' y ``hola'' son semánticamente iguales.
     \item Reduce vocabulario a la mitad.
-    \item Simplifica matching.
+    \item Simplifica \textit{matching}.
 \end{itemize}
 
 \noindent \textbf{Ejemplos:}
@@ -2816,7 +2819,7 @@ text = ''.join(
 
 \noindent \textbf{Explicación técnica:}
 \begin{itemize}
-    \item NFD: Normalization Form Canonical Decomposition.
+    \item \textit{NFD: Normalization Form Canonical Decomposition}.
     \item ``á'' → ``a'' + acento (base + diacrítico).
     \item Categoría ``Mn'': Mark, Nonspacing (diacríticos).
     \item Filtrar categoría ``Mn'' elimina acentos.
@@ -2832,7 +2835,7 @@ text = ''.join(
 
 \noindent \textbf{Ventajas:}
 \begin{itemize}
-    \item Typos de acentos no afectan matching.
+    \item Typos de acentos no afectan \textit{matching}.
     \item ``hola'' = ``hóla'' = ``holá''.
     \item Útil para usuarios sin teclado en español.
 \end{itemize}
@@ -2882,7 +2885,7 @@ text = ' '.join(text.split())
 
 \noindent \textbf{Funcionalidad:}
 \begin{itemize}
-    \item \texttt{.split()} divide por cualquier whitespace.
+    \item \texttt{.split()} divide por cualquier \textit{whitespace}.
     \item \texttt{' '.join()} une con un solo espacio.
 \end{itemize}
 
@@ -2926,7 +2929,7 @@ Detectar y corregir typos comunes:
 \noindent \textbf{Algoritmo: Levenshtein Distance}
 
 \textbf{Definición:}\\
-Distancia de edición mínima entre dos strings (inserciones, eliminaciones, sustituciones) \cite{refimpl17}.
+Distancia de edición mínima entre dos \textit{strings} (inserciones, eliminaciones, sustituciones) \cite{refimpl17}.
 
 \begin{verbatim}
 "kitten" → "sitting"
@@ -3070,7 +3073,7 @@ Tamaño del diccionario & 50+ términos \\ \hline
 
 \textbf{Objetivo}
 
-Convertir leet speak (1337) a texto normal para mejorar la detección de nombres propios \cite{refimpl15}.\\
+Convertir \textit{leet speak} a texto normal para mejorar la detección de nombres propios \cite{refimpl15}.\\
 
 \textbf{Casos}:
 \begin{itemize}
@@ -3197,6 +3200,8 @@ if nombre_normalizado in COMMON_SPANISH_NAMES:
 
 Cobertura: $\sim$70\%.
 
+\vspace{0.7em}
+
 {\large \noindent \textbf{Estrategia 2: Capitalización}}
 
 \noindent \textbf{Patrón de nombre propio:}
@@ -3246,6 +3251,8 @@ def is_proper_noun_by_capitalization(word: str) -> bool:
     \item Requiere capitalización correcta.
     \item Puede detectar falsos positivos (inicio de oración).
 \end{itemize}
+
+\vspace{0.7em}
 
 {\large \noindent \textbf{Estrategia 3: Validación por ausencia en dataset}}\\
 
