@@ -1385,6 +1385,65 @@ Los microservicios representan un modelo arquitectónico moderno y modular, idea
     \captionof{figure}[Arquitectura de Microservicios]{Arquitectura de Microservicios, obtenido de \cite{refmic5}.} 
 \end{center}
 
+\section{Modelo C4 de Arquitectura de Software}
+El Modelo C4 es un enfoque creado por Simon Brown, cuyo propósito es aportar claridad y consistencia a la documentación de arquitectura de software \cite{refc4-1}\cite{refc4-3}. Este modelo surgió como respuesta a la disminución en la calidad de los diagramas técnicos derivada del uso extendido de metodologías ágiles, donde frecuentemente se emplean diagramas improvisados, ambiguos o con notación poco clara \cite{refc4-1}. El Modelo C4 propone una estructura jerárquica que permite representar un sistema de software en distintos niveles de abstracción, facilitando la comunicación entre desarrolladores, arquitectos y otros interesados dentro de un proyecto \cite{refc4-2}\cite{refc4-2}.\\
+
+El modelo busca proporcionar un lenguaje común para describir software, reduciendo malentendidos y mejorando la colaboración entre equipos técnicos y no técnicos \cite{refc4-2}\cite{refc4-3}. Para ello se basa en un conjunto de abstracciones y tipos de diagramas que permiten visualizar desde el panorama general del sistema hasta los detalles más específicos de su implementación.\\
+
+\textbf{Abstracciones del Modelo C4}\\
+El C4 modela la arquitectura de un sistema utilizando cuatro tipos de elementos fundamentales \cite{refc4-3}:
+\begin{itemize}
+    \item Persona: Representa a los usuarios finales que interactúan con el sistema, humanos o no.
+    \item Sistema: La unidad de mayor nivel que ofrece valor a los usuarios.
+    \item Contenedor: Aplicaciones o almacenes de datos que componen un sistema; son ejecutables o desplegables de forma independiente.
+    \item Componente: Módulos o bloques internos que conforman cada contenedor.
+\end{itemize}
+
+Estas abstracciones permiten estructurar adecuadamente la representación del sistema y constituyen la base para los diagramas en sus diferentes niveles \cite{refc4-1}\cite{refc4-3}.\\
+
+El modelo está compuesto por una jerarquía de cuatro diagramas, cada uno dirigido a un público específico y con un objetivo claro \cite{refc4-1,refc4-2,refc4-3}.\\
+
+\textbf{Nivel 1: Diagrama de Contexto del Sistema}\\
+Describe el sistema principal y cómo este interactúa con los usuarios y otros sistemas externos. Proporciona una vista de alto nivel que ayuda a entender el alcance general y la relación del sistema con su entorno \cite{refc4-1, refc4-2,refc4-3}.\\
+
+\begin{center}
+    \includegraphics[width=0.95\textwidth]{Images/Cap 2/C4/C4_Diagrama_Contexto.png}
+    \captionof{figure}[Diagrama de Contexto]{Diagrama de Contexto, obtenido de \cite{refc4-1}.} 
+\end{center}
+
+Este nivel es especialmente útil para audiencias técnicas y no técnicas, ya que muestra el panorama completo sin entrar en detalles internos.\\
+
+\textbf{Nivel 2: Diagrama de Contenedores}\\
+Amplía el diagrama de contexto mostrando las aplicaciones, bases de datos y servicios que componen el sistema. Incluye las principales decisiones tecnológicas y aclara cómo interactúan los contenedores entre sí \cite{refc4-1,refc4-2,refc4-3}.\\
+
+\begin{center}
+    \includegraphics[width=0.95\textwidth]{Images/Cap 2/C4/C4_Diagrama_Contenedor.png}
+    \captionof{figure}[Diagrama de Contenedores]{Diagrama de Contenedores, obtenido de \cite{refc4-1}.} 
+\end{center}
+
+Su propósito es visualizar la arquitectura principal de implementación, de manera similar a un plano general de la estructura interna del sistema.\\
+
+\textbf{Nivel 3: Diagrama de Componentes}\\
+En este nivel se detalla la estructura interna de un contenedor, desglosándolo en componentes y mostrando cómo colaboran para cumplir funcionalidades específicas \cite{refc4-1,refc4-2, refc4-3}.\\
+
+\begin{center}
+    \includegraphics[width=0.95\textwidth]{Images/Cap 2/C4/C4_Diagrama_Componentes.png}
+    \captionof{figure}[Diagrama de Componentes]{Diagrama de Componentes, obtenido de \cite{refc4-1}.} 
+\end{center}
+
+Sirve para el análisis detallado de la organización interna y las dependencias locales.\\
+
+\textbf{Nivel 4: Diagrama de Código}\\
+Representa la implementación interna de un componente, típicamente en forma de diagramas UML generados automáticamente. Este nivel es opcional y rara vez se utiliza, ya que detalla clases e interfaces específicas del código \cite{refc4-1, refc4-2, refc4-3}.\\
+
+\begin{center}
+    \includegraphics[width=0.95\textwidth]{Images/Cap 2/C4/C4_Diagrama_Codigo.png}
+    \captionof{figure}[Diagrama de Código]{Diagrama de Código, obtenido de \cite{refc4-1}.} 
+\end{center}
+
+El modelo C4 promueve la creación de diagramas claros, evitando ambigüedades y asegurando que cada elemento incluya nombre, tipo, tecnología y una breve descripción \cite{refc4-1}. Además, recomienda acompañar los diagramas con una leyenda que explique colores, bordes o formas utilizadas para que el lector pueda interpretarlos de manera consistente.\\
+
+Este enfoque se ha convertido en una herramienta valiosa para mejorar la comunicación, documentación, colaboración y toma de decisiones, ofreciendo una forma estructurada y consistente de representar arquitecturas complejas \cite{refc4-2}. Gracias a su simplicidad y adaptabilidad, permite visualizar y comprender rápidamente los sistemas, incluso en equipos de gran tamaño o con alta rotación técnica \cite{refc4-3}.
 
 \section{Servicios en la Nube}
 Los servicios en la nube son soluciones tecnológicas que permiten a usuarios y organizaciones acceder bajo demanda a recursos informáticos, aplicaciones y datos a través de internet, sin necesidad de poseer infraestructura o hardware especializado. Estos servicios son administrados por un proveedor de nube, lo que permite a los usuarios obtener acceso flexible y económico a las herramientas que necesitan, sin asumir los costos ni la complejidad de su gestión \cite{refnub1}.\\
