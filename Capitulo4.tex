@@ -22,7 +22,7 @@ Por estas razones, se decidió prescindir del modelado 3D en esta etapa del proy
 
 \subsection{Arquitectura del modulo de Procesamiento de Lenguaje Natural (PLN)}
 
-{\large \noindent \textbf{Visión general de la arquitectura}}
+{\textbf{Visión general de la arquitectura}}
 
 El sistema implementa una arquitectura de microservicios basada en capas, siguiendo los principios de separación de responsabilidades y modularidad. La arquitectura se compone de cuatro capas principales:
 \begin{center}
@@ -50,7 +50,7 @@ El sistema se compone de cuatro módulos principales, cada uno con funciones esp
 \paragraph{Responsabilidad}
 \begin{itemize}
     \item Exposición de endpoints HTTP.
-    \item Validación de requests mediante Pydantic.
+    \item Validación de requests mediante Pydantic \cite{refimpl1}.
     \item Manejo centralizado de errores y excepciones.
     \item Generación automática de documentación (OpenAPI).
     \item Registro de logs de operación.
@@ -69,9 +69,9 @@ El sistema se compone de cuatro módulos principales, cada uno con funciones esp
 
 \paragraph{Tecnologías utilizadas}
 \begin{itemize}
-    \item FastAPI 0.104.1
-    \item Uvicorn (servidor ASGI)
-    \item Pydantic 2.0+ (validación de datos)
+    \item FastAPI 0.104.1 \cite{refimpl2}. 
+    \item Uvicorn (servidor ASGI) \cite{refimpl3}.
+    \item Pydantic 2.0+ (validación de datos) \cite{refimpl1}.
 \end{itemize}
 
 \noindent \textbf{2. Motor de Búsqueda (app/matcher\_improved.py) -- 681 líneas}
@@ -81,7 +81,7 @@ El sistema se compone de cuatro módulos principales, cada uno con funciones esp
     \item Generación de embeddings semánticos.
     \item Búsqueda jerárquica con re-ranking.
     \item Detección de patrones con nombres propios.
-    \item Cálculo de similitud mediante coseno.
+    \item Cálculo de similitud mediante coseno \cite{refcos1}.
     \item Sistema automático de deletreo en casos especiales.
     \item Gestión del cache de embeddings.
 \end{itemize}
@@ -114,8 +114,8 @@ El sistema se compone de cuatro módulos principales, cada uno con funciones esp
 \paragraph{Responsabilidad}
 \begin{itemize}
     \item Normalización de texto: minúsculas, acentos, puntuación y espacios.
-    \item Corrección ortográfica ligera utilizando RapidFuzz.
-    \item Normalización de leet speak (por ejemplo, \texttt{@ → a}, \texttt{3 → e}).
+    \item Corrección ortográfica ligera utilizando RapidFuzz \cite{refimpl4}.
+    \item Normalización de leet speak (por ejemplo, \texttt{@ → a}, \texttt{3 → e}) \cite{refimpl5}.
     \item Sistema de deletreo letra por letra.
     \item Manejo y detección de caracteres especiales.
 \end{itemize}
@@ -135,12 +135,11 @@ El sistema se compone de cuatro módulos principales, cada uno con funciones esp
     \item Eliminación de acentos mediante \texttt{unicodedata.normalize('NFD')}.
     \item Remoción de puntuación no relevante.
     \item Normalización de espacios con expresiones regulares.
-    \item Corrección de errores ortográficos comunes usando RapidFuzz.
-    \item Normalización de leet speak si aplica.
+    \item Corrección de errores ortográficos comunes usando RapidFuzz \cite{refimpl4}.
+    \item Normalización de leet speak si aplica \cite{refimpl5}.
 \end{enumerate}
 
 \noindent \textbf{4. Gestión de Datos (app/groups.py) -- 64 líneas}
-
 
 \paragraph{Responsabilidad}
 \begin{itemize}
@@ -338,10 +337,9 @@ Este flujo ocurre cuando la similitud es menor al threshold correspondiente al g
 
 \subsection{Patrones de diseño aplicados}
 
-El sistema implementa múltiples patrones de diseño para garantizar mantenibilidad, escalabilidad y robustez.
+El sistema implementa múltiples patrones de diseño para garantizar mantenibilidad, escalabilidad y robustez \cite{refimpl6}.
 
 \noindent \textbf{1. Patrón Singleton}
-
 
 \textbf{Implementación}
 \begin{itemize}
@@ -436,7 +434,6 @@ def search_similar_phrase(query):
 
 \noindent \textbf{4. Patrón Facade}
 
-
 \textbf{Implementación}
 \begin{itemize}
     \item La API REST sirve como fachada del sistema.
@@ -501,7 +498,6 @@ def __init__(
 
 \noindent \textbf{6. Patrón Cache / Lazy Loading}
 
-
 \textbf{Implementación}
 \begin{itemize}
     \item Embeddings almacenados en caché en archivos \texttt{.npz}.
@@ -536,7 +532,7 @@ def _load_model():
 
 \subsection{Principios SOLID Aplicados}
 
-\textbf{Single Responsibility Principle}
+\textbf{Single Responsibility Principle \cite{refimpl7}}
 \begin{itemize}
     \item \texttt{main.py}: Manejo de API REST.
     \item \texttt{matcher\_improved.py}: Búsqueda semántica.
@@ -544,25 +540,25 @@ def _load_model():
     \item \texttt{groups.py}: Gestión y carga del dataset.
 \end{itemize}
 
-\textbf{Open / Closed Principle}
+\textbf{Open / Closed Principle \cite{refimpl7}}
 \begin{itemize}
     \item El sistema permite extensión (nuevos modelos, endpoints).
     \item La lógica principal permanece estable (cerrada a modificaciones).
 \end{itemize}
 
-\textbf{Liskov Substitution Principle}
+\textbf{Liskov Substitution Principle \cite{refimpl7}}
 \begin{itemize}
     \item Modelos de embeddings intercambiables.
     \item Algoritmos de búsqueda reemplazables (básico vs reranking).
 \end{itemize}
 
-\textbf{Interface Segregation Principle}
+\textbf{Interface Segregation Principle \cite{refimpl7}}
 \begin{itemize}
     \item La API expone solo endpoints necesarios.
     \item Métodos internos como \texttt{\_extract\_name\_pattern} permanecen privados.
 \end{itemize}
 
-\textbf{Dependency Inversion Principle}
+\textbf{Dependency Inversion Principle \cite{refimpl7}}
 \begin{itemize}
     \item Dependencias inyectadas mediante el constructor.
     \item Uso de abstracciones, no implementaciones directas.
@@ -576,7 +572,7 @@ def _load_model():
 
 \noindent \textbf{Fecha de release:} Abril 2024\\
 
-Python 3.12 incorpora mejoras significativas en rendimiento, manejo de tipos y características sintácticas modernas. El proyecto aprovecha varias de estas capacidades.
+Python 3.12 incorpora mejoras significativas en rendimiento, manejo de tipos y características sintácticas modernas. El proyecto aprovecha varias de estas capacidades \cite{refimpl8}.
 
 \subsection{Características Utilizadas}
 
@@ -649,7 +645,7 @@ class QueryRequest(BaseModel):
 
 \textbf{Razón 1: Ecosistema de Machine Learning y NLP}
 
-Python es el lenguaje dominante en el desarrollo de modelos de aprendizaje automático y procesamiento del lenguaje natural:
+Python es el lenguaje dominante en el desarrollo de modelos de aprendizaje automático y procesamiento del lenguaje natural \cite{refimpl8}:
 \begin{itemize}
     \item Cerca del 70\% de los artículos publicados en NeurIPS 2023 utilizan Python.
     \item Las bibliotecas de ML más importantes están escritas para Python:
@@ -664,24 +660,24 @@ Python es el lenguaje dominante en el desarrollo de modelos de aprendizaje autom
 
 \textbf{Razón 2: Rapidez de desarrollo}
 
-Python permite prototipado eficiente:
+Python permite prototipado eficiente \cite{refimpl8}:
 \begin{itemize}
-    \item Sintaxis clara y expresiva
-    \item Tipado dinámico (con \textit{type hints} opcionales)
-    \item REPL interactivo para pruebas rápidas
-    \item Uso de Jupyter notebooks para análisis exploratorio
+    \item Sintaxis clara y expresiva.
+    \item Tipado dinámico (con \textit{type hints} opcionales).
+    \item REPL interactivo para pruebas rápidas.
+    \item Uso de Jupyter notebooks para análisis exploratorio.
 \end{itemize}
 
 \vspace{1em} % ← agrega espacio aquí
 
 \textbf{Razón 3: Bibliotecas maduras}
 
-El ecosistema de Python proporciona herramientas de calidad industrial:
+El ecosistema de Python proporciona herramientas de calidad industrial \cite{refimpl8}:
 \begin{itemize}
-    \item FastAPI para servicios web (más eficiente que Flask en entornos \texttt{async})
-    \item Pydantic para validación de datos
-    \item NumPy para computación numérica
-    \item Pytest para testing automatizado
+    \item FastAPI para servicios web (más eficiente que Flask en entornos \texttt{async}).
+    \item Pydantic para validación de datos.
+    \item NumPy para computación numérica.
+    \item Pytest para testing automatizado.
 \end{itemize}
 
 \vspace{1em} % ← agrega espacio aquí
@@ -689,24 +685,24 @@ El ecosistema de Python proporciona herramientas de calidad industrial:
 \textbf{Razón 4: Comunidad y soporte}
 
 \begin{itemize}
-    \item Comunidad muy activa en StackOverflow y GitHub
-    \item Documentación extensa y actualizada
-    \item Amplia disponibilidad de cursos y recursos educativos
+    \item Comunidad muy activa en StackOverflow y GitHub.
+    \item Documentación extensa y actualizada.
+    \item Amplia disponibilidad de cursos y recursos educativos.
 \end{itemize}
 
 \vspace{1em} % ← agrega espacio aquí
 
 \textbf{Razón 5: Rendimiento suficiente para ML}
 
-Aunque Python es un lenguaje interpretado, las operaciones costosas (como generación de embeddings o cálculo de similitudes) se ejecutan en implementaciones optimizadas en C/C++ a través de bibliotecas como NumPy o PyTorch.
+Aunque Python es un lenguaje interpretado, las operaciones costosas (como generación de embeddings o cálculo de similitudes) se ejecutan en implementaciones optimizadas en C/C++ a través de bibliotecas como NumPy \cite{refimpl9} o PyTorch \cite{refimpl10}.
 
 \vspace{1em} % ← agrega espacio aquí
 
 \textbf{Benchmark de latencia:}
 \begin{itemize}
-    \item Python (este proyecto): 42\,ms por consulta
-    \item Alternativa C++: $\sim$20\,ms/consulta (estimado)
-    \item Alternativa Java: $\sim$30\,ms/consulta (estimado)
+    \item Python (este proyecto): 42\,ms por consulta.
+    \item Alternativa C++: $\sim$20\,ms/consulta (estimado).
+    \item Alternativa Java: $\sim$30\,ms/consulta (estimado).
 \end{itemize}
 
 El overhead adicional de Python (alrededor de 22\,ms) es aceptable considerando su rapidez de desarrollo y soporte de librerías.
@@ -716,9 +712,9 @@ El overhead adicional de Python (alrededor de 22\,ms) es aceptable considerando 
 \subsection{Framework Web: FastAPI}
 
 \noindent \textbf{Versión:} FastAPI 0.104.1 \\
-\noindent \textbf{Desarrollador:} Sebastián Ramírez (tiangolo)\\
+\noindent \textbf{Desarrollador:} Sebastián Ramírez Montaño \cite{refimpl2}.\\
 
-FastAPI es un framework moderno para la construcción de APIs de alto rendimiento basado en ASGI, con soporte nativo para \texttt{async/await}, validación automática y documentación generada dinámicamente.\\
+FastAPI es un framework moderno para la construcción de APIs de alto rendimiento basado en ASGI, con soporte nativo para \texttt{async/await}, validación automática y documentación generada dinámicamente \cite{refimpl2}.\\
 
 \noindent \textbf{Características clave}\\
 
@@ -754,9 +750,9 @@ class QueryRequest(BaseModel):
 \noindent \textbf{3. Documentación automática}
 
 \begin{itemize}
-    \item Swagger UI disponible en \texttt{/docs}.
+    \item Swagger UI disponible en \texttt{/docs} \cite{refimpl11}.
     \item ReDoc disponible en \texttt{/redoc}.
-    \item Esquema OpenAPI 3.0 generado automáticamente en \texttt{/openapi.json}.
+    \item Esquema OpenAPI 3.0 generado automáticamente en \texttt{/openapi.json} \cite{refimpl12}.
 \end{itemize}
 
 \textbf{Beneficios:}
@@ -822,8 +818,8 @@ async def buscar(request: QueryRequest):
 \end{table}
 
 \begin{itemize}
-    \item \textbf{Rendimiento:} FastAPI es uno de los frameworks más rápidos en Python (benchmarks: TechEmpower).
-    \item \textbf{Validación automática:} Pydantic realiza validación de datos sin necesidad de código adicional.
+    \item \textbf{Rendimiento:} FastAPI es uno de los frameworks más rápidos en Python (benchmarks: TechEmpower) \cite{refimpl12}.
+    \item \textbf{Validación automática:} Pydantic realiza validación de datos sin necesidad de código adicional \cite{refimpl1}.
     \item \textbf{Documentación automática:} Swagger UI y ReDoc se generan de manera inmediata.
     \item \textbf{Soporte nativo para \texttt{async/await}:} útil para operaciones de E/S (\textit{I/O-bound}).
     \item \textbf{Uso de type hints:} facilita autocompletado y documentación.
@@ -853,7 +849,7 @@ async def buscar(request: QueryRequest):
 
 \begin{itemize}
     \item Django es un framework completo (full-stack), orientado a aplicaciones completas.
-    \item FastAPI es un microframework ideal para APIs y microservicios de aprendizaje automático.
+    \item FastAPI es un microframework ideal para APIs y microservicios de aprendizaje automático \cite{refimpl12}.
 \end{itemize}
 
 \textbf{Conclusión:} Django es excesivo (overkill) para un microservicio que sirve como backend de modelos de PLN.
@@ -923,9 +919,9 @@ async def buscar(request: QueryRequest):
 \noindent \textbf{Biblioteca utilizada}
 
 \begin{itemize}
-    \item \textbf{Biblioteca:} \texttt{sentence-transformers 2.2.2}
-    \item \textbf{Desarrolladores:} UKPLab (TU Darmstadt)
-    \item \textbf{Artículo base:} \textit{Sentence-BERT} \cite{refebd10}
+    \item \textbf{Biblioteca:} \texttt{sentence-transformers 2.2.2}.
+    \item \textbf{Desarrolladores:} UKPLab \cite{refimpl13}.
+    \item \textbf{Artículo base:} \textit{Sentence-BERT} \cite{refebd10}.
 \end{itemize}
 
 \noindent \textbf{Modelo seleccionado}
@@ -974,23 +970,23 @@ El flujo interno del modelo sigue las siguientes etapas:
 
     \item \textbf{Capa de Embeddings:}
     \begin{itemize}
-        \item Token embeddings (768 dimensiones)
-        \item Positional embeddings
-        \item Segment embeddings
+        \item Token embeddings (768 dimensiones).
+        \item Positional embeddings.
+        \item Segment embeddings.
     \end{itemize}
 
     \item \textbf{12 capas Transformer}
     \begin{itemize}
         \item Cada capa contiene:
         \begin{itemize}
-            \item Multi-Head Self-Attention
-            \item Feed-Forward Network
+            \item Multi-Head Self-Attention.
+            \item Feed-Forward Network.
         \end{itemize}
         \item Se repite desde la capa 1 hasta la capa 12.
     \end{itemize}
 
     \item \textbf{Pooling layer} \\
-    Mean Pooling (promedio de todos los embeddings)
+    Mean Pooling (promedio de todos los embeddings).
 
     \item \textbf{Normalización final} \\
     Normalización L2 del vector resultante.
@@ -1070,7 +1066,7 @@ El flujo interno del modelo sigue las siguientes etapas:
 Modelos clásicos como Word2Vec y GloVe generan embeddings estáticos, es decir, una representación por palabra sin contexto. Ejemplo:
 
 \begin{itemize}
-    \item ``banco'' (institución financiera) vs. ``banco'' (asiento)
+    \item ``banco'' (institución financiera) vs. ``banco'' (asiento).
 \end{itemize}
 
 \begin{itemize}
@@ -1082,7 +1078,7 @@ Modelos clásicos como Word2Vec y GloVe generan embeddings estáticos, es decir,
 
 \vspace{1em}
 
-\textbf{¿Por qué Sentence-Transformers y Spacy?}
+\textbf{¿Por qué Sentence-Transformers y no Spacy?}
 
 \begin{table}[H]
 \centering
@@ -1114,31 +1110,31 @@ Fácil de usar & - \\ \hline
 \begin{itemize}
     \item \texttt{all-MiniLM-L6-v2}
     \begin{itemize}
-        \item Pros: muy rápido
-        \item Contras: solo inglés, menor precisión
-        \item Decisión: descartado
+        \item Pros: muy rápido.
+        \item Contras: solo inglés, menor precisión.
+        \item Decisión: descartado.
     \end{itemize}
 
     \item \texttt{distiluse-base-multilingual-cased-v2}
     \begin{itemize}
-        \item Pros: multilingüe
-        \item Contras: 512 dimensiones, 250\,MB
-        \item Decisión: descartado por peso
+        \item Pros: multilingüe.
+        \item Contras: 512 dimensiones, 250\,MB.
+        \item Decisión: descartado por peso.
     \end{itemize}
 
     \item \texttt{paraphrase-multilingual-mpnet-base-v2}
     \begin{itemize}
-        \item Pros: máxima precisión
-        \item Contras: 768 dimensiones, 400\,MB, $\sim$80\,ms/consulta
-        \item Decisión: demasiado lento para tiempo real
+        \item Pros: máxima precisión.
+        \item Contras: 768 dimensiones, 400\,MB, $\sim$80\,ms/consulta.
+        \item Decisión: demasiado lento para tiempo real.
     \end{itemize}
 
     \item \textbf{\texttt{paraphrase-multilingual-MiniLM-L12-v2}} (modelo elegido)
     \begin{itemize}
-        \item Precisión alta (92\%)
-        \item Velocidad excelente ($\sim$40\,ms por consulta)
-        \item Tamaño reducido (120\,MB)
-        \item Soporte multilingüe incluyendo español
+        \item Precisión alta (92\%).
+        \item Velocidad excelente ($\sim$40\,ms por consulta).
+        \item Tamaño reducido (120\,MB).
+        \item Soporte multilingüe incluyendo español.
     \end{itemize}
 \end{itemize}
 
@@ -1169,7 +1165,7 @@ paraphrase-mpnet-multilingual & 768 & 400MB & 80ms & 96\% \\ \hline
 
 {\large \noindent \textbf{NumPy 1.24.3}}
 
-\textbf{Uso en el proyecto:}
+\textbf{Uso en el proyecto \cite{refimpl9}:}
 \begin{itemize}
     \item Operaciones matriciales para embeddings.
     \item Cálculo de centroides de grupos.
@@ -1201,7 +1197,7 @@ np.savez(cache_path,
 
 {\large \noindent \textbf{Scikit-learn 1.3.0}}
 
-\textbf{Uso en el proyecto:}
+\textbf{Uso en el proyecto \cite{refimpl14}:}
 \begin{itemize}
     \item Cálculo de similitud de coseno.
     \item Normalización de vectores.
@@ -1232,7 +1228,7 @@ similarity = cosine_similarity(
 
 {\large \noindent \textbf{RapidFuzz 3.5.2}}
 
-\textbf{Uso en el proyecto:}
+\textbf{Uso en el proyecto \cite{refimpl4}:}
 \begin{itemize}
     \item Corrección ortográfica.
     \item Detección de errores comunes (typos).
@@ -1264,7 +1260,7 @@ if similarity > 80:
 
 {\large \noindent \textbf{PyTorch 2.1.0}}
 
-\textbf{Uso en el proyecto:}
+\textbf{Uso en el proyecto \cite{refimpl10}:}
 \begin{itemize}
     \item Backend de \texttt{sentence-transformers}.
     \item Ejecución del modelo Transformer.
@@ -1293,7 +1289,7 @@ model.to("cpu")
 
 {\large \noindent \textbf{Pytest 7.4.3}}
 
-\textbf{Plugins utilizados:}
+\textbf{Plugins utilizados \cite{refimpl15}:}
 \begin{itemize}
     \item \texttt{pytest-cov} --- Cobertura de código.
     \item \texttt{pytest-asyncio} --- Soporte para tests \textit{async}.
@@ -1328,7 +1324,7 @@ pytest tests/performance/ --benchmark-only
 
 {\large \noindent \textbf{Uvicorn 0.24.0}}
 
-\textbf{Características:}
+\textbf{Características \cite{refimpl3}:}
 \begin{itemize}
     \item Servidor ASGI de alto rendimiento.
     \item Basado en \texttt{uvloop} (más rápido que asyncio).
@@ -1354,7 +1350,7 @@ uvicorn app.main:app \
 
 {\large \noindent \textbf{Git 2.43.0}}
 
-\textbf{Estrategia de ramas:}
+\textbf{Estrategia de ramas \cite{refimpl16}:}
 \begin{itemize}
     \item \textbf{main:} Rama estable.
     \item \textbf{feat/*:} Nuevas funcionalidades.
@@ -1381,7 +1377,7 @@ git push -u origin feat/nombre-detection
 
 {\large \noindent \textbf{Pydantic 2.5.0}}
 
-\textbf{Uso en el proyecto:}
+\textbf{Uso en el proyecto \cite{refimpl1}:}
 \begin{itemize}
     \item Validación automática de requests.
     \item Serialización y deserialización.
@@ -1420,24 +1416,24 @@ class QueryResponse(BaseModel):
 \noindent\textbf{Criterios de selección}
 \textbf{1. Rendimiento}
 \begin{itemize}
-    \item FastAPI: Alto rendimiento.
-    \item Sentence-Transformers: Inferencia rápida.
-    \item NumPy: Operaciones vectoriales optimizadas.
+    \item FastAPI: Alto rendimiento \cite{refimpl2}.
+    \item Sentence-Transformers: Inferencia rápida \cite{refimpl13}.
+    \item NumPy: Operaciones vectoriales optimizadas \cite{refimpl9}.
 \end{itemize}
 \textbf{Resultado:} Latencia promedio de 40\,ms.
 
 \textbf{2. Ecosistema y comunidad}
 \begin{itemize}
-    \item Python: Amplio ecosistema ML/NLP.
-    \item FastAPI: Más de 70\,000 estrellas en GitHub.
-    \item Sentence-Transformers: Estándar de la industria.
+    \item Python: Amplio ecosistema ML/PLN \cite{refimpl8}.
+    \item FastAPI: Más de 70\,000 estrellas en GitHub \cite{refimpl2}.
+    \item Sentence-Transformers: Estándar de la industria \cite{refimpl13}.
 \end{itemize}
 
 \textbf{3. Mantenibilidad}
 \begin{itemize}
-    \item Type hints en Python 3.12.
-    \item Validación con Pydantic.
-    \item Tests con Pytest.
+    \item Type hints en Python 3.12 \cite{refimpl8}.
+    \item Validación con Pydantic \cite{refimpl1}.
+    \item Tests con Pytest \cite{refimpl15}.
 \end{itemize}
 
 \textbf{4. Escalabilidad}
@@ -2929,6 +2925,9 @@ Detectar y corregir typos comunes:
 
 \noindent \textbf{Algoritmo: Levenshtein Distance}
 
+\textbf{Definición:}\\
+Distancia de edición mínima entre dos strings (inserciones, eliminaciones, sustituciones) \cite{refimpl17}.
+
 \begin{verbatim}
 "kitten" → "sitting"
 ↓
@@ -2939,7 +2938,7 @@ Detectar y corregir typos comunes:
 Distancia = 3 operaciones
 \end{verbatim}
 
-\noindent \textbf{RapidFuzz:}
+\noindent \textbf{RapidFuzz \cite{refimpl4}:}
 \begin{itemize}
     \item Implementación optimizada en C++.
     \item 5-10x más rápida que difflib.
@@ -3071,9 +3070,9 @@ Tamaño del diccionario & 50+ términos \\ \hline
 
 \textbf{Objetivo}
 
-Convertir leet speak (1337) a texto normal para mejorar la detección de nombres propios.
+Convertir leet speak (1337) a texto normal para mejorar la detección de nombres propios \cite{refimpl15}.\\
 
-Casos:
+\textbf{Casos}:
 \begin{itemize}
     \item Nombres en redes sociales: ``M4ri@'', ``Ju4n''.
     \item Texto decorativo: ``H0l4'', ``Gr4ci4s''.
@@ -3696,9 +3695,9 @@ embedding_final = token_emb + position_emb + type_emb
 
 Donde:
 \begin{itemize}
-    \item $Q$ (Query): Qu\'e estoy buscando.
-    \item $K$ (Key): Qu\'e informaci\'on tengo.
-    \item $V$ (Value): Cu\'al es esa informaci\'on.
+    \item $Q$ (Query): ¿Qu\'e estoy buscando?.
+    \item $K$ (Key): ¿Qu\'e informaci\'on tengo?.
+    \item $V$ (Value): ¿Cu\'al es esa informaci\'on?.
     \item $d_k$: Dimensi\'on de las keys (32 por head).
 \end{itemize}
 
