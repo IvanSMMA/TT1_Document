@@ -2339,6 +2339,7 @@ def normalize_leet_speak(text: str) -> str:
 	return ''.join(result)
 \end{lstlisting}
 
+\newpage
 {\large \noindent \textbf{Función \texttt{spell\_out\_text()}}}
 \begin{lstlisting}[language=Python]
 def spell_out_text(text: str, include_spaces: bool = True) -> List[str]:
@@ -2476,6 +2477,7 @@ def load_groups(json_path: str = "data/grupos.json") -> Dict[str, List[str]]:
         raise
 \end{lstlisting}
 
+\newpage
 {\noindent \textbf{Función \texttt{get\_all\_phrases()}}}
 \begin{lstlisting}[language=Python]
 def get_all_phrases() -> Dict[str, List[str]]:
@@ -2518,6 +2520,7 @@ def get_group_phrases(grupo: str) -> List[str]:
     return grupos[grupo]
 \end{lstlisting}
 
+\newpage
 {\noindent \textbf{Estructura del JSON: \texttt{data/grupos.json}}}
 \begin{lstlisting}
 {
@@ -2575,6 +2578,7 @@ def get_group_phrases(grupo: str) -> List[str]:
 }
 \end{lstlisting}
 
+\vspace{1em}
 {\large \noindent \textbf{Sistema de embeddings}}\\
 {\textbf \textbf{Generación de \textit{Embeddings}}}
 \begin{lstlisting}[language=Python]
@@ -2618,27 +2622,10 @@ def _generate_and_cache_embeddings(self):
     self._save_to_cache()
 \end{lstlisting}
 
+\vspace{0.5em}
 {\noindent \textbf{Guardado en caché}}
 \begin{lstlisting}[language=Python]
 def _save_to_cache(self):
-    """
-    Guarda embeddings en archivo .npz para carga rápida.
-
-    Formato NPZ:
-    - Formato comprimido de NumPy
-    - Múltiples arrays en un solo archivo
-    - Carga rápida (<1 segundo)
-
-    Estructura del archivo:
-    {
-        'A_embeddings': array(shape=[13, 384]),
-        'B_embeddings': array(shape=[13, 384]),
-        'C_embeddings': array(shape=[17, 384]),
-        'A_frases': array(['frase1', 'frase2', ...]),
-        'B_frases': array(['frase1', 'frase2', ...]),
-        'C_frases': array(['frase1', 'frase2', ...])
-    }
-    """
     logger.info(f"Guardando embeddings en cache: {self.cache_path}")
 
     # Crear directorio si no existe
@@ -2661,19 +2648,10 @@ def _save_to_cache(self):
     logger.info(f"Cache guardado exitosamente ({file_size:.2f} MB)")
 \end{lstlisting}
 
+\newpage
 {\noindent \textbf{Carga desde caché}}
 \begin{lstlisting}[language=Python]
 def _load_from_cache(self):
-    """
-    Carga embeddings desde cache.
-
-    Ventajas:
-    - Carga instantánea (<1 segundo)
-    - No requiere modelo cargado
-    - Ahorro de ~5 segundos en startup
-
-    Tiempo de carga: <1 segundo
-    """
     logger.info(f"Cargando embeddings desde cache: {self.cache_path}")
 
     try:
@@ -2700,6 +2678,7 @@ def _load_from_cache(self):
         self._generate_and_cache_embeddings()
 \end{lstlisting}
 
+\newpage
 {\noindent \textbf{Formato del embedding}}
 \begin{lstlisting}
 Input: "Hola, ¿cómo estás?"
@@ -2720,6 +2699,7 @@ Output: Vector [384]
    ]
 \end{lstlisting}
 
+\vspace{1em}
 \noindent \textbf{Métricas}
 
 \begin{table}[H]
@@ -2744,6 +2724,7 @@ Memoria usada (cache) & 65 KB \\ \hline
 
 %#---------------------------------
 %#---------------------------------
+\newpage
 \subsection{Etapa 1: Preprocesamiento de texto}
 
 \noindent \textbf{Normalización de texto}
@@ -2787,10 +2768,9 @@ Output: "hola como estas"
 % ------------------------------------------------------------
 % PASO 1
 % ------------------------------------------------------------
-
+\newpage
 {\large \noindent \textbf{Implementación paso a paso}} \\
-{\large \noindent \textbf{Paso 1: Conversión a minúsculas}} \\
-
+{\large \noindent \textbf{Paso 1: Conversión a minúsculas}}
 \begin{lstlisting}[language=python]
 text = text.lower()
 \end{lstlisting}
@@ -2812,9 +2792,8 @@ text = text.lower()
 % ------------------------------------------------------------
 % PASO 2
 % ------------------------------------------------------------
-
-{\large \noindent \textbf{Paso 2: Eliminación de acentos}} \\[4pt]
-
+\vspace{1em}
+{\large \noindent \textbf{Paso 2: Eliminación de acentos}}
 \begin{lstlisting}[language=python]
 import unicodedata
 
@@ -2851,9 +2830,8 @@ text = ''.join(
 % ------------------------------------------------------------
 % PASO 3
 % ------------------------------------------------------------
-
-{\large \noindent \textbf{Paso 3: Remoción de puntuación}} \\[4pt]
-
+\vspace{1em}
+{\large \noindent \textbf{Paso 3: Remoción de puntuación}}
 \begin{lstlisting}[language=python]
 import string
 
@@ -2884,9 +2862,8 @@ text = text.translate(
 % ------------------------------------------------------------
 % PASO 4
 % ------------------------------------------------------------
-
-{\large \noindent \textbf{Paso 4: Normalización de espacios}} \\[4pt]
-
+\vspace{1em}
+{\large \noindent \textbf{Paso 4: Normalización de espacios}}
 \begin{lstlisting}[language=python]
 text = ' '.join(text.split())
 \end{lstlisting}
@@ -2897,6 +2874,7 @@ text = ' '.join(text.split())
     \item \texttt{' '.join()} une con un solo espacio.
 \end{itemize}
 
+\newpage
 \noindent \textbf{Ejemplos:}
 \begin{itemize}
     \item ``hola  mundo'' → ``hola mundo''.
@@ -2908,7 +2886,7 @@ text = ' '.join(text.split())
 % ------------------------------------------------------------
 % CASOS EDGE
 % ------------------------------------------------------------
-
+\vspace{1em}
 {\large \noindent \textbf{Casos EDGE manejados}}
 
 \begin{itemize}
@@ -2923,8 +2901,7 @@ text = ' '.join(text.split())
 % CORRECCIÓN ORTOGRÁFICA
 % ------------------------------------------------------------
 
-{\large \noindent \textbf{Corrección ortográfica con RapidFuzz}} \\[4pt]
-
+{\large \noindent \textbf{Corrección ortográfica con RapidFuzz}} 
 \noindent \textbf{Objetivo:}  
 Detectar y corregir typos comunes:
 
@@ -2949,6 +2926,7 @@ Distancia de edición mínima entre dos \textit{strings} (inserciones, eliminaci
 Distancia = 3 operaciones
 \end{verbatim}
 
+\newpage
 \noindent \textbf{RapidFuzz \cite{refimpl4}:}
 \begin{itemize}
     \item Implementación optimizada en C++.
@@ -2986,6 +2964,7 @@ def correct_typo(word: str, dictionary: List[str]) -> str:
         return word
 \end{lstlisting}
 
+\newpage
 \noindent \textbf{Diccionario de Typos Comunes}
 
 \begin{lstlisting}[language=Python]
@@ -3026,6 +3005,7 @@ TYPOS_COMUNES = {
 }
 \end{lstlisting}
 
+\vspace{0.5em}
 {\large \noindent \textbf{Ejemplos de corrección}}
 
 \noindent \textbf{Caso 1: Typo simple}
@@ -3181,6 +3161,7 @@ def normalize_leet_speak(text: str) -> str:
     Decisión: usar minúsculas.
 \end{enumerate}
 
+\newpage
 {\large \noindent \textbf{Detección de Nombres Propios}}\\
 
 {\large \noindent \textbf{Estrategia 1: Lista de nombres comunes}}
@@ -3219,7 +3200,6 @@ Cobertura: $\sim$70\%.
     \item Longitud 3-15 caracteres.
 \end{itemize}
 
-
 \begin{lstlisting}[language=Python]
 def is_proper_noun_by_capitalization(word: str) -> bool:
     """
@@ -3247,6 +3227,7 @@ def is_proper_noun_by_capitalization(word: str) -> bool:
     return True
 \end{lstlisting}
 
+\vspace{1em}
 \textbf{Ventajas:}
 \begin{itemize}
     \item Detecta nombres que no están en la lista.
@@ -3292,6 +3273,7 @@ def is_name_by_absence(word: str, dataset_words: Set[str]) -> bool:
     return True
 \end{lstlisting}
 
+\vspace{1em}
 {\large \noindent \textbf{Estrategia combinada}}
 
 \begin{lstlisting}[language=Python]
@@ -3327,6 +3309,7 @@ Precisión combinada: $\sim$92\%.\\
     \item ``Soy [NOMBRE]''.
 \end{enumerate}
 
+\newpage
 \textbf{Algoritmo:}
 
 \begin{lstlisting}[language=Python]
@@ -3372,20 +3355,12 @@ Ejemplos:
     \item Textos personalizados: ``Hola Mundo'' → [H, O, L, A, espacio, ...].
 \end{itemize}
 
+\newpage
 \textbf{Algoritmo:}
 
+\newpage
 \begin{lstlisting}[language=Python]
 def spell_out_text(text: str, include_spaces: bool = True) -> List[str]:
-    """
-    Deletrea texto carácter por carácter.
-
-    Args:
-        text: Texto a deletrear
-        include_spaces: Si True, incluye "espacio" en la lista
-
-    Returns:
-        Lista de caracteres/palabras para deletrear
-    """
     result = []
 
     for char in text:
@@ -3409,6 +3384,7 @@ def spell_out_text(text: str, include_spaces: bool = True) -> List[str]:
     return result
 \end{lstlisting}
 
+\newpage
 {\large \noindent \textbf{Manejo de caracteres especiales}}
 
 \begin{lstlisting}[language=Python]
@@ -3569,6 +3545,7 @@ videos/
 \caption[Comparación de modelos]{Comparación de modelos de embeddings, elaboración propia.}
 \end{table}
 
+\newpage
 \textbf{Criterios de selección}
 
 \begin{enumerate}
@@ -3692,6 +3669,7 @@ Tres tipos de embeddings combinados:
 embedding_final = token_emb + position_emb + type_emb
 \end{verbatim}
 
+\newpage
 {\large \noindent\textbf{Transformer layer}}\\
 \textbf{Arquitectura de una capa:}
 
@@ -3751,6 +3729,8 @@ Estrategias de pooling:
     \end{verbatim}
 
     \textbf{Ventaja}: Captura información de toda la oración.
+
+    \newpage
     \item \textbf{CLS Pooling (alternativa)}
     \begin{verbatim}
     embedding = token_embeddings[0]  # Token [CLS]
@@ -3793,6 +3773,7 @@ Después: embedding = [0.536, -0.821, 0.286, ...]
 
 \vspace{1em}
 
+\newpage
 {\large \noindent \textbf{Generación de embeddings}}
 
 \noindent\textbf{Proceso completo}
@@ -3821,6 +3802,7 @@ embeddings = model.encode(
 # Cada fila es un embedding de 384 dimensiones
 \end{verbatim}
 
+\vspace{1em}
 {\large \noindent \textbf{Optimizaciones aplicadas}}
 
 \begin{enumerate}
@@ -3838,6 +3820,7 @@ embeddings = model.encode(
         \item Ahorro de ~5 segundos por startup.
     \end{itemize}
 
+    \newpage
     \item \textbf{Lazy loading}
     \begin{itemize}
         \item Modelo cargado solo cuando se necesita.
@@ -3891,6 +3874,7 @@ Rango: [-1, 1]
     \item -1.0: Vectores opuestos (ángulo 180°).
 \end{itemize}
 
+\vspace{1em}
 {\large \noindent \textbf{Simplificación con L2 Normalization}}
 
 Si ||A|| = 1 y ||B|| = 1 (L2 normalized):
@@ -3941,6 +3925,7 @@ Similitud = (0.5×0.6) + (0.5×0.4) + (0.707×0.693)
         = 0.3 + 0.2 + 0.49
         = 0.99  ← Muy similar!
 
+\newpage
 Frase 2: "Ayuda"
 Embedding: [-0.3, 0.8, 0.524]
 
@@ -3988,6 +3973,7 @@ similarities = cosine_similarity([query_emb], phrase_embeddings)[0]
     \item Escalabilidad: O(K + N\_k) donde K = núm. grupos, N\_k = frases en top grupos.
 \end{itemize}
 
+\newpage
 {\large \noindent \textbf{Fase 1: Búsqueda por centroides}}
 
 \noindent \textbf{Centroide}: Vector promedio de un grupo.
@@ -4034,6 +4020,7 @@ Similitud con centroides:
 Grupos candidatos: [A, C, B].
 \end{verbatim}
 
+\newpage
 {\large \noindent\textbf{Fase 2: Re-ranking fino}}
 
 \noindent Búsqueda en grupos candidatos:
