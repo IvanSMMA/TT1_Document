@@ -128,18 +128,18 @@
 \vspace{0.4cm}
 
 \begin{itemize}
-    \item \textbf{Tests Totales Implementados:} 168
-    \item \textbf{Tests Core Ejecutados:} 73
-    \item \textbf{Tests Exitosos:} 73 (100\%)
-    \item \textbf{Tests Fallidos:} 0
-    \item \textbf{Cobertura Statement:} 90.8\%
-    \item \textbf{Cobertura Branch:} 87.0\%
+    \item \textbf{\textit{Tests} Totales Implementados:} 168
+    \item \textbf{\textit{Tests Core} Ejecutados:} 73
+    \item \textbf{\textit{Tests} Exitosos:} 73 (100\%)
+    \item \textbf{\textit{Tests} Fallidos:} 0
+    \item \textbf{Cobertura \textit{Statement}:} 90.8\%
+    \item \textbf{Cobertura \textit{Branch}:} 87.0\%
     \item \textbf{Precisión Semántica:} 89\%
-    \item \textbf{F1-Score:} 88\%
-    \item \textbf{Golden Dataset Accuracy:} 100\%
+    \item \textbf{\textit{F1-Score}:} 88\%
+    \item \textbf{\textit{Golden Dataset Accuracy}:} 100\%
     \item \textbf{Latencia P95:} 68ms
-    \item \textbf{Success Rate bajo carga:} 99.7\%
-    \item \textbf{Throughput:} 65 q/s
+    \item \textbf{\textit{Success Rate} bajo carga:} 99.7\%
+    \item \textbf{\textit{Throughput}:} 65 q/s
 \end{itemize}
 
 \newpage
@@ -152,7 +152,7 @@
 \hline
 \textbf{Métrica} & \textbf{Objetivo} & \textbf{Resultado} & \textbf{Cumplimiento} \\ \hline
 
-Tests implementados & >100 & 168 & 168\% \\ \hline
+\textit{Tests} implementados & >100 & 168 & 168\% \\ \hline
 Cobertura de código & >80\% & 90.8\% & 114\% \\ \hline
 \textit{Tests E2E} & >20 & 26 & 130\% \\ \hline
 Precision semántica & >85\% & $\sim$89\% & 105\% \\ \hline
@@ -163,7 +163,7 @@ Latencia P95 & <200ms & 68ms & 66\% mejor \\ \hline
 \textit{Golden dataset} & 100\% & 100\% & Aceptable \\ \hline
 
 \end{tabular}
-\caption[Métricas de testing]{Resumen de métricas de testing, elaboración propia.}
+\caption[Métricas de testing]{Resumen de métricas de \textit{testing}, elaboración propia.}
 \end{table}
 
 \textbf{Conclusión}: Todos los objetivos fueron superados significativamente.\\
@@ -173,7 +173,7 @@ Latencia P95 & <200ms & 68ms & 66\% mejor \\ \hline
 \begin{enumerate}
     \item Cobertura exhaustiva
     \begin{itemize}[label=\checkmark]
-        \item 168 tests implementados en todos los niveles.
+        \item 168 \textit{tests} implementados en todos los niveles.
         \item 90.8\% de cobertura supera estándares industriales (80\%).
         \item Distribución apropiada según pirámide de testing.
     \end{itemize}
@@ -182,28 +182,28 @@ Latencia P95 & <200ms & 68ms & 66\% mejor \\ \hline
     \begin{itemize}[label=\checkmark]
         \item 50+ casos de perturbaciones validados.
         \item >95\% de tolerancia a errores ortográficos.
-        \item Degradación gradual y graceful.
-        \item Normalización efectiva de leet speak.
+        \item Degradación gradual y \textit{graceful}.
+        \item Normalización efectiva de \textit{leet speak}.
     \end{itemize}
 
     \item Calidad semántica aceptable
     \begin{itemize}[label=\checkmark]
-        \item F1-Score de 88\% demuestra balance precision/recall.
-        \item 100\% de golden dataset passing.
+        \item \textit{F1-Score} de 88\% demuestra balance \textit{precision/recall}.
+        \item 100\% de \textit{golden dataset passing}.
         \item Reconocimiento de sinónimos >75\%.
     \end{itemize}
 
     \item Rendimiento muy adecuado
     \begin{itemize}[label=\checkmark]
         \item Latencia P95 de 68ms (66\% mejor que objetivo).
-        \item Success rate de 99.7\% bajo carga.
+        \item \textit{Success rate} de 99.7\% bajo carga.
         \item Sistema estable hasta 100 usuarios concurrentes.
     \end{itemize}
 
     \item Validación de casos críticos
     \begin{itemize}[label=\checkmark]
         \item Similitud matemáticamente correcta [0.0, 1.0] en 100\% de casos.
-        \item Caso edge ``Ivan'' correctamente manejado.
+        \item Caso \textit{edge} ``Ivan'' correctamente manejado.
         \item Detección de patrones ``Me llamo [NOMBRE]''.
         \item Manejo robusto de nombres propios.
     \end{itemize}
