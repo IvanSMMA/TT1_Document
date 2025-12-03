@@ -4066,6 +4066,7 @@ def rerank_in_groups(query_embedding, candidate_groups, embeddings, frases):
     return best_grupo, best_frase, best_sim
 \end{verbatim}
 
+\newpage
 {\large \noindent \textbf{Boosts aplicados}}
 
 \begin{enumerate}
@@ -4108,6 +4109,7 @@ def rerank_in_groups(query_embedding, candidate_groups, embeddings, frases):
     \end{verbatim}
 \end{enumerate}
 
+\newpage
 {\large \noindent \textbf{Ejemplo completo}}
 
 \begin{verbatim}
@@ -4197,6 +4199,7 @@ Precisión & 92\% (vs 90\% exhaustiva) \\ \hline
     \end{itemize}
 \end{itemize}
 
+\newpage
 {\large \noindent \textbf{Endpoints implementados}}\\
 
 {\large \noindent \textbf{1. POST /buscar}}\\
@@ -4237,6 +4240,7 @@ Body:
     \item 500: Error interno.
 \end{itemize}
 
+\newpage
 {\large \noindent \textbf{2. GET /grupos}}\\
 
 Listado de grupos disponibles y sus frases.
@@ -4286,6 +4290,7 @@ Frases de un grupo específico.\\
     \item 404: Grupo no encontrado.
 \end{itemize}
 
+\newpage
 {\large \noindent \textbf{4. POST /deletreo}}\\
 
 Deletreo manual de cualquier texto.
@@ -4333,8 +4338,7 @@ Health check del servicio.
     \item Formato más limpio para lectura.
 \end{itemize}
 
-\vspace{1em}
-
+\newpage
 {\large \noindent \textbf{Validación de datos con Pydantic}}
 
 \noindent \textbf{Modelos de validación}
@@ -4384,6 +4388,7 @@ POST /buscar
 → ✓ Pasa validación
 \end{lstlisting}
 
+\newpage
 Request inválido (texto vacío):
 
 \begin{lstlisting}
@@ -4422,6 +4427,7 @@ POST /buscar
 }
 \end{lstlisting}
 
+\newpage
 Validación de responses
 
 \begin{lstlisting}[language=Python]
@@ -4441,6 +4447,7 @@ class QueryResponse(BaseModel):
     total_caracteres_nombre: int | None = None
 \end{lstlisting}
 
+\vspace{1em}
 Validaciones:
 \begin{itemize}
     \item Similitud entre 0.0 y 1.0 (ge=0.0, le=1.0).
@@ -4459,6 +4466,7 @@ Validaciones:
     \item Responses consistentes.
 \end{enumerate}
 
+\newpage
 \textbf{Códigos por error}
 
 \begin{table}[H]
@@ -4483,32 +4491,28 @@ Validaciones:
 from fastapi import HTTPException
 from fastapi.responses import JSONResponse
 
-# Error controlado
 @app.post("/buscar")
 async def buscar(request: QueryRequest):
     if matcher is None:
         raise HTTPException(
             status_code=503,
-            detail="Servicio no disponible: matcher no inicializado"
-        )
+            detail="Servicio no disponible: matcher no inicializado")
 
     if not request.texto.strip():
         raise HTTPException(
             status_code=400,
-            detail="El texto no puede estar vacío"
-        )
+            detail="El texto no puede estar vacío"        )
 
     try:
         resultado = matcher.search_similar_phrase(request.texto)
         return resultado
     except Exception as e:
         logger.error(f"Error en búsqueda: {e}")
-        raise HTTPException(
-            status_code=500,
-            detail="Error interno del servidor"
-        )
+        raise HTTPException(status_code=500,
+            detail="Error interno del servidor")
 \end{lstlisting}
 
+\newpage
 {\large \noindent \textbf{Middleware de error handling}}
 
 \begin{lstlisting}[language=Python]
@@ -4569,6 +4573,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 \end{lstlisting}
 
+\vspace{1em}
 \textbf{Eventos loggeados}
 
 \begin{lstlisting}
@@ -4598,6 +4603,7 @@ logger = logging.getLogger(__name__)
     \item Tiempo de inicialización.
 \end{itemize}
 
+\newpage
 {\large \noindent \textbf{Documentación automática (OpenAPI / Swagger)}}
 
 \textbf{Generación automática}  
@@ -4617,6 +4623,7 @@ Acceso:
     \item \texttt{http://localhost:8000/openapi.json}.
 \end{itemize}
 
+\vspace{1em}
 \textbf{Ejemplo de documentación generada}
 
 \begin{lstlisting}
@@ -4650,10 +4657,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/QueryResponse'
-        '400':
-          description: Texto vacío o inválido
-        '503':
-          description: Servicio no disponible
+        '400': description: Texto vacío o inválido
+        '503': description: Servicio no disponible
 
 components:
   schemas:
@@ -4689,9 +4694,9 @@ components:
           maximum: 1.0
         deletreo_activado:
           type: boolean
-        # ... más campos
 \end{lstlisting}
 
+\newpage
 \textbf{Ventajas de documentación generada}
 
 \begin{itemize}
@@ -4721,7 +4726,6 @@ La estrategia de \textit{testing} del proyecto sigue el modelo de la Pirámide d
     \captionof{figure}[Piramide de Testing]{Piramide de \textit{Testing}, obtenido de \cite{refpirtes}.} 
 \end{center}
 
-\newpage
 \noindent \textbf{Distribución implementada}
 
 \begin{table}[H]
@@ -4753,7 +4757,6 @@ El porcentaje elevado de tests E2E (superior al estándar industrial de 10--15\%
     \item Degradación gradual ante \textit{inputs} de baja calidad.
 \end{enumerate}
 
-\newpage
 {\large \noindent \textbf{Stack tecnológico}}
 
 \begin{table}[H]
@@ -4772,6 +4775,7 @@ Cobertura de código & pytest-cov & 4.1+ \\ \hline
 \caption[Tecnologías de testing]{Tecnologías usadas para \textit{testing}, elaboración propia.}
 \end{table}
 
+\newpage
 {\large \noindent \textbf{Estructura del \textit{testing}}}
 
 El sistema de \textit{testing} está organizado en directorios especializados:
@@ -4800,7 +4804,6 @@ tests/
     `-- locustfile.py
 \end{verbatim}
 
-\newpage
 {\noindent \textbf{Estadísticas generales}}
 
 \begin{itemize}
@@ -4810,6 +4813,7 @@ tests/
     \item Tiempo de ejecución: $\sim$ 28 segundos.
 \end{itemize}
 
+\newpage
 {\large \noindent \textbf{\textit{Tests} unitarios (37 \textit{tests}, 89\% cobertura)}}
 
 Los \textit{tests} unitarios validan componentes individuales de forma aislada, constituyendo la base de la pirámide de \textit{testing}.\\
@@ -4847,7 +4851,6 @@ def clip_similarity(similarity: float) -> float:
 
 Resultado: 100\% de \textit{tests} garantizan similitud matemáticamente correcta.\\
 
-\newpage
 \textbf{2. Validación de rango en todas las \textit{queries} (6 \textit{tests})}\\
 
 \textit{Test} parametrizado con 10 \textit{queries} diversas validando:
@@ -4888,7 +4891,6 @@ Grupos del sistema:
     \item Grupo C: Comunicación (gracias, sí, bien).
 \end{itemize}
 
-\newpage
 {\large \noindent \textbf{\textit{Tests} de preprocesamiento (12 \textit{tests})}}\\
 
 Validación de normalización de texto para robustez del sistema PLN:\\
@@ -4910,6 +4912,7 @@ Ejemplo:
 "¡HOLA, ¿Cómo  estás?!" → "hola como estas"
 \end{verbatim}
 
+\newpage
 \textbf{Resultados}
 
 \begin{table}[H]
@@ -4936,7 +4939,6 @@ Mapeo implementado:
 @ → "arroba", . → "punto", ! → "exclamación", (espacio) → "espacio"
 \end{verbatim}
 
-\newpage
 {\large \noindent \textbf{\textit{Tests} de integración (10 tests, 6 endpoints)}}\\
 
 Validación de la interacción entre componentes y funcionamiento de la API REST.\\
@@ -4959,6 +4961,7 @@ GET / & 1 & 200 \\ \hline
 \caption[Tests por endpoint]{Resumen de \textit{tests} por endpoint, elaboración propia.}
 \end{table}
 
+\newpage
 \noindent \textbf{Casos críticos del \textit{Endpoint} principal (POST /buscar)}
 
 \begin{enumerate}
@@ -4980,7 +4983,6 @@ GET / & 1 & 200 \\ \hline
     \item Resultado: Usuario recibe I-V-A-N.
 \end{itemize}
 
-\newpage
 \textbf{Resultados}
 
 \begin{table}[H]
@@ -4997,6 +4999,7 @@ Tiempo de ejecución & $\sim$8s \\ \hline
 \caption[Métricas adicionales]{Métricas adicionales de pruebas, elaboración propia.}
 \end{table}
 
+\newpage
 {\large \noindent \textbf{\textit{Tests End-To-End}  y robustez lingüística (26 \textit{tests})}}\\
 Los \textit{tests} E2E validan robustez ante variaciones naturales del lenguaje mediante ``\textit{Perturbation Testing}'', metodología específica para sistemas PLN \cite{refe2e}.\\
 
@@ -5018,7 +5021,6 @@ Salud del sistema & 2 & \textit{Health checks} \\ \hline
 \caption[Escenarios de prueba]{Escenarios evaluados, cantidad de \textit{tests} y validación principal, elaboración propia.}
 \end{table}
 
-\newpage
 \textbf{\textit{Tests} de robustez lingüística (14 \textit{tests}) - crítico PLN}\\
 Metodología de ``\textit{Perturbation Testing}'' con 4 estrategias
 
@@ -5029,6 +5031,7 @@ Metodología de ``\textit{Perturbation Testing}'' con 4 estrategias
     \item \textit{Load testing} (estrés).
 \end{enumerate}
 
+\newpage
 \textbf{Tipos de perturbaciones testeadas (50+ casos)}
 
 \begin{table}[H]
@@ -5052,7 +5055,6 @@ Variaciones de acentos & \texttt{``médico''} vs \texttt{``medico''} \\ \hline
 \caption[Tipos de perturbación]{Tipos de perturbaciones lingüísticas y ejemplos representativos, elaboración propia.}
 \end{table}
 
-\newpage
 \textbf{Degradación gradual por severidad}
 
 \begin{table}[H]
@@ -5068,6 +5070,7 @@ Grave & \texttt{``hkka''} & Activa deletreo \\ \hline
 \caption[Niveles de error]{Clasificación de severidad de errores y el comportamiento esperado, elaboración propia.}
 \end{table}
 
+\newpage
 \textbf{Casos realistas con \textit{Leet Speak} (4+ \textit{tests})}
 Normalización de \textit{Leet Speak} en deletreo
 
@@ -5087,7 +5090,6 @@ Normalización de \textit{Leet Speak} en deletreo
 \caption[Normalización de Leet Speak]{Equivalencias para normalización de texto en Leet Speak, elaboración propia.}
 \end{table}
 
-\newpage
 \textbf{Resultados}
 
 \begin{table}[H]
@@ -5109,6 +5111,7 @@ Tiempo de ejecución & $\sim$15s & <30s \\ \hline
 \caption[Métricas generales]{Resultados generales de pruebas E2E, elaboración propia.}
 \end{table}
 
+\newpage
 \textbf{Fortalezas identificadas}
 \begin{itemize}
     \item Tolerancia a typos: $>95\%$ de clasificación correcta.
@@ -5146,6 +5149,7 @@ Cálculo similitud & 9ms & 15ms & <20ms \\ \hline
     \item Cache hit: $\sim 333$ q/s.
 \end{itemize}
 
+\newpage
 \textbf{Test de concurrencia}
 
 \begin{table}[H]
@@ -5186,6 +5190,7 @@ Latencia P99 & 187ms & <500ms \\ \hline
 \caption[Métricas de rendimiento]{Resumen de rendimiento total, elaboración propia.}
 \end{table}
 
+\newpage
 \textbf{Resumen de métricas de rendimiento}
 \begin{table}[H]
 \centering
@@ -5234,6 +5239,7 @@ Dataset curado manualmente con casos que deben funcionar correctamente\\
 
 \textbf{Resultado}: $100\%$ de golden dataset passing\\
 
+\newpage
 \textbf{Métricas de clasificación semántica}
 
 \begin{table}[H]
@@ -5274,8 +5280,7 @@ C & gracias, muchas gracias, bien & 78\% \\ \hline
 
 \textbf{Objetivo}: >70\% dentro de cada grupo.\\
 
-\vspace{1em}
-
+\newpage
 {\large \noindent \textbf{Cobertura de código}}\\
 \textbf{Cobertura global del módulo}
 
@@ -5316,7 +5321,7 @@ Estos casos no afectan la funcionalidad core del sistema.
 %===================================================================
 %===================================================================
 %===================================================================
-
+\newpage
 \section{Resultados del Modulo de PLN}
 
 {\large \noindent \textbf{Resumen ejecutivo}}\\
@@ -5363,7 +5368,6 @@ Latencia P95 & <200ms & 68ms & 66\% mejor \\ \hline
 \end{tabular}
 \caption[Métricas de testing]{Resumen de métricas de \textit{testing}, elaboración propia.}
 \end{table}
-
 \textbf{Conclusión}: Todos los objetivos fueron superados significativamente.\\
 
 \noindent \textbf{Fortalezas}
@@ -5384,6 +5388,7 @@ Latencia P95 & <200ms & 68ms & 66\% mejor \\ \hline
         \item Normalización efectiva de \textit{leet speak}.
     \end{itemize}
 
+    \newpage
     \item Calidad semántica aceptable
     \begin{itemize}[label=\checkmark]
         \item \textit{F1-Score} de 88\% demuestra balance \textit{precision/recall}.
@@ -5425,6 +5430,7 @@ Latencia P95 & <200ms & 68ms & 66\% mejor \\ \hline
     \item Carga: $<1$ segundo.
 \end{itemize}
 
+\newpage
 \textbf{Resultados}
 
 \begin{table}[H]
@@ -5477,6 +5483,7 @@ Latencia & $\sim$42ms & $\sim$40ms \\ \hline
 \caption[Comparación de métodos]{Comparación entre enfoque exhaustivo y jerárquico, elaboración propia.}
 \end{table}
 
+\newpage
 {\large \noindent \textbf{Optimización de latencia}}\\
 \textbf{Técnicas aplicadas}\\
 
@@ -5510,6 +5517,7 @@ embeddings = model.encode(texts, batch_size=32)
     \end{verbatim}
     Speedup: $\sim$2x para múltiples textos.\\
 
+    \newpage
     \item \textbf{Async I/O (FastAPI)}
     \\[4pt]
     \begin{verbatim}
@@ -5543,8 +5551,8 @@ async def buscar(request: QueryRequest):
     \item \textit{Re-ranking} (25\%).
 \end{enumerate}
 
-\vspace{1em}
 
+\newpage
 {\large \noindent \textbf{Gestión de memoria}}
 
 \begin{table}[H]
@@ -5589,6 +5597,7 @@ Python \textit{runtime} & $\sim$30 MB \\ \hline
     \end{verbatim}
 \end{enumerate}
 
+\newpage
 {\large \noindent \textbf{Escalabilidad}}\\
 \textbf{Escalabilidad horizontal}\\
 API \textit{stateless} permite múltiples instancias:\\
@@ -5631,6 +5640,7 @@ uvicorn app.main:app \
     \item 4 \textit{workers}: $\sim$90 req/s (3.6x).
 \end{itemize}
 
+\newpage
 \noindent \textbf{Limitaciones}
 \begin{itemize}
     \item Modelo en memoria: $\sim$420 MB por \textit{worker}.
@@ -5721,6 +5731,7 @@ Latencia P99 (ms) & -- & 47ms & -- \\ \hline
 
 \textbf{Objetivo}: >20 req/s (cumplido).
 
+\newpage
 \noindent \textbf{Memoria}
 \begin{table}[H]
 \centering
@@ -5762,6 +5773,7 @@ Sin \textit{memory leaks} detectados.\\
 
 \vspace{1em}
 
+\newpage
 {\large \noindent \textbf{Comparación con alternativas}}\\
 
 \textbf{Ventajas del prototipo}
