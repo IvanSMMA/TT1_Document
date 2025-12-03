@@ -18,6 +18,180 @@ Asimismo, se evaluaron plataformas en línea capaces de realizar captura de movi
 
 Por estas razones, se decidió prescindir del modelado 3D en esta etapa del proyecto y concentrar los esfuerzos en el desarrollo del prototipo funcional centrado en el procesamiento del lenguaje natural y la traducción textual a representaciones visuales más simples. No obstante, se mantiene la documentación relativa al modelado 3D y MediaPipe, ya que constituye una base conceptual y técnica valiosa para trabajos futuros que busquen ampliar el presente desarrollo.\\
 
+\section{Introducción y Herramientas Tecnológicas}
+
+\subsection{Resumen del Proyecto}
+La interfaz de SignAI se desarrolla en React Native y Expo para la traducción de texto a \textbf{Lengua de Señas Mexicana (LSM)}. La aplicación gestiona una secuencia compleja de reproducción que combina videos alojados en \textbf{AWS S3} \cite{refaws1} con señales de control internas para demarcar el flujo (Inicio, Fin, Espacio).
+
+\subsection{Herramientas Utilizadas y Entorno de Desarrollo}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{3.5cm}|p{5.5cm}|p{4.5cm}|}
+\hline
+\textbf{Componente} & \textbf{Tecnología/Herramienta} & \textbf{Uso Clave en el Proyecto} \\ \hline
+
+\textbf{Frontend Core} &
+React Native, Expo &
+Entorno de desarrollo, CLI y construcción de la app. \\ \hline
+
+\textbf{Lenguaje} &
+TypeScript &
+Tipado estático para robustez en la manipulación de estados y API. \\ \hline
+
+\textbf{Reproducción} &
+\texttt{expo-video} &
+Control de reproducción de video \\ \hline
+
+\textbf{Iconografía} &
+\texttt{MaterialIcons} &
+Iconos para controles y utilidades (Pausa, Reinicio, Limpiar campo, Pista). \\ \hline
+
+\textbf{Almacenamiento} &
+\textbf{Amazon S3} &
+\textit{Plataforma de Hosting} distribuido para el contenido de video de LSM, garantizando escalabilidad. \\ \hline
+
+\textbf{IDE} &
+Visual Studio Code (VS Code) &
+Entorno de desarrollo principal. \\ \hline
+
+\end{tabular}
+\caption{\textit{Stack} Tecnológico y Herramientas de Desarrollo, elaboración propia}
+\label{tab:herramientas}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[t]{0.45\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/Cap4/images/vscode.png}
+        \caption{Entorno de Desarrollo (VS Code), obtenido de \cite{refapp1}.}
+        \label{fig:vs_code}
+    \end{minipage}%
+    \hfill
+    \begin{minipage}[t]{0.45\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/Cap4/images/expogo.png}
+        \caption{Herramienta de \textit{Testing} (Expo Go), obtenido de \cite{refexpo1}.}
+        \label{fig:expo_go}
+    \end{minipage}
+\end{figure}
+
+
+\section{Lógica del Flujo y Validación}
+
+\subsection{Validación de Caracteres y campo vacío}
+La aplicación impone una \textbf{validación estricta} en la entrada de texto para asegurar que solo se procese contenido traducible a LSM, esto con base en la regla de negocio RN03.
+
+\begin{itemize}
+    \item Los caracteres no permitidos se definen en la constante \texttt{CARACTERES\_NO\_PERMITIDOS}, incluyendo números y la mayoría de los símbolos de puntuación exceptuando los signos de interrogación ya que dentro del listado de frases hay preguntas.
+    \item La función \texttt{validarTexto} verifica la entrada. El único símbolo permitido fuera de las letras y espacios es el \textbf{símbolo de concatenación "\texttt{+}"}.
+    \item Si se detecta un carácter inválido, se interrumpe la ejecución de \texttt{traducir} y se activa el componente \texttt{errorValidationContainer} para informar al usuario el carácter específico y su nombre, pidiendole que ingrese en una nueva entrada cumpliendo con la regla de negocio RN05 Y RN06.
+\end{itemize}
+
+\subsection{Mecanismo de Procesamiento de la API y Deletreo}
+
+La traducción se basa en la comunicación con un módulo de Procesamiento de Lenguaje Natural (PLN) externo.
+
+\begin{enumerate}
+    \item \textbf{Entrada y Asignación de Frase:} La entrada de texto del usuario es enviada a la API. El módulo de PLN compara la entrada con una base de datos de frases conocidas.
+    \item \textbf{Videos en AWS S3:} Si el módulo PLN encuentra una coincidencia, devuelve directamente el \texttt{url\_video} de la frase completa, el cual está alojado en \textbf{Amazon S3} \cite{refaws1}.
+    \item \textbf{Modo Deletreo:}
+    \begin{itemize}
+        \item Si no se detecta una similitud suficiente (o si la lógica de PLN lo determina), el modo deletreo se activa (\texttt{deletreo\_activado: true}).
+        \item La API devuelve una secuencia de URLs para cada carácter de la frase, incluyendo un \textit{string} vacío (\texttt{“”}) para representar los espacios.
+        \item La función \texttt{procesarMultiplesFrases} transforma estos \textit{strings} vacíos en la señal interna \textbf{\texttt{SIGNAL\_MARKERS.espacio}} para que el frontend pueda gestionarla como una pausa visual.
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Mecanismo de Concatenación y \texttt{SIGNAL\_ESPACIO}}
+La función \texttt{procesarMultiplesFrases} implementa la lógica de concatenación a través del símbolo \texttt{+}.
+
+\begin{enumerate}[label={}]
+    \item \textbf{Paso 1-División:} El texto completo del usuario se divide usando \texttt{+} para obtener un array de frases individuales.
+    \item \textbf{Paso 2-Llamadas Secuenciales:} Se realiza una llamada \texttt{fetch} a la API por cada frase, acumulando los URLs de video en \texttt{secuenciaFinal}.
+    \item \textbf{Paso 3-Separador de Frases:} Después de cada frase procesada (excepto la última), se inserta \textbf{\texttt{SIGNAL\_MARKERS.espacio}}. Esta señal garantiza una pausa de $600 \text{ ms}$ (Tabla \ref{tabla:logica_avance_secuencia}) entre la traducción de la primera frase y la siguiente, mejorando la legibilidad visual de la secuencia.
+\end{enumerate}
+
+\section{Control de Reproducción y Estabilidad}
+
+\subsection{Decisiones de Librería y Estabilidad}
+
+\begin{enumerate}
+    \item \textbf{Uso de \texttt{expo-video} vs. \texttt{expo-av}:} Se eligió \texttt{expo-video} por su API moderna y el uso del \texttt{useVideoPlayer} hook, que proporciona un objeto \texttt{player} con métodos de control explícito (\texttt{player.replace}, \texttt{player.playing}) ideal para la lógica de secuencias.
+    \item \textbf{Eliminación de \texttt{react-native-reanimated}:} La librería fue deshabilitada del proyecto al causar el error crítico \texttt{Worklets Mismatch} en Android (0.6.1 vs 0.5.1). Este error indica una incompatibilidad de versiones binarias en el cliente \texttt{Expo Go} la cual fue la herramienta utilizada para el testing de la aplicación. Para estabilizar la aplicación, se neutralizó el código problemático (\texttt{explore.tsx}) que lo importaba, este archivo se generó al levantar el proyecto con mpm, permitiendo la funcionalidad principal de traducción.
+\end{enumerate}
+
+\subsection{Lógica de Reproducción Secuencial (Basada en Duración)}
+
+Para el manejo de la secuencia de videos en lugar de usar un sistema inestable basado en eventos se optó por un sistema basado en \textbf{temporizadores y duración del video}.
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{4cm}|p{5.5cm}|p{4.5cm}|}
+\hline
+\textbf{Tipo de Elemento} & \textbf{Mecanismo de Avance} & \textbf{Duración} \\ \hline
+
+\texttt{SIGNAL\_INICIO}, \texttt{SIGNAL\_FIN} & \texttt{setTimeout} (fijo) & $100 \text{ ms}$ \\ \hline
+
+\texttt{SIGNAL\_ESPACIO} & \texttt{setTimeout} (fijo) & $800 \text{ ms}$ \\ \hline
+
+Videos de LSM (URL) & \texttt{setTimeout} basado en \texttt{player.duration} & $D_{\text{video}} + 200 \text{ ms}$ \\ \hline
+
+\end{tabular}
+\caption[Lógica de Avance de Secuencia]{Lógica de Avance de Secuencia, elaboración propia.}
+\label{tabla:logica_avance_secuencia}
+\end{table}
+
+\begin{enumerate}[label=\textbf{L.\arabic*}]
+    \item \textbf{Avance Unificado (\texttt{avanzarIndice}):} La función \texttt{avanzarIndice} contiene la lógica de estado de alto nivel (\texttt{setIndiceLetraActual}, \texttt{setVideoActual}) para pasar al siguiente URL en \texttt{secuenciaCompleta}.
+    \item \textbf{Programación de Videos:} Un \texttt{useEffect} se activa cuando el video comienza a reproducirse (\texttt{if (player.playing)}). Obtiene la \textbf{duración real} del video (\texttt{player.duration}) y programa el salto al siguiente elemento después de ese tiempo más un búfer de $200 \text{ ms}$ para asegurar que el video termine.
+    \item \textbf{Control de Flujo:} La función utiliza \texttt{setEnPausa(true)} antes de cualquier cambio de índice y \texttt{setEnPausa(false)} después, para evitar que los \texttt{useEffect} se activen de forma recursiva o no deseada durante la transición.
+\end{enumerate}
+
+\subsection{Controles de Utilidad (Overlay Buttons)}
+La interfaz incluye botones de utilidad que mejoran la experiencia de usuario:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\linewidth]{Images/Cap4/images/botones.png}
+    \caption{Botones de Pista (Lightbulb) y Reinicio de App (Home), elaboración propia.}
+    \label{fig:utility_buttons}
+\end{figure}
+
+
+\begin{itemize}
+    \item \textbf{Botón de Pista (emoji-objects):} Llama a \texttt{mostrarAyuda}, que despliega un \texttt{Alert} con instrucciones sobre la validación de texto, el uso del símbolo \texttt{+} y la lógica de las señales de flujo.
+    \item \textbf{Botón de para reiniciar App (stop-circle):} Llama a \texttt{reiniciarApp}. Esta función de \texttt{useCallback} restablece \textbf{todos los estados} de la aplicación (texto, respuesta, secuencia, índices), regresando la interfaz a su estado inicial de bienvenida.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\linewidth]{Images/Cap4/images/infodes.jpeg}
+    \caption{Captura del funcionamiento del botón de información sobre la app, elaboración propia.}
+    \label{fig:utility_buttons_2}
+\end{figure}
+
+\subsection{Componente \texttt{VideoControls}}
+Este componente proporciona el control granular de la secuencia de video:
+
+\begin{enumerate}[label=\textbf{C.\arabic*}]
+    \item \textbf{Pausa / Reanudar (Toggle):} El botón alterna el estado \texttt{pausadoPorUsuario}.
+    \begin{itemize}
+        \item Si se presiona, \texttt{pausadoPorUsuario} se vuelve \texttt{true}, forzando al \texttt{player} a detenerse y previniendo que el \texttt{useEffect} avance la secuencia.
+        \item Si se vuelve a presionar, \texttt{pausadoPorUsuario} se vuelve \texttt{false}, permitiendo que el \texttt{useEffect} reanude la reproducción y el avance.
+    \end{itemize}
+    \item \textbf{Reiniciar Secuencia:} Llama a \texttt{reiniciarReproduccion}.
+    \begin{itemize}
+        \item Esta función restablece el estado de reproducción: \texttt{pausadoPorUsuario} a \texttt{false}, \texttt{indiceLetraActual} a 0, y \texttt{videoActual} a \texttt{secuenciaCompleta[0]} (\texttt{SIGNAL\_INICIO}). Esto permite al usuario repetir la secuencia traducida de forma instantánea.
+    \end{itemize}
+\end{enumerate}
+
+%====================================================================================
+%====================================================================================
+%====================================================================================
 \section{Implementación del Modulo de Procesamiento de Lenguaje Natural (PLN)}
 
 \subsection{Arquitectura del modulo de Procesamiento de Lenguaje Natural (PLN)}
