@@ -1,27 +1,37 @@
 \chapter{Diseño y Arquitectura del Sistema}
 \section{Análisis de viabilidad y factibilidad}
-En esta sección, se presenta el análisis de viabilidad y factibilidad del prototipo de aplicación móvil de apoyo para la traducción de español a Lengua de Señas Mexicana (LSM) empleando técnicas de Procesamiento de Lenguaje Natural (PLN) y modelado 3D, con el objetivo de evaluar si existen las condiciones técnicas, humanas, tecnológicas y financieras necesarias para su desarrollo exitoso del mismo. En primer lugar, se analiza la viabilidad, considerando los conocimientos del equipo, las tecnologías disponibles, las condiciones de ejecución y el potencial de escalabilidad del prototipo. Posteriormente, se estudia la factibilidad, enfocándose en los recursos financieros, humanos y tecnológicos, así como en el tiempo estimado para completar el proyecto.\\
+En esta sección se presenta el análisis de viabilidad y factibilidad del prototipo de aplicación móvil de apoyo para la traducción de español a Lengua de Señas Mexicana (LSM), empleando técnicas de Procesamiento de Lenguaje Natural (PLN) y generación de animaciones en video asistida por IA. El objetivo es evaluar si existen las condiciones técnicas, humanas, tecnológicas y financieras necesarias para el desarrollo exitoso del prototipo. 
+
+En primer lugar, se analiza la viabilidad, considerando los conocimientos del equipo, las tecnologías disponibles, las condiciones de ejecución y el potencial de escalabilidad del prototipo. Posteriormente, se estudia la factibilidad, enfocándose en los recursos financieros, humanos y tecnológicos, así como en el tiempo estimado para completar el proyecto.\\
 
 \subsection{Viabilidad}
 El análisis de viabilidad considera los conocimientos técnicos del equipo, la madurez de las tecnologías disponibles y las condiciones actuales para el desarrollo. Este análisis permite evaluar si el proyecto puede llevarse a cabo de manera exitosa bajo las condiciones planteadas.
 
 \subsubsection{Conocimientos y experiencia}
-El equipo de desarrollo posee conocimientos en herramientas de IA como el Procesamiento de Lenguaje Natural (PLN), así como habilidades básicas en animaciones y recursos visuales. Aunque la experiencia en animación 3D orientada a señas (ver \textbf{\nameref{anexo:blender_unity}}), programación de aplicaciones móviles y en el manejo de la Lengua de Señas Mexicana (LSM) es limitada, se considera factible adquirir y aplicar los conocimientos necesarios mediante el uso de recursos de investigación, bibliotecas especializadas y la colaboración con expertos en LSM, tomando en cuenta la versión correspondiente al uso y documentación del año 2024. Esta disposición de aprendizaje y fortalecimiento de competencias respalda la viabilidad técnica del proyecto en función de las capacidades del equipo.
-De manera complementaria, se cuenta con diversas tecnologías que facilitarán la implementación del prototipo, tal como se describe a continuación.
+El equipo de desarrollo posee conocimientos en herramientas de IA, particularmente en Procesamiento de Lenguaje Natural (PLN), así como habilidades básicas en edición y curaduría de recursos audiovisuales. Si bien en etapas tempranas del proyecto se exploraron alternativas basadas en modelado y animación 3D orientada a señas (ver \textbf{\nameref{anexo:blender_unity}}), en el alcance actual del prototipo se optó por un enfoque más acotado y realista, basado en el uso de animaciones en video generadas mediante servicios de IA en la nube.
+
+En concreto, se empleó la plataforma \textit{GoEnhance AI} (\textit{GoEnhance AI - All-in-One AI Video Generator}), la cual permite crear videos a partir de texto, imágenes o clips existentes utilizando modelos avanzados de generación de video (por ejemplo, Runway, Kling o Veo~3). Este enfoque reduce la complejidad técnica asociada al rigging, al control de esqueletos 3D y a la integración de motores gráficos en tiempo real, permitiendo que el equipo concentre sus esfuerzos en el diseño del flujo de traducción, el procesamiento de texto y la integración de los videos de señas en la aplicación móvil.
+
+Aunque la experiencia directa del equipo en la Lengua de Señas Mexicana (LSM) es limitada, se considera viable la correcta representación de las frases del prototipo mediante el uso de referencias bibliográficas, materiales audiovisuales especializados y la validación manual del contenido generado. La disposición para el aprendizaje continuo y la consulta con fuentes especializadas respalda la viabilidad técnica del proyecto en función de las capacidades actuales del equipo.
 
 \subsubsection{Tecnologías disponibles}
-Actualmente, existen diversas tecnologías y herramientas que facilitan la creación de sistemas de traducción de texto a señas, tales como conjunto de datos de señas en video, motores de animación 3D, frameworks para el desarrollo de aplicaciones móviles y herramientas para creación de animaciones (ver \textbf{\nameref{anexo:blender_unity}}). Asimismo, se dispone de plataformas de código abierto que permiten representar señas mediante modelos animados o videos precargados, optimizando así los recursos disponibles para el desarrollo de prototipos.
+Actualmente existen diversas tecnologías y herramientas que facilitan la creación de sistemas de apoyo a la traducción de texto a señas, tales como conjuntos de datos de señas en video, plataformas de generación de video con IA, frameworks para el desarrollo de aplicaciones móviles y librerías para el procesamiento de lenguaje natural. En el presente proyecto se privilegiaron soluciones que reducen la carga de infraestructura y la complejidad de integración, aprovechando servicios en la nube y herramientas de desarrollo multiplataforma.
 
-Las tecnologías consideradas para el presente proyecto incluyen:
-\begin{itemize} 
-	\item Librerías y conjunto de datos de señas mexicanas (videos de señas). 
-	\item Herramientas de animación 3D como Blender (versión 4.4.3) o Unity (versión 6.1), así como motores ligeros compatibles con aplicaciones móviles (ver \textbf{\nameref{anexo:blender_unity}}).
-	\item Frameworks de desarrollo móvil como React (19.0.0) y Expo SDK (54.0.0). 
-	\item Herramientas de Procesamiento de Lenguaje Natural (PLN) para el análisis y segmentación de frases en español. 
+Las tecnologías consideradas y efectivamente utilizadas en el prototipo incluyen:
+
+\begin{itemize}
+	\item Conjuntos de datos y videos de señas correspondientes a frases seleccionadas en LSM, generados y/o adaptados específicamente para el prototipo.
+	\item La plataforma \textit{GoEnhance AI}, empleada para generar videos de señas a partir de descripciones textuales, lo que permite obtener recursos audiovisuales consistentes sin requerir un pipeline local de modelado 3D ni motores de animación en tiempo real.
+	\item Frameworks de desarrollo móvil como React (19.0.0) y Expo SDK (54.0.0), que facilitan la construcción de una aplicación multiplataforma y la integración de videos de señas en la interfaz de usuario.
+	\item Contenedores identificando las unidades desplegables (aplicación móvil React/Expo, API backend FastAPI con despliegue en Render PaaS, almacenamiento JSON/NPZ y un bucket de AWS S3 para el servicio de animaciones en video)
+	\item Herramientas de Procesamiento de Lenguaje Natural (PLN) para el análisis, normalización y segmentación de frases en español, que permiten mapear las entradas de texto de los usuarios a las frases disponibles en el repositorio de señas.
 \end{itemize}
+
+Este conjunto de tecnologías, basado en servicios de IA ya entrenados y herramientas de desarrollo consolidadas, incrementa la viabilidad del proyecto al reducir la necesidad de infraestructura especializada (como GPUs dedicadas o motores de animación complejos) y al permitir que el equipo se enfoque en la lógica de negocio del prototipo y en la experiencia de usuario.
 
 \subsubsection{Condiciones para la ejecución}
 El proyecto se desarrolla en el marco de un trabajo terminal académico, lo que garantiza el acceso a recursos institucionales, asesoría especializada y bibliografía técnica actualizada. De igual manera, el creciente interés social y académico por fomentar la inclusión de la comunidad sorda en México genera un entorno favorable para la implementación de este tipo de iniciativas, fortaleciendo así las condiciones de ejecución del prototipo.
+
 
 \subsection{Factibilidad}
 La factibilidad del proyecto se analiza considerando los recursos financieros, humanos y tecnológicos disponibles, así como el tiempo estimado para su desarrollo y finalización.
@@ -32,7 +42,7 @@ El presente apartado tiene como objetivo evaluar los costos asociados al desarro
 Para ello, se plantea un análisis financiero estructurado en dos niveles: 
 
 \begin{itemize}
-	\item \textbf{Enfoque académico:} incluye estimaciones de costos simbólicos aproximados del mercado laboral en México correspondientes al año 2025 \cite{ref63}, considerando el uso de recursos propios, herramientas gratuitas y asesorías puntuales. Este enfoque representa fielmente la ejecución del proyecto dentro de un marco académico.
+	\item \textbf{Enfoque académico:} incluye estimaciones de costos simbólicos aproximados del mercado laboral en México correspondientes al año 2025 \cite{ref63}, considerando el uso de recursos propios, herramientas gratuitas y asesorías puntuales. Este enfoque representa fielmente la ejecución del proyecto dentro de un marco universitario.
 	
 	\item \textbf{Enfoque exploratorio de comercialización:} presenta una simulación de costos reales basada en tarifas aproximadas de mercado laboral en México correspondientes al año 2025 \cite{ref63}, incluyendo sueldos profesionales, licencias, infraestructura tecnológica y servicios externos. Este análisis permite anticipar los requerimientos financieros de una futura etapa de comercialización.
 \end{itemize}
@@ -47,7 +57,7 @@ Ambas perspectivas se estructuran mediante dos métodos complementarios de anál
 Esta estructura metodológica permite identificar con precisión los recursos involucrados, calcular el presupuesto total estimado y analizar la factibilidad financiera del proyecto, tanto en su ejecución académica como en un escenario de comercialización futuro.
 
 \paragraph{\textbf{Informe de costos de creación del prototipo.}} 
-Este informe presenta el análisis financiero asociado a la creación del prototipo en cuestión. El objetivo es identificar y estructurar los costos necesarios para garantizar la factibilidad del proyecto en su etapa de creación.
+Este informe presenta el análisis financiero asociado a la creación del prototipo. El objetivo es identificar y estructurar los costos necesarios para garantizar la factibilidad del proyecto en su etapa de construcción inicial.
 
 \paragraph{\textbf{Presupuesto mediante recursos.}} 
 Dentro del análisis basado en recursos, el proceso de desarrollo se ha estructurado en tres etapas principales, cada una integrada por actividades específicas que permiten avanzar de manera ordenada, asegurando la calidad y funcionalidad del prototipo final. Las etapas contempladas son:
@@ -58,21 +68,16 @@ Dentro del análisis basado en recursos, el proceso de desarrollo se ha estructu
 	\item \textbf{Evaluación financiera}. 
 \end{itemize}
 
-Cada una de estas etapas será detallada en los apartados siguientes.
-
 \paragraph{\textbf{Creación del prototipo.}} 
-Esta primera etapa abarca todas las actividades necesarias para el desarrollo inicial del prototipo: definición de objetivos, especificaciones técnicas, requisitos, diseño de animaciones, etc. Aquí se implementan técnicas de PLN para la segmentación de frases y modelado/animación 3D para representar las señas en LSM.
+Esta primera etapa abarca todas las actividades necesarias para el desarrollo inicial del prototipo: definición de objetivos, especificaciones técnicas, requisitos, diseño de animaciones en video, entre otras. Aquí se implementan técnicas de PLN para la segmentación de frases y la generación o curaduría de animaciones en video que representen las señas en LSM de manera comprensible para los usuarios.
 
 \paragraph{\textbf{Despliegue del prototipo.}} 
-Incluye acciones para poner en funcionamiento la app en Android (versión 14), publicación, configuración técnica, documentación técnica y pruebas piloto con usuarios. Esta retroalimentación permitirá ajustar y mejorar la experiencia de uso.
+Incluye acciones para poner en funcionamiento la aplicación móvil desarrollada con React (19.0.0) y Expo SDK (54.0.0) en dispositivos con Android 14, así como su publicación en un entorno de pruebas, configuración técnica, documentación y ejecución de pruebas piloto con usuarios. Esta retroalimentación permite ajustar y mejorar la experiencia de uso.
 
 \paragraph{\textbf{Evaluación financiera.}} 
 Implica analizar los costos de las etapas anteriores y valorar beneficios esperados como impacto social, accesibilidad y sostenibilidad. Aunque el proyecto tiene fines académicos, se incluye un análisis básico de posibilidad de escalamiento.\\
 
-Este enfoque estructurado de desarrollo permite garantizar una planeación clara y eficiente, considerando los elementos técnicos, operativos y financieros necesarios para la ejecución del proyecto.\\
-
-Por último, como medida preventiva ante posibles riesgos o imprevistos, se contempla una reserva de contingencia equivalente al 15\% del costo total estimado.\\
-
+Este enfoque estructurado de desarrollo permite garantizar una planeación clara y eficiente, considerando los elementos técnicos, operativos y financieros necesarios para la ejecución del proyecto. Como medida preventiva ante posibles riesgos o imprevistos, se contempla una reserva de contingencia equivalente al 15\% del costo total estimado.\\
 
 \paragraph{\textbf{Análisis de recursos.}} 
 \paragraph{\textbf{Costos de servicios.}} 
@@ -95,7 +100,7 @@ A continuación, se detallan los costos asociados a los servicios necesarios par
 			\textbf{Total estimado de servicios} & \textbf{\$2,300.00} & \textbf{\$9,200.00} & \textbf{\$27,600.00} \\ \hline
 		\end{tabular}
 	\end{adjustbox}
-	\caption[Costos estimados de servicios en el escenario académico durante la creación del prototipo]{Costos estimados de servicios en el escenario académico durante la creación del prototipo, elaboración propia.}
+	\caption[Costos estimados de servicios en el escenario académico durante la creación del prototipo]{Costos estimados de servicios en el escenario académico durante la creación del prototipo, elaboración propia. Estos costos consideran el uso de servicios básicos para programación, control de versiones y pruebas en dispositivos físicos o emulados.}
 	\label{tab:costos_servicios}
 \end{table}
 
@@ -112,11 +117,11 @@ A continuación, se detallan los costos asociados a los servicios necesarios par
 			\textbf{Recurso o servicio} & \textbf{Costo mensual (MXN \$)} & \textbf{Costo a 4 meses (MXN \$)} & \textbf{Costo a 1 año (MXN \$)} \\ \hline
 			Electricidad e internet (oficina dedicada) & \$2,500.00 & \$10,000.00 & \$30,000.00 \\ \hline
 			Renta de espacio de coworking (para 4 personas) & \$9,000.00 & \$36,000.00 & \$108,000.00 \\ \hline
-			Suscripción a plataformas de desarrollo (GitHub Copilot, AWS, Blender, etc.) & \$800.00 & \$3,200.00 & \$9,600.00 \\ \hline
+			Suscripción a plataformas de desarrollo (GitHub Copilot, AWS, etc.) & \$800.00 & \$3,200.00 & \$9,600.00 \\ \hline
 			API de lenguaje natural (OpenAI GPT, DialogFlow) & \$1,000.00 & \$4,000.00 & \$12,000.00 \\ \hline
 			Servicios de almacenamiento en la nube (Google Cloud, Firebase, etc.) & \$750.00 & \$3,000.00 & \$9,000.00 \\ \hline
 			Servidor para aplicación móvil (Firebase/AWS) & \$1,200.00 & \$4,800.00 & \$14,400.00 \\ \hline
-			Licencia de software para animación (Unity, MediaPipe, etc.) & \$1,500.00 & \$6,000.00 & \$18,000.00 \\ \hline
+			Licencia de software y/o servicios para animación y edición de video & \$1,500.00 & \$6,000.00 & \$18,000.00 \\ \hline
 			Validación profesional de señas LSM (freelancer mensual) & \$5,000.00 & \$20,000.00 & \$60,000.00 \\ \hline
 			Servicios de soporte técnico y mantenimiento & \$3,000.00 & \$12,000.00 & \$36,000.00 \\ \hline
 			Marketing digital (redes sociales, web, SEO) & \$2,000.00 & \$8,000.00 & \$24,000.00 \\ \hline
@@ -143,8 +148,8 @@ En esta sección se presentan los costos estimados de artículos y adquisiciones
 			\textbf{Recurso} & \textbf{Unidades} & \textbf{Costo unitario (MXN \$)} & \textbf{Costo total (MXN \$)} \\ \hline
 			Equipo de cómputo personal (propio de los integrantes) & 3 & -- & -- \\ \hline
 			Dispositivo Android para pruebas físicas & 1 & -- & -- \\ \hline
-			Capacitación online (cursos: PLN, Blender, MediaPipe, LSM, Nube, etc.) & 3 cursos & \$800.00 & \$2,400.00 \\ \hline
-			Compra de modelos 3D o recursos gráficos (opcional) & 1 paquete & \$2,500.00 & \$2,500.00 \\ \hline
+			Capacitación online (cursos: PLN, LSM, Nube, etc.) & 3 cursos & \$800.00 & \$2,400.00 \\ \hline
+			Compra de recursos para animaciones (opcional) & 1 paquete & \$2,500.00 & \$2,500.00 \\ \hline
 			\textbf{Total compras no recurrentes} & & & \textbf{\$4,900.00} \\ \hline
 		\end{tabular}
 	\end{adjustbox}
@@ -154,7 +159,7 @@ En esta sección se presentan los costos estimados de artículos y adquisiciones
 
 
 \noindent \textbf{Nota aclaratoria:}  
-el equipo de cómputo utilizado corresponde a dispositivos personales de los integrantes del proyecto, por lo cual no se ha considerado un costo adicional en esta categoría. La compra de herramientas para modelado 3D o recursos gráficos es considerada opcional y dependerá de la necesidad de complementar el material gráfico disponible de manera gratuita o de libre acceso.
+el equipo de cómputo utilizado corresponde a dispositivos personales de los integrantes del proyecto, por lo cual no se ha considerado un costo adicional en esta categoría. La compra de herramientas o recursos gráficos y audiovisuales es considerada opcional y dependerá de la necesidad de complementar el material disponible de manera gratuita o de libre acceso, tal como sucedió en la versión prototipo de este trabajo terminal.
 
 \begin{table}[H]
 	\centering
@@ -165,18 +170,21 @@ el equipo de cómputo utilizado corresponde a dispositivos personales de los int
 		\begin{tabular}{|p{7cm}|c|r|r|}
 			\hline
 			\textbf{Recurso} & \textbf{Unidades} & \textbf{Costo unitario (MXN \$)} & \textbf{Costo total (MXN \$)} \\ \hline
-			Equipo de cómputo profesional (para desarrollo y edición 3D) & 4 & \$25,000.00 & \$100,000.00 \\ \hline
+			Equipo de cómputo profesional (para desarrollo y animaciones) & 4 & \$25,000.00 & \$100,000.00 \\ \hline
 			Dispositivos móviles de prueba (Android gama media) & 2 & \$12,000.00 & \$24,000.00 \\ \hline
 			Cámara y sensor de movimiento (para captura LSM y pruebas) & 1 & \$12,000.00 & \$12,000.00 \\ \hline
-			Paquete profesional de modelos 3D con licencia comercial & 1 & \$10,000.00 & \$10,000.00 \\ \hline
+			Paquete profesional con licencia comercial de animaciones & 1 & \$10,000.00 & \$10,000.00 \\ \hline
 			Cursos y certificaciones profesionales (PLN, UX, IA, LSM y Unity) & 4 & \$3,000.00 & \$12,000.00 \\ \hline
 			Equipo de audio y grabación (para interfaz voz/signos) & 1 & \$4,500.00 & \$4,500.00 \\ \hline
 			\textbf{Total compras no recurrentes} & & & \textbf{\$162,500.00} \\ \hline
 		\end{tabular}
 	\end{adjustbox}
-	\caption[Costos estimados de compras no recurrentes en un escenario de comercialización]{Costos estimados de compras no recurrentes en un escenario de comercialización, elaboración propia.}
+	\caption[Costos estimados de compras no recurrentes en un escenario de comercialización]{Costos estimados de compras no recurrentes en un escenario de comercialización hipotético, elaboración propia.}
 	\label{tab:compras_no_recurrentes_comercial}
 \end{table}
+
+\noindent Estos montos representan un escenario de referencia para una posible etapa comercial, y no corresponden a gastos realizados durante el desarrollo académico del prototipo.
+
 
 
 \paragraph{\textbf{Sueldos y asesorías.}} 
@@ -193,7 +201,7 @@ El presente apartado presenta el costo estimado de los sueldos y asesorías cons
 			\textbf{Equipo} & \textbf{Cantidad} & \multicolumn{2}{c|}{\textbf{Desarrollo}} & \multicolumn{2}{c|}{\textbf{Mantenimiento / Ajustes}} \\ \hline
 			\textbf{Tipo} & & \textbf{Mensual (MXN \$)} & \textbf{4 meses (MXN \$)} & \textbf{Mensual (MXN \$)} & \textbf{A un año (MXN \$)} \\ \hline
 			Desarrollador Full Stack Junior (estudiante) & 3 & \$72,000.00 (\$24,000.00 c/u) & \$288,000.00 & -- & -- \\ \hline
-			Asesoría en animación 3D (freelance) & 1 parcial & \$300.00 (por sesión) & \$1,200.00 (cuatro sesiones) & -- & -- \\ \hline
+			Asesoría en animaciones (freelance) & 1 parcial & \$300.00 (por sesión) & \$1,200.00 (cuatro sesiones) & -- & -- \\ \hline
 			Asesoría en LSM (validación de señas) & 1 parcial & \$200.00 (por sesión) & \$800.00 (cuatro sesiones) & -- & -- \\ \hline
 			\textbf{Total} & \textbf{5} & \textbf{\$72,500.00} & \textbf{\$290,000.00} & -- & -- \\ \hline
 		\end{tabular}
@@ -218,7 +226,7 @@ el sueldo en este caso, se considera un pago simbólico, sin embargo, el sueldo 
 			\textbf{Tipo} & & \textbf{Mensual (MXN \$)} & \textbf{4 meses (MXN \$)} & \textbf{Mensual (MXN \$)} & \textbf{A un año (MXN \$)} \\ \hline
 			Desarrollador backend / frontend & 2 & \$28,000.00 & \$224,000.00 & \$16,000.00 & \$192,000.00 \\ \hline
 			Especialista en PLN & 1 & \$30,000.00 & \$120,000.00 & \$15,000.00 & \$180,000.00 \\ \hline
-			Diseñador 3D / animador (Unity / Blender) & 1 & \$25,000.00 & \$100,000.00 & \$12,000.00 & \$144,000.00 \\ \hline
+			Diseñador de animaciones / animador & 1 & \$25,000.00 & \$100,000.00 & \$12,000.00 & \$144,000.00 \\ \hline
 			Asesoría profesional en LSM & 1 parcial & \$10,000.00 & \$40,000.00 & \$5,000.00 & \$60,000.00 \\ \hline
 			Soporte técnico / DevOps & 1 & \$15,000.00 & \$60,000.00 & \$10,000.00 & \$120,000.00 \\ \hline
 			\textbf{Total estimado} & \textbf{6} & \textbf{\$108,000.00} & \textbf{\$544,000.00} & \textbf{\$58,000.00} & \textbf{\$696,000.00} \\ \hline
@@ -343,15 +351,6 @@ Para ofrecer una visión integral, esta sección presenta dos enfoques diferenci
 \vspace{1em}
 Esta doble perspectiva permite comparar la ejecución del despliegue del prototipo en un entorno académico y en un escenario comercial futuro, facilitando la toma de decisiones sobre su escalabilidad y viabilidad económica.
 
-\paragraph{\textbf{Métricas para medir el éxito.}}
-Para evaluar la efectividad del despliegue del prototipo, se definirán los siguientes indicadores clave de desempeño (KPIs):
-
-\begin{itemize}
-	\item Porcentaje de pruebas funcionales exitosas (fluidez y comprensión de las animaciones 3D): superior al 90\%.
-	\item Nivel de satisfacción o retroalimentación positiva de los usuarios evaluadores: superior al 85\%.
-\end{itemize}
-
-El cumplimiento de estas métricas permitirá validar que el prototipo alcanza los niveles de funcionalidad, accesibilidad e inclusión planteados como objetivos principales del proyecto.
 
 \paragraph{\textbf{Análisis exploratorio de costo de desarrollo.}}
 \paragraph{\textbf{Escenario de posible futura etapa de comercialización.}}
@@ -473,7 +472,7 @@ Aunque el esfuerzo promedio mensual es inferior a una persona de tiempo completo
 
 
 \subsubsection{Recursos tecnológicos}
-El equipo de trabajo dispone del equipo de cómputo necesario para el desarrollo, prueba y validación de la aplicación móvil. Además, se cuenta con acceso a las plataformas de desarrollo y a las herramientas de software requeridas, tales como ambientes de programación, motores de animación 3D (ver \textbf{\nameref{anexo:blender_unity}}) y bibliotecas especializadas de procesamiento de lenguaje natural (PLN). Esta disponibilidad de recursos tecnológicos garantiza las condiciones adecuadas para la implementación efectiva del prototipo.
+El equipo de trabajo dispone del equipo de cómputo necesario para el desarrollo, prueba y validación de la aplicación móvil. Además, se cuenta con acceso a las plataformas de desarrollo y a las herramientas de software requeridas, tales como ambientes de programación, bibliotecas especializadas de procesamiento de lenguaje natural (PLN), etc. Esta disponibilidad de recursos tecnológicos garantiza las condiciones adecuadas para la implementación efectiva del prototipo.
 
 \subsubsection{Plazo}
 El tiempo estimado para el desarrollo del prototipo es de aproximadamente ocho meses, considerando las fases de análisis, diseño, desarrollo, pruebas y presentación final. Dado que el alcance del proyecto se limita a la traducción de un conjunto predefinido de frases específicas, se considera que el plazo establecido es adecuado para cumplir con los objetivos planteados y la solución propuesta. \\
@@ -481,13 +480,46 @@ El tiempo estimado para el desarrollo del prototipo es de aproximadamente ocho m
 El análisis realizado en esta sección, permite concluir que el proyecto es tanto viable como factible dentro del contexto académico en el cual se desarrolla. El equipo de trabajo cuenta con los conocimientos fundamentales, el acceso a las tecnologías requeridas y los recursos necesarios para la construcción de un prototipo funcional. Aunque se han identificado áreas que demandarán un proceso de capacitación complementaria como el aprendizaje de LSM y el entendimiento de las herramientas de animación, estas no representan un obstáculo significativo para el éxito del proyecto, siempre que se mantenga una adecuada gestión de tiempos y actividades conforme a los alcances establecidos. De este modo, se fortalecen las condiciones para lograr un desarrollo efectivo que cumpla con los objetivos planteados y a futuro siente las bases para una posible expansión comercial.\\
 
 \section{Análisis y diseño de sistemas}
-\subsection{Entregables}
 
-\subsubsection{Diagrama de arquitectura}
+\subsection{Arquitectura del sistema (modelo C4 y capas)}
+\subsubsection{Arquitectura del sistema (modelo C4 y capas)}
+
+La arquitectura de SignAI se documenta mediante el modelo C4 (\textit{Context, Containers, Components, Code}) propuesto por \cite{brown2018c4}, y adoptado en contextos académicos como complemento de UML por \cite{vazquez2020c4}. En este trabajo se implementan tres de sus cuatro niveles jerárquicos: \textbf{Contexto}, que establece el sistema como una caja negra dentro de su ecosistema; \textbf{Contenedores}, que identifican las unidades desplegables (aplicación móvil React/Expo, API backend FastAPI con despliegue en Render PaaS, almacenamiento JSON/NPZ y servicio externo AWS S3); y \textbf{Componentes}, que detallan la estructura interna del backend mediante sus módulos principales (API Layer, Matcher PLN, Embeddings Service, Preprocess Module y Groups Manager). El cuarto nivel (\textit{Code}) se sustituye por un diagrama de clases UML, enfoque consistente con la postura de \cite{brown2018c4} y con la experiencia reportada por \cite{vazquez2020c4}, quienes señalan que el modelo C4 complementa a UML en lugar de reemplazarlo.
+
+Adicionalmente, se incluyó un diagrama de arquitectura por capas que documenta la separación lógica presentación–servicios–datos, siguiendo los principios de \textit{Separation of Concerns} descritos por \cite{fowler2002patterns}. La decisión de implementar una arquitectura monolítica modular, en lugar de una basada en microservicios, responde a criterios de proporcionalidad arquitectónica: el sistema aborda un único dominio de negocio (procesamiento de lenguaje natural para búsqueda semántica en LSM), maneja un volumen de datos acotado (43 frases con \textit{embeddings} precomputados de aproximadamente 256~KB) y carece de requisitos que justifiquen la complejidad operacional de una arquitectura distribuida (como escalado independiente por componente, despliegue políglota o múltiples equipos trabajando en paralelo), tal como advierte la literatura especializada sobre los costes organizativos y técnicos de los microservicios en sistemas pequeños o de un solo dominio \cite{dragoni2017micro,aldebagy2018comparative,newman2021microservices}.
+
+El diseño monolítico modular, con bajo acoplamiento entre componentes internos, facilita una posible migración futura a microservicios cuando las métricas de tráfico, el tamaño del \textit{dataset} o la complejidad organizacional lo justifiquen. Esta progresión documental, desde vistas de alto nivel (Contexto, Contenedores, Capas) hasta detalles de implementación (Componentes y diagrama de clases UML), permite una comprensión arquitectónica tanto para stakeholders técnicos como no técnicos, en concordancia con las mejores prácticas de documentación de arquitectura de software establecidas por \cite{bass2012software} y con las directrices del estándar ISO/IEC/IEEE~42010:2011 \cite{iso42010}, que recomiendan describir la arquitectura mediante múltiples vistas consistentes alineadas con las preocupaciones de los distintos interesados.
+
+\subsubsection{Diagrama de contexto (C4 nivel 1)}
 \begin{center}
-	\includegraphics[width=0.97\textwidth]{Images/Cap 3/Arquitectura_Grande.jpg}
-	\captionof{figure}[Diagrama de arquitectura]{Diagrama de arquitectura, elaboración propia.}  % Pie de foto manual
+	\includegraphics[width=0.4\textwidth]{Images/Cap 3/contexto_vf.png}
+	\captionof{figure}[Diagrama de contexto (C4 nivel 1)]{Diagrama de contexto (C4 nivel 1), elaboración propia. 
+		Véase la versión SVG para mayor detalle en \href{https://tinyurl.com/5cvnfn3s}{\textbf{\underline{este enlace}}}.}  % Pie de foto manual
 \end{center}
+
+\subsubsection{Diagrama de contenedores (C4 nivel 2)}
+\begin{center}
+	\includegraphics[width=0.4\textwidth]{Images/Cap 3/contenedores_vf.png}
+	\captionof{figure}[Diagrama de contenedores (C4 nivel 2)]{Diagrama de contenedores (C4 nivel 2), elaboración propia. 
+		Véase la versión SVG para mayor detalle en \href{https://tinyurl.com/4wjeeuzb}{\textbf{\underline{este enlace}}}.}  % Pie de foto manual
+\end{center}
+
+\subsubsection{Diagrama de componentes (C4 nivel 3)}
+\begin{center}
+	\includegraphics[width=0.4\textwidth]{Images/Cap 3/componentes_vf.png}
+	\captionof{figure}[Diagrama de componentes (C4 nivel 3]{Diagrama de componentes (C4 nivel 3), elaboración propia. 
+		Véase la versión SVG para mayor detalle en \href{https://tinyurl.com/4pzpmh3w}{\textbf{\underline{este enlace}}}.}  % Pie de foto manual
+\end{center}
+
+\subsubsection{Diagrama de arquitectura en capas (3 Tier)}
+\begin{center}
+	\includegraphics[width=0.4\textwidth]{Images/Cap 3/capas_vf.png}
+	\captionof{figure}[Diagrama de arquitectura en capas (3 Tier)]{Diagrama de arquitectura en capas (3 Tier), elaboración propia. 
+		Véase la versión SVG para mayor detalle en \href{https://tinyurl.com/3wekk86t}{\textbf{\underline{este enlace}}}.}  % Pie de foto manual
+\end{center}
+
+
+\subsection{Modelo de requisitos}
 
 \subsubsection{Reglas de negocio}
 
@@ -599,12 +631,14 @@ En este caso, los requerimientos no funcionales se basaron en los especificados 
 	\label{tab:requerimientos_no_funcionales}
 \end{table}
 
+\subsection{Modelos UML de análisis y diseño}
+
 \subsubsection{Diagrama de procesos}
 \begin{center}
-    \makebox[\textwidth]{%
-        \includegraphics[width=1.2\textwidth]{Images/Cap 3/Procesos.png}
-    }
-    \captionof{figure}[Diagrama de procesos del sistema]{Diagrama de procesos del sistema, elaboración propia.}
+	\makebox[\textwidth]{%
+		\includegraphics[width=1.2\textwidth]{Images/Cap 3/Procesos.png}
+	}
+	\captionof{figure}[Diagrama de procesos del sistema]{Diagrama de procesos del sistema, elaboración propia.}
 \end{center}
 
 \subsubsection{Diagrama de actividades} 
@@ -612,25 +646,24 @@ En este caso, los requerimientos no funcionales se basaron en los especificados 
 	\makebox[\textwidth]{%
 		\includegraphics[width=1\textwidth]{Images/Cap 3/actividades.png}
 	}
-    \captionof{figure}[Diagrama de actividades del sistema]{Diagrama de actividades del sistema, elaboración propia.}
+	\captionof{figure}[Diagrama de actividades del sistema]{Diagrama de actividades del sistema, elaboración propia.}
 \end{center}
 
 
 \subsubsection{Diagrama de clases}
 \begin{center}
-	\makebox[\textwidth]{%
-		\includegraphics[width=1\textwidth]{Images/Cap 3/clasesFinal.png}
-	}
-	\captionof{figure}[Diagrama de clases del sistema]{Diagrama de clases del sistema, elaboración propia.}
+	\includegraphics[width=0.4\textwidth]{Images/Cap 3/clases_vf.png}
+	\captionof{figure}[Diagrama de clases]{Diagrama de clases, elaboración propia. 
+		Véase la versión SVG para mayor detalle en \href{https://tinyurl.com/2nmxvc9f}{\textbf{\underline{este enlace}}}.}  % Pie de foto manual
 \end{center}
 
 \subsubsection{Diagrama de secuencia}
 \begin{center}
-	\makebox[\textwidth]{%
-		\includegraphics[width=1\textwidth]{Images/Cap 3/Secuencia.png}
-	}
-    \captionof{figure}[Diagrama de secuencia del sistema]{Diagrama de secuencia del sistema, elaboración propia.}
+	\includegraphics[width=0.4\textwidth]{Images/Cap 3/secuencia_vf.png}
+	\captionof{figure}[Diagrama de secuencia]{Diagrama de secuencia, elaboración propia. 
+		Véase la versión SVG para mayor detalle en \href{https://tinyurl.com/bde4v2ak}{\textbf{\underline{este enlace}}}.}  % Pie de foto manual
 \end{center}
+
 
 \subsubsection{Casos de uso}
 \subsubsection{Caso de uso 01: Traducir texto}
@@ -639,75 +672,75 @@ El usuario ingresa texto en la aplicación, que luego es procesado y traducido a
 \subsubsection{Descripción}
 
 \begin{table}[H]
-    \centering
-    \renewcommand{\arraystretch}{1.6}
-    \setlength{\tabcolsep}{5pt}
-    \begin{adjustbox}{max width=\linewidth}
-        \normalsize
-        \begin{tabular}{|c|p{12cm}|}
-            \hline
-            \textbf{Elemento} & \textbf{Descripción} \\ \hline
-
-            \textbf{Caso de uso} & Traducir texto. \\ \hline
-
-            \textbf{Actor principal} & Usuario (persona que ingresa el texto a traducir). \\ \hline
-
-            \textbf{Descripción} & 
-            El usuario ingresa texto en el campo indicado de la aplicación. El sistema procesa la frase y determina si existe una traducción directa en LSM. Si la hay, se reproduce la animación correspondiente con un avatar 3D. En caso contrario, el sistema recurre al deletreo dactilológico. \\ \hline
-
-            \textbf{Atributos del texto} & 
-            Máximo 50 caracteres. Validación para evitar caracteres especiales o símbolos no admitidos. \\ \hline
-
-            \textbf{Entrada} & 
-            Texto proporcionado por el usuario. \\ \hline
-
-            \textbf{Procesamiento} & 
-            El módulo de procesamiento de lenguaje natural (PLN) analiza el texto y busca coincidencias en el conjunto de datos. Si no hay coincidencia, se segmenta y transforma en deletreo letra por letra. \\ \hline
-
-            \textbf{Salida} & 
-            Se muestra la animación en 3D de la traducción en LSM o, en su defecto, del deletreo dactilológico correspondiente. Incluye un mensaje visual de inicio: “Vamos”. \\ \hline
-
-            \textbf{Precondiciones} & 
-            El sistema debe estar encendido, funcional y el usuario debe encontrarse en la pantalla principal con acceso al campo de texto. \\ \hline
-
-            \textbf{Postcondiciones} & 
-            El usuario visualiza la animación correspondiente y puede ingresar una nueva frase para traducir. \\ \hline
-
-            \textbf{Excepciones} & 
-            Si el texto excede el límite o contiene caracteres no válidos, el sistema mostrará un mensaje de error basado en RN05 e invitará a corregir la entrada. \\ \hline
-        \end{tabular}
-    \end{adjustbox}
-    \caption[Caso de uso 1]{Caso de uso 1, elaboración propia.}
-    \label{tab:caso_uso_1}
+	\centering
+	\renewcommand{\arraystretch}{1.6}
+	\setlength{\tabcolsep}{5pt}
+	\begin{adjustbox}{max width=\linewidth}
+		\normalsize
+		\begin{tabular}{|c|p{12cm}|}
+			\hline
+			\textbf{Elemento} & \textbf{Descripción} \\ \hline
+			
+			\textbf{Caso de uso} & Traducir texto. \\ \hline
+			
+			\textbf{Actor principal} & Usuario (persona que ingresa el texto a traducir). \\ \hline
+			
+			\textbf{Descripción} & 
+			El usuario ingresa texto en el campo indicado de la aplicación. El sistema procesa la frase y determina si existe una traducción directa en LSM. Si la hay, se reproduce la animación correspondiente con un avatar 3D. En caso contrario, el sistema recurre al deletreo dactilológico. \\ \hline
+			
+			\textbf{Atributos del texto} & 
+			Máximo 50 caracteres. Validación para evitar caracteres especiales o símbolos no admitidos. \\ \hline
+			
+			\textbf{Entrada} & 
+			Texto proporcionado por el usuario. \\ \hline
+			
+			\textbf{Procesamiento} & 
+			El módulo de procesamiento de lenguaje natural (PLN) analiza el texto y busca coincidencias en el conjunto de datos. Si no hay coincidencia, se segmenta y transforma en deletreo letra por letra. \\ \hline
+			
+			\textbf{Salida} & 
+			Se muestra la animación en 3D de la traducción en LSM o, en su defecto, del deletreo dactilológico correspondiente. Incluye un mensaje visual de inicio: “Vamos”. \\ \hline
+			
+			\textbf{Precondiciones} & 
+			El sistema debe estar encendido, funcional y el usuario debe encontrarse en la pantalla principal con acceso al campo de texto. \\ \hline
+			
+			\textbf{Postcondiciones} & 
+			El usuario visualiza la animación correspondiente y puede ingresar una nueva frase para traducir. \\ \hline
+			
+			\textbf{Excepciones} & 
+			Si el texto excede el límite o contiene caracteres no válidos, el sistema mostrará un mensaje de error basado en RN05 e invitará a corregir la entrada. \\ \hline
+		\end{tabular}
+	\end{adjustbox}
+	\caption[Caso de uso 1]{Caso de uso 1, elaboración propia.}
+	\label{tab:caso_uso_1}
 \end{table}
-   
+
 
 \subsubsection{Trayectoria principal}
 \begin{enumerate}[label=\textbf{\arabic*}, leftmargin=1.5cm]
-    \item \UCsystem \ El sistema muestra un campo de entrada de texto en la pantalla principal de la aplicación, permitiendo al usuario ingresar texto.  
-    Además, la interfaz incluye:  
-    \begin{itemize}
-        \item Botón para iniciar la traducción.
-    \end{itemize}
-
-    \item \UCactor \ Ingresa el texto en el campo de entrada.  
-   
-    \item \UCsystem \ El sistema procesa el texto ingresado y le asigna una traducción a LSM, mostrandole la animación asignada si la hubo o el deletreo dactilológico si no se le pudo asignar una.
-
-    \item \UCactor \ Puede ingresar texto nuevo y volver a interar la traducción.
-
+	\item \UCsystem \ El sistema muestra un campo de entrada de texto en la pantalla principal de la aplicación, permitiendo al usuario ingresar texto.  
+	Además, la interfaz incluye:  
+	\begin{itemize}
+		\item Botón para iniciar la traducción.
+	\end{itemize}
+	
+	\item \UCactor \ Ingresa el texto en el campo de entrada.  
+	
+	\item \UCsystem \ El sistema procesa el texto ingresado y le asigna una traducción a LSM, mostrandole la animación asignada si la hubo o el deletreo dactilológico si no se le pudo asignar una.
+	
+	\item \UCactor \ Puede ingresar texto nuevo y volver a interar la traducción.
+	
 \end{enumerate}
 
 \subsubsection{Trayectoria alternativa A}
 \begin{enumerate}[label=\textbf{\arabic*}, leftmargin=1.5cm]
-    \item \UCactor \ Ingresa el texto con caracteres no permitidos o excede el límite de caracteres.
+	\item \UCactor \ Ingresa el texto con caracteres no permitidos o excede el límite de caracteres.
 	\item \UCsystem \ El sistema muestra un mensaje de error indicando que el texto no es válido con base en la RN05.  
 	\item \UCactor \ El usuario corrige el texto y vuelve a intentar la traducción.
 \end{enumerate}
 
 \subsubsection{Trayectoria alternativa B}
 \begin{enumerate}[label=\textbf{\arabic*}, leftmargin=1.5cm]
-    \item \UCactor \ Intenta traducir el texto sin haberlo ingresado.
+	\item \UCactor \ Intenta traducir el texto sin haberlo ingresado.
 	\item \UCsystem \ El sistema muestra un mensaje de error indicando que el campo de texto está vacío con base en la RN04.
 	\item \UCactor \ El usuario ingresa el texto y vuelve a intentar la traducción.
 \end{enumerate}
@@ -717,30 +750,30 @@ El usuario ingresa texto en la aplicación, que luego es procesado y traducido a
 
 \subsubsection{Diagrama de casos de uso}
 \begin{center}
-    \includegraphics[width=0.6\textwidth]{Images/Cap 3/casodeuso.png}
-    \captionof{figure}[Diagrama de caso de uso 1]{Diagrama de caso de uso 1, elaboración propia.}
+	\includegraphics[width=0.6\textwidth]{Images/Cap 3/casodeuso.png}
+	\captionof{figure}[Diagrama de caso de uso 1]{Diagrama de caso de uso 1, elaboración propia.}
 \end{center}
 
 \subsubsection{Identificación de frases}
 
 \begin{table}[H]
-\centering
-\begin{tabularx}{\textwidth}{|X|X|X|}
-\hline
-\textbf{Emergencia (3 a 4 palabras)} & \textbf{Saludo (1 a 3 palabras)} & \textbf{Expresiones de Mínima Comunicación (2 a 4 palabras)} \\ \hline
-Ayuda, por favor. & Hola. & Gracias. \\ \hline
-Llama a la policía. & Buenos días. & Soy Sordo. \\ \hline
-Necesito un médico. & Buenas tardes. & Sí. \\ \hline
-Estoy herido. & Buenas noches. & No. \\ \hline
-¿Dónde está el hospital? & ¿Cómo estás? & Bien. \\ \hline
-Es una emergencia. & Bienvenido. & Mal. \\ \hline
-¿Necesitas ayuda? & Encantado de conocerte. & Perdón. \\ \hline
-¿Dónde está la salida? & ¿Cómo te llamas? & Entiendo. \\ \hline
-¡Fuego! ¡Fuego! & Me llamo [nombre]. & No Entiendo. \\ \hline
-Estoy sangrando. & Nos vemos. & No lo sé. \\ \hline
-Alto. & Me voy. & Espera \\ \hline
-\end{tabularx}
-\caption[Identificación de frases]{Identificación de frases, elaboración propia.}
+	\centering
+	\begin{tabularx}{\textwidth}{|X|X|X|}
+		\hline
+		\textbf{Emergencia (3 a 4 palabras)} & \textbf{Saludo (1 a 3 palabras)} & \textbf{Expresiones de Mínima Comunicación (2 a 4 palabras)} \\ \hline
+		Ayuda, por favor. & Hola. & Gracias. \\ \hline
+		Llama a la policía. & Buenos días. & Soy Sordo. \\ \hline
+		Necesito un médico. & Buenas tardes. & Sí. \\ \hline
+		Estoy herido. & Buenas noches. & No. \\ \hline
+		¿Dónde está el hospital? & ¿Cómo estás? & Bien. \\ \hline
+		Es una emergencia. & Bienvenido. & Mal. \\ \hline
+		¿Necesitas ayuda? & Encantado de conocerte. & Perdón. \\ \hline
+		¿Dónde está la salida? & ¿Cómo te llamas? & Entiendo. \\ \hline
+		¡Fuego! ¡Fuego! & Me llamo [nombre]. & No Entiendo. \\ \hline
+		Estoy sangrando. & Nos vemos. & No lo sé. \\ \hline
+		Alto. & Me voy. & Espera \\ \hline
+	\end{tabularx}
+	\caption[Identificación de frases]{Identificación de frases, elaboración propia.}
 \end{table}
 
 Las frases seleccionadas son ejemplos representativos de situaciones cotidianas y de emergencia. Se busca que el usuario pueda comunicarse de manera efectiva en contextos importantes, facilitando la comprensión y la interacción con personas que utilizan la Lengua de Señas Mexicana (LSM).
