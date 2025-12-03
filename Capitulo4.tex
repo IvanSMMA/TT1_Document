@@ -82,12 +82,13 @@ Entorno de desarrollo principal. \\ \hline
 \section{Lógica del Flujo y Validación}
 
 \subsection{Validación de Caracteres y campo vacío}
-La aplicación impone una \textbf{validación estricta} en la entrada de texto para asegurar que solo se procese contenido traducible a LSM, esto con base en la regla de negocio RN03 (ver \textbf{\autoref{tab:reglas_negocio}}).
+La aplicación impone una \textbf{validación estricta} en la entrada de texto para asegurar que solo se procese contenido traducible a LSM, esto con base en la regla de negocio RN02 (un máximo de 50 caracteres permitido por entrada) y RN03(ver \textbf{\autoref{tab:reglas_negocio}}).
 
 \begin{itemize}
     \item Los caracteres no permitidos se definen en la constante \texttt{CARACTERES\_NO\_PERMITIDOS}, incluyendo números y la mayoría de los símbolos de puntuación exceptuando los signos de interrogación ya que dentro del listado de frases hay preguntas.
     \item La función \texttt{validarTexto} verifica la entrada. El único símbolo permitido fuera de las letras y espacios es el \textbf{símbolo de concatenación "\texttt{+}"}.
     \item Si se detecta un carácter inválido, se interrumpe la ejecución de \texttt{traducir} y se activa el componente \texttt{errorValidationContainer} para informar al usuario el carácter específico y su nombre, pidiendole que ingrese en una nueva entrada cumpliendo con la regla de negocio RN05 Y RN06 (ver \textbf{\autoref{tab:reglas_negocio}}).
+    \item El número máximo de caracteres soportado por entrada de usuario es de 50, cumpliendo con la regla de negocio RN02 (ver \textbf{\autoref{tab:reglas_negocio}}).
 \end{itemize}
 
 \subsection{Mecanismo de Procesamiento de la API y Deletreo}
@@ -360,7 +361,7 @@ El flujo de datos del sistema sigue una secuencia bien definida que abarca valid
     \item \textbf{Validación (API Layer)} \\
     $\downarrow$
     \begin{itemize}
-        \item Validación de request mediante Pydantic.
+        \item Validación de request mediante Pydantic, también se considera la validación del número máximo de caracteres por entrada de usuario que es de 50 esto con cumplimiento de la regla de negocio RN02 (ver \textbf{\autoref{tab:reglas_negocio}}).
         \item Verificación de texto no vacío.
         \item Registro en \textit{logs} del request recibido.
     \end{itemize}
