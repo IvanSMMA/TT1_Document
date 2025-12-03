@@ -3,17 +3,18 @@
 
 \vspace{1em}
 
-\subsection{Metodología de testing}
+\subsection{Metodología de \textit{testing}}
 
-{\large \noindent \textbf{Piramide de Testing}}
+{\large \noindent \textbf{Piramide de \textit{Testing}}}
 
-La estrategia de testing del proyecto sigue el modelo de la Pirámide de testing propuesta por Mike Cohn, que establece una distribución óptima de los diferentes tipos de pruebas.\\
+La estrategia de \textit{testing} del proyecto sigue el modelo de la Pirámide de \textit{testing} propuesta por Mike Cohn \cite{refpirtes}, que establece una distribución óptima de los diferentes tipos de pruebas.\\
 
 \begin{center}
     \includegraphics[width=0.45\textwidth]{Images/Cap5/1_PiramideTesting.png}
-    \captionof{figure}[Piramide de Testing]{Piramide de Testing, elaboración propia.} 
+    \captionof{figure}[Piramide de Testing]{Piramide de \textit{Testing}, obtenido de \cite{refpirtes}.} 
 \end{center}
 
+\newpage
 \noindent \textbf{Distribución implementada}
 
 \begin{table}[H]
@@ -21,7 +22,7 @@ La estrategia de testing del proyecto sigue el modelo de la Pirámide de testing
 \renewcommand{\arraystretch}{1.6}
 \begin{tabular}{|p{4cm}|p{2.5cm}|p{2.5cm}|p{4cm}|}
 \hline
-\textbf{Tipo de test} & \textbf{Cantidad} & \textbf{\% Total} & \textbf{Tiempo de ejecución} \\ \hline
+\textbf{Tipo de \textit{test}} & \textbf{Cantidad} & \textbf{\% Total} & \textbf{Tiempo de ejecución} \\ \hline
 \textit{Tests} unitarios & 37 & 51\% & $<$5 segundos \\ \hline
 \textit{Tests} integración & 10 & 14\% & $\sim$8 segundos \\ \hline
 \textit{Tests} E2E & 26 & 35\% & $\sim$15 segundos \\ \hline
@@ -29,10 +30,10 @@ Total (núcleo) & 73 & 100\% & $\sim$28 segundos \\ \hline
 \textit{Test} adicionales & 95 & - & Variable \\ \hline
 Total general & 168 & - & - \\ \hline
 \end{tabular}
-\caption[Resumen de tests]{Resumen de tests, elaboración propia.}
+\caption[Resumen de tests]{Resumen de \textit{tests}, elaboración propia.}
 \end{table}
 
-\textbf{Nota:} Los tests de performance, quality y stress \textbf{NO} se incluyen en la distribución de la pirámide ya que son tests especializados que se ejecutan de forma independiente.\\
+\textbf{Nota:} Los \textit{tests} de \textit{performance}, \textit{quality} y \textit{stress} \textbf{NO} se incluyen en la distribución de la pirámide ya que son \textit{tests} especializados que se ejecutan de forma independiente.\\
 
 \noindent \textbf{Justificación del 35\% de tests E2E}
 
@@ -40,11 +41,12 @@ El porcentaje elevado de tests E2E (superior al estándar industrial de 10--15\%
 
 \begin{enumerate}
     \item Validación exhaustiva de robustez lingüística.
-    \item Tests de tolerancia a errores ortográficos y variaciones naturales.
-    \item Validación de casos edge específicos (nombres propios, leet speak).
-    \item Degradación gradual ante inputs de baja calidad.
+    \item \textit{Tests} de tolerancia a errores ortográficos y variaciones naturales.
+    \item Validación de casos \textit{edge} específicos (nombres propios, \textit{leet speak}).
+    \item Degradación gradual ante \textit{inputs} de baja calidad.
 \end{enumerate}
 
+\newpage
 {\large \noindent \textbf{Stack tecnológico}}
 
 \begin{table}[H]
@@ -53,19 +55,19 @@ El porcentaje elevado de tests E2E (superior al estándar industrial de 10--15\%
 \begin{tabular}{|p{4cm}|p{4cm}|p{3cm}|}
 \hline
 \textbf{Componente} & \textbf{Tecnología} & \textbf{Versión} \\ \hline
-\textit{Framework de testing} & \textit{pytest} & 7.4+ \\ \hline
+\textit{Framework} de \textit{testing} & \textit{pytest} & 7.4+ \\ \hline
 \textit{API testing} & FastAPI TestClient & 0.104+ \\ \hline
-\textit{Cobertura de código} & pytest-cov & 4.1+ \\ \hline
+Cobertura de código & pytest-cov & 4.1+ \\ \hline
 \textit{Load testing} & Locust & 2.15+ \\ \hline
 \textit{Performance benchmarks} & pytest-benchmark & 4.0+ \\ \hline
 \textit{Resource monitoring} & psutil & 5.9+ \\ \hline
 \end{tabular}
-\caption[Tecnologías de testing]{Tecnologías usadas para testing, elaboración propia.}
+\caption[Tecnologías de testing]{Tecnologías usadas para \textit{testing}, elaboración propia.}
 \end{table}
 
-{\large \noindent \textbf{Estructura del testing}}
+{\large \noindent \textbf{Estructura del \textit{testing}}}
 
-El sistema de testing está organizado en directorios especializados:
+El sistema de \textit{testing} está organizado en directorios especializados:
 
 \begin{verbatim}
 tests/
@@ -91,25 +93,26 @@ tests/
     `-- locustfile.py
 \end{verbatim}
 
+\newpage
 {\noindent \textbf{Estadísticas generales}}
 
 \begin{itemize}
-    \item Líneas de código de testing: 2{,}749.
-    \item Funciones de test: 168.
+    \item Líneas de código de \textit{testing}: 2{,}749.
+    \item Funciones de \textit{test}: 168.
     \item Cobertura de código: 90.8\%.
-    \item Tiempo de ejecución: \textasciitilde 28 segundos.
+    \item Tiempo de ejecución: $\sim$ 28 segundos.
 \end{itemize}
 
-{\large \noindent \textbf{Tests unitarios (37 tests, 89\% cobertura)}}
+{\large \noindent \textbf{\textit{Tests} unitarios (37 \textit{tests}, 89\% cobertura)}}
 
-Los tests unitarios validan componentes individuales de forma aislada, constituyendo la base de la pirámide de testing.\\
+Los \textit{tests} unitarios validan componentes individuales de forma aislada, constituyendo la base de la pirámide de \textit{testing}.\\
 
-\textbf{Tests del Matcher Semántico (25 tests)}
+\textbf{\textit{Tests} del \textit{Matcher} Semántico (25 tests)}
 
 Componente central responsable de:
 
 \begin{itemize}
-    \item Generación de embeddings con modelos transformer.
+    \item Generación de \textit{embeddings} con modelos \textit{transformer}.
     \item Cálculo de similitud coseno.
     \item Clasificación en grupos semánticos (A, B, C).
     \item Activación de modo deletreo.
@@ -119,7 +122,7 @@ Componente central responsable de:
 
 {\large \noindent \textbf{Casos críticos validados}}
 
-\textbf{1. Normalización de similitud al rango [0.0, 1.0] (4 tests)}\\
+\textbf{1. Normalización de similitud al rango [0.0, 1.0] (4 \textit{tests})}\\
 
 Problema resuelto: El sistema original retornaba valores > 1.0 debido a errores de precisión flotante.\\
 
@@ -135,17 +138,18 @@ def clip_similarity(similarity: float) -> float:
     return similarity
 \end{lstlisting}
 
-Resultado: 100\% de tests garantizan similitud matemáticamente correcta.\\
+Resultado: 100\% de \textit{tests} garantizan similitud matemáticamente correcta.\\
 
-\textbf{2. Validación de rango en todas las queries (6 tests)}\\
+\newpage
+\textbf{2. Validación de rango en todas las \textit{queries} (6 \textit{tests})}\\
 
-Test parametrizado con 10 queries diversas validando:
+\textit{Test} parametrizado con 10 \textit{queries} diversas validando:
 
 \begin{verbatim}
 assert 0.0 <= result["similitud"] <= 1.0
 \end{verbatim}
 
-\textbf{3. Detección de patrones de nombres (7 tests)}\\
+\textbf{3. Detección de patrones de nombres (7 \textit{tests})}\\
 
 Funcionalidad especial que detecta y procesa:
 
@@ -167,27 +171,28 @@ Output: {
 }
 \end{lstlisting}
 
-\textbf{4. Clasificación en grupos semánticos (3 tests)}\\
+\textbf{4. Clasificación en grupos semánticos (3 \textit{tests})}\\
 
 Grupos del sistema:
 
 \begin{itemize}
     \item Grupo A: Emergencias (ayuda, socorro, urgente).
     \item Grupo B: Saludos (hola, buenos días, adios).
-    \item Grupo C: Expresiones de mínima comunicación (gracias, sí, bien).
+    \item Grupo C: Comunicación (gracias, sí, bien).
 \end{itemize}
 
-{\large \noindent \textbf{Tests de preprocesamiento (12 tests)}}\\
+\newpage
+{\large \noindent \textbf{\textit{Tests} de preprocesamiento (12 \textit{tests})}}\\
 
 Validación de normalización de texto para robustez del sistema PLN:\\
 
-\textbf{1. Normalización de texto (7 tests)}
+\textbf{1. Normalización de texto (7 \textit{tests})}
 
 Transformaciones aplicadas:
 
 \begin{itemize}
     \item Conversión a minúsculas.
-    \item Eliminación de acentos (Unicode normalization).
+    \item Eliminación de acentos (\textit{Unicode normalization}).
     \item Eliminación de caracteres especiales.
     \item Normalización de espacios múltiples.
 \end{itemize}
@@ -206,17 +211,17 @@ Ejemplo:
 \begin{tabular}{|p{4cm}|p{3.5cm}|p{3.5cm}|}
 \hline
 \textbf{Métrica} & \textbf{Valor} & \textbf{Objetivo} \\ \hline
-Total tests & 37 & 30+ \\ \hline
-Tests exitosos & 37 (100\%) & 100\% \\ \hline
+Total \textit{tests} & 37 & 30+ \\ \hline
+\textit{Tests} exitosos & 37 (100\%) & 100\% \\ \hline
 Cobertura de código & 89\% & $>$80\% \\ \hline
 Tiempo de ejecución & $<$5 segundos & $<$10 segundos \\ \hline
 Casos límite cubiertos & 15+ & 10+ \\ \hline
 \end{tabular}
-\caption[Métricas de tests]{Métricas principales de los tests, elaboración propia.}
+\caption[Métricas de tests]{Métricas principales de los \textit{tests}, elaboración propia.}
 \end{table}
 
 
-\textbf{2. Deletreo con caracteres especiales (5 tests)}
+\textbf{2. Deletreo con caracteres especiales (5 \textit{tests})}
 
 Mapeo implementado:
 
@@ -224,18 +229,19 @@ Mapeo implementado:
 @ → "arroba", . → "punto", ! → "exclamación", (espacio) → "espacio"
 \end{verbatim}
 
-{\large \noindent \textbf{Tests de integración (10 tests, 6 endpoints)}}\\
+\newpage
+{\large \noindent \textbf{\textit{Tests} de integración (10 tests, 6 endpoints)}}\\
 
 Validación de la interacción entre componentes y funcionamiento de la API REST.\\
 
-\textbf{Endpoints testeados}
+\textbf{\textit{Endpoints} testeados}
 
 \begin{table}[H]
 \centering
 \renewcommand{\arraystretch}{1.6}
 \begin{tabular}{|p{5cm}|p{2.5cm}|p{3.5cm}|}
 \hline
-\textbf{Endpoint} & \textbf{Tests} & \textbf{Status Codes Validados} \\ \hline
+\textbf{\textit{Endpoint}} & \textbf{\textit{Tests}} & \textbf{\textit{Status Codes} Validados} \\ \hline
 POST /buscar & 8 & 200, 400, 422 \\ \hline
 GET /grupos & 1 & 200 \\ \hline
 GET /grupos/\{grupo\} & 2 & 200, 404 \\ \hline
@@ -243,19 +249,21 @@ POST /deletreo & 3 & 200, 400 \\ \hline
 GET /health & 1 & 200 \\ \hline
 GET / & 1 & 200 \\ \hline
 \end{tabular}
-\caption[Tests por endpoint]{Resumen de tests por endpoint, elaboración propia.}
+\caption[Tests por endpoint]{Resumen de \textit{tests} por endpoint, elaboración propia.}
 \end{table}
 
-\noindent \textbf{Casos críticos del Endpoint principal (POST /buscar)}
+\noindent \textbf{Casos críticos del \textit{Endpoint} principal (POST /buscar)}
 
 \begin{enumerate}
-    \item Query válida retorna resultado correcto.
-    \item Queries inválidas retornan errores apropiados (400, 422).
-    \item Match exacto tiene similitud muy alta (>0.95).
-    \item Queries sin match activan deletreo automático.
+    \item \textit{Query} válida retorna resultado correcto.
+    \item \textit{Queries} inválidas retornan errores apropiados (400, 422).
+    \item \textit{Match} exacto tiene similitud muy alta (>0.95).
+    \item \textit{Queries} sin \textit{match} activan deletreo automático.
     \item Emergencias se clasifican correctamente en Grupo A.
-    \item Caso edge ``Ivan'': detecta baja similitud y activa deletreo.
+    \item Caso \textit{edge} ``Ivan'': detecta baja similitud y activa deletreo.
 \end{enumerate}
+
+\vspace{1em}
 
 \textbf{Problema histórico del caso \texttt{``Ivan''}}:
 
@@ -265,6 +273,7 @@ GET / & 1 & 200 \\ \hline
     \item Resultado: Usuario recibe I-V-A-N.
 \end{itemize}
 
+\newpage
 \textbf{Resultados}
 
 \begin{table}[H]
@@ -273,16 +282,16 @@ GET / & 1 & 200 \\ \hline
 \begin{tabular}{|p{6cm}|p{6cm}|}
 \hline
 \textbf{Métrica} & \textbf{Valor} \\ \hline
-Total tests & 10 \\ \hline
-Tests exitosos & 10 (100\%) \\ \hline
-Endpoints cubiertos & 6 \\ \hline
+Total \textit{tests} & 10 \\ \hline
+\textit{Tests} exitosos & 10 (100\%) \\ \hline
+\textit{Endpoints} cubiertos & 6 \\ \hline
 Tiempo de ejecución & $\sim$8s \\ \hline
 \end{tabular}
 \caption[Métricas adicionales]{Métricas adicionales de pruebas, elaboración propia.}
 \end{table}
 
-{\large \noindent \textbf{Tests End - To - End  y robustez lingüística (26 tests)}}\\
-Los tests E2E validan robustez ante variaciones naturales del lenguaje mediante ``Perturbation Testing'', metodología específica para sistemas PLN.\\
+{\large \noindent \textbf{\textit{Tests End-To-End}  y robustez lingüística (26 \textit{tests})}}\\
+Los \textit{tests} E2E validan robustez ante variaciones naturales del lenguaje mediante ``\textit{Perturbation Testing}'', metodología específica para sistemas PLN \cite{refe2e}.\\
 
 \textbf{Escenarios completos de usuario (8 escenarios)}
 
@@ -291,25 +300,26 @@ Los tests E2E validan robustez ante variaciones naturales del lenguaje mediante 
 \renewcommand{\arraystretch}{1.6}
 \begin{tabular}{|p{5cm}|p{2.5cm}|p{4cm}|}
 \hline
-\textbf{Escenario} & \textbf{Tests} & \textbf{Validación principal} \\ \hline
+\textbf{Escenario} & \textbf{\textit{Tests}} & \textbf{Validación principal} \\ \hline
 Emergencias & 2 & Clasificación Grupo A \\ \hline
 Saludos formales & 3 & Tolerancia a variaciones \\ \hline
-Casos edge & 3 & Manejo robusto (\texttt{"Ivan"}) \\ \hline
+Casos \textit{edge} & 3 & Manejo robusto (\texttt{``Ivan''}) \\ \hline
 Conversación completa & 3 & Consistencia temporal \\ \hline
 Múltiples usuarios & 2 & Estabilidad bajo carga \\ \hline
 Salud del sistema & 2 & \textit{Health checks} \\ \hline
 \end{tabular}
-\caption[Escenarios de prueba]{Escenarios evaluados, cantidad de tests y validación principal, elaboración propia.}
+\caption[Escenarios de prueba]{Escenarios evaluados, cantidad de \textit{tests} y validación principal, elaboración propia.}
 \end{table}
 
-\textbf{Tests de robustez lingüística (14 tests) - crítico PLN}\\
-Metodología de ``Perturbation Testing'' con 4 estrategias
+\newpage
+\textbf{\textit{Tests} de robustez lingüística (14 \textit{tests}) - crítico PLN}\\
+Metodología de ``\textit{Perturbation Testing}'' con 4 estrategias
 
 \begin{enumerate}
-    \item Character-level perturbations (errores de tipeo).
-    \item Input fuzzing (ruido en el input).
-    \item Semantic equivalence testing (sinónimos).
-    \item Load testing (estrés).
+    \item \textit{Character-level perturbations} (errores de tipeo).
+    \item \textit{Input fuzzing} (ruido en el input).
+    \item \textit{Semantic equivalence testing} (sinónimos).
+    \item \textit{Load testing} (estrés).
 \end{enumerate}
 
 \textbf{Tipos de perturbaciones testeadas (50+ casos)}
@@ -335,6 +345,7 @@ Variaciones de acentos & \texttt{``médico''} vs \texttt{``medico''} \\ \hline
 \caption[Tipos de perturbación]{Tipos de perturbaciones lingüísticas y ejemplos representativos, elaboración propia.}
 \end{table}
 
+\newpage
 \textbf{Degradación gradual por severidad}
 
 \begin{table}[H]
@@ -350,7 +361,7 @@ Grave & \texttt{``hkka''} & Activa deletreo \\ \hline
 \caption[Niveles de error]{Clasificación de severidad de errores y el comportamiento esperado, elaboración propia.}
 \end{table}
 
-\textbf{Casos realistas con Leet Speak (4+ tests)}
+\textbf{Casos realistas con \textit{Leet Speak} (4+ \textit{tests})}
 Normalización de \textit{Leet Speak} en deletreo
 
 \begin{table}[H]
@@ -369,6 +380,7 @@ Normalización de \textit{Leet Speak} en deletreo
 \caption[Normalización de Leet Speak]{Equivalencias para normalización de texto en Leet Speak, elaboración propia.}
 \end{table}
 
+\newpage
 \textbf{Resultados}
 
 \begin{table}[H]
