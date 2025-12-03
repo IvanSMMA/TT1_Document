@@ -1,0 +1,1313 @@
+\chapter{Implementación de la Aplicación}
+\section{Justificación de los cambios}
+\label{implementación:justificación_cambios}
+
+Durante la fase de planeación se estableció un conjunto de 43 frases, distribuidas en tres categorías principales: saludos, expresiones de emergencia y agradecimientos, con el propósito de representar situaciones comunes de comunicación básica. Sin embargo, se identificó que las frases correspondientes a la categoría de agradecimientos como “gracias”, “muchas gracias” o “te lo agradezco” compartían un mismo gesto en LSM. Esto generaba redundancia semántica y gestual, ya que diferentes frases se traducían a una única seña, sin aportar valor adicional al conjunto de datos ni al propósito comunicativo del prototipo.\\
+
+Se optó por sustituir la categoría de agradecimientos por una nueva categoría denominada expresiones de mínima comunicación, la cual incluye frases breves y funcionales utilizadas en interacciones cotidianas. Esta modificación permitió ampliar la cobertura comunicativa del prototipo, garantizando una mayor variedad de gestos en escenarios reales de comunicación entre personas oyentes y personas con discapacidad auditiva.\\
+
+Por otro lado, en el capítulo 1 y 2 se indicó que el desarrollo del prototipo incluiría el modelado 3D de avatares mediante MediaPipe, con procesamiento en Blender o Unity. Sin embargo, durante el desarrollo del Trabajo Terminal se identificaron diversas limitaciones técnicas y operativas que impidieron la implementación de esta fase.\\
+
+MediaPipe permite capturar un esqueleto en forma de nube de puntos a partir de un video, generando un archivo JSON con las coordenadas de las articulaciones. Este archivo puede convertirse a formato BVH para su uso en \textit{software} de animación como Blender. No obstante, se observó que MediaPipe no logra capturar la totalidad de las articulaciones del cuerpo humano, lo que ocasiona que el archivo BVH resultante esté incompleto al momento de su importación en Blender.\\
+
+Esta situación requería realizar un procesamiento manual de cada animación, lo que representaba una curva de aprendizaje considerable, dado que Blender es una herramienta compleja que demanda tiempo y experiencia para crear animaciones detalladas, especialmente aquellas que involucran movimientos de los dedos. Dado que el proyecto contemplaba 70 animaciones distintas, el tiempo y los recursos necesarios para completarlas excedían los límites establecidos para este Trabajo Terminal.\\
+
+También se consideró la posibilidad de utilizar captura de movimiento (\textit{motion capture}) mediante un traje de captura de movimiento, con el fin de mejorar la detección de dedos y gestos faciales. Sin embargo, esta alternativa implicaba una inversión económica elevada y la colaboración de expertos en animación, lo cual resultaba inviable dentro del alcance y recursos disponibles del proyecto.\\
+
+Asimismo, se evaluaron plataformas en línea capaces de realizar captura de movimiento a partir de videos en formato MP4, empleando técnicas de visión artificial y redes neuronales profundas para generar modelos 3D exportables a Unity o Blender. Si bien estas herramientas ofrecían resultados aceptables con gestos simples, presentaban deficiencias significativas en la detección de movimientos complejos de los dedos o expresiones faciales elaboradas, lo que requería un proceso manual de corrección que habría incrementado sustancialmente el tiempo de desarrollo.\\
+
+Por estas razones, se decidió prescindir del modelado 3D en esta etapa del proyecto y concentrar los esfuerzos en el desarrollo del prototipo funcional centrado en el procesamiento del lenguaje natural y la traducción textual a representaciones visuales más simples. No obstante, se mantiene la documentación relativa al modelado 3D y MediaPipe, ya que constituye una base conceptual y técnica valiosa para trabajos futuros que busquen ampliar el presente desarrollo.\\
+
+\section{Introducción y Herramientas Tecnológicas}
+
+\subsection{Resumen del Proyecto}
+La interfaz de SignAI se desarrolla en React Native y Expo para la traducción de texto a \textbf{Lengua de Señas Mexicana (LSM)}. La aplicación gestiona una secuencia compleja de reproducción que combina videos alojados en \textbf{AWS S3} \cite{refaws1} con señales de control internas para demarcar el flujo (Inicio, Fin, Espacio).
+
+\subsection{Herramientas Utilizadas y Entorno de Desarrollo}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{3.5cm}|p{5.5cm}|p{4.5cm}|}
+\hline
+\textbf{Componente} & \textbf{Tecnología/Herramienta} & \textbf{Uso Clave en el Proyecto} \\ \hline
+
+\textbf{Frontend Core} &
+React Native, Expo &
+Entorno de desarrollo, CLI y construcción de la app. \\ \hline
+
+\textbf{Lenguaje} &
+TypeScript &
+Tipado estático para robustez en la manipulación de estados y API. \\ \hline
+
+\textbf{Reproducción} &
+\texttt{expo-video} &
+Control de reproducción de video \\ \hline
+
+\textbf{Iconografía} &
+\texttt{MaterialIcons} &
+Iconos para controles y utilidades (Pausa, Reinicio, Limpiar campo, Pista). \\ \hline
+
+\textbf{Almacenamiento} &
+\textbf{Amazon S3} &
+\textit{Plataforma de Hosting} distribuido para el contenido de video de LSM, garantizando escalabilidad. \\ \hline
+
+\textbf{IDE} &
+Visual Studio Code (VS Code) &
+Entorno de desarrollo principal. \\ \hline
+
+\end{tabular}
+\caption{\textit{Stack} Tecnológico y Herramientas de Desarrollo, elaboración propia}
+\label{tab:herramientas}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[t]{0.45\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/Cap4/images/vscode.png}
+        \caption{Entorno de Desarrollo (VS Code), obtenido de \cite{refapp1}.}
+        \label{fig:vs_code}
+    \end{minipage}%
+    \hfill
+    \begin{minipage}[t]{0.45\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{Images/Cap4/images/expogo.png}
+        \caption{Herramienta de \textit{Testing} (Expo Go), obtenido de \cite{refexpo1}.}
+        \label{fig:expo_go}
+    \end{minipage}
+\end{figure}
+
+\section{Lógica del Flujo y Validación}
+
+\subsection{Validación de Caracteres y campo vacío}
+La aplicación impone una \textbf{validación estricta} en la entrada de texto para asegurar que solo se procese contenido traducible a LSM, esto con base en la regla de negocio RN02 (un máximo de 50 caracteres permitido por entrada) y RN03(ver \textbf{\autoref{tab:reglas_negocio}}).
+
+\begin{itemize}
+    \item Los caracteres no permitidos se definen en la constante \texttt{CARACTERES\_NO\_PERMITIDOS}, incluyendo números y la mayoría de los símbolos de puntuación exceptuando los signos de interrogación ya que dentro del listado de frases hay preguntas.
+    \item La función \texttt{validarTexto} verifica la entrada. El único símbolo permitido fuera de las letras y espacios es el \textbf{símbolo de concatenación "\texttt{+}"}.
+    \item Si se detecta un carácter inválido, se interrumpe la ejecución de \texttt{traducir} y se activa el componente \texttt{errorValidationContainer} para informar al usuario el carácter específico y su nombre, pidiendole que ingrese en una nueva entrada cumpliendo con la regla de negocio RN05 Y RN06 (ver \textbf{\autoref{tab:reglas_negocio}}).
+    \item El número máximo de caracteres soportado por entrada de usuario es de 50, cumpliendo con la regla de negocio RN02 (ver \textbf{\autoref{tab:reglas_negocio}}).
+\end{itemize}
+
+\newpage
+
+\subsection{Mecanismo de Procesamiento de la API y Deletreo}
+
+La traducción se basa en la comunicación con un módulo de Procesamiento de Lenguaje Natural (PLN) externo.
+
+\begin{enumerate}
+    \item \textbf{Entrada y Asignación de Frase:} La entrada de texto del usuario es enviada a la API. El módulo de PLN compara la entrada con una base de datos de frases conocidas.
+    \item \textbf{Videos en AWS S3:} Si el módulo PLN encuentra una coincidencia, devuelve directamente el \texttt{url\_video} de la frase completa, el cual está alojado en \textbf{Amazon S3} \cite{refaws1}.
+    \item \textbf{Modo Deletreo:}
+    \begin{itemize}
+        \item Si no se detecta una similitud suficiente (o si la lógica de PLN lo determina), el modo deletreo se activa (\texttt{deletreo\_activado: true}).
+        \item La API devuelve una secuencia de URLs para cada carácter de la frase, incluyendo un \textit{string} vacío (\texttt{“”}) para representar los espacios.
+        \item La función \texttt{procesarMultiplesFrases} transforma estos \textit{strings} vacíos en la señal interna \textbf{\texttt{SIGNAL\_MARKERS.espacio}} para que el frontend pueda gestionarla como una pausa visual.
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Mecanismo de Concatenación y \texttt{SIGNAL\_ESPACIO}}
+La función \texttt{procesarMultiplesFrases} implementa la lógica de concatenación a través del símbolo \texttt{+}.
+
+\begin{enumerate}[label={}]
+    \item \textbf{Paso 1-División:} El texto completo del usuario se divide usando \texttt{+} para obtener un array de frases individuales.
+    \item \textbf{Paso 2-Llamadas Secuenciales:} Se realiza una llamada \texttt{fetch} a la API por cada frase, acumulando los URLs de video en \texttt{secuenciaFinal}.
+    \item \textbf{Paso 3-Separador de Frases:} Después de cada frase procesada (excepto la última), se inserta \textbf{\texttt{SIGNAL\_MARKERS.espacio}}. Esta señal garantiza una pausa de $600 \text{ ms}$ (Tabla \ref{tabla:logica_avance_secuencia}) entre la traducción de la primera frase y la siguiente, mejorando la legibilidad visual de la secuencia.
+\end{enumerate}
+
+\section{Control de Reproducción y Estabilidad}
+
+\subsection{Decisiones de Librería y Estabilidad}
+
+\begin{enumerate}
+    \item \textbf{Uso de \texttt{expo-video} vs. \texttt{expo-av}:} Se eligió \texttt{expo-video} por su API moderna y el uso del \texttt{useVideoPlayer} hook, que proporciona un objeto \texttt{player} con métodos de control explícito (\texttt{player.replace}, \texttt{player.playing}) ideal para la lógica de secuencias.
+    \item \textbf{Eliminación de \texttt{react-native-reanimated}:} La librería fue deshabilitada del proyecto al causar el error crítico \texttt{Worklets Mismatch} en Android (0.6.1 vs 0.5.1). Este error indica una incompatibilidad de versiones binarias en el cliente \texttt{Expo Go} la cual fue la herramienta utilizada para el testing de la aplicación. Para estabilizar la aplicación, se neutralizó el código problemático (\texttt{explore.tsx}) que lo importaba, este archivo se generó al levantar el proyecto con mpm, permitiendo la funcionalidad principal de traducción.
+\end{enumerate}
+
+\subsection{Lógica de Reproducción Secuencial (Basada en Duración)}
+
+Para el manejo de la secuencia de videos en lugar de usar un sistema inestable basado en eventos se optó por un sistema basado en \textbf{temporizadores y duración del video}.
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{4cm}|p{5.5cm}|p{4.5cm}|}
+\hline
+\textbf{Tipo de Elemento} & \textbf{Mecanismo de Avance} & \textbf{Duración} \\ \hline
+
+\texttt{SIGNAL\_INICIO}, \texttt{SIGNAL\_FIN} & \texttt{setTimeout} (fijo) & $100 \text{ ms}$ \\ \hline
+
+\texttt{SIGNAL\_ESPACIO} & \texttt{setTimeout} (fijo) & $800 \text{ ms}$ \\ \hline
+
+Videos de LSM (URL) & \texttt{setTimeout} basado en \texttt{player.duration} & $D_{\text{video}} + 200 \text{ ms}$ \\ \hline
+
+\end{tabular}
+\caption[Lógica de Avance de Secuencia]{Lógica de Avance de Secuencia, elaboración propia.}
+\label{tabla:logica_avance_secuencia}
+\end{table}
+
+\begin{enumerate}[label=\textbf{L.\arabic*}]
+    \item \textbf{Avance Unificado (\texttt{avanzarIndice}):} La función \texttt{avanzarIndice} contiene la lógica de estado de alto nivel (\texttt{setIndiceLetraActual}, \texttt{setVideoActual}) para pasar al siguiente URL en \texttt{secuenciaCompleta}.
+    \item \textbf{Programación de Videos:} Un \texttt{useEffect} se activa cuando el video comienza a reproducirse (\texttt{if (player.playing)}). Obtiene la \textbf{duración real} del video (\texttt{player.duration}) y programa el salto al siguiente elemento después de ese tiempo más un búfer de $200 \text{ ms}$ para asegurar que el video termine.
+    \item \textbf{Control de Flujo:} La función utiliza \texttt{setEnPausa(true)} antes de cualquier cambio de índice y \texttt{setEnPausa(false)} después, para evitar que los \texttt{useEffect} se activen de forma recursiva o no deseada durante la transición.
+\end{enumerate}
+
+\newpage
+\subsection{Controles de Utilidad (Overlay Buttons)}
+La interfaz incluye botones de utilidad que mejoran la experiencia de usuario:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\linewidth]{Images/Cap4/images/botones.png}
+    \caption{Botones de Pista (Lightbulb) y Reinicio de App (Home), elaboración propia.}
+    \label{fig:utility_buttons}
+\end{figure}
+
+
+\begin{itemize}
+    \item \textbf{Botón de Pista (emoji-objects):} Llama a \texttt{mostrarAyuda}, que despliega un \texttt{Alert} con instrucciones sobre la validación de texto, el uso del símbolo \texttt{+} y la lógica de las señales de flujo.
+    \item \textbf{Botón de para reiniciar App (stop-circle):} Llama a \texttt{reiniciarApp}. Esta función de \texttt{useCallback} restablece \textbf{todos los estados} de la aplicación (texto, respuesta, secuencia, índices), regresando la interfaz a su estado inicial de bienvenida.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\linewidth]{Images/Cap4/images/infodes.jpeg}
+    \caption{Captura del funcionamiento del botón de información sobre la app, elaboración propia.}
+    \label{fig:utility_buttons_2}
+\end{figure}
+
+\subsection{Componente \texttt{VideoControls}}
+Este componente proporciona el control granular de la secuencia de video:
+
+\begin{enumerate}[label=\textbf{C.\arabic*}]
+    \item \textbf{Pausa / Reanudar (Toggle):} El botón alterna el estado \texttt{pausadoPorUsuario}.
+    \begin{itemize}
+        \item Si se presiona, \texttt{pausadoPorUsuario} se vuelve \texttt{true}, forzando al \texttt{player} a detenerse y previniendo que el \texttt{useEffect} avance la secuencia.
+        \item Si se vuelve a presionar, \texttt{pausadoPorUsuario} se vuelve \texttt{false}, permitiendo que el \texttt{useEffect} reanude la reproducción y el avance.
+    \end{itemize}
+    \item \textbf{Reiniciar Secuencia:} Llama a \texttt{reiniciarReproduccion}.
+    \begin{itemize}
+        \item Esta función restablece el estado de reproducción: \texttt{pausadoPorUsuario} a \texttt{false}, \texttt{indiceLetraActual} a 0, y \texttt{videoActual} a \texttt{secuenciaCompleta[0]} (\texttt{SIGNAL\_INICIO}). Esto permite al usuario repetir la secuencia traducida de forma instantánea.
+    \end{itemize}
+\end{enumerate}
+
+\section{Pruebas de Funcionamiento y Casos de Uso de la Aplicación}
+
+\subsection{Estrategia de Pruebas}
+Se debe realizar una prueba funcional de caja negra enfocada en los flujos críticos de la aplicación (validación, concatenación y control de reproducción).
+
+\subsection{Casos de Prueba Críticos}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|p{1.7cm}|p{5cm}|p{5cm}|}
+\hline
+\textbf{ID} & \textbf{Acción del Usuario} & \textbf{Resultado Esperado} \\ \hline
+
+\textbf{CP-1} & Ingresar ``hola'' & Secuencia [INICIO, Vídeo ``hola'', FIN]. \\ \hline
+
+\textbf{CP-2} & Ingresar ``mi nombre es+Ivan'' & Secuencia [INICIO, Video ``me llamo'', ESPACIO, ``I``, ``V``, ``A``, ``N``, FIN]. \\ \hline
+
+\textbf{CP-3} & Ingresar ``test!'' & Muestra mensaje de error. \\ \hline
+
+\textbf{CP-4} & Ingresar ``texto'' y Pausar & El video se detiene y el índice no cambia. \\ \hline
+
+\textbf{CP-5} & Secuencia en curso y Reiniciar & Inicia inmediatamente la reproducción desde \texttt{SIGNAL\_INICIO}. \\ \hline
+
+\textbf{CP-6} & Errores ortográficos & Asignar la frase correcta. \\ \hline
+
+\textbf{CP-7} & Campo vacío & Mensaje de error. \\ \hline
+
+\end{tabular}
+\caption[Casos de Prueba para la Lógica de SingAI]{Casos de Prueba para la Lógica de SingAI, elaboración propia.}
+\end{table}
+
+\newpage
+\textbf{CP-1}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.65\linewidth]{Images/Cap4/images/hola.png}
+    \caption{Captura del funcionamiento para el CP-1 (elaboración propia). Es posible observar que la salida deseada "hola" se cumplió}
+    \label{fig:CP_1}
+\end{figure}
+
+\newpage
+\textbf{CP-2}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.65\linewidth]{Images/Cap4/images/ivan.png}
+    \caption{Captura del funcionamiento para el CP-2 (elaboración propia). En esta prueba se aprecia que se concatenó de forma correcta y se creó el arreglo de los videos.}
+    \label{fig:CP_2}
+\end{figure}
+
+\newpage
+\textbf{CP-3}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.65\linewidth]{Images/Cap4/images/test!.png}
+    \caption{Captura del funcionamiento para el CP-3 (elaboración propia). Se puede observar que se le indico al usuario que está ingresando un caracter no permitido.}
+    \label{fig:CP_3}
+\end{figure}
+
+\newpage
+\textbf{CP-4}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.65\linewidth]{Images/Cap4/images/texto.png}
+    \caption{Captura del funcionamiento para el CP-4 (elaboración propia). Se puede apreciar que se detuvo la secuencia en el índice 3 ya que se refleja en el cambio de icono del botón de pausa.}
+    \label{fig:CP_4}
+\end{figure}
+
+\newpage
+\textbf{CP-5}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.65\linewidth]{Images/Cap4/images/reinicio.png}
+    \caption{Captura del funcionamiento para el CP-5 (elaboración propia). Partiendo de la frase anterior se oprimió el botón de reinicio lo que llevó a reiniciar la secuencia de videos.}
+    \label{fig:CP_5}
+\end{figure}
+
+\newpage
+\textbf{CP-6}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.65\linewidth]{Images/Cap4/images/errores.png}
+    \caption{Captura del funcionamiento para el CP-6 (elaboración propia). En está prueba se puede observar tanto el manejo de los espacios como el módulo de PLN siendo exitoso en ambas consultas con errores ortográficos.}
+    \label{fig:CP_6}
+\end{figure}
+
+\newpage
+\textbf{CP-7}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.65\linewidth]{Images/Cap4/images/vacio.jpeg}
+    \caption{Captura del funcionamiento para el CP-7 (elaboración propia), donde manda mensaje de error si el usuario ingresa un campo vacío.}
+    \label{fig:CP_7}
+\end{figure}
+
+\newpage
+La implementación de la aplicación \textbf{SignAI} ha demostrado ser exitosa, cumpliendo con todos los objetivos y reglas de negocio planteadas. La arquitectura diseñada, basada en la separación de responsabilidades entre el Frontend de \textbf{React Native/Expo}, el Backend de \textbf{FastAPI (PLN)} y el almacenamiento en \textbf{Amazon S3} garantiza un sistema modular, escalable y mantenible.
+
+\subsection{Cumplimiento de los requerimientos funcionales}
+\begin{itemize}
+    \item \textbf{Editar texto}: el usuario en todo momento puede editar el texto ingresado, cumpliendo con el requerimiento funcional RF01.
+    \item \textbf{Traducción Semántica Robusta}: se validó el funcionamiento del módulo de PLN (pruebas \ref{fig:CP_1} y \ref{fig:CP_6}), demostrando la capacidad del sistema para interpretar intenciones, manejar errores ortográficos y asignar la frase de LSM más adecuada, manteniendo la integridad de la traducción, lo que cumple con el requerimiento funcional RF02.
+    \item \textbf{Representaciones visuales de las señas correspondientes}: se muestra que los videos de las señas correspondientes expresan movimientos coorporales y expersiones faciales(pruebas \ref{fig:CP_1}, \ref{fig:CP_2}, \ref{fig:CP_4}, \ref{fig:CP_5}), esto cumple con el requerimiento funcional RF03.
+    \item \textbf{Modo de deletreo}: en las pruebas \ref{fig:CP_2} y \ref{fig:CP_4} podemos observar como se activa y se asigna el modo de deletreo para cada letra del texto ingresada ya que el sistema no encontró una frase con similitud.
+\end{itemize}
+
+
+\subsection{Adherencia a las Reglas de Negocio}
+La aplicación respeta estrictamente las reglas de negocio críticas para la experiencia del usuario y la seguridad del sistema (ver \textbf{\autoref{tab:reglas_negocio}}):
+
+\begin{itemize}
+    \item \textbf{RN01 (Entrada manual)}: la aplicación solo permite al usuario ingresar el texto de forma manual.
+    \item \textbf{RN02 (Límite de caracteres)}: se le asignó un límite de caracteres.
+    \item \textbf{RN03 (Restricción de Entrada)}: la validación de entrada \texttt{validarTexto} asegura que solo caracteres traducibles (letras y espacio) entren al sistema.
+    \item \textbf{RN04 (Activación de botón "traducir")}: si el usuario ingresa un campo vacío la aplicación manda un mensaje
+    \item \textbf{RN05 y RN06 (Manejo de Caracteres Inválidos)}: si se detecta un carácter no permitido, el sistema detiene el proceso de traducción y emite un mensaje de error claro al usuario, indicando el carácter específico que debe ser removido (prueba \ref{fig:CP_3}).
+    \item \textbf{RN07(Siempre mostrar animación)}: el sistema garantiza siempre darle una respuesta al usuario aunque no encuentre similitud de alguna frase.
+\end{itemize}
+
+\textbf{SignAI} es un producto funcional y estable. La documentación técnica y la evidencia de las pruebas demuestran que el sistema está listo para el despliegue final, brindando una solución eficaz y confiable para la traducción de texto a Lengua de Señas Mexicana.
+
+\subsection{Video de funcionamiento}
+\url{https://drive.google.com/file/d/1lu_suRxC8Mf-s6DCtPHaD5JmAzrJgjEW/view?usp=sharing}
+
+\subsection{Código fuente de la app}
+
+\begin{lstlisting}   
+import React, { useState, useCallback, useEffect } from "react";
+import { View, Text, TextInput, Button, StyleSheet, ActivityIndicator, Alert, TouchableOpacity } from "react-native";
+import { VideoView, useVideoPlayer } from "expo-video";
+import { MaterialIcons } from "@expo/vector-icons"; 
+
+interface RespuestaAPI {
+  query: string;
+  grupo: string | null;
+  frase_similar: string;
+  similitud: number;
+  deletreo_activado: boolean;
+  deletreo: string[] | null;
+  total_caracteres: number | null;
+  url_video: string;
+  spell_urls: string[] | null;
+}
+
+const API_URL = "http://192.168.0.159:8000/buscar";
+
+
+const SIGNAL_MARKERS = {
+  inicio: "SIGNAL_INICIO",
+  fin: "SIGNAL_FIN",
+  espacio: "SIGNAL_ESPACIO" 
+};
+
+
+const CARACTERES_NO_PERMITIDOS = [
+  '.', ',', ';', ':', '!', '-', '_', '@', '#', '$', '%', '&', "'", '"',
+  '/', '\\', '(', ')', '[', ']', '{', '}', '=', '*', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
+];
+
+const NOMBRES_CARACTERES: { [key: string]: string } = {
+  '.': 'punto',
+  ',': 'coma',
+  ';': 'punto y coma',
+  ':': 'dos puntos',
+  '!': 'exclamación',
+  '?': 'interrogación',
+  '-': 'guión',
+  '_': 'guión bajo',
+  '@': 'arroba',
+  '#': 'numeral',
+  '$': 'dólar',
+  '%': 'porcentaje',
+  '&': 'ampersand',
+  '/': 'barra',
+  '\\': 'barra invertida',
+  '(': 'paréntesis abierto',
+  ')': 'paréntesis cerrado',
+  '[': 'corchete abierto',
+  ']': 'corchete cerrado',
+  '{': 'llave abierta',
+  '}': 'llave cerrada',
+  '+': 'más',
+  '=': 'igual',
+  '*': 'asterisco',
+  '"': 'comillas',
+  "'": 'comilla simple'
+};
+export default function Index() {
+  const [texto, setTexto] = useState("");
+  const [respuesta, setRespuesta] = useState<RespuestaAPI | null>(null);
+  const [cargando, setCargando] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [errorValidacion, setErrorValidacion] = useState<{ caracter: string, nombre: string } | null>(null);
+  
+  
+  const [indiceLetraActual, setIndiceLetraActual] = useState(0);
+  const [videoActual, setVideoActual] = useState<string | null>(null);
+  const [secuenciaCompleta, setSecuenciaCompleta] = useState<string[]>([]);
+  const [enPausa, setEnPausa] = useState(false);
+  const [pausadoPorUsuario, setPausadoPorUsuario] = useState(false);
+  const [deletreoInfo, setDeletreoInfo] = useState<string[]>([]);
+  
+  
+  const mostrarAyuda = () => {
+  Alert.alert(
+    "¿CÓMO FUNCIONA SignAI?",
+    `
+ESTRUCTURA DE LA TRADUCCIÓN:
+
+1. ENTRADA DE TEXTO:
+   - Solo se permiten LETRAS y ESPACIOS.
+   - Usa el símbolo '+' para CONCATENAR varias frases en una sola secuencia (Ej: mi nombre es+Juan).
+
+2. CARACTERES NO PERMITIDOS:
+   - Los números y la mayoría de los SÍMBOLOS (.,;:-_@#$...) serán RECHAZADOS.
+
+3. FLUJO DE REPRODUCCIÓN SECUENCIAL:
+   - INICIO: La secuencia comienza con la señal AMARILLA (INICIO).
+   - FIN: La secuencia termina con la señal AZUL (FIN).
+   - ESPACIOS: Los espacios se representan con la señal VERDE [ _ ].
+
+4. CONTROLES:
+   - Los botones PAUSA/PLAY y REINICIO aparecen debajo del reproductor para controlar la secuencia.
+    `,
+    [{ text: "ENTENDIDO" }]
+  );
+};
+  
+  
+  const reiniciarApp = useCallback(() => {
+    setTexto("");
+    setRespuesta(null);
+    setCargando(false);
+    setError(null);
+    setErrorValidacion(null);
+    setIndiceLetraActual(0);
+    setVideoActual(null);
+    setSecuenciaCompleta([]);
+    setEnPausa(false);
+    setPausadoPorUsuario(false);
+    setDeletreoInfo([]);
+  }, []);
+
+  
+  const avanzarSecuencia = useCallback(() => {
+    
+    
+    setIndiceLetraActual(prevIndice => {
+        const siguienteIndice = prevIndice + 1;
+        const totalElementos = secuenciaCompleta.length; 
+
+        
+        if (siguienteIndice < totalElementos) {
+            
+            setEnPausa(true);
+            setTimeout(() => {
+                setVideoActual(secuenciaCompleta
+                [siguienteIndice]);
+                setEnPausa(false);
+            }, 1000);
+        } else {
+            
+            setEnPausa(true);
+            setTimeout(() => {
+                setVideoActual(secuenciaCompleta[0]);
+                setIndiceLetraActual(0); 
+                setEnPausa(false);
+            }, 1000); 
+            return 0; 
+        }
+        
+        return siguienteIndice; 
+    });
+  }, [secuenciaCompleta]);
+
+  const reiniciarReproduccion = useCallback(() => {
+    if (secuenciaCompleta.length > 0) {
+      setPausadoPorUsuario(false); 
+      setIndiceLetraActual(0);
+      setVideoActual(secuenciaCompleta[0]);
+      setEnPausa(false);
+      
+    }
+  }, [secuenciaCompleta]);
+
+  
+  const validarTexto = (texto: string): { valido: boolean; caracterInvalido?: string; nombreCaracter?: string } => {
+    
+    const textoSinMas = texto.replace(/\+/g, '');
+    
+    for (const char of textoSinMas) {
+      if (CARACTERES_NO_PERMITIDOS.includes(char)) {
+        return {
+          valido: false,
+          caracterInvalido: char,
+          nombreCaracter: NOMBRES_CARACTERES[char] || 'número'
+        };
+      }
+    }
+    return { valido: true };
+  };
+
+  
+  const procesarMultiplesFrases = async (textoCompleto: string): Promise<{
+    secuencia: string[],
+    deletreoInfo: string[]
+  }> => {
+    const frases = textoCompleto.split('+').map(f => f.trim()).filter(f => f.length > 0);
+    
+    let secuenciaFinal: string[] = [];
+    let deletreoInfoFinal: string[] = [];
+
+    for (const frase of frases) {
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ texto: frase }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`Error HTTP: ${response.status}`);
+        }
+
+        const data: RespuestaAPI = await response.json();
+
+        if (data.deletreo_activado && data.spell_urls && data.spell_urls.length > 0) {
+          
+          const urlsProcesadas = data.spell_urls.map((url, index) => {
+            const deletreado = data.deletreo || [];
+            
+            
+            if (deletreado[index] === "espacio" && url === "") {
+                return SIGNAL_MARKERS.espacio;
+            }
+            
+            return url;
+          });
+          
+          secuenciaFinal.push(...urlsProcesadas);
+          
+          
+          if (data.deletreo) {
+            deletreoInfoFinal.push(...data.deletreo);
+          }
+        } else if (data.url_video) {
+          
+          secuenciaFinal.push(data.url_video);
+          deletreoInfoFinal.push(data.frase_similar);
+        }
+      } catch (err) {
+        console.error(`Error al procesar frase "${frase}":`, err);
+        throw err;
+      }
+      
+      
+      if (secuenciaFinal.length > 0 && frase !== frases[frases.length - 1]) {
+        secuenciaFinal.push(SIGNAL_MARKERS.espacio);
+        deletreoInfoFinal.push("espacio");
+      }
+    }
+
+    return { secuencia: secuenciaFinal, deletreoInfo: deletreoInfoFinal };
+  };
+
+  const traducir = useCallback(async () => {
+    setErrorValidacion(null);
+    if (!texto.trim()) {
+      Alert.alert("Error", "Por favor, ingresa una palabra o frase para traducir.");
+      return;
+    }
+
+    
+    const validacion = validarTexto(texto);
+    if (!validacion.valido) {
+      setErrorValidacion({
+        caracter: validacion.caracterInvalido!,
+        nombre: validacion.nombreCaracter!,
+      });
+      setRespuesta(null);
+      setCargando(false);
+      setError(null);
+      return;
+    }
+
+    setCargando(true);
+    setRespuesta(null);
+    setError(null);
+    setIndiceLetraActual(0);
+    setVideoActual(null);
+    setSecuenciaCompleta([]);
+    setEnPausa(false);
+    setPausadoPorUsuario(false);
+    setDeletreoInfo([]);
+
+    try {
+      console.log(`Intentando conectar a: ${API_URL}`);
+      
+      
+      const { secuencia, deletreoInfo } = await procesarMultiplesFrases(texto);
+      
+      if (secuencia.length === 0) {
+           setError("No se pudo obtener la secuencia de videos. La respuesta de la API fue vacía.");
+           return;
+      }
+
+      
+      const secuenciaConSenales = [
+        SIGNAL_MARKERS.inicio,
+        ...secuencia,
+        SIGNAL_MARKERS.fin
+      ];
+
+      setSecuenciaCompleta(secuenciaConSenales);
+      setDeletreoInfo(deletreoInfo);
+      setVideoActual(secuenciaConSenales[0]);
+      setIndiceLetraActual(0);
+
+      
+      setRespuesta({
+        query: texto,
+        grupo: null,
+        frase_similar: deletreoInfo.join(" "),
+        similitud: 1.0,
+        deletreo_activado: true, 
+        deletreo: deletreoInfo,
+        total_caracteres: deletreoInfo.length,
+        url_video: "",
+        spell_urls: secuencia
+      });
+
+    } catch (err) {
+      console.error("Error al conectar con la API:", err);
+      const errorMessage = `No se pudo contactar al servidor. Detalle: ${(err as Error).message}`;
+      setError(errorMessage);
+      Alert.alert("Error de Conexión", errorMessage);
+      setRespuesta(null);
+    } finally {
+      setCargando(false);
+    }
+  }, [texto]);
+
+  
+  const togglePausa = () => {
+    setPausadoPorUsuario(prev => !prev);
+  };
+
+  
+  const esSenal = videoActual === SIGNAL_MARKERS.inicio || 
+                  videoActual === SIGNAL_MARKERS.fin || 
+                  videoActual === SIGNAL_MARKERS.espacio;
+
+  const player = useVideoPlayer(
+    videoActual && !esSenal ? { uri: videoActual } : null,
+    (player) => {
+      if (player) {
+        player.loop = false;
+        player.muted = true;
+        
+        if (!pausadoPorUsuario) {
+          player.play();
+        }
+      }
+    }
+  );
+
+  
+  useEffect(() => {
+    
+    if (pausadoPorUsuario) {
+      player?.pause();
+      return;
+    }
+
+    
+    if (!videoActual || enPausa) return;
+
+    
+    if (esSenal) {
+      const duracion = videoActual === SIGNAL_MARKERS.espacio ? 800 : 2000;
+      
+      const timer = setTimeout(avanzarSecuencia, duracion);
+      return () => clearTimeout(timer);
+    }
+
+    
+    if (!player) return;
+
+    
+    player.replace({ uri: videoActual });
+    if (!player.playing) {
+        player.play();
+    }
+    
+    
+    const subscription = player.addListener('playingChange', (newStatus) => {
+        
+        
+        if (newStatus.isPlaying === false && !pausadoPorUsuario) {
+             avanzarSecuencia(); 
+        }
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, [videoActual, pausadoPorUsuario, esSenal, player, avanzarSecuencia, enPausa]);
+
+
+  
+  
+
+
+  const obtenerEstadoReproduccion = () => {
+    if (secuenciaCompleta.length === 0) {
+      return "";
+    }
+
+    
+    if (indiceLetraActual === 0) {
+      return "SEÑAL DE INICIO";
+    }
+
+    
+    if (indiceLetraActual === secuenciaCompleta.length - 1) {
+      return "SEÑAL DE FIN";
+    }
+
+    
+    const indiceReal = indiceLetraActual - 1;
+
+    
+    const elementoActual = deletreoInfo[indiceReal];
+
+    if (videoActual === SIGNAL_MARKERS.espacio || elementoActual === "espacio") {
+      return `Elemento ${indiceReal + 1} de ${deletreoInfo.length}: [espacio]`;
+    }
+
+    if (deletreoInfo && indiceReal >= 0 && indiceReal < deletreoInfo.length) {
+      return `Elemento ${indiceReal + 1} de ${deletreoInfo.length}: ${elementoActual}`;
+    }
+
+    return "";
+  };
+
+  
+  const VideoControls = () => {
+    const mostrarControles = secuenciaCompleta.length > 0;
+
+    if (!mostrarControles) {
+      return null;
+    }
+
+    return (
+      <View style={styles.controlsContainer}>
+        {/* Botón de Pausa / Reanudar */}
+        <TouchableOpacity
+          style={[styles.controlButton, pausadoPorUsuario && styles.controlButtonActive]}
+          onPress={togglePausa}
+        >
+          <MaterialIcons
+            name={pausadoPorUsuario ? "play-arrow" : "pause"}
+            size={24}
+            color="white"
+          />
+        </TouchableOpacity>
+
+        {/* Botón de Reiniciar Secuencia */}
+        <TouchableOpacity
+          style={[styles.controlButton, styles.controlButtonRestart]}
+          onPress={reiniciarReproduccion}
+        >
+          <MaterialIcons
+            name="restart-alt"
+            size={24}
+            color="white"
+          />
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
+  const RespuestaResultado = () => {
+    if (respuesta) {
+      const titulo = respuesta.deletreo_activado
+        ? "Traducción en Progreso"
+        : `Frase Sugerida (${respuesta.grupo})`;
+
+      const fraseMostrada = respuesta.frase_similar;
+
+      return (
+        <View style={styles.resultBox}>
+          <Text style={styles.resultText}>
+            {titulo}: {fraseMostrada}
+          </Text>
+
+          {respuesta.deletreo_activado && respuesta.deletreo && (
+            <>
+              <Text style={styles.similarityText}>
+                Secuencia: {respuesta.deletreo.join(", ")}
+              </Text>
+              <Text style={styles.progressText}>
+                {obtenerEstadoReproduccion()}
+              </Text>
+
+            </>
+          )}
+
+          {!respuesta.deletreo_activado && (
+            <Text style={styles.infoText}>
+              El video se repetirá automáticamente
+            </Text>
+          )}
+        </View>
+      );
+    }
+    return null;
+  };
+
+  return (
+    <View style={styles.container}>
+      {/* Header */}
+      <View style={styles.header}>
+        <Text style={styles.headerText}>SignAI <MaterialIcons name="waving-hand" size={24} color="#000000ff" /></Text>
+      </View>
+
+      {/* Contenido principal */}
+      <View style={styles.animationBox}>
+
+        {/* Botones de Ayuda y Reinicio de App */}
+        <View style={styles.overlayButtons}>
+          {/* Botón de Pista/Ayuda (Esquina Superior Izquierda) */}
+          <TouchableOpacity
+            style={[styles.utilityButton, styles.helpButton]}
+            onPress={mostrarAyuda}
+            disabled={cargando}
+          >
+            <MaterialIcons name="emoji-objects" size={24} color="#000000ff" />
+          </TouchableOpacity>
+
+          {/* Botón de Reinicio de App (Esquina Superior Derecha) */}
+          <TouchableOpacity
+            style={[styles.utilityButton, styles.homeButton]}
+            onPress={reiniciarApp}
+            disabled={cargando}
+          >
+            <MaterialIcons name="stop-circle" size={24} color="#000" />
+          </TouchableOpacity>
+        </View>
+        {/* -------------------------------------- */}
+
+        {cargando ? (
+          <ActivityIndicator size="large" color="#FFD700" />
+        ) : errorValidacion ? (
+          <View style={[styles.videoPlayer, styles.errorValidationContainer]}>
+            <Text style={styles.errorValidationTitle}> Carácter No Permitido </Text>
+            <Text style={styles.errorValidationText}>
+              {`El carácter "${errorValidacion.caracter}" (${errorValidacion.nombre}) no está permitido.`}
+            </Text>
+            <Text style={styles.errorValidationSubtitle}>
+              Solo se permiten letras, espacios y el símbolo + para concatenar frases.
+            </Text>
+          </View>
+        ) : videoActual === SIGNAL_MARKERS.inicio ? (
+          <View style={styles.videoPlayer}>
+            <View style={styles.signalContainer}>
+              <View style={[styles.signalCircle, styles.signalInicio]}>
+                <Text style={styles.signalText}>INICIO</Text>
+              </View>
+            </View>
+          </View>
+        ) : videoActual === SIGNAL_MARKERS.fin ? (
+          <View style={styles.videoPlayer}>
+            <View style={styles.signalContainer}>
+              <View style={[styles.signalCircle, styles.signalFin]}>
+                <Text style={styles.signalText}>FIN</Text>
+              </View>
+            </View>
+          </View>
+        ) : videoActual === SIGNAL_MARKERS.espacio ? (
+          <View style={styles.videoPlayer}>
+            <View style={styles.signalContainer}>
+              <View style={[styles.signalCircle, styles.signalEspacio]}>
+                <Text style={styles.signalText}>[ _ ]</Text>
+              </View>
+            </View>
+          </View>
+        ) : videoActual ? (
+          <VideoView
+            style={styles.videoPlayer}
+            player={player}
+            nativeControls={false}
+          />
+        ) : (
+  <View style={styles.videoPlayer}>
+    <View style={styles.welcomeContainer}>
+      
+      {/* 1. Icono de Saludo Grande (MaterialIcons: waving-hand o similar) */}
+      <Text style={styles.welcomeText}></Text>
+      {/* <MaterialIcons name="waving-hand" size={90} color="#000000ff" style={styles.wavingHand} /> */}
+
+      {/* 2. Nombre de la Aplicación en Grande */}
+      <Text style={styles.welcomeText}>SignAI</Text>
+
+      {/* 3. Subtítulo opcional (opcional, para dar contexto) */}
+      <Text style={styles.subtitleText}>
+        Ingresa una frase para ver la traducción en LSM
+      </Text>
+    </View>
+  </View>
+)}
+
+        {/* Error visual */}
+        {error && (
+          <View style={styles.errorBox}>
+            <Text style={styles.errorTextTitle}>Error de Conexión:</Text>
+            <Text style={styles.errorText}>{error}</Text>
+          </View>
+        )}
+      </View>
+
+      {/* Controles de Video */}
+      <VideoControls />
+
+      {/* Input y resultado */}
+      <View style={styles.inputBox}>
+        <TextInput
+          style={styles.input}
+          placeholder="Ingresa cualquier texto"
+          placeholderTextColor="#A9A9A9"
+          value={texto}
+          onChangeText={setTexto}
+          editable={!cargando}
+        />
+        <Button
+          title={cargando ? "Cargando..." : "Traducir"}
+          onPress={traducir}
+          disabled={cargando}
+        />
+        <RespuestaResultado />
+      </View>
+
+      {/* Footer */}
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>SignAI</Text>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+  },
+  header: {
+    backgroundColor: "#FFD700",
+    padding: 20,
+    alignItems: "center",
+  },
+  headerText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "black",
+  },
+  animationBox: {
+    flex: 3,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+    backgroundColor: "#fff",
+    width: "100%",
+    
+    position: 'relative',
+  },
+  
+  overlayButtons: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+    right: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    zIndex: 10, 
+  },
+  utilityButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    borderColor: '#ccc',
+    borderWidth: 1,
+  },
+  helpButton: {
+    
+  },
+  homeButton: {
+    
+  },
+  
+  videoPlayer: {
+    width: "100%",
+    maxWidth: 360,
+    aspectRatio: 1,
+    alignSelf: "center",
+    borderRadius: 10,
+    backgroundColor: "#ffffffff",
+    overflow: "hidden",
+  },
+  controlsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 10,
+    backgroundColor: '#fff',
+  },
+  controlButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "#007bff",
+    justifyContent: "center",
+    alignItems: "center",
+    marginHorizontal: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  controlButtonActive: {
+    backgroundColor: "#007bff", 
+  },
+  controlButtonRestart: {
+    backgroundColor: "#007bff", 
+  },
+  controlButtonText: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  inputBox: {
+    flex: 2,
+    padding: 20,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 6,
+    padding: 10,
+    marginBottom: 10,
+    backgroundColor: "white",
+  },
+  footer: {
+    backgroundColor: "#FFD700",
+    padding: 15,
+    alignItems: "center",
+  },
+  footerText: {
+    fontSize: 14,
+    color: "black",
+  },
+  resultBox: {
+    marginTop: 15,
+    padding: 10,
+    backgroundColor: "#eee",
+    borderRadius: 8,
+  },
+  resultText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#333",
+  },
+  similarityText: {
+    fontSize: 14,
+    color: "gray",
+    marginTop: 5,
+  },
+  progressText: {
+    fontSize: 14,
+    color: "#007bff",
+    marginTop: 5,
+    fontWeight: "600",
+  },
+  infoText: {
+    fontSize: 12,
+    color: "#666",
+    marginTop: 5,
+    fontStyle: "italic",
+  },
+  errorBox: {
+    marginTop: 10,
+    padding: 10,
+    backgroundColor: "#fee2e2",
+    borderColor: "#f87171",
+    borderWidth: 1,
+    borderRadius: 8,
+    width: "100%",
+    maxWidth: 350,
+  },
+  errorTextTitle: {
+    fontWeight: "bold",
+    color: "#b91c1c",
+    marginBottom: 4,
+  },
+  errorText: {
+    fontSize: 12,
+    color: "#b91c1c",
+  },
+  signalContainer: {
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#ffffff",
+    borderRadius: 10,
+  },
+  signalCircle: {
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 4.65,
+    elevation: 8,
+  },
+  signalInicio: {
+    backgroundColor: "#FFD700",
+  },
+  signalFin: {
+    backgroundColor: "#4169E1",
+  },
+  signalEspacio: {
+    backgroundColor: "#000000ff",
+  },
+  signalText: {
+    fontSize: 32,
+    fontWeight: "bold",
+    color: "white",
+    textShadowColor: "rgba(0, 0, 0, 0.3)",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
+  },
+  errorValidationContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#ffe0e0",
+    padding: 20,
+    borderWidth: 2,
+    borderColor: "#e53e3e",
+    width: "70%",
+  },
+  errorValidationTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#e53e3e",
+    marginBottom: 10,
+    textAlign: "center",
+  },
+  errorValidationText: {
+    fontSize: 16,
+    color: "#333",
+    marginBottom: 5,
+    textAlign: "center",
+  },
+  errorValidationSubtitle: {
+    fontSize: 14,
+    color: "#666",
+    marginTop: 10,
+    textAlign: "center",
+    fontStyle: "italic",
+  },
+
+  
+
+
+
+welcomeContainer: {
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor: '#fff',
+  width: '100%',
+},
+welcomeText: {
+  fontSize: 48,
+  fontWeight: 'bold',
+  color: '#000000ff', 
+  textAlign: 'center',
+  marginTop: 10,
+},
+subtitleText: {
+  fontSize: 16,
+  color: 'gray',
+  marginTop: 10,
+},
+wavingHand: {
+  
+  transform: [{ rotate: '20deg' }], 
+},
+emojiText: {
+  fontSize: 90, 
+  textAlign: 'center',
+},
+});
+\end{lstlisting}
+
+\subsection{Configuración de Dependencias: \texttt{package.json}}
+El siguiente listado muestra las dependencias y versiones exactas del proyecto, esenciales para asegurar la reproducibilidad del entorno de compilación (SDK y librerías clave como \texttt{expo-video}).
+
+\begin{lstlisting}
+{
+  "main": "expo-router/entry",
+  "name": "mi-lsm-app",
+  "version": "1.0.1",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "expo": "~50.0.14",
+    "expo-status-bar": "~1.11.1",
+    "expo-router": "~3.4.8",
+    "react": "18.2.0",
+    "react-native": "0.73.6",
+    "expo-video": "~5.2.0",
+    "react-native-safe-area-context": "4.8.2",
+    "react-native-screens": "~3.29.0",
+    "expo-constants": "~15.4.6"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "@types/react": "~18.2.45",
+    "typescript": "^5.1.3"
+  },
+  "private": true
+}
+\end{lstlisting}
+
+\section{Despliegue de Producción}
+\label{sec:despliegue}
+
+\subsection{El Producto Final: APK y AAB}
+
+Para distribuir la aplicación SignAI a usuarios de Android, el código fuente desarrollado en React Native/Expo debe ser compilado en un paquete binario ejecutable.
+
+\begin{itemize}
+    \item \textbf{APK (Android Package Kit):} Es el formato de archivo de paquete utilizado por el sistema operativo Android para la distribución e instalación de aplicaciones móviles. Esencialmente, contiene todos los elementos necesarios para que la aplicación se instale correctamente en un dispositivo \cite{refapp2}.
+    \item \textbf{AAB (Android App Bundle):} Es el formato de publicación recomendado por Google Play Store. Un AAB es un paquete binario que incluye el código, los recursos y las librerías necesarios, pero difiere el proceso de generación del APK final al momento de la descarga. Google Play utiliza esta optimización (denominada \textit{Dynamic Delivery}) para crear un APK más pequeño y optimizado para el dispositivo específico del usuario \cite{refapp3}.
+    \item \textbf{Herramienta de Compilación:} El proceso de generación de estos paquetes se realiza en la nube de Expo utilizando \textbf{EAS Build} (\textit{Expo Application Services}). Esto garantiza que el código fuente de React Native se traduzca de forma robusta a los binarios nativos de Android \cite{refapp4}.
+\end{itemize}
+
+
+
+\textbf{Definición de Microservicio en SignAI}\\
+Un microservicio es una arquitectura donde las funcionalidades de una aplicación se dividen en servicios más pequeños, independientes y comunicables a través de protocolos de red \cite{refapp5}. En el contexto de SignAI:
+\begin{itemize}
+    \item La API de FastAPI es el \textbf{Servicio de Traducción}.
+    \item Su única responsabilidad es procesar el texto, ejecutar el PLN, aplicar los umbrales de similitud y devolver la secuencia de URLs de video.
+\end{itemize}
+El despliegue en Render proporciona una \textbf{URL pública y estable}, reemplazando la dirección IP local que solo funcionaba en el entorno de desarrollo.\\
+
+\vspace{0.7em}
+\textbf{Microservicio: Despliegue de la API en Render}
+\label{subsec:microservicio}
+
+Para garantizar la accesibilidad y el funcionamiento continuo de la aplicación una vez compilada como APK o AAB, el Backend de \textbf{FastAPI (PLN)} se desplegará como un microservicio en una plataforma como \textbf{Render}.\\
+
+\textbf{¿Qué es Render?}\\
+\label{subsubsec:render_def}
+Render es una plataforma moderna de nube unificada (\textit{Unified Cloud Platform}) que simplifica el despliegue y alojamiento de aplicaciones web, bases de datos y microservicios. A diferencia de proveedores de infraestructura tradicionales (como AWS o Azure), Render se enfoca en ofrecer una experiencia de desarrollo fluida, permitiendo a los desarrolladores centrarse en el código de la aplicación \cite{refapp6}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{Images/Cap4/images/render.jpg}
+    \caption{Icono de Render, obtenido de \cite{refapp6}}
+    \label{fig:render}
+\end{figure}
+
+\textbf{Ventajas del Despliegue en Render}\\
+\begin{enumerate}
+    \item \textbf{Accesibilidad 24/7:} La API está disponible globalmente, permitiendo que el APK final funcione sin requerir que la laptop del desarrollador esté encendida o conectada a la misma red local \cite{refapp5}.
+    \item \textbf{Separación Clara de Responsabilidades:} Se refuerza la arquitectura modular: el \textit{Frontend} se encarga de la interfaz y la reproducción, y Render se encarga de la lógica de negocio y el PLN \cite{refapp5}.
+    \item \textbf{Actualizaciones Transparentes:} Cualquier mejora en el módulo de PLN (ej., ajuste de umbrales, mejora del modelo) se realiza actualizando el código en Render. Esta mejora es instantánea para el usuario final del APK, sin necesidad de que descarguen una nueva versión de la aplicación \cite{refapp6}.
+    \item \textbf{Escalabilidad:} Render ofrece la capacidad de escalar el servicio de FastAPI de forma independiente si la demanda del servicio de traducción aumenta, garantizando el rendimiento sin afectar la experiencia de usuario del cliente móvil \cite{refapp6}.
+\end{enumerate}
+
+\newpage
+\subsection{Integración Arquitectónica Final}
+
+La comunicación entre el Frontend (APK) y el Backend (Render) se realiza mediante peticiones HTTP a la URL pública.\\
+
+El proceso de comunicación es el siguiente:
+\begin{enumerate}
+    \item El usuario ingresa texto en el \textbf{APK}.
+    \item El Frontend (\texttt{index.tsx}) envía la petición a \texttt{API\_URL} (\textbf{Render/FastAPI}).
+    \item El Microservicio PLN procesa la entrada, accede a las bases de datos de frases y devuelve la secuencia de URLs (o URLs de deletreo).
+    \item El Frontend consume la respuesta y utiliza las URLs de \textbf{AWS S3} para cargar los videos en la vista \texttt{VideoView}.
+\end{enumerate}
+Este flujo robusto garantiza que el objetivo de un producto listo para el usuario final se cumpla con alta disponibilidad y mantenimiento simplificado.
+
