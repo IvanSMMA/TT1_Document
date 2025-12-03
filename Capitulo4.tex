@@ -2,15 +2,15 @@
 \section{Justificación de los cambios}
 \label{implementación:justificación_cambios}
 
-Durante la fase de planeación se estableció un conjunto de 33 frases, distribuidas en tres categorías principales: saludos, expresiones de emergencia y agradecimientos, con el propósito de representar situaciones comunes de comunicación básica. Sin embargo, se identificó que las frases correspondientes a la categoría de agradecimientos como “gracias”, “muchas gracias” o “te lo agradezco” compartían un mismo gesto en LSM. Esto generaba redundancia semántica y gestual, ya que diferentes frases se traducían a una única seña, sin aportar valor adicional al conjunto de datos ni al propósito comunicativo del prototipo.\\
+Durante la fase de planeación se estableció un conjunto de 43 frases, distribuidas en tres categorías principales: saludos, expresiones de emergencia y agradecimientos, con el propósito de representar situaciones comunes de comunicación básica. Sin embargo, se identificó que las frases correspondientes a la categoría de agradecimientos como “gracias”, “muchas gracias” o “te lo agradezco” compartían un mismo gesto en LSM. Esto generaba redundancia semántica y gestual, ya que diferentes frases se traducían a una única seña, sin aportar valor adicional al conjunto de datos ni al propósito comunicativo del prototipo.\\
 
 Se optó por sustituir la categoría de agradecimientos por una nueva categoría denominada expresiones de mínima comunicación, la cual incluye frases breves y funcionales utilizadas en interacciones cotidianas. Esta modificación permitió ampliar la cobertura comunicativa del prototipo, garantizando una mayor variedad de gestos en escenarios reales de comunicación entre personas oyentes y personas con discapacidad auditiva.\\
 
 Por otro lado, en el capítulo 1 y 2 se indicó que el desarrollo del prototipo incluiría el modelado 3D de avatares mediante MediaPipe, con procesamiento en Blender o Unity. Sin embargo, durante el desarrollo del Trabajo Terminal se identificaron diversas limitaciones técnicas y operativas que impidieron la implementación de esta fase.\\
 
-MediaPipe permite capturar un esqueleto en forma de nube de puntos a partir de un video o en tiempo real, generando un archivo en formato JSON con las coordenadas de las articulaciones. Este archivo puede convertirse a formato BVH para su uso en software de animación como Blender. No obstante, se observó que MediaPipe no logra capturar la totalidad de las articulaciones del cuerpo humano, lo que ocasiona que el archivo BVH resultante esté incompleto al momento de su importación en Blender.\\
+MediaPipe permite capturar un esqueleto en forma de nube de puntos a partir de un video o en tiempo real, generando un archivo en formato JSON con las coordenadas de las articulaciones. Este archivo puede convertirse a formato BVH para su uso en \textit{software} de animación como Blender. No obstante, se observó que MediaPipe no logra capturar la totalidad de las articulaciones del cuerpo humano, lo que ocasiona que el archivo BVH resultante esté incompleto al momento de su importación en Blender.\\
 
-Esta situación requería realizar un procesamiento manual de cada animación, lo que representaba una curva de aprendizaje considerable, dado que Blender es una herramienta compleja que demanda tiempo y experiencia para crear animaciones detalladas, especialmente aquellas que involucran movimientos de los dedos. Dado que el proyecto contemplaba 60 animaciones distintas, el tiempo y los recursos necesarios para completarlas excedían los límites establecidos para este Trabajo Terminal.\\
+Esta situación requería realizar un procesamiento manual de cada animación, lo que representaba una curva de aprendizaje considerable, dado que Blender es una herramienta compleja que demanda tiempo y experiencia para crear animaciones detalladas, especialmente aquellas que involucran movimientos de los dedos. Dado que el proyecto contemplaba 70 animaciones distintas, el tiempo y los recursos necesarios para completarlas excedían los límites establecidos para este Trabajo Terminal.\\
 
 También se consideró la posibilidad de utilizar captura de movimiento (\textit{motion capture}) mediante un traje de captura de movimiento, con el fin de mejorar la detección de dedos y gestos faciales. Sin embargo, esta alternativa implicaba una inversión económica elevada y la colaboración de expertos en animación, lo cual resultaba inviable dentro del alcance y recursos disponibles del proyecto.\\
 
@@ -82,12 +82,12 @@ Entorno de desarrollo principal. \\ \hline
 \section{Lógica del Flujo y Validación}
 
 \subsection{Validación de Caracteres y campo vacío}
-La aplicación impone una \textbf{validación estricta} en la entrada de texto para asegurar que solo se procese contenido traducible a LSM, esto con base en la regla de negocio RN03.
+La aplicación impone una \textbf{validación estricta} en la entrada de texto para asegurar que solo se procese contenido traducible a LSM, esto con base en la regla de negocio RN03 (ver \textbf{\autoref{tab:reglas_negocio}}).
 
 \begin{itemize}
     \item Los caracteres no permitidos se definen en la constante \texttt{CARACTERES\_NO\_PERMITIDOS}, incluyendo números y la mayoría de los símbolos de puntuación exceptuando los signos de interrogación ya que dentro del listado de frases hay preguntas.
     \item La función \texttt{validarTexto} verifica la entrada. El único símbolo permitido fuera de las letras y espacios es el \textbf{símbolo de concatenación "\texttt{+}"}.
-    \item Si se detecta un carácter inválido, se interrumpe la ejecución de \texttt{traducir} y se activa el componente \texttt{errorValidationContainer} para informar al usuario el carácter específico y su nombre, pidiendole que ingrese en una nueva entrada cumpliendo con la regla de negocio RN05 Y RN06.
+    \item Si se detecta un carácter inválido, se interrumpe la ejecución de \texttt{traducir} y se activa el componente \texttt{errorValidationContainer} para informar al usuario el carácter específico y su nombre, pidiendole que ingrese en una nueva entrada cumpliendo con la regla de negocio RN05 Y RN06 (ver \textbf{\autoref{tab:reglas_negocio}}).
 \end{itemize}
 
 \subsection{Mecanismo de Procesamiento de la API y Deletreo}

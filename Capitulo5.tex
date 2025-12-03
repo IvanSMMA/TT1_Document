@@ -703,7 +703,7 @@ La implementación de la aplicación \textbf{SignAI} ha demostrado ser exitosa, 
 
 
 \subsection{Adherencia a las Reglas de Negocio}
-La aplicación respeta estrictamente las reglas de negocio críticas para la experiencia del usuario y la seguridad del sistema:
+La aplicación respeta estrictamente las reglas de negocio críticas para la experiencia del usuario y la seguridad del sistema (ver \textbf{\autoref{tab:reglas_negocio}}):
 
 \begin{itemize}
     \item \textbf{RN01 (Entrada manual)}: la aplicación solo permite al usuario ingresar el texto de forma manual.
@@ -1695,7 +1695,7 @@ Render es una plataforma moderna de nube unificada (\textit{Unified Cloud Platfo
 \textbf{Ventajas del Despliegue en Render}\\
 \begin{enumerate}
     \item \textbf{Accesibilidad 24/7:} La API está disponible globalmente, permitiendo que el APK final funcione sin requerir que la laptop del desarrollador esté encendida o conectada a la misma red local \cite{refapp5}.
-    \item \textbf{Separación Clara de Responsabilidades:} Se refuerza la arquitectura modular: el Frontend se encarga de la interfaz y la reproducción, y Render se encarga de la lógica de negocio y el PLN \cite{refapp5}.
+    \item \textbf{Separación Clara de Responsabilidades:} Se refuerza la arquitectura modular: el \textit{Frontend} se encarga de la interfaz y la reproducción, y Render se encarga de la lógica de negocio y el PLN \cite{refapp5}.
     \item \textbf{Actualizaciones Transparentes:} Cualquier mejora en el módulo de PLN (ej., ajuste de umbrales, mejora del modelo) se realiza actualizando el código en Render. Esta mejora es instantánea para el usuario final del APK, sin necesidad de que descarguen una nueva versión de la aplicación \cite{refapp6}.
     \item \textbf{Escalabilidad:} Render ofrece la capacidad de escalar el servicio de FastAPI de forma independiente si la demanda del servicio de traducción aumenta, garantizando el rendimiento sin afectar la experiencia de usuario del cliente móvil \cite{refapp6}.
 \end{enumerate}

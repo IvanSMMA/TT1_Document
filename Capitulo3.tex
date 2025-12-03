@@ -8,21 +8,21 @@ En primer lugar, se analiza la viabilidad, considerando los conocimientos del eq
 El análisis de viabilidad considera los conocimientos técnicos del equipo, la madurez de las tecnologías disponibles y las condiciones actuales para el desarrollo. Este análisis permite evaluar si el proyecto puede llevarse a cabo de manera exitosa bajo las condiciones planteadas.
 
 \subsubsection{Conocimientos y experiencia}
-El equipo de desarrollo posee conocimientos en herramientas de IA, particularmente en Procesamiento de Lenguaje Natural (PLN), así como habilidades básicas en edición y curaduría de recursos audiovisuales. Si bien en etapas tempranas del proyecto se exploraron alternativas basadas en modelado y animación 3D orientada a señas (ver \textbf{\nameref{anexo:blender_unity}}), en el alcance actual del prototipo se optó por un enfoque más acotado y realista, basado en el uso de animaciones en video generadas mediante servicios de IA en la nube.
+El equipo de desarrollo posee conocimientos en herramientas de IA, particularmente en Procesamiento de Lenguaje Natural (PLN), así como habilidades básicas en edición y curaduría de recursos audiovisuales. Si bien en etapas tempranas del proyecto se exploraron alternativas basadas en modelado y animación 3D orientada a señas (ver \textbf{\nameref{anexo:blender_unity}}), en el alcance actual del prototipo se optó por un enfoque más acotado y realista, basado en el uso de animaciones en video generadas mediante servicios de IA en la nube.\\
 
-En concreto, se empleó la plataforma \textit{GoEnhance AI} (\textit{GoEnhance AI - All-in-One AI Video Generator}), la cual permite crear videos a partir de texto, imágenes o clips existentes utilizando modelos avanzados de generación de video (por ejemplo, Runway, Kling o Veo~3). Este enfoque reduce la complejidad técnica asociada al rigging, al control de esqueletos 3D y a la integración de motores gráficos en tiempo real, permitiendo que el equipo concentre sus esfuerzos en el diseño del flujo de traducción, el procesamiento de texto y la integración de los videos de señas en la aplicación móvil.
+En concreto, se empleó la plataforma GoEnhance AI (GoEnhance AI - All-in-One AI Video Generator), la cual permite crear videos a partir de texto, imágenes o clips existentes utilizando modelos avanzados de generación de video (por ejemplo, Runway, Kling o Veo~3). Este enfoque reduce la complejidad técnica asociada al \textit{rigging}, al control de esqueletos 3D y a la integración de motores gráficos en tiempo real, permitiendo que el equipo concentre sus esfuerzos en el diseño del flujo de traducción, el procesamiento de texto y la integración de los videos de señas en la aplicación móvil.\\
 
 Aunque la experiencia directa del equipo en la Lengua de Señas Mexicana (LSM) es limitada, se considera viable la correcta representación de las frases del prototipo mediante el uso de referencias bibliográficas, materiales audiovisuales especializados y la validación manual del contenido generado. La disposición para el aprendizaje continuo y la consulta con fuentes especializadas respalda la viabilidad técnica del proyecto en función de las capacidades actuales del equipo.
 
 \subsubsection{Tecnologías disponibles}
-Actualmente existen diversas tecnologías y herramientas que facilitan la creación de sistemas de apoyo a la traducción de texto a señas, tales como conjuntos de datos de señas en video, plataformas de generación de video con IA, frameworks para el desarrollo de aplicaciones móviles y librerías para el procesamiento de lenguaje natural. En el presente proyecto se privilegiaron soluciones que reducen la carga de infraestructura y la complejidad de integración, aprovechando servicios en la nube y herramientas de desarrollo multiplataforma.
+Actualmente existen diversas tecnologías y herramientas que facilitan la creación de sistemas de apoyo a la traducción de texto a señas, tales como conjuntos de datos de señas en video, plataformas de generación de video con IA, \textit{frameworks} para el desarrollo de aplicaciones móviles y librerías para el procesamiento de lenguaje natural. En el presente proyecto se privilegiaron soluciones que reducen la carga de infraestructura y la complejidad de integración, aprovechando servicios en la nube y herramientas de desarrollo multiplataforma.\\
 
 Las tecnologías consideradas y efectivamente utilizadas en el prototipo incluyen:
 
 \begin{itemize}
 	\item Conjuntos de datos y videos de señas correspondientes a frases seleccionadas en LSM, generados y/o adaptados específicamente para el prototipo.
-	\item La plataforma \textit{GoEnhance AI}, empleada para generar videos de señas a partir de descripciones textuales, lo que permite obtener recursos audiovisuales consistentes sin requerir un pipeline local de modelado 3D ni motores de animación en tiempo real.
-	\item Frameworks de desarrollo móvil como React (19.0.0) y Expo SDK (54.0.0), que facilitan la construcción de una aplicación multiplataforma y la integración de videos de señas en la interfaz de usuario.
+	\item La plataforma GoEnhance AI, empleada para generar videos de señas a partir de descripciones textuales, lo que permite obtener recursos audiovisuales consistentes sin requerir un \textit{pipeline} local de modelado 3D ni motores de animación en tiempo real.
+	\item \textit{Frameworks} de desarrollo móvil como React (19.0.0) y Expo SDK (54.0.0), que facilitan la construcción de una aplicación multiplataforma y la integración de videos de señas en la interfaz de usuario.
 	\item Contenedores identificando las unidades desplegables (aplicación móvil React/Expo, API backend FastAPI con despliegue en Render PaaS, almacenamiento JSON/NPZ y un bucket de AWS S3 para el servicio de animaciones en video)
 	\item Herramientas de Procesamiento de Lenguaje Natural (PLN) para el análisis, normalización y segmentación de frases en español, que permiten mapear las entradas de texto de los usuarios a las frases disponibles en el repositorio de señas.
 \end{itemize}
@@ -36,7 +36,7 @@ El proyecto se desarrolla en el marco de un trabajo terminal académico, lo que 
 \subsection{Factibilidad}
 La factibilidad del proyecto se analiza considerando los recursos financieros, humanos y tecnológicos disponibles, así como el tiempo estimado para su desarrollo y finalización.
 
-\subsubsection{Recursos financieros}
+\noindent \textbf{Recursos financieros}
 El presente apartado tiene como objetivo evaluar los costos asociados al desarrollo, despliegue y potencial comercialización del prototipo. 
 
 Para ello, se plantea un análisis financiero estructurado en dos niveles: 
@@ -116,12 +116,12 @@ A continuación, se detallan los costos asociados a los servicios necesarios par
 			\hline
 			\textbf{Recurso o servicio} & \textbf{Costo mensual (MXN \$)} & \textbf{Costo a 4 meses (MXN \$)} & \textbf{Costo a 1 año (MXN \$)} \\ \hline
 			Electricidad e internet (oficina dedicada) & \$2,500.00 & \$10,000.00 & \$30,000.00 \\ \hline
-			Renta de espacio de coworking (para 4 personas) & \$9,000.00 & \$36,000.00 & \$108,000.00 \\ \hline
+			Renta de espacio de \textit{co-working} (para 4 personas) & \$9,000.00 & \$36,000.00 & \$108,000.00 \\ \hline
 			Suscripción a plataformas de desarrollo (GitHub Copilot, AWS, etc.) & \$800.00 & \$3,200.00 & \$9,600.00 \\ \hline
 			API de lenguaje natural (OpenAI GPT, DialogFlow) & \$1,000.00 & \$4,000.00 & \$12,000.00 \\ \hline
 			Servicios de almacenamiento en la nube (Google Cloud, Firebase, etc.) & \$750.00 & \$3,000.00 & \$9,000.00 \\ \hline
 			Servidor para aplicación móvil (Firebase/AWS) & \$1,200.00 & \$4,800.00 & \$14,400.00 \\ \hline
-			Licencia de software y/o servicios para animación y edición de video & \$1,500.00 & \$6,000.00 & \$18,000.00 \\ \hline
+			Licencia de \textit{software} y/o servicios para animación y edición de video & \$1,500.00 & \$6,000.00 & \$18,000.00 \\ \hline
 			Validación profesional de señas LSM (freelancer mensual) & \$5,000.00 & \$20,000.00 & \$60,000.00 \\ \hline
 			Servicios de soporte técnico y mantenimiento & \$3,000.00 & \$12,000.00 & \$36,000.00 \\ \hline
 			Marketing digital (redes sociales, web, SEO) & \$2,000.00 & \$8,000.00 & \$24,000.00 \\ \hline
@@ -133,7 +133,7 @@ A continuación, se detallan los costos asociados a los servicios necesarios par
 	\label{tab:costos_comercial}
 \end{table}
 
-
+\newpage
 \paragraph{\textbf{Compras no recurrentes.}} 
 En esta sección se presentan los costos estimados de artículos y adquisiciones necesarias para la creación del prototipo, clasificadas como compras no recurrentes. Estas compras representan inversiones únicas que no implican costos periódicos, pero que son fundamentales para el correcto desarrollo y prueba de la aplicación.
 
@@ -148,7 +148,7 @@ En esta sección se presentan los costos estimados de artículos y adquisiciones
 			\textbf{Recurso} & \textbf{Unidades} & \textbf{Costo unitario (MXN \$)} & \textbf{Costo total (MXN \$)} \\ \hline
 			Equipo de cómputo personal (propio de los integrantes) & 3 & -- & -- \\ \hline
 			Dispositivo Android para pruebas físicas & 1 & -- & -- \\ \hline
-			Capacitación online (cursos: PLN, LSM, Nube, etc.) & 3 cursos & \$800.00 & \$2,400.00 \\ \hline
+			Capacitación \textit{online} (cursos: PLN, LSM, Nube, etc.) & 3 cursos & \$800.00 & \$2,400.00 \\ \hline
 			Compra de recursos para animaciones (opcional) & 1 paquete & \$2,500.00 & \$2,500.00 \\ \hline
 			\textbf{Total compras no recurrentes} & & & \textbf{\$4,900.00} \\ \hline
 		\end{tabular}
@@ -200,8 +200,8 @@ El presente apartado presenta el costo estimado de los sueldos y asesorías cons
 			\hline
 			\textbf{Equipo} & \textbf{Cantidad} & \multicolumn{2}{c|}{\textbf{Desarrollo}} & \multicolumn{2}{c|}{\textbf{Mantenimiento / Ajustes}} \\ \hline
 			\textbf{Tipo} & & \textbf{Mensual (MXN \$)} & \textbf{4 meses (MXN \$)} & \textbf{Mensual (MXN \$)} & \textbf{A un año (MXN \$)} \\ \hline
-			Desarrollador Full Stack Junior (estudiante) & 3 & \$72,000.00 (\$24,000.00 c/u) & \$288,000.00 & -- & -- \\ \hline
-			Asesoría en animaciones (freelance) & 1 parcial & \$300.00 (por sesión) & \$1,200.00 (cuatro sesiones) & -- & -- \\ \hline
+			Desarrollador \textit{Full Stack Junior} (estudiante) & 3 & \$72,000.00 (\$24,000.00 c/u) & \$288,000.00 & -- & -- \\ \hline
+			Asesoría en animaciones (\textit{freelance}) & 1 parcial & \$300.00 (por sesión) & \$1,200.00 (cuatro sesiones) & -- & -- \\ \hline
 			Asesoría en LSM (validación de señas) & 1 parcial & \$200.00 (por sesión) & \$800.00 (cuatro sesiones) & -- & -- \\ \hline
 			\textbf{Total} & \textbf{5} & \textbf{\$72,500.00} & \textbf{\$290,000.00} & -- & -- \\ \hline
 		\end{tabular}
@@ -224,7 +224,7 @@ el sueldo en este caso, se considera un pago simbólico, sin embargo, el sueldo 
 			\hline
 			\textbf{Rol / Servicio} & \textbf{Cantidad} & \multicolumn{2}{c|}{\textbf{Desarrollo}} & \multicolumn{2}{c|}{\textbf{Mantenimiento / Ajustes}} \\ \hline
 			\textbf{Tipo} & & \textbf{Mensual (MXN \$)} & \textbf{4 meses (MXN \$)} & \textbf{Mensual (MXN \$)} & \textbf{A un año (MXN \$)} \\ \hline
-			Desarrollador backend / frontend & 2 & \$28,000.00 & \$224,000.00 & \$16,000.00 & \$192,000.00 \\ \hline
+			Desarrollador \textit{backend} / \textit{frontend} & 2 & \$28,000.00 & \$224,000.00 & \$16,000.00 & \$192,000.00 \\ \hline
 			Especialista en PLN & 1 & \$30,000.00 & \$120,000.00 & \$15,000.00 & \$180,000.00 \\ \hline
 			Diseñador de animaciones / animador & 1 & \$25,000.00 & \$100,000.00 & \$12,000.00 & \$144,000.00 \\ \hline
 			Asesoría profesional en LSM & 1 parcial & \$10,000.00 & \$40,000.00 & \$5,000.00 & \$60,000.00 \\ \hline
@@ -243,7 +243,7 @@ La columna de “Mantenimiento / Ajustes” se incluye únicamente como referenc
 
 
 \paragraph{\textbf{Presupuesto mediante actividades.}} 
-En el siguiente apartado, se presenta el presupuesto detallado por actividades, donde se especifica el tiempo estimado y el costo asociado a cada tarea del proyecto. Además, los valores por hora se ajustan para una estimación freelance o contratista externo (no asalariado fijo), ideal para la simulación de costos comerciales.  Los sueldos se consideran como un aproximado en México con fecha de mayo de 2025 \cite{ref71, ref72, ref73, ref74, ref75, ref76, ref77}.\\
+En el siguiente apartado, se presenta el presupuesto detallado por actividades, donde se especifica el tiempo estimado y el costo asociado a cada tarea del proyecto. Además, los valores por hora se ajustan para una estimación \textit{freelance} o contratista externo (no asalariado fijo), ideal para la simulación de costos comerciales.  Los sueldos se consideran como un aproximado en México con fecha de mayo de 2025 \cite{ref71, ref72, ref73, ref74, ref75, ref76, ref77}.\\
 
 Las actividades específicas y sus tiempos estimados se encuentran detallados en los anexos titulados \textbf{\nameref{anexo:actividades_academicas}} y \textbf{\nameref{anexo:actividades_comercial}} .
 
@@ -356,6 +356,7 @@ Esta doble perspectiva permite comparar la ejecución del despliegue del prototi
 \paragraph{\textbf{Escenario de posible futura etapa de comercialización.}}
 Este apartado presenta una proyección financiera elaborada bajo un enfoque comercial, con el objetivo de estimar los costos y condiciones necesarias para escalar el prototipo de aplicación a un producto funcional en el mercado. Aunque el presente trabajo terminal tiene un carácter académico, esta simulación permite anticipar los requerimientos económicos y técnicos para una eventual implementación comercial.
 
+\newpage
 \paragraph{\textbf{Análisis de costos.}}
 A continuación, se presenta el desglose de costos estimados para una fase inicial de comercialización del prototipo, considerando sueldos profesionales, infraestructura tecnológica, servicios especializados, mantenimiento y una reserva para riesgos:
 
@@ -424,14 +425,12 @@ Redondeando al entero más cercano:
 	\textbf{Nota final:} esta simulación financiera tiene carácter exploratorio y busca establecer un marco inicial para la evaluación económica del producto. Las cifras deberán ser validadas y refinadas mediante estudios de mercado y pruebas piloto antes de su implementación real.
 \end{flushleft}
 
-
-
-\subsubsection{Recursos humanos}
-El equipo de desarrollo está conformado por tres estudiantes de la carrera de Ingeniería en Inteligencia Artificial, con experiencia académica en proyectos de Ingeniería de software. Esta preparación garantiza que el equipo cuenta con las competencias necesarias para realizar el análisis, diseño, implementación, prueba y validación del prototipo propuesto.\\
+\textbf{Recursos humanos}\\
+El equipo de desarrollo está conformado por tres estudiantes de la carrera de Ingeniería en Inteligencia Artificial, con experiencia académica en proyectos de Ingeniería de \textit{software}. Esta preparación garantiza que el equipo cuenta con las competencias necesarias para realizar el análisis, diseño, implementación, prueba y validación del prototipo propuesto.\\
 
 Adicionalmente, se contempla la posibilidad de realizar capacitaciones específicas sobre LSM, manejo de conjuntos de datos de señas y técnicas de animación 3D, con el objetivo de reforzar el conocimiento técnico necesario para los módulos especializados del sistema.\\
 
-La asignación de tres integrantes al proyecto se fundamenta mediante una estimación del esfuerzo utilizando el modelo \textbf{COCOMO II (Constructive Cost Model II)}, específicamente en su modalidad \textit{Early Design Model}, apropiada para proyectos en etapas iniciales \cite{refcocomo}.\\
+La asignación de tres integrantes al proyecto se fundamenta mediante una estimación del esfuerzo utilizando el modelo \textbf{COCOMO II (\textit{Constructive Cost Model II})}, específicamente en su modalidad \textit{Early Design Model}, apropiada para proyectos en etapas iniciales \cite{refcocomo}.\\
 
 La fórmula del modelo es la siguiente:
 
@@ -444,7 +443,7 @@ Donde:
 \begin{itemize}
 	\item \textbf{PM} = Persona-meses estimados de esfuerzo.
 	\item \textbf{A} = Constante base del modelo. Se usa el valor estándar de $A = 2.94$.
-	\item \textbf{Tamaño} = Tamaño estimado del software en miles de líneas de código (KLOC). Se considera un tamaño de $2$ KLOC (2,000 líneas de código).
+	\item \textbf{Tamaño} = Tamaño estimado del \textit{software} en miles de líneas de código (KLOC). Se considera un tamaño de $2$ KLOC (2,000 líneas de código).
 	\item \textbf{E} = Exponente de escala. Para este proyecto se asume $E = 1.05$, valor apropiado para proyectos con requisitos moderadamente definidos.
 	\item $\prod EM_i$ = Producto de los multiplicadores de esfuerzo. Se asume un valor neutral de $1.0$, al tratarse de un entorno académico con condiciones estándar.
 \end{itemize}
@@ -471,10 +470,10 @@ Aunque el esfuerzo promedio mensual es inferior a una persona de tiempo completo
 \end{itemize}
 
 
-\subsubsection{Recursos tecnológicos}
-El equipo de trabajo dispone del equipo de cómputo necesario para el desarrollo, prueba y validación de la aplicación móvil. Además, se cuenta con acceso a las plataformas de desarrollo y a las herramientas de software requeridas, tales como ambientes de programación, bibliotecas especializadas de procesamiento de lenguaje natural (PLN), etc. Esta disponibilidad de recursos tecnológicos garantiza las condiciones adecuadas para la implementación efectiva del prototipo.
+\noindent \textbf{Recursos tecnológicos}\\
+El equipo de trabajo dispone del equipo de cómputo necesario para el desarrollo, prueba y validación de la aplicación móvil. Además, se cuenta con acceso a las plataformas de desarrollo y a las herramientas de \textit{software} requeridas, tales como ambientes de programación, bibliotecas especializadas de procesamiento de lenguaje natural (PLN), etc. Esta disponibilidad de recursos tecnológicos garantiza las condiciones adecuadas para la implementación efectiva del prototipo.\\
 
-\subsubsection{Plazo}
+\noindent \textbf{Plazo}\\
 El tiempo estimado para el desarrollo del prototipo es de aproximadamente ocho meses, considerando las fases de análisis, diseño, desarrollo, pruebas y presentación final. Dado que el alcance del proyecto se limita a la traducción de un conjunto predefinido de frases específicas, se considera que el plazo establecido es adecuado para cumplir con los objetivos planteados y la solución propuesta. \\
 
 El análisis realizado en esta sección, permite concluir que el proyecto es tanto viable como factible dentro del contexto académico en el cual se desarrolla. El equipo de trabajo cuenta con los conocimientos fundamentales, el acceso a las tecnologías requeridas y los recursos necesarios para la construcción de un prototipo funcional. Aunque se han identificado áreas que demandarán un proceso de capacitación complementaria como el aprendizaje de LSM y el entendimiento de las herramientas de animación, estas no representan un obstáculo significativo para el éxito del proyecto, siempre que se mantenga una adecuada gestión de tiempos y actividades conforme a los alcances establecidos. De este modo, se fortalecen las condiciones para lograr un desarrollo efectivo que cumpla con los objetivos planteados y a futuro siente las bases para una posible expansión comercial.\\
@@ -484,11 +483,11 @@ El análisis realizado en esta sección, permite concluir que el proyecto es tan
 \subsection{Arquitectura del sistema (modelo C4 y capas)}
 \subsubsection{Arquitectura del sistema (modelo C4 y capas)}
 
-La arquitectura de SignAI se documenta mediante el modelo C4 (\textit{Context, Containers, Components, Code}) propuesto por \cite{brown2018c4}, y adoptado en contextos académicos como complemento de UML por \cite{vazquez2020c4}. En este trabajo se implementan tres de sus cuatro niveles jerárquicos: \textbf{Contexto}, que establece el sistema como una caja negra dentro de su ecosistema; \textbf{Contenedores}, que identifican las unidades desplegables (aplicación móvil React/Expo, API backend FastAPI con despliegue en Render PaaS, almacenamiento JSON/NPZ y servicio externo AWS S3); y \textbf{Componentes}, que detallan la estructura interna del backend mediante sus módulos principales (API Layer, Matcher PLN, Embeddings Service, Preprocess Module y Groups Manager). El cuarto nivel (\textit{Code}) se sustituye por un diagrama de clases UML, enfoque consistente con la postura de \cite{brown2018c4} y con la experiencia reportada por \cite{vazquez2020c4}, quienes señalan que el modelo C4 complementa a UML en lugar de reemplazarlo.
+La arquitectura de SignAI se documenta mediante el modelo C4 (\textit{Context, Containers, Components, Code}) propuesto por \cite{brown2018c4}, y adoptado en contextos académicos como complemento de UML por \cite{vazquez2020c4}. En este trabajo se implementan tres de sus cuatro niveles jerárquicos: \textbf{Contexto}, que establece el sistema como una caja negra dentro de su ecosistema; \textbf{Contenedores}, que identifican las unidades desplegables (aplicación móvil React/Expo, API \textit{backend} FastAPI con despliegue en Render PaaS, almacenamiento JSON/NPZ y servicio externo AWS S3); y \textbf{Componentes}, que detallan la estructura interna del backend mediante sus módulos principales (API \textit{Layer}, \textit{Matcher} PLN, \textit{Embeddings Service}, \textit{Preprocess Module} y  \textit{Groups Manager}). El cuarto nivel (\textit{Code}) se sustituye por un diagrama de clases UML, enfoque consistente con la postura de \cite{brown2018c4} y con la experiencia reportada por \cite{vazquez2020c4}, quienes señalan que el modelo C4 complementa a UML en lugar de reemplazarlo.\\
 
-Adicionalmente, se incluyó un diagrama de arquitectura por capas que documenta la separación lógica presentación–servicios–datos, siguiendo los principios de \textit{Separation of Concerns} descritos por \cite{fowler2002patterns}. La decisión de implementar una arquitectura monolítica modular, en lugar de una basada en microservicios, responde a criterios de proporcionalidad arquitectónica: el sistema aborda un único dominio de negocio (procesamiento de lenguaje natural para búsqueda semántica en LSM), maneja un volumen de datos acotado (43 frases con \textit{embeddings} precomputados de aproximadamente 256~KB) y carece de requisitos que justifiquen la complejidad operacional de una arquitectura distribuida (como escalado independiente por componente, despliegue políglota o múltiples equipos trabajando en paralelo), tal como advierte la literatura especializada sobre los costes organizativos y técnicos de los microservicios en sistemas pequeños o de un solo dominio \cite{dragoni2017micro,aldebagy2018comparative,newman2021microservices}.
+Adicionalmente, se incluyó un diagrama de arquitectura por capas que documenta la separación lógica presentación–servicios–datos, siguiendo los principios de \textit{Separation of Concerns} descritos por \cite{fowler2002patterns}. La decisión de implementar una arquitectura monolítica modular, en lugar de una basada en microservicios, responde a criterios de proporcionalidad arquitectónica: el sistema aborda un único dominio de negocio (procesamiento de lenguaje natural para búsqueda semántica en LSM), maneja un volumen de datos acotado (43 frases con \textit{embeddings} precomputados de aproximadamente 256~KB) y carece de requisitos que justifiquen la complejidad operacional de una arquitectura distribuida (como escalado independiente por componente, despliegue políglota o múltiples equipos trabajando en paralelo), tal como advierte la literatura especializada sobre los costes organizativos y técnicos de los microservicios en sistemas pequeños o de un solo dominio \cite{dragoni2017micro,aldebagy2018comparative,newman2021microservices}.\\
 
-El diseño monolítico modular, con bajo acoplamiento entre componentes internos, facilita una posible migración futura a microservicios cuando las métricas de tráfico, el tamaño del \textit{dataset} o la complejidad organizacional lo justifiquen. Esta progresión documental, desde vistas de alto nivel (Contexto, Contenedores, Capas) hasta detalles de implementación (Componentes y diagrama de clases UML), permite una comprensión arquitectónica tanto para stakeholders técnicos como no técnicos, en concordancia con las mejores prácticas de documentación de arquitectura de software establecidas por \cite{bass2012software} y con las directrices del estándar ISO/IEC/IEEE~42010:2011 \cite{iso42010}, que recomiendan describir la arquitectura mediante múltiples vistas consistentes alineadas con las preocupaciones de los distintos interesados.
+El diseño monolítico modular, con bajo acoplamiento entre componentes internos, facilita una posible migración futura a microservicios cuando las métricas de tráfico, el tamaño del \textit{dataset} o la complejidad organizacional lo justifiquen. Esta progresión documental, desde vistas de alto nivel (Contexto, Contenedores, Capas) hasta detalles de implementación (Componentes y diagrama de clases UML), permite una comprensión arquitectónica tanto para \textit{stakeholders} técnicos como no técnicos, en concordancia con las mejores prácticas de documentación de arquitectura de \textit{software} establecidas por \cite{bass2012software} y con las directrices del estándar ISO/IEC/IEEE~42010:2011 \cite{iso42010}, que recomiendan describir la arquitectura mediante múltiples vistas consistentes alineadas con las preocupaciones de los distintos interesados.
 
 \subsubsection{Diagrama de contexto (C4 nivel 1)}
 \begin{center}
@@ -499,11 +498,12 @@ El diseño monolítico modular, con bajo acoplamiento entre componentes internos
 
 \subsubsection{Diagrama de contenedores (C4 nivel 2)}
 \begin{center}
-	\includegraphics[width=0.4\textwidth]{Images/Cap 3/contenedores_vf.png}
+	\includegraphics[width=0.7\textwidth]{Images/Cap 3/contenedores_vf.png}
 	\captionof{figure}[Diagrama de contenedores (C4 nivel 2)]{Diagrama de contenedores (C4 nivel 2), elaboración propia. 
 		Véase la versión SVG para mayor detalle en \href{https://tinyurl.com/4wjeeuzb}{\textbf{\underline{este enlace}}}.}  % Pie de foto manual
 \end{center}
 
+\newpage
 \subsubsection{Diagrama de componentes (C4 nivel 3)}
 \begin{center}
 	\includegraphics[width=0.4\textwidth]{Images/Cap 3/componentes_vf.png}
@@ -644,12 +644,12 @@ En este caso, los requerimientos no funcionales se basaron en los especificados 
 \subsubsection{Diagrama de actividades} 
 \begin{center}
 	\makebox[\textwidth]{%
-		\includegraphics[width=1\textwidth]{Images/Cap 3/actividades.png}
+		\includegraphics[width=0.94\textwidth]{Images/Cap 3/actividades.png}
 	}
 	\captionof{figure}[Diagrama de actividades del sistema]{Diagrama de actividades del sistema, elaboración propia.}
 \end{center}
 
-
+\newpage
 \subsubsection{Diagrama de clases}
 \begin{center}
 	\includegraphics[width=0.4\textwidth]{Images/Cap 3/clases_vf.png}
@@ -714,7 +714,7 @@ El usuario ingresa texto en la aplicación, que luego es procesado y traducido a
 	\label{tab:caso_uso_1}
 \end{table}
 
-
+\newpage
 \subsubsection{Trayectoria principal}
 \begin{enumerate}[label=\textbf{\arabic*}, leftmargin=1.5cm]
 	\item \UCsystem \ El sistema muestra un campo de entrada de texto en la pantalla principal de la aplicación, permitiendo al usuario ingresar texto.  
@@ -760,18 +760,24 @@ El usuario ingresa texto en la aplicación, que luego es procesado y traducido a
 	\centering
 	\begin{tabularx}{\textwidth}{|X|X|X|}
 		\hline
-		\textbf{Emergencia (3 a 4 palabras)} & \textbf{Saludo (1 a 3 palabras)} & \textbf{Expresiones de Mínima Comunicación (2 a 4 palabras)} \\ \hline
+		\textbf{Emergencia (3 a 4 palabras)} & \textbf{Saludo (1 a 3 palabras)} & \textbf{Expresiones de Mínima Comunicación (1 a 3palabras)} \\ \hline
 		Ayuda, por favor. & Hola. & Gracias. \\ \hline
 		Llama a la policía. & Buenos días. & Soy Sordo. \\ \hline
 		Necesito un médico. & Buenas tardes. & Sí. \\ \hline
 		Estoy herido. & Buenas noches. & No. \\ \hline
 		¿Dónde está el hospital? & ¿Cómo estás? & Bien. \\ \hline
 		Es una emergencia. & Bienvenido. & Mal. \\ \hline
-		¿Necesitas ayuda? & Encantado de conocerte. & Perdón. \\ \hline
+		¿Necesitas ayuda? & Mucho gusto. & Perdón. \\ \hline
 		¿Dónde está la salida? & ¿Cómo te llamas? & Entiendo. \\ \hline
-		¡Fuego! ¡Fuego! & Me llamo [nombre]. & No Entiendo. \\ \hline
+		Incendio & Me llamo [nombre]. & No Entiendo. \\ \hline
 		Estoy sangrando. & Nos vemos. & No lo sé. \\ \hline
-		Alto. & Me voy. & Espera \\ \hline
+		Alto. & Me voy. & Muchas gracias. \\ \hline
+		Auxilio. & Adios. & Te lo agradezco. \\ \hline
+		Socorro. & Hasta luego. & Espera. \\ \hline
+		 &  & Disculpa. \\ \hline
+		 &  & Lo siento. \\ \hline
+		 &  & De acuerdo. \\ \hline
+		 &  & Vale. \\ \hline
 	\end{tabularx}
 	\caption[Identificación de frases]{Identificación de frases, elaboración propia.}
 \end{table}
