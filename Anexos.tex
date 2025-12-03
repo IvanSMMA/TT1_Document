@@ -1,9 +1,9 @@
 \appendix
 
-\chapter[MediaPipe, Blender y Unity]{MediaPipe, Blender y Unity}
+\chapter[Anexo A: MediaPipe, Blender y Unity]{MediaPipe, Blender y Unity}
 \label{anexo:blender_unity}
 
-Las herramientas y tecnologías descritas en este anexo formaron parte del enfoque inicial propuesto para el desarrollo del prototipo. Sin embargo, durante el desarrollo del proyecto se identificaron diversas limitaciones técnicas, de tiempo y de recursos que impidieron su implementación, tales como la necesidad de un equipo especializado en animación, disponibilidad de hardware para captura de movimiento y la alta complejidad del modelado 3D para representar señas detalladas de la Lengua de Señas Mexicana (LSM). Se realizaron algunas modificaciones a la propuesta original con el fin de cubrir la mayor parte de los objetivos, enfocándose principalmente en la fluidez y comunicación del español a LSM, y se optó por reubicar estos elementos a los anexos, manteniéndolos como referencia conceptual del planteamiento original y como base para futuros trabajos que deseen retomar esta línea de desarrollo.\\
+Las herramientas y tecnologías descritas en este anexo formaron parte del enfoque inicial propuesto para el desarrollo del prototipo. Sin embargo, durante el desarrollo del proyecto se identificaron diversas limitaciones técnicas, de tiempo y de recursos que impidieron su implementación, tales como la necesidad de un equipo especializado en animación, disponibilidad de \textit{hardware} para captura de movimiento y la alta complejidad del modelado 3D para representar señas detalladas de la Lengua de Señas Mexicana (LSM). Se realizaron algunas modificaciones a la propuesta original con el fin de cubrir la mayor parte de los objetivos, enfocándose principalmente en la fluidez y comunicación del español a LSM, y se optó por reubicar estos elementos a los anexos, manteniéndolos como referencia conceptual del planteamiento original y como base para futuros trabajos que deseen retomar esta línea de desarrollo.\\
 
 \section{MediaPipe}
 MediaPipe es un conjunto de herramientas de código abierto para ser empleadas en tareas como el reconocimiento facial, seguimiento de gestos, detección de objetos y el seguimiento del cuerpo humano \cite{ref49}.
@@ -73,39 +73,39 @@ El modelo de marcador de pose realiza un seguimiento de 33 ubicaciones de puntos
 A continuación, se enlistan las partes representadas del cuerpo:
 
 \begin{enumerate}
-    \item Nose - nariz.  
-    \item Left eye (inner) - ojo izquierdo (interior).  
-    \item Left eye - ojo izquierdo.  
-    \item Left eye (outer) - ojo izquierdo (exterior).  
-    \item Right eye (inner) - ojo derecho (interior).  
-    \item Right eye - ojo derecho.  
-    \item Right eye (outer) - ojo derecho (exterior).  
-    \item Left ear - oreja izquierda.  
-    \item Right ear - oreja derecha.  
-    \item Mouth (left) - boca (izquierda).  
-    \item Mouth (right) - boca (derecha).  
-    \item Left shoulder - hombro izquierdo.  
-    \item Right shoulder - hombro derecho.  
-    \item Left elbow - codo izquierdo.  
-    \item Right elbow - codo derecho.  
-    \item Left wrist - muñeca izquierda.  
-    \item Right wrist - muñeca derecha.  
-    \item Left pinky - meñique izquierdo.  
-    \item Right pinky - meñique derecho.  
-    \item Left index - índice izquierdo.  
-    \item Right index - índice derecho.  
-    \item Left thumb - pulgar izquierdo.  
-    \item Right thumb - pulgar derecho.  
-    \item Left hip - cadera izquierda.  
-    \item Right hip - cadera derecha.  
-    \item Left knee - rodilla izquierda.  
-    \item Right knee - rodilla derecha.  
-    \item Left ankle - tobillo izquierdo.  
-    \item Right ankle - tobillo derecho.  
-    \item Left heel - talón izquierdo.  
-    \item Right heel - talón derecho.  
-    \item Left foot index - punta del pie izquierdo.  
-    \item Right foot index - punta del pie derecho.  
+    \item \textit{Nose} - nariz.  
+    \item \textit{Left eye (inner)} - ojo izquierdo (interior).  
+    \item \textit{Left eye} - ojo izquierdo.  
+    \item \textit{Left eye (outer)} - ojo izquierdo (exterior).  
+    \item \textit{Right eye (inner)} - ojo derecho (interior).  
+    \item \textit{Right eye} - ojo derecho.  
+    \item \textit{Right eye (outer)} - ojo derecho (exterior).  
+    \item \textit{Left ear} - oreja izquierda.  
+    \item \textit{Right ear} - oreja derecha.  
+    \item \textit{Mouth (left)} - boca (izquierda).  
+    \item \textit{Mouth (right)} - boca (derecha).  
+    \item \textit{Left shoulder} - hombro izquierdo.  
+    \item \textit{Right shoulder} - hombro derecho.  
+    \item \textit{Left elbow} - codo izquierdo.  
+    \item \textit{Right elbow} - codo derecho.  
+    \item \textit{Left wrist} - muñeca izquierda.  
+    \item \textit{Right wrist} - muñeca derecha.  
+    \item \textit{Left pinky} - meñique izquierdo.  
+    \item \textit{Right pinky} - meñique derecho.  
+    \item \textit{Left index} - índice izquierdo.  
+    \item \textit{Right index} - índice derecho.  
+    \item \textit{Left thumb} - pulgar izquierdo.  
+    \item \textit{Right thumb} - pulgar derecho.  
+    \item \textit{Left hip} - cadera izquierda.  
+    \item \textit{Right hip} - cadera derecha.  
+    \item \textit{Left knee} - rodilla izquierda.  
+    \item \textit{Right knee} - rodilla derecha.  
+    \item \textit{Left ankle} - tobillo izquierdo.  
+    \item \textit{Right ankle} - tobillo derecho.  
+    \item \textit{Left heel} - talón izquierdo.  
+    \item \textit{Right heel} - talón derecho.  
+    \item \textit{Left foot index} - punta del pie izquierdo.  
+    \item \textit{Right foot index} - punta del pie derecho.  
 \end{enumerate}
 
 \subsection{MediaPipe Holistic}
@@ -120,15 +120,15 @@ El Modelo Holistic está diseñado para capturar simultáneamente expresiones fa
 
 Los principales componentes del modelo MediaPipe Holistic son los siguientes \cite{refhol2}:
 \begin{itemize}
-	\item \textbf{Pose Sub-model}: estima 33 puntos clave del esqueleto humano, cubriendo articulaciones como hombros, codos, muñecas, cadera, rodillas y tobillos. Permite reconstruir poses corporales en tiempo real, útil para análisis de movimiento, deporte, danza y experiencias interactivas.
-	\item \textbf{Face Sub-model}: detecta 468 puntos del rostro, incluyendo ojos, boca, nariz y contornos faciales. Su nivel de detalle permite reconocer expresiones, emociones y habilitar experiencias de realidad aumentada como filtros o maquillaje digital.
-	\item \textbf{Hands Sub-model}: identifica 21 puntos por mano, capturando la forma y movimiento de los dedos. Esto permite aplicaciones como reconocimiento de lengua de señas, manipulación virtual o interfaces gestuales.
+	\item \textbf{\textit{Pose Sub-model}}: estima 33 puntos clave del esqueleto humano, cubriendo articulaciones como hombros, codos, muñecas, cadera, rodillas y tobillos. Permite reconstruir poses corporales en tiempo real, útil para análisis de movimiento, deporte, danza y experiencias interactivas.
+	\item \textbf{\textit{Face Sub-model}}: detecta 468 puntos del rostro, incluyendo ojos, boca, nariz y contornos faciales. Su nivel de detalle permite reconocer expresiones, emociones y habilitar experiencias de realidad aumentada como filtros o maquillaje digital.
+	\item \textbf{\textit{Hands Sub-model}}: identifica 21 puntos por mano, capturando la forma y movimiento de los dedos. Esto permite aplicaciones como reconocimiento de lengua de señas, manipulación virtual o interfaces gestuales.
 \end{itemize}
 
 Entre las aplicaciones del modelo destacan principalmente las siguientes \cite{refhol2}:
 \begin{itemize}
 	\item \textbf{Realidad Aumentada (AR)}: integración de objetos virtuales que reaccionan al movimiento corporal del usuario.
-	\item \textbf{Fitness y salud}: seguimiento de posturas y movimientos para ofrecer retroalimentación en tiempo real.
+	\item \textbf{\textit{Fitness} y salud}: seguimiento de posturas y movimientos para ofrecer retroalimentación en tiempo real.
 	\item \textbf{Interacción humano-computadora}: control de interfaces sin contacto, ideal para dispositivos inteligentes o entornos públicos.
 	\item \textbf{Accesibilidad}: interpretación de lengua de señas y soporte para personas con movilidad reducida mediante controles gestuales.
 \end{itemize}
@@ -154,17 +154,15 @@ Unity destaca por su conjunto de características robustas que facilitan el desa
 
 En la actualidad Unity es empleado en múltiples industrias, además del desarrollo de videojuegos, ya que es popular en sectores como la arquitectura, el diseño automotriz, la medicina y la educación. Además, tiene soporte en varias plataformas como computadoras (PC), consolas, dispositivos móviles y dispositivos de realidad aumentada \cite{ref55}. La última versión que se ha lanzado de Unity, al momento de la realización de este trabajo, es la 6.1.\\
 
-Considerando que Unity tiene compatibilidad con dispositivos móviles, en el siguiente apartado se hará un breve análisis de Android, un sistema operativo móvil que es ampliamente utilizado en smartphones.\\
-
 \subsection{Blender}
-Blender es una suite de animación y creación 3D libre y de código abierto, disponible para Linux, macOS y Windows. Permite desarrollar visualizaciones tridimensionales como imágenes, animaciones, efectos visuales (VFX), edición de video, entre otras \cite{refbl1}. Gracias a su versatilidad y a su constante evolución, se ha convertido en una herramienta ampliamente utilizada en ámbitos como la animación, el cine, los videojuegos, la arquitectura, el diseño gráfico y la impresión 3D \cite{refbl2}\cite{refbl3}.\\
+Blender es una \textit{suite} de animación y creación 3D libre y de código abierto, disponible para Linux, macOS y Windows. Permite desarrollar visualizaciones tridimensionales como imágenes, animaciones, efectos visuales (VFX), edición de video, entre otras \cite{refbl1}. Gracias a su versatilidad y a su constante evolución, se ha convertido en una herramienta ampliamente utilizada en ámbitos como la animación, el cine, los videojuegos, la arquitectura, el diseño gráfico y la impresión 3D \cite{refbl2}\cite{refbl3}.\\
 
 Blender reúne en una sola plataforma todas las funciones necesarias para un flujo de trabajo completo en 3D. Entre sus características destacan \cite{refbl1, refbl2, refbl3}:
 \begin{itemize}
-	\item Suite 3D integrada: Modelado, Esculpido, Texturizado, UV Mapping, Rigging, Animación, Simulación, Composición, VFX y Renderizado.
+	\item \textit{Suite} 3D integrada: Modelado, Esculpido, Texturizado, \textit{UV Mapping}, \textit{Rigging}, Animación, Simulación, Composición, VFX y Renderizado.
 	\item Multiplataforma con una interfaz unificada basada en OpenGL, personalizable mediante scripts en Python.
 	\item Arquitectura 3D eficiente que permite un flujo de trabajo rápido.
-	\item Comunidad activa que impulsa la mejora continua del software.
+	\item Comunidad activa que impulsa la mejora continua del \textit{software}.
 	\item Aplicación ligera y portable.
 	\item Soporte para animación 2D.
 	\item Integración con motores de render como Cycles y Eevee, además de compatibilidad con motores externos (RenderMan, Arnold, LuxCore).
@@ -177,11 +175,11 @@ Blender ofrece una variedad de herramientas profesionales que permiten desarroll
 	\item \textbf{Modelado 3D}: creación de objetos, personajes y entornos mediante modelado poligonal, curvas y superficies.
 	\item \textbf{Escultura digital}: esculpido artístico de modelos en alta y media resolución.
 	\item \textbf{Texturizado y materiales}: creación de materiales PBR, texturas procedurales y pintura digital en tiempo real.
-	\item \textbf{Rigging y animación}: sistema de huesos, controles avanzados, animación por fotogramas clave y plugins.
+	\item \textbf{Rigging y animación}: sistema de huesos, controles avanzados, animación por fotogramas clave y \textit{plugins}.
 	\item \textbf{Simulaciones}: fluidos, humo, fuego, telas, partículas y cuerpos rígidos.
 	\item \textbf{Animación 2D}: herramientas completas para dibujo y animación cuadro a cuadro.
 	\item \textbf{Edición de video}: corte, composición, efectos y corrección de color.
-	\item \textbf{Composición y VFX}: nodos, tracking de cámara, integración de efectos visuales.
+	\item \textbf{Composición y VFX}: nodos, \textit{tracking} de cámara, integración de efectos visuales.
 	\item \textbf{Impresión 3D}: herramientas para preparar modelos y exportación en formatos compatibles.
 	\item \textbf{Creación de videojuegos}: mediante su motor de juegos y herramientas interactivas.
 	\item \textbf{Producción de cómics y arte secuencial}: dibujo 2D y 3D.
@@ -213,7 +211,7 @@ Esta compatibilidad amplia permite que Blender se integre sin dificultad en pipe
     \captionof{figure}[Logo de Blender]{Logo de Blender, obtenido de \cite{refbl5}}.
 \end{center}
 
-\chapter[LGPID]{Ley General para la Inclusión de las Personas con Discapacidad}
+\chapter[Anexo B: LGPID]{Ley General para la Inclusión de las Personas con Discapacidad}
 \label{anexo:ley_inclusion_disc}
 \section{Encabezado de la Ley General para la Inclusión de las Personas con Discapacidad}
 
@@ -240,7 +238,7 @@ Esta compatibilidad amplia permite que Blender se integre sin dificultad en pipe
     \captionof{figure}[Artículo 20]{Artículo 20 de la Ley General para la Inclusión de las Personas con Discapacidad, obtenido de \cite{ref34}}
 \end{center}
 
-\chapter[Enfoque por actividades (académico)]{Enfoque por actividades (académico)}
+\chapter[Anexo C: Enfoque por actividades (académico)]{Enfoque por actividades (académico)}
 \label{anexo:actividades_academicas}  % Etiqueta para hacer referencia
 \section{Etapa: creación del prototipo}
 
@@ -348,7 +346,7 @@ Esta compatibilidad amplia permite que Blender se integre sin dificultad en pipe
 			Diagramas de flujo y secuencia & 12 & \$150.00 & \$1,800.00 \\ \hline
 			Diagramas correspondientes UML & 20 & \$150.00 & \$3,000.00 \\ \hline
 			Integración de APIs externas & 20 & \$150.00 & \$3,000.00 \\ \hline
-			Integración backend y frontend & 25 & \$150.00 & \$3,750.00 \\ \hline
+			Integración \textit{backend} y \textit{frontend} & 25 & \$150.00 & \$3,750.00 \\ \hline
 			\textbf{Total} & \textbf{124} & -- & \textbf{\$18,600.00} \\ \hline
 		\end{tabular}
 	\end{adjustbox}
@@ -563,7 +561,7 @@ Esta compatibilidad amplia permite que Blender se integre sin dificultad en pipe
 	\label{tab:costos_estados_financieros}
 \end{table}
 
-\chapter[Enfoque por actividades (comercial)]{Enfoque por actividades (comercial)}
+\chapter[Anexo D: Enfoque por actividades (comercial)]{Enfoque por actividades (comercial)}
 \label{anexo:actividades_comercial}  % Etiqueta para hacer referencia
 \section{Etapa: creación del prototipo}
 \begin{table}[H]
@@ -672,7 +670,7 @@ Esta compatibilidad amplia permite que Blender se integre sin dificultad en pipe
 			Implementación del sistema de recuperación de contraseña & 15 & \$320.00 & \$4,800.00 \\ \hline
 			Creación de la funcionalidad de registro de nuevos usuarios & 15 & \$320.00 & \$4,800.00 \\ \hline
 			Integración de APIs externas & 20 & \$320.00 & \$6,400.00 \\ \hline
-			Integración backend y frontend & 25 & \$320.00 & \$8,000.00 \\ \hline
+			Integración \textit{backend} y \textit{frontend} & 25 & \$320.00 & \$8,000.00 \\ \hline
 			\textbf{Total} & \textbf{154} & -- & \textbf{\$47,200.00} \\ \hline
 		\end{tabular}
 	\end{adjustbox}
@@ -972,7 +970,7 @@ Esta compatibilidad amplia permite que Blender se integre sin dificultad en pipe
 	\label{tab:costos_mantenimiento}
 \end{table}
 
-\chapter[Cuestionario de evaluación de usabilidad]{Cuestionario completo de evaluación de usabilidad}
+\chapter[Anexo E: Cuestionario de evaluación de usabilidad]{Cuestionario completo de evaluación de usabilidad}
 \label{anexo:cuestionario}
 
 {\large \noindent \textbf{Evolución de la aplicación SignAI}}\\
