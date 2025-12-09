@@ -139,10 +139,10 @@ El sistema se compone de cuatro módulos principales, cada uno con funciones esp
 
 \paragraph{\textit{Dataset} actual}
 \begin{itemize}
-    \item \textbf{Grupo A (Emergencias)}: 13 frases.
-    \item \textbf{Grupo B (Saludos)}: 13 frases.
-    \item \textbf{Grupo C (Comunicación)}: 17 frases.
-    \item \textbf{Total}: 43 frases.
+    \item \textbf{Grupo A (Emergencias)}: 11 frases.
+    \item \textbf{Grupo B (Saludos)}: 11 frases.
+    \item \textbf{Grupo C (Comunicación)}: 10 frases.
+    \item \textbf{Total}: 32 frases.
 \end{itemize}
 
 \paragraph{Funciones disponibles}
@@ -288,7 +288,7 @@ Este flujo ocurre cuando la similitud es menor al \textit{threshold} correspondi
     \item Carga de datos \\
     $\downarrow$ \\
     \texttt{load\_groups()} $\rightarrow$ lectura de \texttt{grupos.json} \\
-    Resultado: 43 frases cargadas.
+    Resultado: 32 frases cargadas.
 
     \item Inicialización del \textit{matcher} \\
     $\downarrow$ \\
@@ -885,7 +885,7 @@ async def buscar(request: QueryRequest):
     "grupos": {
         "A": {
             "nombre": "Emergencias",
-            "total_frases": 13
+            "total_frases": 11
         }
     }
 }
@@ -1501,7 +1501,7 @@ Control de Versiones & Git 2.43.0 \\ \hline
 \noindent\textbf{Bases de datos}
 \begin{itemize}
     \item PostgreSQL/MySQL: Innecesarias para \textit{dataset} fijo.
-    \item Decisión: JSON plano es suficiente para 43 frases.
+    \item Decisión: JSON plano es suficiente para 32 frases.
 \end{itemize}
 
 \subsection{Conclusión}
@@ -2712,7 +2712,7 @@ Output: Vector [384]
 
 Dimensión del \textit{embedding} & 384 \\ \hline
 Tamaño por \textit{embedding} & 384 × 4 bytes = 1.5 KB \\ \hline
-\textit{Total embeddings} en memoria & 43 frases × 1.5 KB $\approx$ 65 KB \\ \hline
+\textit{Total embeddings} en memoria & 32 frases × 1.5 KB $\approx$ 65 KB \\ \hline
 Tamaño del cache (.npz) & $\sim$50 KB (comprimido) \\ \hline
 Tiempo de generación (1ª vez) & $\sim$5 segundos \\ \hline
 Tiempo de carga (desde cache) & <1 segundo \\ \hline
@@ -3960,8 +3960,8 @@ similarities = cosine_similarity([query_emb], phrase_embeddings)[0]
 
 \textbf{Problema}: Búsqueda exhaustiva es costosa.
 \begin{itemize}
-    \item Dataset: 43 frases en 3 grupos.
-    \item Cálculo directo: 43 comparaciones por \textit{query}.
+    \item Dataset: 32 frases en 3 grupos.
+    \item Cálculo directo: 32 comparaciones por \textit{query}.
     \item Escalabilidad: O(N) con N = total de frases.
 \end{itemize}
 
@@ -4154,7 +4154,7 @@ Mejor match global: "Necesito un médico" (Grupo A, sim: 0.97)
 \begin{tabular}{|p{6cm}|p{7cm}|}
 \hline
 \textbf{Métrica} & \textbf{Valor} \\ \hline
-Comparaciones (exhaustiva) & 43 \\ \hline
+Comparaciones (exhaustiva) & 32 \\ \hline
 Comparaciones (\textit{re-ranking}) & 3 + $\sim$20 = 23 \\ \hline
 \textit{Speedup} & $\sim$1.9x \\ \hline
 Precisión & 92\% (vs 90\% exhaustiva) \\ \hline
@@ -4252,7 +4252,7 @@ Listado de grupos disponibles y sus frases.
         "A": {
             "nombre": "Emergencias",
             "descripcion": "Frases de emergencia",
-            "total_frases": 13,
+            "total_frases": 11,
             "ejemplos": ["Ayuda", "Socorro", "Urgente"]
         },
         "B": { ... },
@@ -4275,7 +4275,7 @@ Frases de un grupo específico.\\
 {
     "grupo": "A",
     "nombre": "Emergencias",
-    "total_frases": 13,
+    "total_frases": 11,
     "frases": [
         "Ayuda, por favor",
         "Llama a la policía",
@@ -4321,7 +4321,7 @@ Health check del servicio.
     "status": "healthy",
     "version": "2.1.0",
     "matcher_initialized": true,
-    "total_frases": 43,
+    "total_frases": 32,
     "uptime_seconds": 3600
 }
 \end{verbatim}
@@ -5418,7 +5418,7 @@ Latencia P95 & <200ms & 68ms & 66\% mejor \\ \hline
 
 \textbf{Problema}: Generar \textit{embeddings} es costoso:
 \begin{itemize}
-    \item Tiempo: $\sim$5 segundos para 43 frases.
+    \item Tiempo: $\sim$5 segundos para 32 frases.
     \item Requiere modelo cargado en memoria.
     \item Se ejecuta en cada \textit{startup}.
 \end{itemize}
@@ -5451,9 +5451,9 @@ Memoria en RAM & 65 KB & 65 KB \\ \hline
 
 \textbf{Búsqueda jerárquica por centroides}\\
 
-\textbf{Problema}: Búsqueda exhaustiva en 43 frases:
+\textbf{Problema}: Búsqueda exhaustiva en 32 frases:
 \begin{itemize}
-    \item O(N) comparaciones con N = 43.
+    \item O(N) comparaciones con N = 32.
     \item No escala bien con más frases.
     \item Ineficiente para \textit{datasets} grandes.
 \end{itemize}
@@ -5466,7 +5466,7 @@ Memoria en RAM & 65 KB & 65 KB \\ \hline
 
 Complejidad: O(K + N\_k) $\ll$ O(N)\\
 
-\textbf{Resultados}: \textit{Dataset} actual (43 frases):\\
+\textbf{Resultados}: \textit{Dataset} actual (32 frases):\\
 
 \begin{table}[H]
 \centering
@@ -5475,7 +5475,7 @@ Complejidad: O(K + N\_k) $\ll$ O(N)\\
 \hline
  & \textbf{Exhaustiva} & \textbf{Jerárquica} \\ \hline
 
-Comparaciones & 43 & 3 + $\sim$20 = 23 \\ \hline
+Comparaciones & 32 & 3 + $\sim$20 = 23 \\ \hline
 \textit{Speedup} & 1x & 1.9x \\ \hline
 Latencia & $\sim$42ms & $\sim$40ms \\ \hline
 

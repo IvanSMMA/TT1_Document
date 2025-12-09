@@ -485,22 +485,22 @@ El análisis realizado en esta sección, permite concluir que el proyecto es tan
 
 La arquitectura de SignAI se documenta mediante el modelo C4 (\textit{Context, Containers, Components, Code}) propuesto por \cite{brown2018c4}, y adoptado en contextos académicos como complemento de UML por \cite{vazquez2020c4}. En este trabajo se implementan tres de sus cuatro niveles jerárquicos: \textbf{Contexto}, que establece el sistema como una caja negra dentro de su ecosistema; \textbf{Contenedores}, que identifican las unidades desplegables (aplicación móvil React/Expo, API \textit{backend} FastAPI con despliegue en Render PaaS, almacenamiento JSON/NPZ y servicio externo AWS S3); y \textbf{Componentes}, que detallan la estructura interna del backend mediante sus módulos principales (API \textit{Layer}, \textit{Matcher} PLN, \textit{Embeddings Service}, \textit{Preprocess Module} y  \textit{Groups Manager}). El cuarto nivel (\textit{Code}) se sustituye por un diagrama de clases UML, enfoque consistente con la postura de \cite{brown2018c4} y con la experiencia reportada por \cite{vazquez2020c4}, quienes señalan que el modelo C4 complementa a UML en lugar de reemplazarlo.\\
 
-Adicionalmente, se incluyó un diagrama de arquitectura por capas que documenta la separación lógica presentación–servicios–datos, siguiendo los principios de \textit{Separation of Concerns} descritos por \cite{fowler2002patterns}. La decisión de implementar una arquitectura monolítica modular, en lugar de una basada en microservicios, responde a criterios de proporcionalidad arquitectónica: el sistema aborda un único dominio de negocio (procesamiento de lenguaje natural para búsqueda semántica en LSM), maneja un volumen de datos acotado (43 frases con \textit{embeddings} precomputados de aproximadamente 256~KB) y carece de requisitos que justifiquen la complejidad operacional de una arquitectura distribuida (como escalado independiente por componente, despliegue políglota o múltiples equipos trabajando en paralelo), tal como advierte la literatura especializada sobre los costes organizativos y técnicos de los microservicios en sistemas pequeños o de un solo dominio \cite{dragoni2017micro,aldebagy2018comparative,newman2021microservices}.\\
+Adicionalmente, se incluyó un diagrama de arquitectura por capas que documenta la separación lógica presentación–servicios–datos, siguiendo los principios de \textit{Separation of Concerns} descritos por \cite{fowler2002patterns}. La decisión de implementar una arquitectura monolítica modular, en lugar de una basada en microservicios, responde a criterios de proporcionalidad arquitectónica: el sistema aborda un único dominio de negocio (procesamiento de lenguaje natural para búsqueda semántica en LSM), maneja un volumen de datos acotado (32 frases con \textit{embeddings} precomputados de aproximadamente 256~KB) y carece de requisitos que justifiquen la complejidad operacional de una arquitectura distribuida (como escalado independiente por componente, despliegue políglota o múltiples equipos trabajando en paralelo), tal como advierte la literatura especializada sobre los costes organizativos y técnicos de los microservicios en sistemas pequeños o de un solo dominio \cite{dragoni2017micro,aldebagy2018comparative,newman2021microservices}.\\
 
 El diseño monolítico modular, con bajo acoplamiento entre componentes internos, facilita una posible migración futura a microservicios cuando las métricas de tráfico, el tamaño del \textit{dataset} o la complejidad organizacional lo justifiquen. Esta progresión documental, desde vistas de alto nivel (Contexto, Contenedores, Capas) hasta detalles de implementación (Componentes y diagrama de clases UML), permite una comprensión arquitectónica tanto para \textit{stakeholders} técnicos como no técnicos, en concordancia con las mejores prácticas de documentación de arquitectura de \textit{software} establecidas por \cite{bass2012software} y con las directrices del estándar ISO/IEC/IEEE~42010:2011 \cite{iso42010}, que recomiendan describir la arquitectura mediante múltiples vistas consistentes alineadas con las preocupaciones de los distintos interesados.
 
 \subsubsection{Diagrama de contexto (C4 nivel 1)}
 \begin{center}
-	\includegraphics[width=0.4\textwidth]{Images/Cap 3/contexto_vf.png}
+	\includegraphics[width=0.4\textwidth]{Images/Cap 3/contexto_presentacion.png}
 	\captionof{figure}[Diagrama de contexto (C4 nivel 1)]{Diagrama de contexto (C4 nivel 1), elaboración propia. 
-		Véase la versión SVG para mayor detalle en \href{https://tinyurl.com/5cvnfn3s}{\textbf{\underline{este enlace}}}.}  % Pie de foto manual
+		Véase la versión SVG para mayor detalle en \href{https://tinyurl.com/2s3ua3mz}{\textbf{\underline{este enlace}}}.}  % Pie de foto manual
 \end{center}
 
 \subsubsection{Diagrama de contenedores (C4 nivel 2)}
 \begin{center}
-	\includegraphics[width=0.7\textwidth]{Images/Cap 3/contenedores_vf.png}
+	\includegraphics[width=0.7\textwidth]{Images/Cap 3/contenedores_presentacion.png}
 	\captionof{figure}[Diagrama de contenedores (C4 nivel 2)]{Diagrama de contenedores (C4 nivel 2), elaboración propia. 
-		Véase la versión SVG para mayor detalle en \href{https://tinyurl.com/4wjeeuzb}{\textbf{\underline{este enlace}}}.}  % Pie de foto manual
+		Véase la versión SVG para mayor detalle en \href{https://tinyurl.com/yydk6ct5}{\textbf{\underline{este enlace}}}.}  % Pie de foto manual
 \end{center}
 
 \newpage
@@ -513,9 +513,9 @@ El diseño monolítico modular, con bajo acoplamiento entre componentes internos
 
 \subsubsection{Diagrama de arquitectura en capas (3 Tier)}
 \begin{center}
-	\includegraphics[width=0.4\textwidth]{Images/Cap 3/capas_vf.png}
+	\includegraphics[width=0.4\textwidth]{Images/Cap 3/capas_presentacion.png}
 	\captionof{figure}[Diagrama de arquitectura en capas (3 Tier)]{Diagrama de arquitectura en capas (3 Tier), elaboración propia. 
-		Véase la versión SVG para mayor detalle en \href{https://tinyurl.com/3wekk86t}{\textbf{\underline{este enlace}}}.}  % Pie de foto manual
+		Véase la versión SVG para mayor detalle en \href{https://tinyurl.com/3vxtfj3j}{\textbf{\underline{este enlace}}}.}  % Pie de foto manual
 \end{center}
 
 
@@ -760,24 +760,18 @@ El usuario ingresa texto en la aplicación, que luego es procesado y traducido a
 	\centering
 	\begin{tabularx}{\textwidth}{|X|X|X|}
 		\hline
-		\textbf{Emergencia (3 a 4 palabras)} & \textbf{Saludo (1 a 3 palabras)} & \textbf{Expresiones de Mínima Comunicación (1 a 3palabras)} \\ \hline
+		\textbf{Emergencia (3 a 4 palabras)} & \textbf{Saludo (1 a 3 palabras)} & \textbf{Expresiones de Mínima Comunicación (1 a 3 palabras)} \\ \hline
 		Ayuda, por favor. & Hola. & Gracias. \\ \hline
 		Llama a la policía. & Buenos días. & Soy Sordo. \\ \hline
 		Necesito un médico. & Buenas tardes. & Sí. \\ \hline
 		Estoy herido. & Buenas noches. & No. \\ \hline
 		¿Dónde está el hospital? & ¿Cómo estás? & Bien. \\ \hline
 		Es una emergencia. & Bienvenido. & Mal. \\ \hline
-		¿Necesitas ayuda? & Mucho gusto. & Perdón. \\ \hline
+		¿Necesitas ayuda? & Encantado de conocerte. & Perdón. \\ \hline
 		¿Dónde está la salida? & ¿Cómo te llamas? & Entiendo. \\ \hline
-		Incendio & Me llamo [nombre]. & No Entiendo. \\ \hline
+		¡Fuego! ¡Fuego! & Me llamo [nombre]. & No Entiendo. \\ \hline
 		Estoy sangrando. & Nos vemos. & No lo sé. \\ \hline
-		Alto. & Me voy. & Muchas gracias. \\ \hline
-		Auxilio. & Adios. & Te lo agradezco. \\ \hline
-		Socorro. & Hasta luego. & Espera. \\ \hline
-		 &  & Disculpa. \\ \hline
-		 &  & Lo siento. \\ \hline
-		 &  & De acuerdo. \\ \hline
-		 &  & Vale. \\ \hline
+		Alto. & Me voy. & \\ \hline
 	\end{tabularx}
 	\caption[Identificación de frases]{Identificación de frases, elaboración propia.}
 \end{table}
