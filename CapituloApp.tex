@@ -1298,17 +1298,46 @@ Render es una plataforma moderna de nube unificada (\textit{Unified Cloud Platfo
     \item \textbf{Escalabilidad:} Render ofrece la capacidad de escalar el servicio de FastAPI de forma independiente si la demanda del servicio de traducción aumenta, garantizando el rendimiento sin afectar la experiencia de usuario del cliente móvil \cite{refapp6}.
 \end{enumerate}
 
-\newpage
+\subsection{Microservicio: Despliegue de la API en Render [REEMPLAZADO]}
+
+La sección anterior sobre Render y sus subsecciones quedan obsoletas debido a restricciones técnicas de memoria. El despliegue final se realizó en \textbf{Hugging Face Spaces} \cite{refapp7}.
+
+\subsection{Microservicio: Despliegue Final en Hugging Face Spaces}
+\label{subsec:microservicio_hf}
+
+Para garantizar la accesibilidad y el funcionamiento continuo de la aplicación una vez compilada como APK o AAB, el \emph{Backend} de \textbf{FastAPI (PLN)} se desplegó como un microservicio en \textbf{Hugging Face Spaces} \cite{refapp7}.\\
+
+\noindent\textbf{¿Qué es Hugging Face Spaces?}\\
+Hugging Face es una plataforma colaborativa que se ha convertido en el centro de la comunidad de \emph{Machine Learning} (ML) y PLN. Sus \textbf{Spaces} son entornos dedicados para alojar, construir y desplegar \emph{demos}, modelos y microservicios basados en inteligencia artificial. Permiten a los desarrolladores utilizar SDKs especializados (como Docker) para el despliegue de sus \emph{backends} \cite{refapp7}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\linewidth]{Images/Cap4/images/hug.jpeg}
+    \caption{Logo de Hugging Face, obtenido de \cite{refapp7}}
+    \label{fig:hugLogo}
+\end{figure}
+
+\vspace{0.7em}
+\noindent \textbf{Ventajas del Despliegue en Hugging Face Spaces}\\
+La migración a Hugging Face se realizó para superar limitaciones cruciales y aprovechar la especialización de la plataforma en IA/ML \cite{refapp7}:
+
+\begin{enumerate}
+    \item \textbf{Estabilidad del Modelo PLN:} El motivo principal de la migración fue la restricción de memoria RAM del entorno anterior. Hugging Face Spaces, configurado con el \textbf{SDK Docker}, proveyó los recursos necesarios para cargar completamente los modelos pesados de \emph{Sentence-Transformers} y sus \emph{caches} de \emph{embeddings}. Esto eliminó los errores de \textbf{Crash Loop} y garantizó la estabilidad del servicio.
+    \item \textbf{Especialización en ML/PLN:} Al ser una plataforma especializada en \emph{Machine Learning}, ofrece herramientas y flujos de trabajo optimizados (CI/CD) para la gestión de modelos y servicios intensivos en IA.
+    \item \textbf{Accesibilidad 24/7:} La API está disponible globalmente a través de una \textbf{URL pública y estable}, permitiendo que el APK final funcione sin dependencia de un entorno local.
+    \item \textbf{Actualizaciones Instantáneas:} Cualquier mejora en el módulo de PLN se realiza mediante un \texttt{git push} al repositorio del Space. Esto activa un nuevo \emph{build} y despliegue del contenedor Docker, haciendo la mejora instantánea para el usuario final del APK, sin necesidad de que descarguen una nueva versión de la aplicación.
+\end{enumerate}
+
 \subsection{Integración Arquitectónica Final}
 
-La comunicación entre el Frontend (APK) y el Backend (Render) se realiza mediante peticiones HTTP a la URL pública.\\
+La comunicación entre el \emph{Frontend} (APK) y el \emph{Backend} (Hugging Face) se realiza mediante peticiones HTTP a la URL pública.
 
 El proceso de comunicación es el siguiente:
 \begin{enumerate}
+    \setcounter{enumi}{4} % Continúa la numeración si viene de otra sección
     \item El usuario ingresa texto en el \textbf{APK}.
-    \item El Frontend (\texttt{index.tsx}) envía la petición a \texttt{API\_URL} (\textbf{Render/FastAPI}).
+    \item El \emph{Frontend} (\texttt{index.tsx}) envía la petición a \texttt{API\_URL} (\textbf{Hugging Face/FastAPI}) \cite{refapp7}.
     \item El Microservicio PLN procesa la entrada, accede a las bases de datos de frases y devuelve la secuencia de URLs (o URLs de deletreo).
-    \item El Frontend consume la respuesta y utiliza las URLs de \textbf{AWS S3} para cargar los videos en la vista \texttt{VideoView}.
+    \item El \emph{Frontend} consume la respuesta y utiliza las URLs de \textbf{AWS S3} para cargar los videos en la vista \texttt{VideoView}.
 \end{enumerate}
 Este flujo robusto garantiza que el objetivo de un producto listo para el usuario final se cumpla con alta disponibilidad y mantenimiento simplificado.
-
