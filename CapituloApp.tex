@@ -2,11 +2,11 @@
 \section{Justificación de los cambios}
 \label{implementación:justificación_cambios}
 
-Durante la fase de planeación se estableció un conjunto de 32 frases, distribuidas en tres categorías principales: saludos, expresiones de emergencia y agradecimientos, con el propósito de representar situaciones comunes de comunicación básica. Sin embargo, se identificó que las frases correspondientes a la categoría de agradecimientos como “gracias”, “muchas gracias” o “te lo agradezco” compartían un mismo gesto en LSM. Esto generaba redundancia semántica y gestual, ya que diferentes frases se traducían a una única seña, sin aportar valor adicional al conjunto de datos ni al propósito comunicativo del prototipo.\\
+Durante la fase de planeación se estableció un conjunto de 30 frases, distribuidas en tres categorías principales: saludos, expresiones de emergencia y agradecimientos, con el propósito de representar situaciones comunes de comunicación básica. Sin embargo, se identificó que las frases correspondientes a la categoría de agradecimientos como “gracias”, “muchas gracias” o “te lo agradezco” compartían un mismo gesto en LSM. Esto generaba redundancia semántica y gestual, ya que diferentes frases se traducían a una única seña, sin aportar valor adicional al conjunto de datos ni al propósito comunicativo del prototipo.\\
 
-Se optó por sustituir la categoría de agradecimientos por una nueva categoría denominada expresiones de mínima comunicación, la cual incluye frases breves y funcionales utilizadas en interacciones cotidianas. Esta modificación permitió ampliar la cobertura comunicativa del prototipo, garantizando una mayor variedad de gestos en escenarios reales de comunicación entre personas oyentes y personas con discapacidad auditiva.\\
+Se optó por sustituir la categoría de agradecimientos por una nueva categoría denominada expresiones de mínima comunicación, la cual incluye frases breves y funcionales utilizadas en interacciones cotidianas, resultando en un conjunto de 32 frases. Esta modificación permitió ampliar la cobertura comunicativa del prototipo, garantizando una mayor variedad de gestos en escenarios reales de comunicación entre personas oyentes y personas con discapacidad auditiva.\\
 
-Por otro lado, en el capítulo 1 y 2 se indicó que el desarrollo del prototipo incluiría el modelado 3D de avatares mediante MediaPipe, con procesamiento en Blender o Unity. Sin embargo, durante el desarrollo del Trabajo Terminal se identificaron diversas limitaciones técnicas y operativas que impidieron la implementación de esta fase.\\
+Por otro lado, en el \textbf{\autoref{sec:Intro}} y \textbf{\autoref{sec:M_teorico}} se indicó que el desarrollo del prototipo incluiría el modelado 3D de avatares mediante MediaPipe, con procesamiento en Blender o Unity. Sin embargo, durante el desarrollo del Trabajo Terminal se identificaron diversas limitaciones técnicas y operativas que impidieron la implementación de esta fase.\\
 
 MediaPipe permite capturar un esqueleto en forma de nube de puntos a partir de un video, generando un archivo JSON con las coordenadas de las articulaciones. Este archivo puede convertirse a formato BVH para su uso en \textit{software} de animación como Blender. No obstante, se observó que MediaPipe no logra capturar la totalidad de las articulaciones del cuerpo humano, lo que ocasiona que el archivo BVH resultante esté incompleto al momento de su importación en Blender.\\
 
@@ -18,6 +18,7 @@ Asimismo, se evaluaron plataformas en línea capaces de realizar captura de movi
 
 Por estas razones, se decidió prescindir del modelado 3D en esta etapa del proyecto y concentrar los esfuerzos en el desarrollo del prototipo funcional centrado en el procesamiento del lenguaje natural y la traducción textual a representaciones visuales más simples. No obstante, se mantiene la documentación relativa al modelado 3D y MediaPipe, ya que constituye una base conceptual y técnica valiosa para trabajos futuros que busquen ampliar el presente desarrollo.\\
 
+\newpage
 \section{Introducción y Herramientas Tecnológicas}
 
 \subsection{Resumen del Proyecto}
